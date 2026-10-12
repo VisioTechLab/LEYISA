@@ -1,0 +1,16 @@
+# Secrets et configurations locales
+.env
+.env.*
+!.env.example
+# Dépendances et sorties
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+# Logs et outils locaux
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
