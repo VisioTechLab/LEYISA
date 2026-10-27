@@ -21,6 +21,10 @@ function displayDate(value: string): string {
   }).format(new Date(`${value}T00:00:00`));
 }
 
+function normalizeSearchValue(value: string): string {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
+}
+
 export function StudentsPage() {
   const [dataSource, setDataSource] = useState<StudentsDataSource | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
@@ -57,13 +61,19 @@ export function StudentsPage() {
   }, []);
 
   const filteredStudents = useMemo(() => {
-    const query = appliedSearch.trim().toLocaleLowerCase("fr");
-    if (!query) return students;
-    return students.filter((student) =>
-      `${student.id} ${student.lastName} ${student.postName} ${student.firstName}`
-        .toLocaleLowerCase("fr")
-        .includes(query),
-    );
+    const searchTerms = normalizeSearchValue(appliedSearch).trim().split(/\s+/).filter(Boolean);
+    if (!searchTerms.length) return students;
+    return students.filter((student) => {
+      const searchableValues = [
+        student.id,
+        student.lastName,
+        student.postName,
+        student.firstName,
+      ].map(normalizeSearchValue);
+      return searchTerms.every((term) =>
+        searchableValues.some((value) => value.includes(term)),
+      );
+    });
   }, [appliedSearch, students]);
 
   function updateField<K extends keyof NewStudent>(key: K, value: NewStudent[K]) {
@@ -221,8 +231,8 @@ export function StudentsPage() {
                   </table>
                 </div>
               ) : (
-                <div className="state-message">
-                  {students.length ? "Aucun élève ne correspond à cette recherche." : "Aucun élève disponible."}
+                <div className="state-message" role="status">
+                  {students.length ? "Aucun résultat" : "Aucun élève disponible."}
                 </div>
               )}
               <p className="table-footnote">

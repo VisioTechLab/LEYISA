@@ -2,6 +2,12 @@
 
 **Date : 23 octobre 2026**
 
+## Mise à jour — 27 octobre 2026
+
+**Tâche :** faire fonctionner la recherche des élèves fictifs par nom ou matricule et afficher « Aucun résultat » lorsqu’aucun élève ne correspond.
+
+**Réalisation :** la recherche accepte le nom, le postnom, le prénom ou le matricule, sans distinction de casse, d’accents ou d’ordre des mots.
+
 ## Objectif
 
 Créer un écran frontend fonctionnel qui affiche simultanément la liste de trois élèves fictifs de 6e A et un formulaire permettant de créer le dossier et de simuler l'inscription d'un nouvel élève. La mise en page reprend la logique visuelle de la maquette `02-eleves-inscriptions.png`, sans remplacer le formulaire de création demandé dans le livrable quotidien.
