@@ -1,22 +1,45 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import "./LoginPage.css";
 
 /**
  * LEYISA SCHOOL V1 — Module M1 Accès (Sidonie)
- * Mission J1 : afficher l'écran de connexion.
+ * Missions J1-J2 : afficher l'écran et valider les champs requis.
  *
- * Volontairement hors périmètre J1 :
- * - aucun appel réseau : endpoint et protocole d'authentification non décidés
- *   (voir docs/contrats-api.md) ;
- * - aucune vérification des champs (mission J2).
+ * La validation des champs est locale ; l'authentification et le
+ * protocole réseau restent hors périmètre tant que le contrat n'est pas décidé.
  */
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [identifierError, setIdentifierError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const identifierRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // J1 : pas d'authentification. Le branchement viendra après accord sur le contrat auth.
+
+    const nextIdentifierError = identifier.trim()
+      ? ""
+      : "Veuillez saisir votre identifiant.";
+    const nextPasswordError = password.length > 0
+      ? ""
+      : "Veuillez saisir votre mot de passe.";
+
+    setIdentifierError(nextIdentifierError);
+    setPasswordError(nextPasswordError);
+
+    // Placer le curseur sur le premier champ à corriger, pour la navigation au clavier.
+    if (nextIdentifierError) {
+      identifierRef.current?.focus();
+      return;
+    }
+    if (nextPasswordError) {
+      passwordRef.current?.focus();
+      return;
+    }
+
+    // J2 : les champs sont valides, mais aucun contrat d'authentification n'existe encore.
   }
 
   return (
@@ -39,24 +62,54 @@ export default function LoginPage() {
             <label htmlFor="login-identifier">Identifiant</label>
             <input
               id="login-identifier"
+              ref={identifierRef}
               name="identifier"
               type="text"
               autoComplete="username"
+              required
+              aria-invalid={Boolean(identifierError)}
+              aria-describedby={identifierError ? "login-identifier-error" : undefined}
               value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setIdentifier(value);
+                if (value.trim()) {
+                  setIdentifierError("");
+                }
+              }}
             />
+            {identifierError && (
+              <p className="login__error" id="login-identifier-error" role="alert">
+                {identifierError}
+              </p>
+            )}
           </div>
 
           <div className="login__field">
             <label htmlFor="login-password">Mot de passe</label>
             <input
               id="login-password"
+              ref={passwordRef}
               name="password"
               type="password"
               autoComplete="current-password"
+              required
+              aria-invalid={Boolean(passwordError)}
+              aria-describedby={passwordError ? "login-password-error" : undefined}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setPassword(value);
+                if (value.length > 0) {
+                  setPasswordError("");
+                }
+              }}
             />
+            {passwordError && (
+              <p className="login__error" id="login-password-error" role="alert">
+                {passwordError}
+              </p>
+            )}
           </div>
 
           <button className="login__submit" type="submit">
