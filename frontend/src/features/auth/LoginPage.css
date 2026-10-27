@@ -1,10 +1,10 @@
 /* Styles limités à l'écran de connexion : toutes les classes commencent par .login */
 .login {
-  --login-slate: #24382f;      /* ardoise */
+  --login-slate: #636365;      /* ardoise */
   --login-chalk: #f3f2ec;      /* craie */
   --login-ochre: #b8862b;      /* ocre, accent unique */
   --login-ink: #1c2420;
-  --login-muted: #5d6a63;
+  --login-muted: #6b6880;
   --login-line: #cfd4cf;
 
   min-height: 100vh;
@@ -88,6 +88,16 @@
   outline: 3px solid var(--login-ochre);
   outline-offset: 1px;
   border-color: var(--login-slate);
+}
+
+.login__field input[aria-invalid="true"] {
+  border-color: #a12622;
+}
+
+.login__error {
+  margin: 0;
+  color: #a12622;
+  font-size: 0.875rem;
 }
 
 .login__submit {
