@@ -1,0 +1,138 @@
+/* Styles limités à l'écran de connexion : toutes les classes commencent par .login */
+.login {
+  --login-slate: #24382f;      /* ardoise */
+  --login-chalk: #f3f2ec;      /* craie */
+  --login-ochre: #b8862b;      /* ocre, accent unique */
+  --login-ink: #1c2420;
+  --login-muted: #5d6a63;
+  --login-line: #cfd4cf;
+
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--login-ink);
+  background: #ffffff;
+}
+
+.login__brand {
+  background: var(--login-slate);
+  color: var(--login-chalk);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-right: 6px solid var(--login-ochre);
+}
+
+.login__school {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.login__tagline {
+  margin: 1rem 0 0;
+  max-width: 28ch;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.login__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+}
+
+.login__form {
+  width: 100%;
+  max-width: 22rem;
+}
+
+.login__title {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.login__intro {
+  margin: 0.5rem 0 2rem;
+  color: var(--login-muted);
+  line-height: 1.5;
+}
+
+.login__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.login__field label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.login__field input {
+  font: inherit;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--login-line);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--login-ink);
+}
+
+.login__field input:focus-visible {
+  outline: 3px solid var(--login-ochre);
+  outline-offset: 1px;
+  border-color: var(--login-slate);
+}
+
+.login__submit {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--login-chalk);
+  background: var(--login-slate);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.login__submit:hover {
+  background: #1a2a23;
+}
+
+.login__submit:focus-visible {
+  outline: 3px solid var(--login-ochre);
+  outline-offset: 2px;
+}
+
+.login__demo {
+  margin: 1.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--login-muted);
+  text-align: center;
+}
+
+/* Mobile : le bandeau passe au-dessus du formulaire */
+@media (max-width: 720px) {
+  .login {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .login__brand {
+    padding: 1.75rem 1.5rem;
+    border-right: none;
+    border-bottom: 6px solid var(--login-ochre);
+  }
+
+  .login__tagline {
+    display: none;
+  }
+}
