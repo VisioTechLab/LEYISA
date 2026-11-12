@@ -4,10 +4,10 @@ LEYISA_SCHOOL
 
 ## Leyisa School V1 — Visio Tech
 
-Socle collaboratif pour la démonstration d'une application destinée à un seul établissement scolaire, à réaliser en cinq jours. Aucun code métier ni dépendance applicative n'est installé à ce stade.
+Socle collaboratif pour la démonstration d'une application destinée à un seul établissement scolaire, à réaliser en cinq jours. La branche de la base de données fournit le socle PostgreSQL et Prisma pour le parcours de démonstration.
 
 - Architecture : monolithe modulaire ; frontend prévu en React, Vite et TypeScript.
-- Backend proposé : NestJS, TypeScript, Prisma et PostgreSQL, à valider avec Melvin avant toute installation.
+- Base de données : PostgreSQL et Prisma. L’intégration au backend applicatif et la validation technique restent à coordonner avec Melvin.
 - Intégration : connexion → configuration scolaire → inscription → affectation → évaluation → notes → validation → résultats → bulletin PDF.
 - Chaque bulletin de démonstration doit porter **DÉMONSTRATION - NON OFFICIEL**.
 
@@ -16,7 +16,7 @@ Socle collaboratif pour la démonstration d'une application destinée à un seul
 1. Lire [les responsabilités](docs/equipe.md), [les règles communes](docs/regles-communes.md) et [le workflow Git](docs/workflow-git.md).
 2. Consulter [AGENTS.md](AGENTS.md) et le Skill de votre rôle dans `.agents/skills/`.
 3. Choisir une petite tranche du [parcours de démonstration](docs/parcours-demo.md), vérifier [les contrats](docs/contrats-api.md), puis créer une branche de fonctionnalité.
-4. Faire valider la stack par Melvin avant de créer les configurations applicatives. Aucune commande de lancement applicatif n'est disponible pour le moment.
+4. Suivre le [guide PostgreSQL local](docs/base-de-donnees.md) pour Docker et les données fictives, ou le [guide Neon](docs/connexion-neon.md) pour rejoindre la base d’intégration.
 
 ## Organisation
 

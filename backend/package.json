@@ -1,0 +1,25 @@
+{
+  "name": "leyisa-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "db:validate": "prisma validate",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:status": "prisma migrate status",
+    "db:seed": "prisma db seed",
+    "db:check-connection": "node --env-file-if-exists=../.env scripts/check-db-connection.mjs",
+    "db:verify": "node --env-file-if-exists=../.env scripts/verify-db.mjs"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "7.8.0",
+    "@prisma/client": "7.8.0"
+  },
+  "devDependencies": {
+    "prisma": "7.8.0"
+  }
+}
