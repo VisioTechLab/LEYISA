@@ -1,17 +1,17 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
 import './assignments.css';
 
 type Assignment = { id: string; teacher: string; subject: string; schoolClass: string };
 
-const DEMO_TEACHERS = ['Enseignant fictif A', 'Enseignant fictif B'];
-const DEMO_SUBJECTS = ['Mathématiques', 'Français'];
-const DEMO_CLASS = '6e A';
+const TEACHERS = ['Nathalie Kambale', 'Patrick Mbuyi'];
+const SUBJECTS = ['Mathématiques', 'Français'];
+const SCHOOL_CLASS = '6e A';
 const INITIAL: Assignment[] = [
-  { id: 'demo-a1', teacher: DEMO_TEACHERS[0], subject: DEMO_SUBJECTS[0], schoolClass: DEMO_CLASS },
-  { id: 'demo-a2', teacher: DEMO_TEACHERS[1], subject: DEMO_SUBJECTS[1], schoolClass: DEMO_CLASS },
+  { id: 'a1', teacher: TEACHERS[0], subject: SUBJECTS[0], schoolClass: SCHOOL_CLASS },
+  { id: 'a2', teacher: TEACHERS[1], subject: SUBJECTS[1], schoolClass: SCHOOL_CLASS },
 ];
 
-/** Maquette fonctionnelle isolée : aucune API, aucun utilisateur réel et aucune persistance. */
+/** Les affectations de test sont conservées en mémoire sur cet écran. */
 export function AssignmentsPage() {
   const [assignments, setAssignments] = useState<Assignment[]>(INITIAL);
   const [teacher, setTeacher] = useState('');
@@ -19,48 +19,80 @@ export function AssignmentsPage() {
   const [notice, setNotice] = useState('');
   const usedSubjects = useMemo(() => new Set(assignments.map(a => `${a.schoolClass}|${a.subject}`)), [assignments]);
 
-  function addAssignment(event: React.FormEvent<HTMLFormElement>) {
+  function addAssignment(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setNotice('');
     if (!teacher || !subject) {
       setNotice('Choisissez un enseignant et une matière.');
       return;
     }
-    if (usedSubjects.has(`${DEMO_CLASS}|${subject}`)) {
-      setNotice('Cette matière a déjà un enseignant dans la classe de démonstration.');
+    if (usedSubjects.has(`${SCHOOL_CLASS}|${subject}`)) {
+      setNotice('Cette matière a déjà un enseignant dans cette classe.');
       return;
     }
-    setAssignments(previous => [...previous, { id: `demo-a${previous.length + 1}`, teacher, subject, schoolClass: DEMO_CLASS }]);
-    setNotice('Affectation ajoutée dans la démonstration (non enregistrée en base).');
+    setAssignments(previous => [
+      ...previous,
+      { id: `a${previous.length + 1}`, teacher, subject, schoolClass: SCHOOL_CLASS },
+    ]);
+    setNotice('Affectation ajoutée pour cette session.');
     setTeacher('');
     setSubject('');
   }
 
   return (
-    <main className="leyisa-assignments">
-      <section className="assignments-content">
-        <header className="assignments-topbar"><span>Leyisa School　/　Enseignants et affectations</span><span className="assignments-year">Année 2026–2027</span></header>
-        <div className="assignments-inner">
-          <h1>Enseignants et affectations</h1>
-          <p className="assignments-subtitle">Définir qui enseigne quelle matière dans une classe.</p>
-          <p className="assignments-demo-note">Aperçu de démonstration : les affectations disparaissent au rechargement.</p>
-          <div className="assignments-layout">
-            <section className="assignments-panel"><h2>Affectations de l'année</h2><p>Exemple de classe 6e A</p>
-              <div className="assignments-table-wrap"><table><thead><tr><th>Enseignant</th><th>Matière</th><th>Classe</th></tr></thead><tbody>{assignments.map(a => <tr key={a.id}><td>{a.teacher}</td><td>{a.subject}</td><td>{a.schoolClass}</td></tr>)}</tbody></table></div>
-              <span className="assignments-count">{assignments.length} affectation(s)</span>
-            </section>
-            <section className="assignments-panel"><h2>Nouvelle affectation</h2><p>Associer un enseignant au programme</p>
-              <form onSubmit={addAssignment}>
-                <label htmlFor="assign-teacher">Enseignant</label><select id="assign-teacher" value={teacher} onChange={e => setTeacher(e.target.value)} required><option value="">Sélectionner un enseignant</option>{DEMO_TEACHERS.map(t => <option key={t} value={t}>{t}</option>)}</select>
-                <label htmlFor="assign-class">Classe</label><input id="assign-class" value={DEMO_CLASS} readOnly aria-readonly="true" />
-                <label htmlFor="assign-subject">Matière</label><select id="assign-subject" value={subject} onChange={e => setSubject(e.target.value)} required><option value="">Sélectionner une matière</option>{DEMO_SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}</select>
-                <button type="submit">Enregistrer l'affectation</button>
-                {notice && <p className="assignments-notice" role="status">{notice}</p>}
-              </form>
-            </section>
+    <main className="leyisa-page leyisa-assignments">
+      <header className="leyisa-page-heading">
+        <h1>Enseignants et affectations</h1>
+        <p>Définir qui enseigne quelle matière dans une classe.</p>
+      </header>
+
+      <div className="leyisa-grid">
+        <section className="leyisa-card" aria-labelledby="assignment-list-title">
+          <h2 id="assignment-list-title">Affectations de l’année</h2>
+          <p className="leyisa-description">Classe de 6e A</p>
+          <div className="leyisa-table-wrap">
+            <table>
+              <thead>
+                <tr><th scope="col">Enseignant</th><th scope="col">Matière</th><th scope="col">Classe</th></tr>
+              </thead>
+              <tbody>
+                {assignments.map(a => (
+                  <tr key={a.id}><td>{a.teacher}</td><td>{a.subject}</td><td>{a.schoolClass}</td></tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
-      </section>
+          <span className="leyisa-chip assignments-count">{assignments.length} affectations</span>
+        </section>
+
+        <section className="leyisa-card" aria-labelledby="new-assignment-title">
+          <h2 id="new-assignment-title">Nouvelle affectation</h2>
+          <p className="leyisa-description">Associer un enseignant au programme</p>
+          <form className="leyisa-form assignments-form" onSubmit={addAssignment}>
+            <div className="leyisa-field">
+              <label htmlFor="assign-teacher">Enseignant</label>
+              <select id="assign-teacher" value={teacher} onChange={event => setTeacher(event.target.value)} required>
+                <option value="">Sélectionner un enseignant</option>
+                {TEACHERS.map(name => <option key={name}>{name}</option>)}
+              </select>
+            </div>
+            <div className="leyisa-field">
+              <label htmlFor="assign-class">Classe</label>
+              <input id="assign-class" value={SCHOOL_CLASS} readOnly />
+            </div>
+            <div className="leyisa-field">
+              <label htmlFor="assign-subject">Matière</label>
+              <select id="assign-subject" value={subject} onChange={event => setSubject(event.target.value)} required>
+                <option value="">Sélectionner une matière</option>
+                {SUBJECTS.map(name => <option key={name}>{name}</option>)}
+              </select>
+            </div>
+            <button className="leyisa-button" type="submit">Enregistrer l’affectation</button>
+            {notice && <p className="leyisa-description" role="status">{notice}</p>}
+            <p className="leyisa-description">Données fictives. Les modifications sont réinitialisées en quittant l’écran.</p>
+          </form>
+        </section>
+      </div>
     </main>
   );
 }

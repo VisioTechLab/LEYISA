@@ -1,4 +1,5 @@
 import { useRef, useState, type FormEvent } from "react";
+import { SchoolLogo } from "../../SchoolLogo";
 import "./LoginPage.css";
 
 /**
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [identifierError, setIdentifierError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [status, setStatus] = useState("");
   const identifierRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -26,6 +28,7 @@ export default function LoginPage() {
       ? ""
       : "Veuillez saisir votre mot de passe.";
 
+    setStatus("");
     setIdentifierError(nextIdentifierError);
     setPasswordError(nextPasswordError);
 
@@ -39,24 +42,26 @@ export default function LoginPage() {
       return;
     }
 
-    // J2 : les champs sont valides, mais aucun contrat d'authentification n'existe encore.
+    setStatus("La connexion au compte est en cours d’intégration. Vous pouvez consulter l’espace de travail ci-dessous.");
   }
 
   return (
     <main className="login">
-      <section className="login__brand" aria-hidden="true">
-        <p className="login__school">Leyisa School</p>
-        <p className="login__tagline">
-          Inscriptions, notes et bulletins de l’établissement, au même endroit.
-        </p>
+      <section className="login__brand" aria-label="Présentation de Leyisa School">
+        <div className="login__logo"><SchoolLogo label="Leyisa School" /></div>
+        <div className="login__presentation">
+          <p className="login__headline">Gérer la scolarité,<br />suivre les résultats.</p>
+          <p className="login__tagline">
+            De l’inscription au bulletin, un parcours commun pour l’administration et les enseignants.
+          </p>
+        </div>
+        <p className="login__signature">Visio Tech</p>
       </section>
 
       <section className="login__panel">
         <form className="login__form" onSubmit={handleSubmit} noValidate>
           <h1 className="login__title">Connexion</h1>
-          <p className="login__intro">
-            Utilisez l’identifiant fourni par l’administration de l’école.
-          </p>
+          <p className="login__intro">Accédez à votre espace de travail.</p>
 
           <div className="login__field">
             <label htmlFor="login-identifier">Identifiant</label>
@@ -66,11 +71,13 @@ export default function LoginPage() {
               name="identifier"
               type="text"
               autoComplete="username"
+              placeholder="Saisir l’identifiant"
               required
               aria-invalid={Boolean(identifierError)}
               aria-describedby={identifierError ? "login-identifier-error" : undefined}
               value={identifier}
               onChange={(e) => {
+                setStatus("");
                 const value = e.target.value;
                 setIdentifier(value);
                 if (value.trim()) {
@@ -98,6 +105,7 @@ export default function LoginPage() {
               aria-describedby={passwordError ? "login-password-error" : undefined}
               value={password}
               onChange={(e) => {
+                setStatus("");
                 const value = e.target.value;
                 setPassword(value);
                 if (value.length > 0) {
@@ -112,11 +120,12 @@ export default function LoginPage() {
             )}
           </div>
 
-          <button className="login__submit" type="submit">
+          <button className="leyisa-button login__submit" type="submit">
             Se connecter
           </button>
 
-          <p className="login__demo">Version de démonstration, non officielle</p>
+          {status && <p className="login__status" role="status">{status}</p>}
+          <a className="login__preview" href="#scolarite">Consulter l’espace de travail</a>
         </form>
       </section>
     </main>
