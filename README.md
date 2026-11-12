@@ -16,7 +16,7 @@ Socle collaboratif pour la démonstration d'une application destinée à un seul
 1. Lire [les responsabilités](docs/equipe.md), [les règles communes](docs/regles-communes.md) et [le workflow Git](docs/workflow-git.md).
 2. Consulter [AGENTS.md](AGENTS.md) et le Skill de votre rôle dans `.agents/skills/`.
 3. Choisir une petite tranche du [parcours de démonstration](docs/parcours-demo.md), vérifier [les contrats](docs/contrats-api.md), puis créer une branche de fonctionnalité.
-4. Suivre le [guide PostgreSQL local](docs/base-de-donnees.md) pour Docker et les données fictives, ou le [guide Neon](docs/connexion-neon.md) pour rejoindre la base d’intégration.
+4. Suivre le [guide du backend](docs/backend.md) pour démarrer NestJS avec PostgreSQL local ou Neon. Le [guide Neon](docs/connexion-neon.md) explique comment préparer les accès individuels.
 
 ## Organisation
 
