@@ -1,0 +1,317 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserKind {
+  STAFF
+  STUDENT
+}
+
+enum Role {
+  ADM
+  SEC
+  ENS
+  DIR
+  ELEVE
+}
+
+enum EvaluationState {
+  DRAFT
+  SUBMITTED
+  REJECTED
+  VALIDATED
+}
+
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind         UserKind @default(STAFF)
+  firstName    String
+  lastName     String
+  login        String?  @unique
+  passwordHash String?
+  loginEnabled Boolean  @default(false)
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
+
+  roles            UserRole[]
+  sessions         Session[]
+  student          Student?
+  teacher          Teacher?
+  submitted        Submission[]  @relation("SubmittedBy")
+  decided          Submission[]  @relation("DecidedBy")
+  closedPeriods    ClassPeriod[] @relation("ClosedBy")
+  publishedPeriods ClassPeriod[] @relation("PublishedBy")
+  auditEntries     AuditEntry[]
+
+  @@unique([id, kind])
+  @@index([lastName, firstName])
+}
+
+model UserRole {
+  userId   String   @db.Uuid
+  userKind UserKind @default(STAFF)
+  role     Role
+  user     User     @relation(fields: [userId, userKind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict)
+
+  @@id([userId, role])
+}
+
+model Session {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @db.Uuid
+  userKind  UserKind  @default(STAFF)
+  tokenHash String    @unique @db.VarChar(64)
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  expiresAt DateTime  @db.Timestamptz(3)
+  revokedAt DateTime? @db.Timestamptz(3)
+  user      User      @relation(fields: [userId, userKind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+}
+
+model SchoolYear {
+  id       String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code     String        @unique
+  startsOn DateTime      @db.Date
+  endsOn   DateTime      @db.Date
+  periods  Period[]
+  classes  SchoolClass[]
+}
+
+model Period {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolYearId String        @db.Uuid
+  code         String
+  label        String
+  position     Int
+  startsOn     DateTime      @db.Date
+  endsOn       DateTime      @db.Date
+  schoolYear   SchoolYear    @relation(fields: [schoolYearId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  classPeriods ClassPeriod[]
+
+  @@unique([schoolYearId, code])
+  @@unique([schoolYearId, position])
+  @@unique([id, schoolYearId])
+}
+
+model SchoolClass {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolYearId String         @db.Uuid
+  code         String
+  label        String
+  schoolYear   SchoolYear     @relation(fields: [schoolYearId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  subjects     ClassSubject[]
+  enrollments  Enrollment[]
+  classPeriods ClassPeriod[]
+
+  @@unique([schoolYearId, code])
+  @@unique([id, schoolYearId])
+}
+
+model Subject {
+  id      String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code    String         @unique
+  label   String
+  classes ClassSubject[]
+}
+
+model ClassSubject {
+  id          String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  classId     String              @db.Uuid
+  subjectId   String              @db.Uuid
+  schoolClass SchoolClass         @relation(fields: [classId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  subject     Subject             @relation(fields: [subjectId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  assignments TeacherAssignment[]
+
+  @@unique([classId, subjectId])
+  @@unique([id, classId])
+  @@index([subjectId])
+}
+
+model Student {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String       @unique @db.Uuid
+  userKind    UserKind     @default(STUDENT)
+  matricule   String       @unique
+  birthDate   DateTime?    @db.Date
+  user        User         @relation(fields: [userId, userKind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict)
+  enrollments Enrollment[]
+
+  @@unique([userId, userKind])
+}
+
+model Enrollment {
+  id           String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  studentId    String           @db.Uuid
+  classId      String           @db.Uuid
+  schoolYearId String           @db.Uuid
+  enrolledAt   DateTime         @default(now()) @db.Timestamptz(3)
+  student      Student          @relation(fields: [studentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  schoolClass  SchoolClass      @relation(fields: [classId, schoolYearId], references: [id, schoolYearId], onDelete: Restrict, onUpdate: Restrict)
+  grades       Grade[]
+  results      ResultSnapshot[]
+
+  @@unique([studentId, schoolYearId])
+  @@unique([id, classId])
+  @@index([classId])
+}
+
+model Teacher {
+  id          String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String              @unique @db.Uuid
+  userKind    UserKind            @default(STAFF)
+  staffNumber String?             @unique
+  user        User                @relation(fields: [userId, userKind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict)
+  assignments TeacherAssignment[]
+
+  @@unique([userId, userKind])
+}
+
+model TeacherAssignment {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  teacherId      String       @db.Uuid
+  classSubjectId String       @db.Uuid
+  classId        String       @db.Uuid
+  startsOn       DateTime     @db.Date
+  /// Fin exclusive. Null signifie sans date de fin fixée.
+  endsOn         DateTime?    @db.Date
+  teacher        Teacher      @relation(fields: [teacherId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  classSubject   ClassSubject @relation(fields: [classSubjectId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
+  evaluations    Evaluation[]
+
+  @@unique([id, classId])
+  @@index([teacherId, startsOn])
+}
+
+model Evaluation {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  assignmentId  String            @db.Uuid
+  classPeriodId String            @db.Uuid
+  classId       String            @db.Uuid
+  title         String
+  heldOn        DateTime          @db.Date
+  maxScore      Decimal           @db.Decimal(10, 4)
+  state         EvaluationState   @default(DRAFT)
+  version       Int               @default(1)
+  createdAt     DateTime          @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime          @updatedAt @db.Timestamptz(3)
+  assignment    TeacherAssignment @relation(fields: [assignmentId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
+  classPeriod   ClassPeriod       @relation(fields: [classPeriodId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
+  grades        Grade[]
+  submissions   Submission[]
+
+  @@unique([id, classId])
+  @@index([assignmentId, classPeriodId])
+  @@index([classPeriodId, state])
+}
+
+model Grade {
+  id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  evaluationId String     @db.Uuid
+  enrollmentId String     @db.Uuid
+  classId      String     @db.Uuid
+  score        Decimal?   @db.Decimal(10, 4)
+  updatedAt    DateTime   @updatedAt @db.Timestamptz(3)
+  evaluation   Evaluation @relation(fields: [evaluationId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
+  enrollment   Enrollment @relation(fields: [enrollmentId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([evaluationId, enrollmentId])
+  @@index([enrollmentId])
+}
+
+model Submission {
+  id                String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  evaluationId      String           @db.Uuid
+  attempt           Int
+  evaluationVersion Int
+  gradeSnapshot     Json
+  status            SubmissionStatus @default(PENDING)
+  submittedById     String           @db.Uuid
+  submittedAt       DateTime         @default(now()) @db.Timestamptz(3)
+  decidedById       String?          @db.Uuid
+  decidedAt         DateTime?        @db.Timestamptz(3)
+  reason            String?
+  evaluation        Evaluation       @relation(fields: [evaluationId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  submittedBy       User             @relation("SubmittedBy", fields: [submittedById], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  decidedBy         User?            @relation("DecidedBy", fields: [decidedById], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([evaluationId, attempt])
+  @@index([status, submittedAt])
+}
+
+model ClassPeriod {
+  id            String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  classId       String           @db.Uuid
+  periodId      String           @db.Uuid
+  schoolYearId  String           @db.Uuid
+  closedAt      DateTime?        @db.Timestamptz(3)
+  closedById    String?          @db.Uuid
+  publishedAt   DateTime?        @db.Timestamptz(3)
+  publishedById String?          @db.Uuid
+  schoolClass   SchoolClass      @relation(fields: [classId, schoolYearId], references: [id, schoolYearId], onDelete: Restrict, onUpdate: Restrict)
+  period        Period           @relation(fields: [periodId, schoolYearId], references: [id, schoolYearId], onDelete: Restrict, onUpdate: Restrict)
+  closedBy      User?            @relation("ClosedBy", fields: [closedById], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  publishedBy   User?            @relation("PublishedBy", fields: [publishedById], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  evaluations   Evaluation[]
+  results       ResultSnapshot[]
+
+  @@unique([classId, periodId])
+  @@unique([id, classId])
+  @@index([periodId, closedAt])
+}
+
+model ResultSnapshot {
+  id                 String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  classPeriodId      String       @db.Uuid
+  enrollmentId       String       @db.Uuid
+  classId            String       @db.Uuid
+  identitySnapshot   Json
+  subjectResults     Json
+  sourceVersions     Json
+  overallMean        Decimal      @db.Decimal(12, 8)
+  calculationProfile String
+  classPeriod        ClassPeriod  @relation(fields: [classPeriodId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
+  enrollment         Enrollment   @relation(fields: [enrollmentId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
+  reportCards        ReportCard[]
+
+  @@unique([classPeriodId, enrollmentId])
+  @@index([enrollmentId])
+}
+
+model ReportCard {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  resultSnapshotId String         @db.Uuid
+  templateVersion  String
+  generatedAt      DateTime       @default(now()) @db.Timestamptz(3)
+  notice           String         @default("DÉMONSTRATION - NON OFFICIEL")
+  resultSnapshot   ResultSnapshot @relation(fields: [resultSnapshotId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([resultSnapshotId, templateVersion])
+}
+
+model AuditEntry {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorId    String?  @db.Uuid
+  action     String
+  targetType String
+  targetId   String   @db.Uuid
+  occurredAt DateTime @default(now()) @db.Timestamptz(3)
+  actor      User?    @relation(fields: [actorId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([targetType, targetId, occurredAt])
+  @@index([actorId, occurredAt])
+}
