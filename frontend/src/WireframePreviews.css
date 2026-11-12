@@ -1,0 +1,58 @@
+.preview-heading, .preview-context {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+}
+
+.preview-heading .leyisa-chip { margin-top: 3px; }
+.preview-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-bottom: 28px; }
+.preview-stat-grid .leyisa-card > p:last-child { margin: 20px 0 12px; font-size: 22px; font-weight: 650; }
+.preview-school-grid .leyisa-card { min-height: 370px; }
+.preview-context { margin-bottom: 23px; }
+.preview-context > div { flex: 1 1 250px; }
+.preview-context-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 12px; }
+.preview-form .leyisa-button { margin-top: 13px; }
+
+.preview-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; margin: 16px 0; }
+.preview-actions .leyisa-button { flex: 0 1 245px; }
+.preview-validation-grid { grid-template-columns: minmax(0, .76fr) minmax(0, 1fr); }
+.preview-submissions { display: grid; gap: 14px; margin-top: 36px; }
+
+.preview-submission {
+  padding: 14px 16px;
+  border: 1px solid var(--leyisa-line);
+  border-radius: 8px;
+  background: var(--leyisa-surface);
+  color: var(--leyisa-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.preview-submission[aria-pressed="true"], .preview-submission:hover { background: var(--leyisa-tint); }
+.preview-submission small { display: block; margin-top: 6px; color: var(--leyisa-muted); }
+.preview-results-grid { grid-template-columns: minmax(0, 2.35fr) minmax(0, 1fr); }
+.preview-bulletins-grid { grid-template-columns: minmax(0, .625fr) minmax(0, 1fr); }
+
+.preview-bulletin {
+  width: min(100%, 412px);
+  margin: 24px auto 0;
+  padding: clamp(14px, 2.4vw, 34px);
+  border: 1px solid var(--leyisa-line);
+}
+
+.preview-bulletin-brand { width: 110px; }
+.preview-bulletin-mark { padding-bottom: 16px; border-bottom: 1px solid var(--leyisa-line); color: var(--leyisa-muted); font-weight: 700; }
+.preview-bulletin .leyisa-table-wrap { margin: 16px 0 20px; }
+.preview-bulletin td { height: auto; padding-block: 12px; }
+
+@media (max-width: 640px) {
+  .preview-stat-grid { gap: 8px; }
+  .preview-stat-grid .leyisa-card { padding-inline: 9px; }
+  .preview-stat-grid h2 { font-size: 15px; }
+  .preview-stat-grid .leyisa-card > p:last-child { font-size: 17px; }
+  .preview-school-grid .leyisa-card { min-height: 0; }
+  .preview-validation-grid, .preview-results-grid, .preview-bulletins-grid { grid-template-columns: minmax(0, 1fr); }
+  .preview-actions .leyisa-button { flex: 1 1 140px; }
+}

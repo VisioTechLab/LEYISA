@@ -13,6 +13,8 @@ Socle collaboratif pour la démonstration d'une application destinée à un seul
 
 ## Commencer
 
+Le [guide du socle commun](docs/integration-v1.md#contributions-reprises-dans-le-socle) indique où retrouver les contributions de l’équipe et leurs commits d’origine.
+
 1. Lire [les responsabilités](docs/equipe.md), [les règles communes](docs/regles-communes.md) et [le workflow Git](docs/workflow-git.md).
 2. Consulter [AGENTS.md](AGENTS.md) et le Skill de votre rôle dans `.agents/skills/`.
 3. Choisir une petite tranche du [parcours de démonstration](docs/parcours-demo.md), vérifier [les contrats](docs/contrats-api.md), puis créer une branche de fonctionnalité.

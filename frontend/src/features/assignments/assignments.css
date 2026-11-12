@@ -1,0 +1,6 @@
+.assignments-count { margin-top: 48px; }
+.assignments-form button { margin-top: 24px; }
+
+@media (min-width: 641px) {
+  .leyisa-assignments .leyisa-card { min-height: 525px; }
+}

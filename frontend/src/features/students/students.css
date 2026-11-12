@@ -1,0 +1,30 @@
+.search-form { gap: 5px; }
+.search-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(100px, 29%); gap: clamp(10px, 3vw, 52px); }
+.student-note { margin-top: 15px; }
+.students-app .leyisa-table-wrap td:first-child { white-space: nowrap; }
+.student-record summary { color: var(--leyisa-ink); cursor: pointer; }
+.student-record dl { margin: 8px 0 0; font-size: 12px; }
+.student-record dl div { display: flex; flex-wrap: wrap; gap: 3px 8px; }
+.student-record dd { margin: 0; }
+
+.student-registration-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; }
+.student-registration-form > :not(label) { grid-column: 1 / -1; }
+.student-registration-form button { margin-top: 10px; }
+.student-registration-form input, .student-registration-form select { font-size: 14px; }
+.students-app .required, .students-app .feedback-error { color: #a12622; }
+.students-app .feedback-success { color: #226647; }
+.students-app .form-feedback { margin: 0; }
+.students-app .state-message { padding: 25px 8px; color: var(--leyisa-muted); text-align: center; }
+.students-app .state-error { color: #a12622; }
+
+@media (min-width: 641px) {
+  .students-app .leyisa-card { min-height: 554px; }
+}
+
+@media (min-width: 851px) and (max-width: 1050px), (max-width: 380px) {
+  .student-registration-form { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 380px) {
+  .search-controls { grid-template-columns: minmax(0, 1fr); }
+}
