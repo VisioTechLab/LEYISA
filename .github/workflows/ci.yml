@@ -1,0 +1,39 @@
+name: Vérification du socle
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, chore/bootstrap-leyisa]
+permissions:
+  contents: read
+jobs:
+  socle:
+    name: Contrôle du socle
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Lire le dépôt
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Vérifier les changements Git
+        run: git show --format= --check HEAD
+      - name: Vérifier les espaces en fin de ligne
+        shell: bash
+        run: |
+          python3 - <<'PYCODE'
+          import pathlib
+          import subprocess
+          paths = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          errors = []
+          for name in filter(None, paths):
+              path = pathlib.Path(name)
+              if path.suffix not in {'.md', '.yml', '.yaml'} and path.name not in {'.gitignore', '.env.example', 'CODEOWNERS'}:
+                  continue
+              for number, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
+                  if line.endswith((' ', '\t')):
+                      errors.append(f'{name}:{number}: espace final')
+          print('\n'.join(errors) if errors else 'Socle : espaces vérifiés ; aucun test applicatif exécuté.')
+          raise SystemExit(bool(errors))
+          PYCODE

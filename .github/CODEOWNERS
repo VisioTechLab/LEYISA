@@ -1,0 +1,22 @@
+# Inactif : remplacer les identifiants EXEMPLE par des comptes vérifiés.
+# Ces lignes commentées ne déclenchent aucune revue ni protection.
+# /frontend/src/features/auth/ @EXEMPLE-SIDONIE
+# /backend/src/modules/auth/ @EXEMPLE-SIDONIE
+# /frontend/src/features/students/ @EXEMPLE-FRANCK
+# /backend/src/modules/students/ @EXEMPLE-FRANCK
+# /frontend/src/features/school/ @EXEMPLE-JONATHAN
+# /backend/src/modules/school/ @EXEMPLE-JONATHAN
+# /frontend/src/features/bulletins/ @EXEMPLE-JONATHAN
+# /backend/src/modules/bulletins/ @EXEMPLE-JONATHAN
+# /frontend/src/features/assignments/ @EXEMPLE-KEVIN
+# /backend/src/modules/assignments/ @EXEMPLE-KEVIN
+# /frontend/src/features/evaluations/ @EXEMPLE-JOEL
+# /backend/src/modules/evaluations/ @EXEMPLE-JOEL
+# /frontend/src/features/results/ @EXEMPLE-MELVIN
+# /backend/src/modules/results/ @EXEMPLE-MELVIN
+# /frontend/src/shared/ @EXEMPLE-MELVIN @EXEMPLE-KEVIN
+# /backend/src/common/ @EXEMPLE-MELVIN @EXEMPLE-KEVIN
+# /.github/ @EXEMPLE-KEVIN @EXEMPLE-MELVIN
+# /docs/ @EXEMPLE-KEVIN @EXEMPLE-MELVIN
+# /AGENTS.md @EXEMPLE-MELVIN
+# Ajouter les configurations racine et migrations après validation de la stack.
