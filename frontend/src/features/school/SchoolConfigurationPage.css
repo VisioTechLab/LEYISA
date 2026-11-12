@@ -1,0 +1,479 @@
+.school-config {
+  --school-ink: #202b34;
+  --school-muted: #687b89;
+  --school-line: #d7e0e5;
+  --school-soft: #edf2f5;
+  --school-accent: #344f62;
+  display: grid;
+  grid-template-columns: 246px minmax(0, 1fr);
+  min-height: 100vh;
+  color: var(--school-ink);
+  background: #f4f6f7;
+  font-family: "Segoe UI Variable", "Segoe UI", sans-serif;
+}
+
+.school-config * {
+  box-sizing: border-box;
+}
+
+.school-config__sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 26px 24px 22px;
+  background: #fff;
+  border-right: 1px solid var(--school-line);
+}
+
+.school-config__brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 27px;
+  border-bottom: 1px solid var(--school-line);
+}
+
+.school-config__brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--school-accent);
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.school-config__brand strong,
+.school-config__brand small {
+  display: block;
+}
+
+.school-config__brand strong {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.school-config__brand small {
+  margin-top: 3px;
+  color: var(--school-muted);
+  font-size: 12px;
+}
+
+.school-config__nav {
+  margin-top: 27px;
+}
+
+.school-config__nav-label {
+  margin: 0 0 14px;
+  color: var(--school-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.school-config__nav ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.school-config__nav li span {
+  display: block;
+  padding: 13px 15px;
+  border-radius: 6px;
+  color: var(--school-muted);
+  font-size: 14px;
+}
+
+.school-config__nav li span.is-active {
+  color: var(--school-accent);
+  background: var(--school-soft);
+  font-weight: 650;
+}
+
+.school-config__sidebar-note {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--school-line);
+  color: var(--school-muted);
+  font-size: 11px;
+}
+
+.school-config__sidebar-note strong {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.school-config__content {
+  min-width: 0;
+}
+
+.school-config__topbar {
+  display: flex;
+  min-height: 70px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 40px;
+  background: #fff;
+}
+
+.school-config__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+}
+
+.school-config__breadcrumb span:nth-child(2) {
+  color: #97a5ae;
+}
+
+.school-config__year-chip,
+.school-config__role {
+  padding: 8px 13px;
+  border-radius: 6px;
+  color: var(--school-accent);
+  background: var(--school-soft);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.school-config__year-chip {
+  min-width: 180px;
+}
+
+.school-config__main {
+  width: min(100%, 1390px);
+  margin: 0 auto;
+  padding: 42px 40px 56px;
+}
+
+.school-config__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 46px;
+}
+
+.school-config__heading h1 {
+  margin: 0;
+  font-size: 29px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.school-config__heading p,
+.school-config__panel-heading p,
+.school-config__summary-card p {
+  color: var(--school-muted);
+}
+
+.school-config__heading p {
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+.school-config__role {
+  min-width: 214px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.school-config__summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+  margin-bottom: 29px;
+}
+
+.school-config__summary-card,
+.school-config__panel {
+  border: 1px solid var(--school-line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.school-config__summary-card {
+  min-height: 158px;
+  padding: 18px 21px;
+}
+
+.school-config__summary-card h2,
+.school-config__panel-heading h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.school-config__summary-card p {
+  margin: 8px 0 27px;
+  font-size: 12px;
+}
+
+.school-config__summary-card strong {
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.school-config__workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(270px, 0.95fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.school-config__panel {
+  min-width: 0;
+  min-height: 382px;
+  padding: 18px 21px;
+}
+
+.school-config__panel-heading {
+  margin-bottom: 34px;
+}
+
+.school-config__panel-heading p {
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+
+.school-config__table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--school-line);
+  border-radius: 7px;
+}
+
+.school-config__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.school-config__table th,
+.school-config__table td {
+  padding: 17px;
+  font-size: 13px;
+}
+
+.school-config__table th {
+  color: var(--school-accent);
+  background: var(--school-soft);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.school-config__table td:nth-child(2),
+.school-config__table td:nth-child(3) {
+  color: var(--school-muted);
+}
+
+.school-config__table tbody tr + tr td {
+  border-top: 1px solid var(--school-line);
+}
+
+.school-config__table tbody tr:nth-child(even) {
+  background: #f8fafb;
+}
+
+.school-config__add-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.school-config__add-panel .school-config__panel-heading {
+  margin-bottom: 44px;
+}
+
+.school-config__add-panel label {
+  margin-bottom: 8px;
+  color: var(--school-muted);
+  font-size: 12px;
+}
+
+.school-config__add-panel select,
+.school-config__add-panel button {
+  min-height: 46px;
+  width: 100%;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.school-config__add-panel select {
+  padding: 0 13px;
+  border: 1px solid var(--school-line);
+  color: var(--school-muted);
+  background: #f8fafb;
+}
+
+.school-config__add-panel button {
+  margin-top: 44px;
+  border: 0;
+  color: #fff;
+  background: var(--school-accent);
+  font-size: 13px;
+  font-weight: 650;
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+.school-config__notice {
+  margin: 25px 0 0;
+  color: var(--school-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1080px) {
+  .school-config {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .school-config__main {
+    padding-right: 26px;
+    padding-left: 26px;
+  }
+
+  .school-config__topbar {
+    padding-right: 26px;
+    padding-left: 26px;
+  }
+
+  .school-config__summary {
+    gap: 14px;
+  }
+
+  .school-config__workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .school-config__panel {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .school-config {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .school-config__sidebar {
+    min-height: 0;
+    padding: 16px 18px 10px;
+    border-right: 0;
+    border-bottom: 1px solid var(--school-line);
+  }
+
+  .school-config__brand {
+    padding-bottom: 14px;
+  }
+
+  .school-config__nav {
+    margin-top: 14px;
+  }
+
+  .school-config__nav-label,
+  .school-config__sidebar-note {
+    display: none;
+  }
+
+  .school-config__nav ul {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .school-config__nav li {
+    flex: 0 0 auto;
+  }
+
+  .school-config__nav li span {
+    padding: 9px 11px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .school-config__topbar {
+    min-height: 60px;
+    padding: 10px 18px;
+  }
+
+  .school-config__breadcrumb {
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .school-config__year-chip {
+    min-width: 0;
+    font-size: 10px;
+  }
+
+  .school-config__main {
+    padding: 28px 18px 36px;
+  }
+
+  .school-config__heading {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+
+  .school-config__heading h1 {
+    font-size: 25px;
+  }
+
+  .school-config__heading p {
+    line-height: 1.5;
+  }
+
+  .school-config__role {
+    min-width: 0;
+  }
+
+  .school-config__summary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .school-config__summary-card {
+    min-height: 0;
+    padding: 16px 18px;
+  }
+
+  .school-config__summary-card p {
+    margin-bottom: 16px;
+  }
+
+  .school-config__panel {
+    padding: 17px 15px;
+  }
+
+  .school-config__panel-heading,
+  .school-config__add-panel .school-config__panel-heading {
+    margin-bottom: 22px;
+  }
+
+  .school-config__table {
+    min-width: 470px;
+  }
+
+  .school-config__table th,
+  .school-config__table td {
+    padding: 14px 12px;
+  }
+
+  .school-config__add-panel button {
+    margin-top: 24px;
+  }
+}
