@@ -4,8 +4,8 @@ Références de démonstration pour Jonathan. Leur ajout ne valide pas les propo
 
 ## Sources à utiliser
 
-- [Configuration scolaire](02_Configuration_scolaire.png) : vue principale du module school.
-- [Bulletins scolaires](08_Bulletins_scolaires.png) : sélection, aperçu et téléchargement.
+- [Configuration scolaire](../wireframes/02_Configuration_scolaire.png) : vue principale du module school.
+- [Bulletins scolaires](../wireframes/08_Bulletins_scolaires.png) : sélection, aperçu et téléchargement.
 - [Ready-to-Code V2](<LEYISA_Ready_to_Code_V2 (1).pdf>) : exigences et critères de vérification.
 - [UML V4](<Leyisa_School_V1_UML_V4 (1).pdf>) : modèle métier et relations.
 
