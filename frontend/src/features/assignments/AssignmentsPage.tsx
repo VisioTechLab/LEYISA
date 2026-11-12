@@ -38,12 +38,6 @@ export function AssignmentsPage() {
 
   return (
     <main className="leyisa-assignments">
-      <aside className="assignments-sidebar" aria-label="Navigation de la maquette">
-        <div className="assignments-brand"><span className="assignments-logo">L</span><span><strong>LEYISA SCHOOL</strong><small>Espace de gestion</small></span></div>
-        <p className="assignments-menu-title">MENU PRINCIPAL</p>
-        <nav aria-label="Rubriques"><span>Accueil</span><span>Scolarité</span><span>Élèves / inscriptions</span><span className="is-active">Enseignants</span><span>Évaluations / notes</span><span>Validation</span><span>Résultats</span><span>Bulletins</span></nav>
-        <div className="assignments-sidebar-foot">VISIO TECH — V1 DEMO<br/><small>Données fictives uniquement</small></div>
-      </aside>
       <section className="assignments-content">
         <header className="assignments-topbar"><span>Leyisa School　/　Enseignants et affectations</span><span className="assignments-year">Année 2026–2027</span></header>
         <div className="assignments-inner">

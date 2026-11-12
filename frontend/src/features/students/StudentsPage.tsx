@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import type { NewStudent, Student, StudentsDataSource } from "./types";
 import { loadStudentsDataSource } from "./studentsDataSource";
 import "./students.css";
@@ -124,32 +124,6 @@ export function StudentsPage() {
 
   return (
     <main className="students-app">
-      <aside className="sidebar">
-        <a className="brand" href="#" aria-label="LEYISA SCHOOL">
-          <span className="brand-mark">L</span>
-          <span className="brand-copy">
-            <strong>LEYISA SCHOOL</strong>
-            <small>Espace de gestion</small>
-          </span>
-        </a>
-        <div className="sidebar-rule" />
-        <p className="sidebar-label">MENU PRINCIPAL</p>
-        <ul className="side-menu" aria-label="Menu principal">
-          <li>Accueil</li>
-          <li>Scolarité</li>
-          <li className="active" aria-current="page">Élèves / inscriptions</li>
-          <li>Enseignants</li>
-          <li>Évaluations / notes</li>
-          <li>Validation</li>
-          <li>Résultats</li>
-          <li>Bulletins</li>
-        </ul>
-        <div className="sidebar-foot">
-          <span>VISIO TECH — V1 DEMO</span>
-          <small>{dataSource ? "Données fictives uniquement" : "Mode démonstration désactivé"}</small>
-        </div>
-      </aside>
-
       <div className="app-main">
         <header className="app-header">
           <div className="breadcrumbs"><span>Leyisa School</span><span>/</span><strong>Élèves et inscriptions</strong></div>
