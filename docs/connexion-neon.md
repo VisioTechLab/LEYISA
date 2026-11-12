@@ -3,34 +3,34 @@
 PostgreSQL et les migrations Prisma restent communs à l’équipe. Docker sert aux essais
 individuels ; Neon sert à partager les mêmes données fictives depuis plusieurs ordinateurs.
 Kevin administre le projet, Melvin valide les migrations, chaque développeur utilise un
-compte PostgreSQL individuel. Ce guide n’implique pas qu’un projet Neon existe déjà.
+compte PostgreSQL individuel. Kevin prépare les accès sur le projet Neon existant.
 
-## Kevin : créer la base et appliquer les migrations
+## Kevin : préparer la base et les accès
 
-1. Dans [Neon](https://console.neon.tech), créer un projet Visio Tech et une base PostgreSQL 18
-   dédiée à Leyisa (par exemple `leyisa_integration`) sur la branche d’intégration retenue.
-   Utiliser uniquement des données fictives. Conserver le compte propriétaire dans le coffre
-   d’équipe, accessible aux responsables autorisés.
+1. Dans [Neon](https://console.neon.tech), sélectionner la base commune et la branche
+   d’intégration. Pour la V1, c’est la base `neondb` sur la branche Neon nommée `production`,
+   à Francfort. Elle contient déjà les données fictives. Conserver le compte propriétaire
+   dans le coffre d’équipe, accessible aux responsables autorisés.
 2. Une fois la cible et la migration approuvées, ouvrir **Connect** pour cette base et ce
    propriétaire. Désactiver **Connection pooling** pour copier l’URL directe TLS. Renseigner
    `LEYISA_DB_MODE=shared` et `DIRECT_DATABASE_URL` dans le `.env` ignoré à la racine, ou les
    injecter via le coffre dans le terminal de migration. La première migration installe
    [`btree_gist`](https://neon.com/docs/extensions/btree_gist) ; le compte propriétaire doit
    pouvoir créer l’extension.
-3. Depuis la racine du dépôt, appliquer les migrations versionnées :
+3. Vérifier l’état des migrations depuis la racine du dépôt.
 
    ```sh
    cd backend
    npm ci
    npm run db:validate
-   npm run db:migrate
    npm run db:status
    cd ..
    ```
 
    Prisma 7 lit l’URL CLI dans `prisma.config.ts`. En mode `shared`, cette URL est
    exclusivement `DIRECT_DATABASE_URL` ; l’URL des modules ne sert pas de secours.
-   `db:migrate` lance `prisma migrate deploy`. Réserver la création de migrations et
+   Les deux migrations initiales de la V1 sont déjà appliquées. Pour appliquer une nouvelle
+   migration validée, utiliser `npm run db:migrate` depuis `backend`. Réserver la création de migrations et
    les tests avec écritures à une base locale. Les changements de structure passent en PR ;
    ne pas modifier les tables dans la console Neon ni utiliser `prisma db push` sur la base commune.
 4. Toujours avec le propriétaire, ouvrir `psql` sur la même base via la connexion directe.
@@ -48,8 +48,10 @@ compte PostgreSQL individuel. Ce guide n’implique pas qu’un projet Neon exis
    `_prisma_migrations`. Il couvre les données de toute l’intégration ; les droits par ressource
    restent une responsabilité du backend.
 
-   Pour chaque développeur et, plus tard, pour le service Railway, créer un compte par SQL et
-   lui attribuer seulement ce groupe. Les comptes créés via SQL ne reçoivent pas automatiquement
+   Créer un compte par personne avec ce groupe. Utiliser par exemple `leyisa_sidonie`,
+   `leyisa_franck`, `leyisa_jonathan`, `leyisa_kevin`, `leyisa_joel`, `leyisa_melvin`
+   et réserver `leyisa_railway` au service. Le compte personnel de Kevin sert au développement.
+   Les comptes créés via SQL ne reçoivent pas automatiquement
    `neon_superuser` ([documentation Neon sur les rôles](https://neon.com/docs/manage/roles)).
 
    Générer un mot de passe fort dans le coffre, puis lancer ces commandes dans Bash :
@@ -90,23 +92,17 @@ cd backend
 npm ci
 npm run db:generate
 npm run db:check-connection
+npm run db:check-access
 ```
 
-Le contrôle lit `SchoolYear` sans écrire ni afficher l’URL. Ensuite l’équipe peut créer le
-premier dossier fictif depuis le module élèves et retrouver la même inscription dans les
-autres modules. `db:seed` et `db:verify` sont réservés au PostgreSQL local.
+Le premier contrôle lit `SchoolYear`. Le second vérifie en lecture seule le groupe du compte,
+les droits métier et l’absence de droits d’administration du schéma ou d’accès aux migrations.
+Les données fictives sont déjà disponibles pour les modules. `db:seed` et `db:verify` sont
+réservés au PostgreSQL local. Le [guide du backend](backend.md) explique comment démarrer NestJS.
 
 ## NestJS et Railway
 
-Le socle fournit la fabrique [`createClient()`](../backend/prisma/client.mjs) : elle instancie
-`PrismaClient` avec `PrismaPg` à partir de `DATABASE_URL`. Le futur backend NestJS devra
-enregistrer un seul client comme fournisseur partagé et appeler `$disconnect()` à l’arrêt.
-Générer le client avant la compilation et inclure le client généré dans le paquet exécuté ;
-le client actuel est généré en TypeScript ESM pour Node 24, donc le build NestJS devra respecter
-ce format ou adapter la configuration de génération avec Melvin.
-
-Avant le déploiement, le backend devra fournir des commandes de build et de démarrage vérifiées.
-Sur Railway, utiliser Node 24 et déclarer `LEYISA_DB_MODE=shared` et `DATABASE_URL` dans les
-[variables du service](https://docs.railway.com/variables), avec le compte limité propre au service.
-NestJS devra écouter sur `0.0.0.0` et le `PORT` fourni par Railway. Les migrations restent dans
-le terminal ou un job contrôlé par Kevin, avec le secret direct uniquement dans cet environnement.
+Le socle NestJS utilise la fabrique [`createClient()`](../backend/prisma/client.mjs) à partir de
+`DATABASE_URL`. Utiliser le compte limité `leyisa_railway` pour le service. Le [guide du
+backend](backend.md) indique les paramètres Railway. Les migrations restent dans le terminal
+ou un job contrôlé par Kevin, avec le secret direct dans cet environnement.

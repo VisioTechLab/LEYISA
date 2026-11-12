@@ -8,7 +8,7 @@ Application pour un seul établissement, organisée en monolithe modulaire. Fron
 
 ## Base de données et hébergement
 
-PostgreSQL et Prisma fournissent le schéma et les migrations versionnés sur GitHub. Docker sert au travail individuel, et Neon est prévu pour la base d’intégration commune. Le backend commun sera développé en NestJS et TypeScript, puis hébergé sur Railway lorsqu’il disposera de commandes de compilation et de démarrage. Kevin coordonne l’intégration ; Melvin valide les choix techniques. Voir le [guide de connexion Neon](connexion-neon.md).
+PostgreSQL et Prisma fournissent le schéma et les migrations versionnés sur GitHub. Docker sert au travail individuel et Neon héberge la base d’intégration commune. Le socle NestJS et TypeScript fournit un client Prisma partagé et un contrôle de santé HTTP. Railway est prévu pour l’hébergement. Kevin coordonne l’intégration et Melvin valide les choix techniques. Voir le [guide du backend](backend.md) et le [guide de connexion Neon](connexion-neon.md).
 
 ## Frontières
 
