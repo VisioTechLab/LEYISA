@@ -11,6 +11,7 @@ export default defineConfig({
         target: process.env.LEYISA_API_TARGET ?? 'http://127.0.0.1:3000',
         rewrite: path => path.replace(/^\/api/, ''),
       },
+      '/auth': 'http://127.0.0.1:3000',
     },
   },
 })

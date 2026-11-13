@@ -1,13 +1,12 @@
 import { useRef, useState, type FormEvent } from "react";
 import { SchoolLogo } from "../../SchoolLogo";
+import { homeHashFor, login, LoginError } from "./authApi";
 import "./LoginPage.css";
 
 /**
- * LEYISA SCHOOL V1 — Module M1 Accès (Sidonie)
- * Missions J1-J2 : afficher l'écran et valider les champs requis.
- *
- * La validation des champs est locale ; l'authentification et le
- * protocole réseau restent hors périmètre tant que le contrat n'est pas décidé.
+ * LEYISA SCHOOL V1 — Module M1 Accès (Sidonie) — wireframe W01
+ * Les champs sont vérifiés ici pour le confort, puis revérifiés par
+ * l'API NestJS POST /auth/login, qui ouvre la session dans Neon.
  */
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState("");
@@ -15,11 +14,13 @@ export default function LoginPage() {
   const [identifierError, setIdentifierError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [status, setStatus] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const identifierRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting) return;
 
     const nextIdentifierError = identifier.trim()
       ? ""
@@ -42,7 +43,18 @@ export default function LoginPage() {
       return;
     }
 
-    setStatus("La connexion au compte est en cours d’intégration. Vous pouvez consulter l’espace de travail ci-dessous.");
+    setSubmitting(true);
+    try {
+      const user = await login(identifier, password);
+      window.location.hash = homeHashFor(user);
+    } catch (error) {
+      // Après un échec : on garde l'identifiant et on vide le mot de passe.
+      setPassword("");
+      setStatus(error instanceof LoginError ? error.message : "La connexion est momentanément impossible.");
+      passwordRef.current?.focus();
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -120,11 +132,11 @@ export default function LoginPage() {
             )}
           </div>
 
-          <button className="leyisa-button login__submit" type="submit">
-            Se connecter
+          <button className="leyisa-button login__submit" type="submit" aria-busy={submitting}>
+            {submitting ? "Connexion…" : "Se connecter"}
           </button>
 
-          {status && <p className="login__status" role="status">{status}</p>}
+          {status && <p className="login__status" role="alert">{status}</p>}
           <a className="login__preview" href="#scolarite">Consulter l’espace de travail</a>
         </form>
       </section>

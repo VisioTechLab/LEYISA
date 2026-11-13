@@ -3,9 +3,10 @@ import { HealthController } from "./common/health.controller.js";
 import { PrismaModule } from "./common/prisma.module.js";
 import { EvaluationsModule } from "./modules/evaluations/evaluations.module.js";
 import { ResultsModule } from "./modules/results/results.module.js";
+import { AuthModule } from "./modules/auth/index.js";
 
 @Module({
-  imports: [PrismaModule, EvaluationsModule, ResultsModule],
+  imports: [PrismaModule, AuthModule, EvaluationsModule, ResultsModule],
   controllers: [HealthController],
 })
 export class AppModule {}
