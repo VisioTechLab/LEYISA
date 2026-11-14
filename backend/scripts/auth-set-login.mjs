@@ -68,8 +68,25 @@ try {
     console.log(`Identifiant « ${login} » activé pour le compte ${userId}.`);
   }
 } catch (error) {
-  const known = error instanceof Error && !("code" in error);
-  console.error(known ? error.message : "Opération impossible. Vérifiez DATABASE_URL, l'identifiant du compte et l'unicité de l'identifiant.");
+  if (error instanceof Error && !("code" in error) && !error.name.startsWith("Prisma")) {
+    console.error(error.message);
+  } else {
+    const code = error?.code ?? error?.cause?.code ?? error?.name ?? "inconnu";
+    const hints = {
+      P2025: "Aucun compte ne porte cet identifiant technique (--user-id).",
+      P2002: "Cet identifiant de connexion est déjà utilisé par un autre compte.",
+      P2023: "L'identifiant technique (--user-id) n'a pas un format accepté.",
+      "42501": "Le compte de base de données n'a pas le droit d'écrire dans cette table.",
+      "23514": "Une règle de la base refuse cette modification.",
+    };
+    console.error(`Opération impossible (code ${code}). ${hints[code] ?? ""}`);
+    // Détail technique, sans empreinte de mot de passe ni adresse de connexion.
+    const detail = String(error?.message ?? "")
+      .replace(/scrypt\$[^\s"',}]+/g, "[empreinte masquée]")
+      .replace(/postgres(ql)?:\/\/\S+/g, "[adresse masquée]")
+      .split("\n").map((line) => line.trim()).filter(Boolean).slice(-4).join("\n");
+    if (detail) console.error(detail);
+  }
   process.exitCode = 1;
 } finally {
   await db?.$disconnect();
