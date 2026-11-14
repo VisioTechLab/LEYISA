@@ -21,5 +21,11 @@ export const authConfig = {
   secureCookie: process.env.NODE_ENV === "production",
 } as const;
 
+/**
+ * Délais des transactions : Neon met la base en veille et le réveil peut
+ * dépasser les 2 secondes d'attente par défaut de Prisma (erreur P2028).
+ */
+export const TRANSACTION_OPTIONS = { maxWait: 10_000, timeout: 15_000 } as const;
+
 export const LOGIN_MAX_LENGTH = 100;
 export const PASSWORD_MAX_LENGTH = 256;

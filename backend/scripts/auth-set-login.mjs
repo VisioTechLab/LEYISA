@@ -64,7 +64,7 @@ try {
       await tx.auditEntry.create({
         data: { actorId: null, action: "AUTH_LOGIN_PROVISIONED", targetType: "User", targetId: userId },
       });
-    });
+    }, { maxWait: 20_000, timeout: 30_000 }); // Neon peut mettre quelques secondes à sortir de veille
     console.log(`Identifiant « ${login} » activé pour le compte ${userId}.`);
   }
 } catch (error) {
