@@ -46,6 +46,11 @@ export default function LoginPage() {
     setSubmitting(true);
     try {
       const user = await login(identifier, password);
+      if (user.permissions.length === 0) {
+        setPassword("");
+        setStatus("Votre compte n’a encore accès à aucun espace. Contactez l’administration de l’école.");
+        return;
+      }
       window.location.hash = homeHashFor(user);
     } catch (error) {
       // Après un échec : on garde l'identifiant et on vide le mot de passe.

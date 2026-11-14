@@ -13,6 +13,7 @@ import {
 import type { AuthContext } from "./auth-context.js";
 import { authConfig, LOGIN_MAX_LENGTH, PASSWORD_MAX_LENGTH, SESSION_COOKIE_NAME } from "./auth.config.js";
 import { AuthService, type PublicUser } from "./auth.service.js";
+import { permissionsFor } from "./permissions.js";
 import { type AuthRequest, CurrentAuth, SessionGuard } from "./session.guard.js";
 import { readCookie } from "./session-token.js";
 
@@ -49,7 +50,14 @@ function parseCredentials(body: unknown): { login: string; password: string } {
 }
 
 function publicUser(auth: AuthContext): PublicUser {
-  return { id: auth.userId, login: auth.login, firstName: auth.firstName, lastName: auth.lastName, roles: auth.roles };
+  return {
+    id: auth.userId,
+    login: auth.login,
+    firstName: auth.firstName,
+    lastName: auth.lastName,
+    roles: auth.roles,
+    permissions: permissionsFor(auth.roles),
+  };
 }
 
 @Controller("auth")
