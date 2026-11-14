@@ -1,10 +1,10 @@
 import { useEffect, useSyncExternalStore } from 'react';
 import { AssignmentsPage } from './features/assignments/AssignmentsPage';
+import { EvaluationsPage } from './features/evaluations/EvaluationsPage';
 import { LoginPage } from './features/auth';
 import { StudentsPage } from './features/students/StudentsPage';
 import {
   BulletinsPreview,
-  GradesPreview,
   ResultsPreview,
   SchoolPreview,
   ValidationPreview,
@@ -15,7 +15,7 @@ const pages = [
   { hash: '#scolarite', label: 'Scolarité', title: 'Configuration scolaire', Page: SchoolPreview },
   { hash: '#eleves', label: 'Élèves / inscriptions', title: 'Élèves et inscriptions', Page: StudentsPage },
   { hash: '#affectations', label: 'Enseignants', title: 'Enseignants et affectations', Page: AssignmentsPage },
-  { hash: '#notes', label: 'Évaluations / notes', title: 'Saisie des notes', Page: GradesPreview },
+  { hash: '#notes', label: 'Évaluations / notes', title: 'Saisie des notes', Page: EvaluationsPage },
   { hash: '#validation', label: 'Validation', title: 'Validation des notes', Page: ValidationPreview },
   { hash: '#resultats', label: 'Résultats', title: 'Résultats et clôture', Page: ResultsPreview },
   { hash: '#bulletins', label: 'Bulletins', title: 'Bulletins scolaires', Page: BulletinsPreview },

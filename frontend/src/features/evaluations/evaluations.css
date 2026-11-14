@@ -1,0 +1,45 @@
+.leyisa-evaluations .leyisa-card { margin-bottom: 23px; }
+
+.evaluations-context {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+}
+.evaluations-context > div { flex: 1 1 250px; }
+.evaluations-context .leyisa-chip[data-state="REJECTED"] { background: #fbe9e7; color: #8a1f11; }
+.evaluations-context .leyisa-chip[data-state="VALIDATED"] { background: #e4f3e8; color: #1c5a2e; }
+
+.evaluations-notice {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--leyisa-line);
+  border-radius: 8px;
+  background: var(--leyisa-surface);
+  color: var(--leyisa-ink);
+}
+.evaluations-notice[data-kind="error"] { border-color: #e2b4ad; background: #fbe9e7; color: #8a1f11; }
+.evaluations-notice[data-kind="success"] { border-color: #b5d8c0; background: #e4f3e8; color: #1c5a2e; }
+.evaluations-locked { margin: 0 0 20px; }
+
+.evaluations-score {
+  width: 110px;
+  max-width: 100%;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid var(--leyisa-line);
+  border-radius: 6px;
+  color: var(--leyisa-ink);
+  background: var(--leyisa-surface);
+  font: inherit;
+}
+.evaluations-score[aria-invalid="true"] { border-color: #b3261e; }
+.evaluations-field-error { display: block; margin-top: 4px; color: #8a1f11; }
+
+.evaluations-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; margin: 16px 0 0; }
+.evaluations-actions .leyisa-button { flex: 0 1 245px; }
+
+@media (max-width: 640px) {
+  .evaluations-actions .leyisa-button { flex: 1 1 140px; }
+}
