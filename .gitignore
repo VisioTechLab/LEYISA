@@ -4,6 +4,7 @@
 !.env.example
 # Dépendances et sorties
 node_modules/
+backend/generated/
 dist/
 build/
 coverage/

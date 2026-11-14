@@ -1,18 +1,32 @@
-export type StudentSex = "F" | "M";
-
 export interface Student {
   id: string;
+  matricule: string;
   lastName: string;
-  postName: string;
   firstName: string;
-  birthDate: string;
-  sex: StudentSex;
+  birthDate: string | null;
   className: string;
+  schoolYear: string;
 }
 
-export type NewStudent = Omit<Student, "id">;
+export interface ClassOption {
+  id: string;
+  code: string;
+  label: string;
+  schoolYearId: string;
+  schoolYearCode: string;
+}
+
+export interface NewStudent {
+  firstName: string;
+  lastName: string;
+  matricule: string;
+  birthDate: string;
+  classId: string;
+  schoolYearId: string;
+}
 
 export interface StudentsDataSource {
   getStudents(): Promise<Student[]>;
+  getClasses(): Promise<ClassOption[]>;
   registerStudent(student: NewStudent): Promise<Student>;
 }
