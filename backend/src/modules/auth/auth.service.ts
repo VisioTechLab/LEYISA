@@ -12,6 +12,7 @@ import { authConfig } from "./auth.config.js";
 import { AUTH_AUDIT_ACTIONS, AuditWriter } from "./audit-writer.js";
 import { LoginThrottle } from "./login-throttle.js";
 import { hashPassword, verifyPassword } from "./password.js";
+import { type Permission, permissionsFor } from "./permissions.js";
 import { generateSessionToken, hashSessionToken } from "./session-token.js";
 
 /** Message unique pour tout échec : ne révèle jamais si l'identifiant existe (US-001). */
@@ -31,6 +32,8 @@ export interface PublicUser {
   firstName: string;
   lastName: string;
   roles: RoleCode[];
+  /** Permissions déduites de la matrice : l'écran s'en sert pour ses menus, le serveur revérifie toujours. */
+  permissions: Permission[];
 }
 
 export interface LoginResult {
@@ -115,6 +118,7 @@ export class AuthService implements OnModuleInit {
       });
     });
 
+    const roles = user.roles.map(({ role }) => role as RoleCode);
     return {
       token,
       expiresAt,
@@ -123,7 +127,8 @@ export class AuthService implements OnModuleInit {
         login: input.login,
         firstName: user.firstName,
         lastName: user.lastName,
-        roles: user.roles.map(({ role }) => role as RoleCode),
+        roles,
+        permissions: permissionsFor(roles),
       },
     };
   }

@@ -10,19 +10,21 @@ Connexion, déconnexion et utilisateur courant (US-001, US-002, wireframe W01), 
 | POST | `/auth/logout` | session | 204, session révoquée, cookie effacé |
 | GET | `/auth/me` | session | 200 `{ user }` ; 401 sans session valide |
 
-`user` = `{ id, login, firstName, lastName, roles }`. Jamais d'empreinte ni de jeton dans les réponses.
+`user` = `{ id, login, firstName, lastName, roles, permissions }`. Jamais d'empreinte ni de jeton dans les réponses.
 
 ## Pour les autres modules
 
-```ts
-import { CurrentAuth, SessionGuard, hasAnyRole, AuditWriter, type AuthContext } from "../auth/index.js";
+Les droits sont définis dans `permissions.ts` et expliqués dans `docs/matrice-droits.md`.
 
-@UseGuards(SessionGuard)
-@Get()
-lister(@CurrentAuth() auth: AuthContext) {
-  if (!hasAnyRole(auth, ["SEC", "ADM"])) throw new ForbiddenException();
-}
+```ts
+import { CurrentAuth, Requires, assertOwnedBy, AuditWriter, type AuthContext } from "../auth/index.js";
+
+@Requires("students.enroll")   // session + permission : 401 ou 403 sinon
+@Post()
+inscrire(@CurrentAuth() auth: AuthContext) { /* … */ }
 ```
+
+Les contrôles d'appartenance (`assertOwnedBy`, `assertNotOwnSubmission`, `assertPeriodOpen`) s'appellent dans le service, sur les données lues.
 
 Audit (R25) : `await auditWriter.write(tx, { actorId: auth.userId, action, targetType, targetId })` dans la même transaction que l'action. Importer `AuthModule` dans le module qui utilise la garde.
 
