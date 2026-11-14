@@ -8,7 +8,7 @@ import {
 import { randomBytes } from "node:crypto";
 import { PrismaService } from "../../common/prisma.service.js";
 import type { AuthContext, RoleCode } from "./auth-context.js";
-import { authConfig } from "./auth.config.js";
+import { authConfig, TRANSACTION_OPTIONS } from "./auth.config.js";
 import { AUTH_AUDIT_ACTIONS, AuditWriter } from "./audit-writer.js";
 import { LoginThrottle } from "./login-throttle.js";
 import { hashPassword, verifyPassword } from "./password.js";
@@ -116,7 +116,7 @@ export class AuthService implements OnModuleInit {
         targetType: "Session",
         targetId: session.id,
       });
-    });
+    }, TRANSACTION_OPTIONS);
 
     const roles = user.roles.map(({ role }) => role as RoleCode);
     return {
@@ -164,6 +164,6 @@ export class AuthService implements OnModuleInit {
         targetType: "Session",
         targetId: context.sessionId,
       });
-    });
+    }, TRANSACTION_OPTIONS);
   }
 }
