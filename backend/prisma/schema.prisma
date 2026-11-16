@@ -133,6 +133,7 @@ model ClassSubject {
   id          String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   classId     String              @db.Uuid
   subjectId   String              @db.Uuid
+  resultMaxScore Decimal           @default(20) @db.Decimal(10, 4)
   schoolClass SchoolClass         @relation(fields: [classId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   subject     Subject             @relation(fields: [subjectId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   assignments TeacherAssignment[]

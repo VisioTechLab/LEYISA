@@ -15,6 +15,7 @@ async function bootstrap(): Promise<void> {
   }
 
   const app = await NestFactory.create(AppModule, { abortOnError: false });
+  app.enableCors({ origin: process.env.CORS_ORIGIN ?? "http://127.0.0.1:5173" });
   app.enableShutdownHooks();
   try {
     await app.listen(port, "0.0.0.0");

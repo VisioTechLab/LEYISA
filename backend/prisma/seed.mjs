@@ -54,7 +54,11 @@ try {
       { code: "DEMO-MATH", label: "Mathématiques" },
       { code: "DEMO-FR", label: "Français" },
     ].map((data) => tx.classSubject.create({
-      data: { schoolClass: { connect: { id: schoolClass.id } }, subject: { create: data } },
+      data: {
+        schoolClass: { connect: { id: schoolClass.id } },
+        subject: { create: data },
+        resultMaxScore: data.code === "DEMO-FR" ? 10 : 20,
+      },
     })));
     async function assign(teacher, classSubject, from) {
       return tx.teacherAssignment.create({
@@ -130,8 +134,8 @@ try {
 
     // Valeurs attendues de ce jeu de test uniquement ; le module results implémentera le calcul.
     const mathMeans = ["15", "16", "11"];
-    const frenchMeans = ["12", "14", "13"];
-    const overallMeans = ["13.50", "15.00", "12.00"];
+    const frenchMeans = ["6", "7", "6.5"];
+    const overallMeans = ["14", "15.33333333", "11.66666667"];
     const results = [];
     for (const [i, enrollment] of enrollments.entries()) {
       const { matricule, user: { firstName, lastName } } = students[i];
@@ -139,8 +143,10 @@ try {
         classPeriodId: classPeriod.id, enrollmentId: enrollment.id, classId: schoolClass.id,
         identitySnapshot: { matricule, firstName, lastName, classLabel: schoolClass.label,
           schoolYearCode: year.code, periodCode: period.code },
-        subjectResults: [{ subjectCode: "DEMO-MATH", meanOn20: mathMeans[i] },
-          { subjectCode: "DEMO-FR", meanOn20: frenchMeans[i] }],
+        subjectResults: [
+          { subjectCode: "DEMO-MATH", label: "Mathématiques", earned: mathMeans[i], maximum: "20" },
+          { subjectCode: "DEMO-FR", label: "Français", earned: frenchMeans[i], maximum: "10" },
+        ],
         sourceVersions: [math1, math2, fr],
         overallMean: overallMeans[i], calculationProfile: "DEMO_V1",
       } }));
