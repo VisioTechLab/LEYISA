@@ -1,0 +1,70 @@
+.login {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 43.4fr) minmax(0, 56.6fr);
+}
+
+.login__brand {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 34px;
+  padding: clamp(30px, 5vw, 72px) clamp(24px, 4.5vw, 65px);
+  background: var(--leyisa-navy);
+  color: #fff;
+}
+
+.login__logo {
+  width: 136px;
+  padding: 8px;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.login__presentation { align-self: center; margin-top: -22vh; }
+.login__headline { margin: 0; font-size: clamp(30px, 3.3vw, 46px); font-weight: 700; line-height: 1.16; }
+.login__tagline { max-width: 41ch; margin: 34px 0 0; font-size: 18px; line-height: 1.35; }
+.login__signature { margin: 0; padding-top: 22px; border-top: 1px solid #a0b0bc; font-size: 12px; }
+
+.login__panel { display: grid; place-items: center; padding: 28px; }
+
+.login__form {
+  width: min(100%, 514px);
+  padding: clamp(28px, 3.4vw, 48px);
+  border: 1px solid var(--leyisa-line);
+  border-radius: 14px;
+  background: var(--leyisa-surface);
+}
+
+.login__title { margin: 0; font-size: 29px; line-height: 1.3; }
+.login__intro { margin: 12px 0 48px; color: var(--leyisa-muted); }
+.login__field { display: grid; gap: 5px; margin-bottom: 26px; }
+.login__field label { color: var(--leyisa-muted); font-size: 13px; }
+
+.login__field input {
+  width: 100%;
+  min-height: 46px;
+  padding: 8px 13px;
+  border: 1px solid var(--leyisa-line);
+  border-radius: 6px;
+  background: var(--leyisa-surface);
+  color: var(--leyisa-ink);
+}
+
+.login__field input[aria-invalid="true"] { border-color: #a12622; }
+.login__error { margin: 0; color: #a12622; font-size: 13px; }
+.login__submit { width: 100%; margin-top: 20px; }
+.login__preview { display: inline-block; margin-top: 24px; color: var(--leyisa-navy); font-size: 13px; }
+.login__status { margin: 14px 0 0; color: var(--leyisa-muted); }
+
+@media (max-width: 760px) {
+  .login { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .login__brand { gap: 19px; padding-block: 24px; }
+  .login__presentation { margin: 0; }
+  .login__logo { width: 105px; }
+  .login__tagline { margin-top: 12px; font-size: 15px; }
+  .login__signature { display: none; }
+  .login__panel { padding: 20px; }
+  .login__intro { margin-bottom: 25px; }
+  .login__field { margin-bottom: 16px; }
+  .login__submit { margin-top: 8px; }
+}

@@ -6,9 +6,9 @@ Application pour un seul établissement, organisée en monolithe modulaire. Fron
 
 `frontend/src/shared/` reçoit les éléments réutilisables après coordination. `backend/src/common/` reçoit les mécanismes transversaux après coordination. Aucun framework ni code fictif n'est ajouté pour occuper ces espaces.
 
-## Proposition à valider par Melvin
+## Base de données et hébergement
 
-NestJS, TypeScript, Prisma et PostgreSQL pour le backend. Ne pas installer NestJS, Symfony, un ORM ou des dépendances tant que le choix n'est pas validé. `package.json`, le schéma de données, les migrations et Docker Compose applicatif seront créés une fois la stack confirmée. Kevin coordonne ensuite leur intégration.
+PostgreSQL et Prisma fournissent le schéma et les migrations versionnés sur GitHub. Docker sert au travail individuel et Neon héberge la base d’intégration commune. Le socle NestJS et TypeScript fournit un client Prisma partagé et un contrôle de santé HTTP. Railway est prévu pour l’hébergement. Kevin coordonne l’intégration et Melvin valide les choix techniques. Voir le [guide du backend](backend.md) et le [guide de connexion Neon](connexion-neon.md).
 
 ## Frontières
 
