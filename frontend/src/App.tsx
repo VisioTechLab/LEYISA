@@ -1,11 +1,13 @@
 import { useEffect, useSyncExternalStore } from 'react';
 import { AssignmentsPage } from './features/assignments/AssignmentsPage';
+import { EvaluationsPage } from './features/evaluations/EvaluationsPage';
 import { LoginPage } from './features/auth';
 import { StudentsPage } from './features/students/StudentsPage';
 import { FinalResultsPage, ValidationPage } from './features/results/ResultsModulePage';
 import {
   BulletinsPreview,
-  GradesPreview,
+  // GradesPreview,
+  // ResultsPreview,
   SchoolPreview,
 } from './WireframePreviews';
 import { SchoolLogo } from './SchoolLogo';
@@ -14,9 +16,9 @@ const pages = [
   { hash: '#scolarite', label: 'Scolarité', title: 'Configuration scolaire', Page: SchoolPreview },
   { hash: '#eleves', label: 'Élèves / inscriptions', title: 'Élèves et inscriptions', Page: StudentsPage },
   { hash: '#affectations', label: 'Enseignants', title: 'Enseignants et affectations', Page: AssignmentsPage },
-  { hash: '#notes', label: 'Évaluations / notes', title: 'Saisie des notes', Page: GradesPreview },
-  { hash: '#validation', label: 'Validation', title: 'Validation des notes', Page: ValidationPage },
-  { hash: '#resultats', label: 'Résultats', title: 'Résultats et clôture', Page: FinalResultsPage },
+  { hash: '#notes', label: 'Évaluations / notes', title: 'Saisie des notes', Page: EvaluationsPage  },
+  { hash: '#validation', label: 'Validation', title: 'Validation des notes', Page: ValidationPage  },
+  { hash: '#resultats', label: 'Résultats', title: 'Résultats et clôture', Page: FinalResultsPage  },
   { hash: '#bulletins', label: 'Bulletins', title: 'Bulletins scolaires', Page: BulletinsPreview },
 ] as const;
 
