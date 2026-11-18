@@ -10,6 +10,7 @@ async function bootstrap(): Promise<void> {
   if (existsSync(envFile)) loadEnvFile(envFile);
 
   const port = Number(process.env.PORT ?? "3000");
+  const host = process.env.HOST ?? "0.0.0.0";
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
     throw new Error("PORT doit être un entier compris entre 1 et 65535.");
   }
@@ -18,7 +19,7 @@ async function bootstrap(): Promise<void> {
   app.enableCors({ origin: process.env.CORS_ORIGIN ?? "http://127.0.0.1:5173" });
   app.enableShutdownHooks();
   try {
-    await app.listen(port, "0.0.0.0");
+    await app.listen(port, host);
   } catch (error) {
     await app.close();
     throw error;
