@@ -1,3 +1,4 @@
+import { api as request } from '../../shared/api';
 import type { NewStudent, Student, StudentsDataSource } from "./types";
 
 interface ApiStudent {
@@ -18,31 +19,6 @@ interface ApiSchoolYear {
   classes: Array<{ id: string; code: string; label: string }>;
 }
 
-const apiBase = (import.meta.env.VITE_STUDENTS_API_URL || "/api").replace(/\/$/, "");
-const tokenKey = import.meta.env.VITE_SESSION_STORAGE_KEY || "leyisa.sessionToken";
-
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const token = window.sessionStorage.getItem(tokenKey);
-  const response = await fetch(`${apiBase}${path}`, {
-    ...init,
-    headers: {
-      Accept: "application/json",
-      ...(init?.body ? { "Content-Type": "application/json" } : {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...init?.headers,
-    },
-  });
-
-  if (!response.ok) {
-    const payload = await response.json().catch(() => null) as { message?: string | string[] } | null;
-    const message = Array.isArray(payload?.message) ? payload.message.join(" ") : payload?.message;
-    if (response.status === 401) throw new Error("Connectez-vous avec un compte autorisé pour consulter les élèves.");
-    if (response.status === 403) throw new Error("Votre compte ne peut pas accéder au module élèves.");
-    throw new Error(message || "Le serveur n’a pas pu traiter la demande.");
-  }
-  return response.json() as Promise<T>;
-}
-
 function toStudent(row: ApiStudent): Student {
   const enrollment = row.enrollments[0];
   return {
@@ -58,8 +34,8 @@ function toStudent(row: ApiStudent): Student {
 
 export function createApiStudentsDataSource(): StudentsDataSource {
   return {
-    async getStudents() {
-      const rows = await request<ApiStudent[]>("/students");
+    async getStudents(search="",page=1) {
+      const rows = await request<ApiStudent[]>(`/students?page=${page}&search=${encodeURIComponent(search)}`);
       return rows.map(toStudent);
     },
     async getClasses() {

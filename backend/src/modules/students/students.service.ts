@@ -5,6 +5,8 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { PrismaService } from "../../common/prisma.service.js";
+import type { AuthContext } from "../auth/auth-context.js";
+import { day, object, optionalText, page, text, todayCivil, uuid } from "../../common/input.js";
 import {
   parseRegisterStudentInput,
   parseStudentId,
@@ -23,8 +25,10 @@ function hasPrismaErrorCode(error: unknown, code: string): boolean {
 export class StudentsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  list() {
+  list(auth:AuthContext,query:Record<string,string>={}) {
     return this.prisma.client.student.findMany({
+      where: {AND:[studentScope(auth)],...(query.search?{OR:[{matricule:{contains:text(query.search,"Recherche",100),mode:"insensitive" as const}},{user:{lastName:{contains:query.search,mode:"insensitive" as const}}},{user:{firstName:{contains:query.search,mode:"insensitive" as const}}}]}:{}),...(query.classId?{enrollments:{some:{classId:uuid(query.classId)}}}:{}),...(query.schoolYearId?{enrollments:{some:{schoolYearId:uuid(query.schoolYearId),...(query.classId?{classId:uuid(query.classId)}:{})}}}:{})},
+      skip:(page(query.page)-1)*50,take:50,
       include: {
         user: { select: { id: true, firstName: true, lastName: true } },
         enrollments: {
@@ -56,10 +60,10 @@ export class StudentsService {
     });
   }
 
-  async findById(id: unknown) {
+  async findById(id: unknown,auth:AuthContext) {
     const studentId = parseStudentId(id);
-    const student = await this.prisma.client.student.findUnique({
-      where: { id: studentId },
+    const student = await this.prisma.client.student.findFirst({
+      where: { id: studentId,...studentScope(auth) },
       include: {
         user: { select: { id: true, firstName: true, lastName: true } },
         enrollments: {
@@ -82,12 +86,14 @@ export class StudentsService {
     return student;
   }
 
-  async register(input: unknown) {
+  async register(input: unknown,auth:AuthContext) {
     const data = parseRegisterStudentInput(input);
 
     try {
-      return await this.prisma.client.$transaction(async (transaction) =>
-        transaction.student.create({
+      return await this.prisma.client.$transaction(async (transaction) => {
+        await transaction.$queryRaw`SELECT id FROM "SchoolClass" WHERE id=${data.classId}::uuid FOR UPDATE`;
+        if(await transaction.classPeriod.count({where:{classId:data.classId,closedAt:{not:null}}}))throw new ConflictException("Inscription après clôture refusée.");
+        const student=await transaction.student.create({
           data: {
             matricule: data.matricule,
             birthDate: data.birthDate,
@@ -119,8 +125,10 @@ export class StudentsService {
               },
             },
           },
-        }),
-      );
+        });
+        await transaction.auditEntry.create({data:{actorId:auth.userId,action:"STUDENT_CREATED",targetType:"Student",targetId:student.id}});
+        return student;
+      });
     } catch (error) {
       if (hasPrismaErrorCode(error, "P2002")) {
         throw new ConflictException("Le matricule ou l’inscription existe déjà.");
@@ -131,4 +139,45 @@ export class StudentsService {
       throw error;
     }
   }
+
+  async createRecord(body:unknown,auth:AuthContext) {
+    const d=object(body);const data=recordData(d);
+    return this.prisma.client.$transaction(async tx=>{
+      const student=await tx.student.create({data:{...data,matricule:text(d.matricule,"Matricule",80),user:{create:{kind:"STUDENT",firstName:text(d.firstName,"Prénom"),lastName:text(d.lastName,"Nom"),roles:{create:{role:"ELEVE"}}}}}});
+      await tx.auditEntry.create({data:{actorId:auth.userId,action:"STUDENT_CREATED",targetType:"Student",targetId:student.id}});return this.findIn(tx,student.id);
+    });
+  }
+  async enroll(raw:string,body:unknown,auth:AuthContext) {
+    const id=uuid(raw),d=object(body),classId=uuid(d.classId),schoolYearId=uuid(d.schoolYearId);
+    return this.prisma.client.$transaction(async tx=>{
+      await tx.$queryRaw`SELECT id FROM "SchoolClass" WHERE id=${classId}::uuid FOR UPDATE`;
+      const schoolClass=await tx.schoolClass.findFirst({where:{id:classId,schoolYearId},include:{classPeriods:true}});
+      if(!schoolClass)throw new BadRequestException("Classe et année incohérentes.");
+      if(schoolClass.classPeriods.some(cp=>cp.closedAt))throw new ConflictException("Cette classe a des résultats clôturés : inscription rétroactive refusée.");
+      const enrollment=await tx.enrollment.create({data:{studentId:id,classId,schoolYearId}});
+      await tx.auditEntry.create({data:{actorId:auth.userId,action:"STUDENT_ENROLLED",targetType:"Enrollment",targetId:enrollment.id}});return this.findIn(tx,id);
+    });
+  }
+  async update(raw:string,body:unknown,auth:AuthContext) {
+    const id=uuid(raw),d=object(body),data=recordData(d);
+    return this.prisma.client.$transaction(async tx=>{
+      await tx.$queryRaw`SELECT id FROM "Student" WHERE id=${id}::uuid FOR UPDATE`;
+      if(await tx.resultSnapshot.count({where:{enrollment:{studentId:id},classPeriod:{closedAt:{not:null}}}}))throw new ConflictException("Identité liée à des résultats clôturés : correction exceptionnelle à faire approuver.");
+      await tx.student.update({where:{id},data:{...data,user:{update:{firstName:text(d.firstName,"Prénom"),lastName:text(d.lastName,"Nom")}}}});
+      await tx.auditEntry.create({data:{actorId:auth.userId,action:"STUDENT_UPDATED",targetType:"Student",targetId:id}});return this.findIn(tx,id);
+    });
+  }
+  private findIn(tx:any,id:string) {return tx.student.findUnique({where:{id},include:{user:{select:{id:true,firstName:true,lastName:true}},enrollments:{include:{schoolClass:{include:{schoolYear:true}}}}}});}
+}
+
+function recordData(d:Record<string,unknown>) {
+ const sex=optionalText(d.sex,"Sexe",1);if(sex&&!['F','M'].includes(sex))throw new BadRequestException("Sexe invalide.");
+ const birthDate=d.birthDate?day(d.birthDate):null;if(birthDate&&birthDate.toISOString().slice(0,10)>todayCivil())throw new BadRequestException("Date de naissance future refusée.");
+ return {postName:optionalText(d.postName,"Postnom")??"",sex,birthDate,birthPlace:optionalText(d.birthPlace,"Lieu de naissance"),permanentNumber:optionalText(d.permanentNumber,"Numéro permanent",80),guardian:optionalText(d.guardian,"Responsable"),contact:optionalText(d.contact,"Contact",100)};
+}
+function studentScope(auth:AuthContext) {
+ if(auth.roles.some(r=>r==='SEC'||r==='DIR'))return {};
+ // Filtre par affectation active, appliqué aussi aux accès directs.
+ const now=day(todayCivil());
+ return {enrollments:{some:{schoolClass:{subjects:{some:{assignments:{some:{teacher:{userId:auth.userId},startsOn:{lte:now},OR:[{endsOn:null},{endsOn:{gt:now}}]}}}}}}}};
 }

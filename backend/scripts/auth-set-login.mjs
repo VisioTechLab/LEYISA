@@ -54,12 +54,15 @@ try {
     if (databaseMode() === "shared" && !values["shared-ok"]) {
       throw new Error("Base partagée : ajoutez --shared-ok seulement après l'accord de Kevin et Melvin.");
     }
-    const password = await askHidden("Mot de passe (8 caractères au moins) : ");
-    if (password.length < 8 || password.length > 256) throw new Error("Le mot de passe doit compter entre 8 et 256 caractères.");
+    const password = await askHidden("Mot de passe (12 caractères au moins) : ");
+    if (password.length < 12 || password.length > 256) throw new Error("Le mot de passe doit compter entre 12 et 256 caractères.");
     if (password !== await askHidden("Confirmez le mot de passe : ")) throw new Error("Les deux saisies sont différentes.");
 
     const passwordHash = await hashPassword(password);
     await db.$transaction(async (tx) => {
+      const user=await tx.user.findUnique({where:{id:userId}});
+      if(!user||user.kind!=='STAFF')throw new Error('Compte STAFF existant requis.');
+      await tx.session.updateMany({where:{userId,revokedAt:null},data:{revokedAt:new Date()}});
       await tx.user.update({ where: { id: userId }, data: { login, passwordHash, loginEnabled: true } });
       await tx.auditEntry.create({
         data: { actorId: null, action: "AUTH_LOGIN_PROVISIONED", targetType: "User", targetId: userId },
@@ -83,6 +86,7 @@ try {
     // Détail technique, sans empreinte de mot de passe ni adresse de connexion.
     const detail = String(error?.message ?? "")
       .replace(/scrypt\$[^\s"',}]+/g, "[empreinte masquée]")
+      .replace(/\$argon2id\$[^\s"',}]+/g,"[empreinte masquée]")
       .replace(/postgres(ql)?:\/\/\S+/g, "[adresse masquée]")
       .split("\n").map((line) => line.trim()).filter(Boolean).slice(-4).join("\n");
     if (detail) console.error(detail);

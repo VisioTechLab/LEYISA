@@ -12,7 +12,8 @@ import { readCookie } from "./session-token.js";
 
 /** Champs de la requête HTTP utilisés par le module (évite une dépendance aux types Express). */
 export interface AuthRequest {
-  headers: { cookie?: string };
+  headers: { cookie?: string; origin?: string; "x-csrf-token"?: string };
+  method?: string;
   ip?: string;
   auth?: AuthContext;
 }
@@ -28,6 +29,7 @@ export class SessionGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<AuthRequest>();
+    if (request.auth) return true;
     const token = readCookie(request.headers.cookie, SESSION_COOKIE_NAME);
     if (!token) throw new UnauthorizedException("Connectez-vous pour continuer.");
 

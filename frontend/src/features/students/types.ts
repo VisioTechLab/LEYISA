@@ -26,7 +26,7 @@ export interface NewStudent {
 }
 
 export interface StudentsDataSource {
-  getStudents(): Promise<Student[]>;
+  getStudents(search?:string,page?:number): Promise<Student[]>;
   getClasses(): Promise<ClassOption[]>;
   registerStudent(student: NewStudent): Promise<Student>;
 }

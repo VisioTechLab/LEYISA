@@ -5,7 +5,7 @@ import {
   type OnModuleInit,
   UnauthorizedException,
 } from "@nestjs/common";
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { PrismaService } from "../../common/prisma.service.js";
 import type { AuthContext, RoleCode } from "./auth-context.js";
 import { authConfig, TRANSACTION_OPTIONS } from "./auth.config.js";
@@ -59,6 +59,17 @@ export class AuthService implements OnModuleInit {
 
   async login(input: LoginInput): Promise<LoginResult> {
     const db = this.prisma.client;
+    // Compteurs persistants indépendants par compte et origine, atomiques entre instances.
+    const keys = [`origin:${input.ip}`, `account:${input.login}`].map(value => createHash("sha256").update(value).digest("hex"));
+    for (const key of keys) {
+      const rows = await db.$queryRaw<Array<{ failures: number }>>`
+        INSERT INTO "LoginLimit" (key,failures,"windowStart") VALUES (${key},1,now())
+        ON CONFLICT (key) DO UPDATE SET
+          failures=CASE WHEN "LoginLimit"."windowStart" < now()-interval '15 minutes' THEN 1 ELSE "LoginLimit".failures+1 END,
+          "windowStart"=CASE WHEN "LoginLimit"."windowStart" < now()-interval '15 minutes' THEN now() ELSE "LoginLimit"."windowStart" END
+        RETURNING failures`;
+      if (rows[0].failures > 5) throw new HttpException("Trop de tentatives. Réessayez dans quelques minutes.", 429);
+    }
     const throttleKey = LoginThrottle.key(input.ip, input.login);
     const retryAfter = this.throttle.retryAfterSeconds(throttleKey);
     if (retryAfter > 0) {
@@ -83,12 +94,12 @@ export class AuthService implements OnModuleInit {
     if (!user || !user.loginEnabled || !user.passwordHash || !passwordOk) {
       this.throttle.recordFailure(throttleKey);
       // AuditEntry.targetId est obligatoire : un identifiant inconnu n'a pas de cible à tracer.
-      if (user) {
+      {
         await this.audit.write(db, {
           actorId: null,
           action: AUTH_AUDIT_ACTIONS.loginFailure,
           targetType: "User",
-          targetId: user.id,
+          targetId: user?.id ?? null,
         });
       }
       throw new UnauthorizedException(INVALID_CREDENTIALS_MESSAGE);
@@ -100,6 +111,13 @@ export class AuthService implements OnModuleInit {
     const expiresAt = new Date(Date.now() + authConfig.sessionTtlMinutes * 60_000);
 
     await db.$transaction(async (tx) => {
+      // Le compte peut avoir été désactivé pendant le calcul de l'empreinte.
+      await tx.$queryRaw`SELECT id FROM "User" WHERE id=${user.id}::uuid FOR UPDATE`;
+      const current = await tx.user.findUnique({ where: { id: user.id } });
+      if (!current?.loginEnabled || current.passwordHash !== user.passwordHash) throw new UnauthorizedException(INVALID_CREDENTIALS_MESSAGE);
+      if (user.passwordHash!.startsWith("scrypt$")) {
+        await tx.user.update({ where: { id: user.id }, data: { passwordHash: await hashPassword(input.password) } });
+      }
       // Nouvelle session à chaque connexion ; l'ancienne éventuelle est fermée.
       if (input.previousToken) {
         await tx.session.updateMany({
@@ -117,6 +135,8 @@ export class AuthService implements OnModuleInit {
         targetId: session.id,
       });
     }, TRANSACTION_OPTIONS);
+
+    await db.loginLimit.updateMany({ where: { key: { in: keys }, failures: { gt: 0 } }, data: { failures: { decrement: 1 } } });
 
     const roles = user.roles.map(({ role }) => role as RoleCode);
     return {

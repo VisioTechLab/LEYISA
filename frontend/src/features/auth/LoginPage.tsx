@@ -52,6 +52,7 @@ export default function LoginPage() {
         return;
       }
       window.location.hash = homeHashFor(user);
+      window.dispatchEvent(new Event('leyisa:login'));
     } catch (error) {
       // Après un échec : on garde l'identifiant et on vide le mot de passe.
       setPassword("");
@@ -142,7 +143,6 @@ export default function LoginPage() {
           </button>
 
           {status && <p className="login__status" role="alert">{status}</p>}
-          <a className="login__preview" href="#scolarite">Consulter l’espace de travail</a>
         </form>
       </section>
     </main>

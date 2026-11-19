@@ -12,7 +12,7 @@ export const SESSION_COOKIE_NAME = "leyisa_session";
 
 export const authConfig = {
   /** Durée de vie d'une session, en minutes (proposé : 8 h). */
-  sessionTtlMinutes: readInt("AUTH_SESSION_TTL_MINUTES", 480),
+  sessionTtlMinutes: Math.min(480,readInt("AUTH_SESSION_TTL_MINUTES", 480)),
   /** Échecs autorisés avant blocage, pour un même identifiant depuis une même adresse. */
   maxFailedAttempts: readInt("AUTH_MAX_FAILED_ATTEMPTS", 5),
   /** Durée du blocage temporaire, en minutes. Jamais de blocage définitif. */

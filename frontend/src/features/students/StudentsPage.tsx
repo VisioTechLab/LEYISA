@@ -1,3 +1,5 @@
+import { useSession } from '../../shared/session';
+import { can } from '../auth/authApi';
 import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import type { ClassOption, NewStudent, Student, StudentsDataSource } from "./types";
 import { loadStudentsDataSource } from "./studentsDataSource";
@@ -26,12 +28,14 @@ function normalizeSearchValue(value: string): string {
 }
 
 export function StudentsPage() {
+  const allowed=can(useSession(),"students.create");
   const [dataSource, setDataSource] = useState<StudentsDataSource | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [classes, setClasses] = useState<ClassOption[]>([]);
   const [form, setForm] = useState<NewStudent>(EMPTY_FORM);
   const [searchInput, setSearchInput] = useState("");
   const [appliedSearch, setAppliedSearch] = useState("");
+  const [page,setPage]=useState(1);
   const [loading, setLoading] = useState(true);
   const [canRegister, setCanRegister] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -91,14 +95,16 @@ export function StudentsPage() {
     setSuccess("");
   }
 
-  function handleSearch(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setAppliedSearch(searchInput);
+  async function loadPage(next:number,search=appliedSearch) {
+    if(!dataSource)return;setLoading(true);setError('');
+    try{setStudents(await dataSource.getStudents(search,next));setPage(next);setAppliedSearch(search);}catch(error){setError(error instanceof Error?error.message:'Recherche impossible.');}finally{setLoading(false);}
   }
+  function handleSearch(event: FormEvent<HTMLFormElement>) {event.preventDefault();void loadPage(1,searchInput);}
+
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (submissionInProgress.current || !dataSource) return;
+    if (!allowed || submissionInProgress.current || !dataSource) return;
     setError("");
     setSuccess("");
     if (!form.firstName.trim() || !form.lastName.trim() || !form.matricule.trim() || !form.birthDate || !form.classId || !form.schoolYearId) {
@@ -144,14 +150,14 @@ export function StudentsPage() {
               {loading ? <div className="state-message" role="status">Chargement des élèves…</div>
                 : error && !students.length ? <div className="state-message state-error" role="alert">{error}</div>
                   : filteredStudents.length ? (
-                    <div className="student-table-wrap"><table className="student-table">
+                    <div className="leyisa-table-wrap"><table className="student-table">
                       <thead><tr><th scope="col">Matricule</th><th scope="col">Élève</th><th scope="col">Date de naissance</th><th scope="col">Année</th><th scope="col">Classe</th></tr></thead>
                       <tbody>{filteredStudents.map((student) => <tr key={student.id}>
                         <td>{student.matricule}</td><td>{student.lastName} {student.firstName}</td><td>{displayDate(student.birthDate)}</td><td>{student.schoolYear}</td><td>{student.className}</td>
                       </tr>)}</tbody>
                     </table></div>
                   ) : <div className="state-message" role="status">{students.length ? "Aucun résultat" : "Aucun élève disponible."}</div>}
-              <p className="table-footnote">{filteredStudents.length} élève(s) affiché(s)</p>
+              <p className="table-footnote">{filteredStudents.length} élève(s) affiché(s) — page {page}</p><button disabled={loading||page===1} onClick={()=>void loadPage(page-1)}>Précédent</button> <button disabled={loading||students.length<50} onClick={()=>void loadPage(page+1)}>Suivant</button>
             </section>
 
             <section className="leyisa-card" aria-labelledby="form-title">
@@ -170,7 +176,8 @@ export function StudentsPage() {
                 {error && <p className="form-feedback feedback-error" role="alert">{error}</p>}
                 {success && <p className="form-feedback feedback-success" role="status">{success}</p>}
                 {!loading && dataSource && classes.length === 0 && !error && <p className="form-feedback feedback-error" role="alert">Aucune classe existante n’est disponible pour une inscription.</p>}
-                {canRegister && <button className="leyisa-button" type="submit" disabled={loading || submitting || !dataSource || classes.length === 0}>
+                {!allowed&&<p>Inscription réservée au secrétariat.</p>}
+                {canRegister && allowed && <button className="leyisa-button" type="submit" disabled={loading || submitting || !dataSource || classes.length === 0}>
                   {submitting ? <><span className="button-spinner" /> Enregistrement…</> : "Créer l’inscription"}
                 </button>}
                 <p className="form-note"><span className="required">*</span> Champs obligatoires</p>

@@ -26,7 +26,7 @@ Lire aussi C02 / SchoolContext (p. 19), les routes proposées (p. 20), les contr
 
 ## Limites et coordination
 
-La maquette de configuration ne détaille pas tous les formulaires de création ou modification ni les états vides, chargements et erreurs. Les compléter à partir des fiches US. Les rôles affichés ne remplacent pas les permissions serveur validées. Les bulletins doivent utiliser les résultats figés, sans recalcul, et porter DÉMONSTRATION - NON OFFICIEL.
+La maquette de configuration ne détaille pas tous les formulaires de création ou modification ni les états vides, chargements et erreurs. Les compléter à partir des fiches US. Les rôles affichés ne remplacent pas les permissions serveur validées. Les nouveaux bulletins doivent utiliser les résultats figés publiés, sans recalcul, et porter DEMO-V1.
 
 Consulter [les contrats](../contrats-api.md), [les règles métier](../regles-metier.md), [l’architecture](../architecture.md), [les responsabilités](../equipe.md) et [le skill de Jonathan](../../.agents/skills/leyisa-jonathan/SKILL.md).
 

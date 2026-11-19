@@ -55,6 +55,8 @@ model User {
   closedPeriods    ClassPeriod[] @relation("ClosedBy")
   publishedPeriods ClassPeriod[] @relation("PublishedBy")
   auditEntries     AuditEntry[]
+  calculationProfiles CalculationProfile[]
+  deliberations DeliberationDecision[]
 
   @@unique([id, kind])
   @@index([lastName, firstName])
@@ -90,6 +92,7 @@ model SchoolYear {
   endsOn   DateTime      @db.Date
   periods  Period[]
   classes  SchoolClass[]
+  calculationProfiles CalculationProfile[]
 }
 
 model Period {
@@ -98,13 +101,17 @@ model Period {
   code         String
   label        String
   position     Int
+  profile      String        @default("SECONDAIRE_TECHNIQUE")
+  kind         String        @default("PERIODE")
+  parentCode   String?
+  source       String        @default("DEMO_PROPOSE")
   startsOn     DateTime      @db.Date
   endsOn       DateTime      @db.Date
   schoolYear   SchoolYear    @relation(fields: [schoolYearId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   classPeriods ClassPeriod[]
 
-  @@unique([schoolYearId, code])
-  @@unique([schoolYearId, position])
+  @@unique([schoolYearId, profile, code])
+  @@unique([schoolYearId, profile, position])
   @@unique([id, schoolYearId])
 }
 
@@ -113,6 +120,11 @@ model SchoolClass {
   schoolYearId String         @db.Uuid
   code         String
   label        String
+  cycle        String         @default("SECONDAIRE_TECHNIQUE")
+  level        String         @default("")
+  optionCode   String?
+  programVersion String       @default("DEMO-V1.1")
+  programStatus String        @default("DEMO_PROPOSE")
   schoolYear   SchoolYear     @relation(fields: [schoolYearId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   subjects     ClassSubject[]
   enrollments  Enrollment[]
@@ -134,6 +146,10 @@ model ClassSubject {
   classId     String              @db.Uuid
   subjectId   String              @db.Uuid
   resultMaxScore Decimal           @default(20) @db.Decimal(10, 4)
+  position    Int                  @default(1)
+  groupCode   String?
+  componentMaxima Json             @default("{}")
+  source      String               @default("A_CONFIRMER")
   schoolClass SchoolClass         @relation(fields: [classId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   subject     Subject             @relation(fields: [subjectId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   assignments TeacherAssignment[]
@@ -149,6 +165,12 @@ model Student {
   userKind    UserKind     @default(STUDENT)
   matricule   String       @unique
   birthDate   DateTime?    @db.Date
+  postName    String       @default("")
+  sex         String?
+  birthPlace  String?
+  permanentNumber String?
+  guardian    String?
+  contact     String?
   user        User         @relation(fields: [userId, userKind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict)
   enrollments Enrollment[]
 
@@ -204,6 +226,9 @@ model Evaluation {
   classPeriodId String            @db.Uuid
   classId       String            @db.Uuid
   title         String
+  kind          String            @default("TRAVAIL_JOURNALIER")
+  decisionId    String?           @db.Uuid
+  decision      DeliberationDecision? @relation(fields:[decisionId],references:[id],onDelete:NoAction,onUpdate:NoAction)
   heldOn        DateTime          @db.Date
   maxScore      Decimal           @db.Decimal(10, 4)
   state         EvaluationState   @default(DRAFT)
@@ -226,6 +251,8 @@ model Grade {
   enrollmentId String     @db.Uuid
   classId      String     @db.Uuid
   score        Decimal?   @db.Decimal(10, 4)
+  status       String     @default("PRESENT")
+  appreciation Json?
   updatedAt    DateTime   @updatedAt @db.Timestamptz(3)
   evaluation   Evaluation @relation(fields: [evaluationId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
   enrollment   Enrollment @relation(fields: [enrollmentId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
@@ -288,6 +315,7 @@ model ResultSnapshot {
   classPeriod        ClassPeriod  @relation(fields: [classPeriodId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
   enrollment         Enrollment   @relation(fields: [enrollmentId, classId], references: [id, classId], onDelete: Restrict, onUpdate: Restrict)
   reportCards        ReportCard[]
+  decisions          DeliberationDecision[]
 
   @@unique([classPeriodId, enrollmentId])
   @@index([enrollmentId])
@@ -298,7 +326,7 @@ model ReportCard {
   resultSnapshotId String         @db.Uuid
   templateVersion  String
   generatedAt      DateTime       @default(now()) @db.Timestamptz(3)
-  notice           String         @default("DÉMONSTRATION - NON OFFICIEL")
+  notice           String         @default("DEMO-V1")
   resultSnapshot   ResultSnapshot @relation(fields: [resultSnapshotId], references: [id], onDelete: Restrict, onUpdate: Restrict)
 
   @@unique([resultSnapshotId, templateVersion])
@@ -308,11 +336,62 @@ model AuditEntry {
   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   actorId    String?  @db.Uuid
   action     String
+  details    Json?
   targetType String
-  targetId   String   @db.Uuid
+  targetId   String?  @db.Uuid
   occurredAt DateTime @default(now()) @db.Timestamptz(3)
   actor      User?    @relation(fields: [actorId], references: [id], onDelete: Restrict, onUpdate: Restrict)
 
   @@index([targetType, targetId, occurredAt])
   @@index([actorId, occurredAt])
+}
+
+model SchoolSettings {
+  id String @id @default("school")
+  identity Json @default("{}")
+  options Json @default("[]")
+  profiles Json @default("{}")
+}
+
+model LoginLimit {
+  key String @id
+  failures Int @default(0)
+  windowStart DateTime @default(now()) @db.Timestamptz(3)
+}
+
+model CalculationProfile {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ code String
+ version Int
+ schoolYearId String @db.Uuid
+ schoolYear SchoolYear @relation(fields:[schoolYearId],references:[id],onDelete:NoAction,onUpdate:NoAction)
+ cycle String
+ level String
+ optionCode String?
+ status String @default("DEMO_PROPOSE")
+ source String
+ config Json
+ createdById String @db.Uuid
+ createdAt DateTime @default(now()) @db.Timestamptz(3)
+ createdBy User @relation(fields:[createdById],references:[id],onDelete:NoAction,onUpdate:NoAction)
+ decisions DeliberationDecision[]
+ @@unique([code,version,schoolYearId,cycle,level])
+}
+
+model DeliberationDecision {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ resultSnapshotId String @db.Uuid
+ profileId String @db.Uuid
+ version Int
+ outcome String
+ reason String
+ courses Json @default("[]")
+ proposed Json
+ decidedById String @db.Uuid
+ createdAt DateTime @default(now()) @db.Timestamptz(3)
+ resultSnapshot ResultSnapshot @relation(fields:[resultSnapshotId],references:[id],onDelete:NoAction,onUpdate:NoAction)
+ profile CalculationProfile @relation(fields:[profileId],references:[id],onDelete:NoAction,onUpdate:NoAction)
+ decidedBy User @relation(fields:[decidedById],references:[id],onDelete:NoAction,onUpdate:NoAction)
+ evaluations Evaluation[]
+ @@unique([resultSnapshotId,version])
 }

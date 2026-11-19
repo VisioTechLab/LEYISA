@@ -14,6 +14,6 @@ Respecter la répartition officielle de `docs/equipe.md`. Toute modification d'u
 
 ## Livrer une tranche intégrable
 
-Réutiliser les contrats et conventions existants. Ne pas inventer de règles scolaires, coefficients, seuils, états ou endpoints officiels. Distinguer confirmé, proposé et non décidé dans la documentation. Utiliser uniquement des données fictives pour la démonstration et afficher `DÉMONSTRATION - NON OFFICIEL` sur chaque bulletin.
+Réutiliser les contrats et conventions existants. Ne pas inventer de règles scolaires, coefficients, seuils, états ou endpoints officiels. Distinguer confirmé, proposé et non décidé dans la documentation. Utiliser uniquement des données fictives pour la démonstration et afficher `DEMO-V1` sur chaque nouveau bulletin (décision explicite du responsable projet, prompt maître de finalisation). Préserver les anciennes migrations et documents historiques.
 
 Exécuter les contrôles disponibles et pertinents, `git diff --check`, puis vérifier les fichiers ajoutés et l'absence de secrets. Signaler explicitement les tests impossibles, les dépendances et les décisions ouvertes. Décrire les changements et les résultats dans la PR ; obtenir au moins une revue humaine d'un autre membre avant fusion.

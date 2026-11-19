@@ -16,11 +16,13 @@ import { AuthService, type PublicUser } from "./auth.service.js";
 import { permissionsFor } from "./permissions.js";
 import { type AuthRequest, CurrentAuth, SessionGuard } from "./session.guard.js";
 import { readCookie } from "./session-token.js";
+import { randomBytes } from "node:crypto";
+import { CSRF_COOKIE, Public, SessionOnly } from "./security.guard.js";
 
 interface CookieOptions {
   httpOnly: boolean;
   secure: boolean;
-  sameSite: "strict";
+  sameSite: "lax";
   path: string;
   expires?: Date;
 }
@@ -33,9 +35,8 @@ interface AuthResponse {
 }
 
 function cookieOptions(): CookieOptions {
-  // Strict : le cookie n'accompagne aucune requête venue d'un autre site.
-  // Un jeton CSRF complémentaire reste à décider avec Joel.
-  return { httpOnly: true, secure: authConfig.secureCookie, sameSite: "strict", path: "/" };
+  // C01 : SameSite=Lax, jeton CSRF et Origin contrôlés par la garde globale.
+  return { httpOnly: true, secure: authConfig.secureCookie, sameSite: "lax", path: "/" };
 }
 
 /** Les contrôles de l'écran ne suffisent jamais : tout est revérifié ici (R02). */
@@ -64,8 +65,18 @@ function publicUser(auth: AuthContext): PublicUser {
 export class AuthController {
   constructor(private readonly auth: AuthService) {}
 
+  @Public()
+  @Get("csrf")
+  csrf(@Res({ passthrough: true }) response: AuthResponse) {
+    const csrfToken = randomBytes(32).toString("hex");
+    response.cookie(CSRF_COOKIE, csrfToken, cookieOptions());
+    response.setHeader("Cache-Control", "no-store");
+    return { csrfToken };
+  }
+
   /** US-001 — Se connecter. */
   @Post("login")
+  @Public()
   @HttpCode(HttpStatus.OK)
   async login(
     @Req() request: AuthRequest,
@@ -87,6 +98,7 @@ export class AuthController {
 
   /** US-002 — Se déconnecter. */
   @Post("logout")
+  @SessionOnly()
   @UseGuards(SessionGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@CurrentAuth() auth: AuthContext, @Res({ passthrough: true }) response: AuthResponse): Promise<void> {
@@ -96,6 +108,7 @@ export class AuthController {
 
   /** Utilisateur courant : l'écran s'en sert pour savoir qui est connecté. */
   @Get("me")
+  @SessionOnly()
   @UseGuards(SessionGuard)
   me(@CurrentAuth() auth: AuthContext, @Res({ passthrough: true }) response: AuthResponse): { user: PublicUser } {
     response.setHeader("Cache-Control", "no-store");

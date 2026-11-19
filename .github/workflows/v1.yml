@@ -1,0 +1,72 @@
+name: Validation applicative V1
+on:
+  pull_request:
+  push:
+    branches: ['integration/**']
+permissions:
+  contents: read
+jobs:
+  application:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: leyisa_ci
+          POSTGRES_PASSWORD: ci-ephemeral-only
+          POSTGRES_DB: leyisa_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U leyisa_ci -d leyisa_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      LEYISA_DB_MODE: local
+      DATABASE_URL: postgresql://leyisa_ci:ci-ephemeral-only@127.0.0.1:5432/leyisa_ci
+      LEYISA_DEMO_CREDENTIALS_FILE: /tmp/leyisa-ci-credentials.json
+      LEYISA_V1_PROOFS: /tmp/leyisa-ci-proofs
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7, révision vérifiée
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Installer les dépendances verrouillées
+        run: |
+          npm ci --prefix backend
+          npm ci --prefix frontend
+      - name: Valider et compiler
+        run: |
+          npm run db:validate --prefix backend
+          npm run build --prefix backend
+          npm run build --prefix frontend
+          npm run lint --prefix frontend
+      - name: Migrer et préparer PostgreSQL isolé
+        run: |
+          npm run db:migrate --prefix backend
+          LEYISA_DEMO_SEED=1 npm run demo:seed --prefix backend
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f backend/prisma/access/shared-runtime.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE leyisa_ci_app LOGIN PASSWORD 'ci-app-ephemeral-only' IN ROLE leyisa_runtime;"
+      - name: Tests réels avec compte runtime limité
+        env:
+          DATABASE_URL: postgresql://leyisa_ci_app:ci-app-ephemeral-only@127.0.0.1:5432/leyisa_ci
+          LEYISA_V1_TESTS: '1'
+        run: |
+          npm test --prefix backend
+          npm run db:verify --prefix backend
+      - name: Contrôles de livraison
+        run: |
+          node backend/scripts/check-release.mjs
+          npm audit --prefix backend --audit-level=moderate
+          npm audit --prefix frontend --audit-level=moderate
+      - name: Conserver les preuves synthétiques
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: preuves-api-v1
+          path: /tmp/leyisa-ci-proofs/
+          if-no-files-found: ignore
+          retention-days: 7
+      # Aucun identifiant ni clé TLS de test dans le dossier de preuves.

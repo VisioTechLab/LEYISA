@@ -1,3 +1,4 @@
+import { api } from '../../shared/api';
 /** Accès à l'API NestJS du module évaluations. Aucune donnée n'est simulée ici. */
 
 export type EvaluationState = 'DRAFT' | 'SUBMITTED' | 'REJECTED' | 'VALIDATED';
@@ -23,9 +24,13 @@ export type GradeRow = {
   firstName: string;
   lastName: string;
   score: string | null;
+  status?:string;
+  appreciation?:Record<string,string>|null;
 };
 
 export type EvaluationDetail = EvaluationSummary & {
+  kind:string;
+  history?:Array<{attempt:number;status:string;reason:string|null}>;
   grades: GradeRow[];
   lastSubmission: {
     attempt: number;
@@ -49,25 +54,6 @@ export class ApiError extends Error {
   }
 }
 
-// En développement, Vite relaie /api vers le backend local (voir vite.config.ts).
-const API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') ?? '/api';
-
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  let response: Response;
-  try {
-    response = await fetch(`${API_URL}${path}`, init);
-  } catch {
-    throw new ApiError(0, 'Le serveur est injoignable. Vérifiez que le backend est démarré.');
-  }
-  const body: unknown = await response.json().catch(() => null);
-  if (!response.ok) {
-    const details = (body ?? {}) as { message?: unknown; errors?: unknown };
-    const message = typeof details.message === 'string' ? details.message : `Le serveur a répondu ${response.status}.`;
-    throw new ApiError(response.status, message, Array.isArray(details.errors) ? details.errors as GradeError[] : []);
-  }
-  return body as T;
-}
-
 export function listEvaluations() {
   return request<EvaluationSummary[]>('/evaluations');
 }
@@ -76,14 +62,18 @@ export function getEvaluation(id: string) {
   return request<EvaluationDetail>(`/evaluations/${encodeURIComponent(id)}`);
 }
 
-export function saveGrades(id: string, grades: { enrollmentId: string; score: string | null }[]) {
+export function saveGrades(id: string, version:number, grades: { enrollmentId: string; score: string | null }[]) {
   return request<EvaluationDetail>(`/evaluations/${encodeURIComponent(id)}/grades`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ grades }),
+    body: JSON.stringify({ grades,version }),
   });
 }
 
-export function submitEvaluation(id: string) {
-  return request<EvaluationDetail>(`/evaluations/${encodeURIComponent(id)}/submission`, { method: 'POST' });
+export function submitEvaluation(id: string,version:number) {
+  return request<EvaluationDetail>(`/evaluations/${encodeURIComponent(id)}/submission`, { method: 'POST',body:JSON.stringify({version}) });
+}
+
+async function request<T>(path:string,init?:RequestInit):Promise<T> {
+ try{return await api<T>(path,init);}catch(error){const e=error as {status?:number;message:string;details?:{errors?:GradeError[]}};throw new ApiError(e.status??0,e.message,e.details?.errors??[]);}
 }

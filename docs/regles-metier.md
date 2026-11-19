@@ -4,7 +4,7 @@
 
 - Application destinée à un seul établissement scolaire.
 - Parcours cible : connexion, configuration scolaire, inscription, affectation, évaluation, notes, validation, résultats et bulletin PDF.
-- Tout bulletin de démonstration porte **DÉMONSTRATION - NON OFFICIEL**.
+- Tout nouveau bulletin de démonstration porte **DEMO-V1** (décision D01, finalisation V1).
 - Franck contribue à la cohérence métier ; les responsables des domaines clarifient leurs règles ensemble.
 
 ## Proposé

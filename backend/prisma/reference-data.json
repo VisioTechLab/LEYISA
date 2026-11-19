@@ -1,0 +1,3678 @@
+{
+  "calendar": [
+    {
+      "cycle": "MATERNEL",
+      "type": "PERIODE",
+      "code": "P1",
+      "parent_ou_contexte": "T1",
+      "debut_inclus": "2026-09-01",
+      "fin_incluse": "2026-11-04",
+      "jours_selon_pdf": "47",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "PERIODE",
+      "code": "P2",
+      "parent_ou_contexte": "T1",
+      "debut_inclus": "2026-11-09",
+      "fin_incluse": "2026-12-22",
+      "jours_selon_pdf": "33",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "PERIODE",
+      "code": "P3",
+      "parent_ou_contexte": "T2",
+      "debut_inclus": "2027-01-11",
+      "fin_incluse": "2027-02-17",
+      "jours_selon_pdf": "28",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "PERIODE",
+      "code": "P4",
+      "parent_ou_contexte": "T2",
+      "debut_inclus": "2027-02-22",
+      "fin_incluse": "2027-03-20",
+      "jours_selon_pdf": "22",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "PERIODE",
+      "code": "P5",
+      "parent_ou_contexte": "T3",
+      "debut_inclus": "2027-04-05",
+      "fin_incluse": "2027-05-21",
+      "jours_selon_pdf": "32",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "PERIODE",
+      "code": "P6",
+      "parent_ou_contexte": "T3",
+      "debut_inclus": "2027-05-24",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "30",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "EVEIL",
+      "code": "E1",
+      "parent_ou_contexte": "T1",
+      "debut_inclus": "2026-12-10",
+      "fin_incluse": "2026-12-17",
+      "jours_selon_pdf": "6",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "EVEIL",
+      "code": "E2",
+      "parent_ou_contexte": "T2",
+      "debut_inclus": "2027-03-09",
+      "fin_incluse": "2027-03-16",
+      "jours_selon_pdf": "6",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "EVEIL",
+      "code": "E3",
+      "parent_ou_contexte": "T3",
+      "debut_inclus": "2027-06-11",
+      "fin_incluse": "2027-06-18",
+      "jours_selon_pdf": "6",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "TRIMESTRE",
+      "code": "T1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-09-01",
+      "fin_incluse": "2026-12-22",
+      "jours_selon_pdf": "80",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "TRIMESTRE",
+      "code": "T2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-01-11",
+      "fin_incluse": "2027-03-20",
+      "jours_selon_pdf": "50",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "TRIMESTRE",
+      "code": "T3",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-04-05",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "62",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CARTE_OU_PROCLAMATION",
+      "code": "RES1",
+      "parent_ou_contexte": "P1",
+      "debut_inclus": "2026-11-14",
+      "fin_incluse": "2026-11-14",
+      "jours_selon_pdf": "",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CARTE_OU_PROCLAMATION",
+      "code": "RES2",
+      "parent_ou_contexte": "P2",
+      "debut_inclus": "2026-12-22",
+      "fin_incluse": "2026-12-22",
+      "jours_selon_pdf": "",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CARTE_OU_PROCLAMATION",
+      "code": "RES3",
+      "parent_ou_contexte": "P3",
+      "debut_inclus": "2027-02-27",
+      "fin_incluse": "2027-02-27",
+      "jours_selon_pdf": "",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CARTE_OU_PROCLAMATION",
+      "code": "RES4",
+      "parent_ou_contexte": "P4",
+      "debut_inclus": "2027-03-20",
+      "fin_incluse": "2027-03-20",
+      "jours_selon_pdf": "",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CARTE_OU_PROCLAMATION",
+      "code": "RES5",
+      "parent_ou_contexte": "P5",
+      "debut_inclus": "2027-05-29",
+      "fin_incluse": "2027-05-29",
+      "jours_selon_pdf": "",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CARTE_OU_PROCLAMATION",
+      "code": "RES6",
+      "parent_ou_contexte": "P6",
+      "debut_inclus": "2027-07-02",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PERIODE",
+      "code": "P1",
+      "parent_ou_contexte": "T1",
+      "debut_inclus": "2026-09-01",
+      "fin_incluse": "2026-11-04",
+      "jours_selon_pdf": "56",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PERIODE",
+      "code": "P2",
+      "parent_ou_contexte": "T1",
+      "debut_inclus": "2026-11-09",
+      "fin_incluse": "2026-12-22",
+      "jours_selon_pdf": "38",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PERIODE",
+      "code": "P3",
+      "parent_ou_contexte": "T2",
+      "debut_inclus": "2027-01-11",
+      "fin_incluse": "2027-02-17",
+      "jours_selon_pdf": "32",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PERIODE",
+      "code": "P4",
+      "parent_ou_contexte": "T2",
+      "debut_inclus": "2027-02-22",
+      "fin_incluse": "2027-03-20",
+      "jours_selon_pdf": "24",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PERIODE",
+      "code": "P5",
+      "parent_ou_contexte": "T3",
+      "debut_inclus": "2027-04-05",
+      "fin_incluse": "2027-05-22",
+      "jours_selon_pdf": "38",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PERIODE",
+      "code": "P6",
+      "parent_ou_contexte": "T3",
+      "debut_inclus": "2027-05-24",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "34",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "EXAMEN",
+      "code": "E1",
+      "parent_ou_contexte": "T1",
+      "debut_inclus": "2026-12-10",
+      "fin_incluse": "2026-12-17",
+      "jours_selon_pdf": "7",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "EXAMEN",
+      "code": "E2",
+      "parent_ou_contexte": "T2",
+      "debut_inclus": "2027-03-09",
+      "fin_incluse": "2027-03-16",
+      "jours_selon_pdf": "7",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "EXAMEN",
+      "code": "E3",
+      "parent_ou_contexte": "T3",
+      "debut_inclus": "2027-06-11",
+      "fin_incluse": "2027-06-18",
+      "jours_selon_pdf": "7",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "TRIMESTRE",
+      "code": "T1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-09-01",
+      "fin_incluse": "2026-12-22",
+      "jours_selon_pdf": "94",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "TRIMESTRE",
+      "code": "T2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-01-11",
+      "fin_incluse": "2027-03-20",
+      "jours_selon_pdf": "56",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "TRIMESTRE",
+      "code": "T3",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-04-05",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "72",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PROCLAMATION",
+      "code": "RES1",
+      "parent_ou_contexte": "P1",
+      "debut_inclus": "2026-11-14",
+      "fin_incluse": "2026-11-14",
+      "jours_selon_pdf": "",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PROCLAMATION",
+      "code": "RES2",
+      "parent_ou_contexte": "P2",
+      "debut_inclus": "2026-12-22",
+      "fin_incluse": "2026-12-22",
+      "jours_selon_pdf": "",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PROCLAMATION",
+      "code": "RES3",
+      "parent_ou_contexte": "P3",
+      "debut_inclus": "2027-02-27",
+      "fin_incluse": "2027-02-27",
+      "jours_selon_pdf": "",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PROCLAMATION",
+      "code": "RES4",
+      "parent_ou_contexte": "P4",
+      "debut_inclus": "2027-03-20",
+      "fin_incluse": "2027-03-20",
+      "jours_selon_pdf": "",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PROCLAMATION",
+      "code": "RES5",
+      "parent_ou_contexte": "P5",
+      "debut_inclus": "2027-05-29",
+      "fin_incluse": "2027-05-29",
+      "jours_selon_pdf": "",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "PROCLAMATION",
+      "code": "RES6",
+      "parent_ou_contexte": "P6",
+      "debut_inclus": "2027-07-02",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PERIODE",
+      "code": "P1",
+      "parent_ou_contexte": "S1",
+      "debut_inclus": "2026-09-01",
+      "fin_incluse": "2026-11-04",
+      "jours_selon_pdf": "56",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PERIODE",
+      "code": "P2",
+      "parent_ou_contexte": "S1",
+      "debut_inclus": "2026-11-09",
+      "fin_incluse": "2027-02-17",
+      "jours_selon_pdf": "70",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PERIODE",
+      "code": "P3",
+      "parent_ou_contexte": "S2",
+      "debut_inclus": "2027-02-22",
+      "fin_incluse": "2027-04-24",
+      "jours_selon_pdf": "41",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PERIODE",
+      "code": "P4",
+      "parent_ou_contexte": "S2",
+      "debut_inclus": "2027-04-26",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "55",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "SEMESTRE",
+      "code": "S1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-09-01",
+      "fin_incluse": "2027-02-17",
+      "jours_selon_pdf": "126",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "SEMESTRE",
+      "code": "S2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-02-22",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "96",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "EXAMEN",
+      "code": "E1",
+      "parent_ou_contexte": "S1",
+      "debut_inclus": "2027-02-09",
+      "fin_incluse": "2027-02-17",
+      "jours_selon_pdf": "8",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "EXAMEN",
+      "code": "E2",
+      "parent_ou_contexte": "S2",
+      "debut_inclus": "2027-05-24",
+      "fin_incluse": "2027-06-01",
+      "jours_selon_pdf": "8",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "REPECHAGE",
+      "code": "REPECHAGE",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-06-15",
+      "fin_incluse": "2027-06-16",
+      "jours_selon_pdf": "2",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "DELIBERATION",
+      "code": "DELIB1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-06-10",
+      "fin_incluse": "2027-06-10",
+      "jours_selon_pdf": "",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "DELIBERATION",
+      "code": "DELIB2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-06-18",
+      "fin_incluse": "2027-06-18",
+      "jours_selon_pdf": "",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PROCLAMATION",
+      "code": "RES1",
+      "parent_ou_contexte": "P1",
+      "debut_inclus": "2026-11-14",
+      "fin_incluse": "2026-11-14",
+      "jours_selon_pdf": "",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PROCLAMATION",
+      "code": "RES2",
+      "parent_ou_contexte": "P2",
+      "debut_inclus": "2027-02-27",
+      "fin_incluse": "2027-02-27",
+      "jours_selon_pdf": "",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PROCLAMATION",
+      "code": "RES3",
+      "parent_ou_contexte": "P3",
+      "debut_inclus": "2027-04-29",
+      "fin_incluse": "2027-04-29",
+      "jours_selon_pdf": "",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "PROCLAMATION",
+      "code": "RES4",
+      "parent_ou_contexte": "P4",
+      "debut_inclus": "2027-07-02",
+      "fin_incluse": "2027-07-02",
+      "jours_selon_pdf": "",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CONGE",
+      "code": "DET1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-11-05",
+      "fin_incluse": "2026-11-07",
+      "jours_selon_pdf": "3",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "VACANCES",
+      "code": "VAC1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-12-23",
+      "fin_incluse": "2027-01-09",
+      "jours_selon_pdf": "13",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "CONGE",
+      "code": "DET2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-02-18",
+      "fin_incluse": "2027-02-20",
+      "jours_selon_pdf": "3",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "MATERNEL",
+      "type": "VACANCES",
+      "code": "VAC2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-03-22",
+      "fin_incluse": "2027-04-03",
+      "jours_selon_pdf": "12",
+      "page_pdf": "3"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "CONGE",
+      "code": "DET1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-11-05",
+      "fin_incluse": "2026-11-07",
+      "jours_selon_pdf": "3",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "VACANCES",
+      "code": "VAC1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-12-23",
+      "fin_incluse": "2027-01-09",
+      "jours_selon_pdf": "13",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "CONGE",
+      "code": "DET2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-02-18",
+      "fin_incluse": "2027-02-20",
+      "jours_selon_pdf": "3",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "PRIMAIRE",
+      "type": "VACANCES",
+      "code": "VAC2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-03-22",
+      "fin_incluse": "2027-04-03",
+      "jours_selon_pdf": "12",
+      "page_pdf": "4"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "CONGE",
+      "code": "DET1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-11-05",
+      "fin_incluse": "2026-11-07",
+      "jours_selon_pdf": "3",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "VACANCES",
+      "code": "VAC1",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2026-12-23",
+      "fin_incluse": "2027-01-09",
+      "jours_selon_pdf": "13",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "CONGE",
+      "code": "DET2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-02-18",
+      "fin_incluse": "2027-02-20",
+      "jours_selon_pdf": "3",
+      "page_pdf": "5"
+    },
+    {
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "type": "VACANCES",
+      "code": "VAC2",
+      "parent_ou_contexte": "ANNEE",
+      "debut_inclus": "2027-03-22",
+      "fin_incluse": "2027-04-03",
+      "jours_selon_pdf": "12",
+      "page_pdf": "5"
+    }
+  ],
+  "options": [
+    {
+      "section": "GENERALE",
+      "code_texte": "1.01",
+      "libelle_source": "LATIN – PHILO",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "GENERALE",
+      "code_texte": "1.02",
+      "libelle_source": "SCIENCES",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "GENERALE",
+      "code_texte": "1.04",
+      "libelle_source": "LATIN – GREC",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "GENERALE",
+      "code_texte": "1.05",
+      "libelle_source": "LATIN – MATHEMATIQUE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "NORMALE",
+      "code_texte": "2.01",
+      "libelle_source": "PEDAGOGIE – GENERALE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "NORMALE",
+      "code_texte": "2.02",
+      "libelle_source": "EDUCATION – PHYSIQUE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "NORMALE",
+      "code_texte": "2.03",
+      "libelle_source": "NORMALE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "NORMALE",
+      "code_texte": "2.04",
+      "libelle_source": "PEDAGOGIE – MATERNELLE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "NORMALE",
+      "code_texte": "2.05",
+      "libelle_source": "PEDAGOGIE – PRE-SCOLAIRE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "3.01",
+      "libelle_source": "COMMERCIALE ET GESTION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "3.02",
+      "libelle_source": "SECRETARIAT ADMINISTRATION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "4.01",
+      "libelle_source": "SOCIALE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "5.01",
+      "libelle_source": "ARTS PLASTIQUES",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "5.02",
+      "libelle_source": "ARTS DRAMATIQUES",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "5.03",
+      "libelle_source": "MUSIQUE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "5.04",
+      "libelle_source": "ESTHETIQUE ET COIFFURE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "5.05",
+      "libelle_source": "COIFFURE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "6.01",
+      "libelle_source": "COUPE ET COUTURE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "7.01",
+      "libelle_source": "HOTESSE D’ACCUEIL",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "7.02",
+      "libelle_source": "HOTELLERIE ET RESTAURATION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "7.03",
+      "libelle_source": "HEBERGEMENT",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "7.04",
+      "libelle_source": "TOURISME",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "8.01",
+      "libelle_source": "AGRICULTURE GENERALE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "8.02",
+      "libelle_source": "PECHE ET NAVIGATION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "8.03",
+      "libelle_source": "VETERINAIRE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "8.04",
+      "libelle_source": "INDUSTRIES AGRICOLES",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "8.05",
+      "libelle_source": "NUTRITION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "8.06",
+      "libelle_source": "FORESTERIE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.01",
+      "libelle_source": "MECANIQUE GENERALE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.02",
+      "libelle_source": "MECANIQUE MACHINES-OUTILS",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.03",
+      "libelle_source": "ELECTRICITE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.04",
+      "libelle_source": "CONSTRUCTION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.05",
+      "libelle_source": "CHIMIE – INDUSTRIELLE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.06",
+      "libelle_source": "ELECTRONIQUE – INDUSTRIELLE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.07",
+      "libelle_source": "IMPRIMAIRIE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.08",
+      "libelle_source": "COMMUTATION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.09",
+      "libelle_source": "RADIO – TRANSMISSION",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.10",
+      "libelle_source": "METEOROLOGIE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.11",
+      "libelle_source": "AVIATION – CIVILE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.12",
+      "libelle_source": "MECANIQUE – DESSIN",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.13",
+      "libelle_source": "HYDRO – PNEUMATIQUE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.14",
+      "libelle_source": "PETROCHIMIE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.15",
+      "libelle_source": "MECANIQUE – AUTOMOBILE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.16",
+      "libelle_source": "CONSTRUCTION – METALIQUE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.17",
+      "libelle_source": "MENUISERIE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.18",
+      "libelle_source": "MINES ET GEOLOGIE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.19",
+      "libelle_source": "METALLURGIE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.20",
+      "libelle_source": "DESSIN DE BATIMENT",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.21",
+      "libelle_source": "PLOMBERIE INSTALLATION SANITAIRE",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    },
+    {
+      "section": "TECHNIQUE",
+      "code_texte": "9.22",
+      "libelle_source": "MINES ET CARRIERES",
+      "statut_source": "Nomenclature communiquée par le responsable projet; provenance à confirmer"
+    }
+  ],
+  "weights": [
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "ALGEBRE",
+      "portee": "P1",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "ALGEBRE",
+      "portee": "P1",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "GEOMETRIE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "GEOMETRIE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "ARITHMETIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "ARITHMETIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "STATISTIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "STATISTIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "ANATOMIE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "ANATOMIE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "BOTANIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "BOTANIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "ZOOLOGIE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "ZOOLOGIE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_01.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "SCIENCE PHYSIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "SCIENCE PHYSIQUE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "TECHNOLOGIE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "TECHNOLOGIE",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "T.I.C",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "T.I.C",
+      "portee": "P1",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "ANGLAIS",
+      "portee": "P1",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "ANGLAIS",
+      "portee": "P1",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "FRANÇAIS",
+      "portee": "P1",
+      "maximum": "70",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "FRANÇAIS",
+      "portee": "P1",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "RELIGION",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "RELIGION",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "E.V.F",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "E.V.F",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "E.C.M",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "E.C.M",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_02.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "P1",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "HISTOIRE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "HISTOIRE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "DESSIN",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "DESSIN",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "MUSIQUE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "MUSIQUE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "7e EB",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "CTEB",
+      "code_option_texte": "",
+      "niveau": "8e EB",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "P1",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "CTEB_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_01.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "BIOL./MICRO.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "BIOL./MICRO.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "BIOL./MICRO.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "BIOL./MICRO.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "",
+      "statut": "NON_APPLICABLE_A_CONFIRMER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "EDUC. PHYS.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "EDUC. PHYS.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "EDUC. PHYS.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "EDUC. PHYS.",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_02.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "1re H",
+      "libelle_source": "LATIN",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "2e H",
+      "libelle_source": "LATIN",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "3e H",
+      "libelle_source": "LATIN",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "LATIN_PHILO",
+      "code_option_texte": "1.01",
+      "niveau": "4e H",
+      "libelle_source": "LATIN",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "LATIN_PHILO_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "ALGEBRE, STATISTIQUE ET ANALYSE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "ALGEBRE, STATISTIQUE ET ANALYSE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "ALGEBRE, STATISTIQUE ET ANALYSE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "ALGEBRE, STATISTIQUE ET ANALYSE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "GEOMETRIE ET TRIGONOMETRIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "GEOMETRIE ET TRIGONOMETRIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "GEOMETRIE ET TRIGONOMETRIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "GEOMETRIE ET TRIGONOMETRIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "DESSIN SCIENTIFIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "DESSIN SCIENTIFIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "DESSIN SCIENTIFIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "DESSIN SCIENTIFIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_01.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "MICROBIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "MICROBIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "MICROBIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "MICROBIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "GEOLOGIE/ECOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "GEOLOGIE/ECOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "GEOLOGIE/ECOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "GEOLOGIE/ECOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "INFORMATIQUE (T.I.C)",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "INFORMATIQUE (T.I.C)",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "INFORMATIQUE (T.I.C)",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "INFORMATIQUE (T.I.C)",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_02.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "SOCAF/ECOPOL/ESTHETIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "SOCAF/ECOPOL/ESTHETIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "SOCAF/ECOPOL/ESTHETIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "SOCAF/ECOPOL/ESTHETIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "1re H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "2e H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "3e H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "SCIENTIFIQUE",
+      "code_option_texte": "1.02",
+      "niveau": "4e H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "SCIENTIFIQUE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "RELIGION",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "E.V.F",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "E.C.M",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "INFORMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "EDUCATION PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_01.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "GEOGRAPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "HISTOIRE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "ECOPOL/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "ECOPOL/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "ECOPOL/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "ECOPOL/PHILOSOPHIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "BIOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "PEDAGOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "PEDAGOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "PEDAGOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "PEDAGOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "PSYCHOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "PSYCHOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "PSYCHOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "PSYCHOLOGIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "DIDACTIQUE GENERALE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "",
+      "statut": "NON_APPLICABLE_A_CONFIRMER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "DIDACTIQUE GENERALE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "DIDACTIQUE GENERALE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "DIDACTIQUE GENERALE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_02.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "DIDACTIQUE DES DISCIPLINES",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "",
+      "statut": "NON_APPLICABLE_A_CONFIRMER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "DIDACTIQUE DES DISCIPLINES",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "DIDACTIQUE DES DISCIPLINES",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "DIDACTIQUE DES DISCIPLINES",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "MATHEMATIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "PHYSIQUE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "CHIMIE",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "",
+      "statut": "NON_APPLICABLE_A_CONFIRMER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "1re H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "2e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "3e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "PEDAGOGIE_GENERALE",
+      "code_option_texte": "2.01",
+      "niveau": "4e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "PORTEE_A_CONFIRMER",
+      "maximum": "50",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "PEDAGOGIE_03.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "E.C.M",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "E.C.M",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "GEO. ECO.",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "GEO. ECO.",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "ED. PHYS.",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "ED. PHYS.",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "RELIGION",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "RELIGION",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "DROIT",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "DROIT",
+      "portee": "P1_PARTIEL",
+      "maximum": "10",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "MATH GEN. (ligne partiellement masquee)",
+      "portee": "P1_PARTIEL",
+      "maximum": "",
+      "statut": "NON_RENSEIGNE",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "MATH GEN. (ligne partiellement masquee)",
+      "portee": "P1_PARTIEL",
+      "maximum": "",
+      "statut": "NON_RENSEIGNE",
+      "capture": "COMMERCIALE_01.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "FISCALITE",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "FISCALITE",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "MATH FINANCIERE",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "MATH FINANCIERE",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "C.C.F",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "C.C.F",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "C.C.A",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "C.C.A",
+      "portee": "P1_PARTIEL",
+      "maximum": "20",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "DOCOM",
+      "portee": "P1_PARTIEL",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "DOCOM",
+      "portee": "P1_PARTIEL",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "ANGLAIS",
+      "portee": "P1_PARTIEL",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "ANGLAIS",
+      "portee": "P1_PARTIEL",
+      "maximum": "30",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_02.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "P1_PARTIEL",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_03.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "FRANÇAIS",
+      "portee": "P1_PARTIEL",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_03.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "INFORMAT.",
+      "portee": "P1_PARTIEL",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_03.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "INFORMAT.",
+      "portee": "P1_PARTIEL",
+      "maximum": "40",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_03.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "1re H",
+      "libelle_source": "COMPTABILITE GENERALE",
+      "portee": "P1_PARTIEL",
+      "maximum": "60",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_03.png"
+    },
+    {
+      "profil": "COMMERCIALE_GESTION",
+      "code_option_texte": "3.01",
+      "niveau": "2e H",
+      "libelle_source": "COMPTABILITE GENERALE",
+      "portee": "P1_PARTIEL",
+      "maximum": "60",
+      "statut": "TRANSCRIT_A_VERIFIER",
+      "capture": "COMMERCIALE_03.png"
+    }
+  ]
+}

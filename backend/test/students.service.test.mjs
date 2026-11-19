@@ -7,6 +7,7 @@ import {
 } from "@nestjs/common";
 import { StudentsService } from "../dist/modules/students/students.service.js";
 
+const auth={userId:"00000000-0000-4000-8000-000000000001",roles:["SEC"]};
 const input = {
   firstName: "Aline",
   lastName: "Mabiala",
@@ -28,6 +29,7 @@ test("register crée User, rôle, Student et Enrollment dans une transaction", a
     $transaction: async (callback) => {
       transactionCount += 1;
       return callback({
+        $queryRaw:async()=>[],classPeriod:{count:async()=>0},auditEntry:{create:async()=>({})},
         student: {
           create: async (args) => {
             createArgs = args;
@@ -38,7 +40,7 @@ test("register crée User, rôle, Student et Enrollment dans une transaction", a
     },
   });
 
-  assert.equal(await service.register(input), student);
+  assert.equal(await service.register(input,auth), student);
   assert.equal(transactionCount, 1);
   assert.equal(createArgs.data.user.create.kind, "STUDENT");
   assert.equal(createArgs.data.user.create.roles.create.role, "ELEVE");
@@ -56,7 +58,7 @@ test("register refuse une date invalide avant la transaction", async () => {
   });
 
   await assert.rejects(
-    () => service.register({ ...input, birthDate: "2013-02-31" }),
+    () => service.register({ ...input, birthDate: "2013-02-31" },auth),
     BadRequestException,
   );
   assert.equal(transactionCount, 0);
@@ -69,7 +71,7 @@ test("register convertit le matricule dupliqué en conflit", async () => {
     },
   });
 
-  await assert.rejects(() => service.register(input), ConflictException);
+  await assert.rejects(() => service.register(input,auth), ConflictException);
 });
 
 test("list retourne les élèves avec identité, classe et année scolaire", async () => {
@@ -84,7 +86,7 @@ test("list retourne les élèves avec identité, classe et année scolaire", asy
     },
   });
 
-  assert.equal(await service.list(), students);
+  assert.equal(await service.list(auth), students);
   assert.ok(query.include.user.select.firstName);
   assert.ok(query.include.enrollments.include.schoolClass.select.schoolYear.select.code);
 });
@@ -106,20 +108,20 @@ test("findById valide l’identifiant et retourne le dossier", async () => {
   let query;
   const service = makeService({
     student: {
-      findUnique: async (args) => {
+      findFirst: async (args) => {
         query = args;
         return student;
       },
     },
   });
 
-  assert.equal(await service.findById(input.classId), student);
+  assert.equal(await service.findById(input.classId,auth), student);
   assert.deepEqual(query.where, { id: input.classId });
 });
 
 test("findById signale un identifiant invalide et un élève absent", async () => {
-  const service = makeService({ student: { findUnique: async () => null } });
+  const service = makeService({ student: { findFirst: async () => null } });
 
-  await assert.rejects(() => service.findById("not-an-uuid"), BadRequestException);
-  await assert.rejects(() => service.findById(input.classId), NotFoundException);
+  await assert.rejects(() => service.findById("not-an-uuid",auth), BadRequestException);
+  await assert.rejects(() => service.findById(input.classId,auth), NotFoundException);
 });
