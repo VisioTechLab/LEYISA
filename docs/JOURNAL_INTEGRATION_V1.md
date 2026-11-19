@@ -38,3 +38,9 @@
 - Les quatre accueils présentent les données réelles avec tableau d’aperçu. W01, W09, W12, W19, W24–26 ont été rapprochés des maquettes existantes. Chromium a rejoué le parcours sur une nouvelle classe-période ouverte et produit les 31 captures de recette ainsi que le PDF. Relecture réussie après redémarrage.
 - Vérification finale locale avec PostgreSQL 18.7 et Node 24.22.1 : 76 tests réussis, aucun échec ni ignoré, 39 vérifications DB et droits du rôle runtime validés. Compilations des deux applications, lint, scan de motifs et comparaison du manifeste des preuves réussis.
 - La [matrice des 31 vues](CONFORMITE_WIREFRAMES_V1.md), le [rapport d’audit](AUDIT_RELEASE_V1.md), les [tests](TESTS_V1.md) et les [migrations](MIGRATIONS_V1.md) documentent les résultats et les écarts. Les verdicts se prononcent sur la démo locale, la démo hébergée et l’exploitation réelle.
+
+## 19 novembre 2026 — accès aux hébergeurs et protection de la démo V1.5
+
+- Vercel confirme le forfait Hobby actif pour `visio-tech-lab`. Le projet `leyisa-v1-5-demo` a été créé avec la protection de tous les déploiements. La relecture confirme Vite, Node.js 24.x, l’absence de liaison Git et zéro déploiement.
+- L’API Render rattache le service Free `leyisa-nestjs` au projet communiqué. Le déploiement de départ `dep-dbqss6tg1s2s73f9ld10` au commit `17df06bac29740a6b550f701c04056c63f870e29` reste en service.
+- Un bac à sable Vercel privé, éphémère et sans port public a vérifié TLS 1.3 et le nom du serveur sur le point d’accès PostgreSQL direct de `demo-v1`. Le test a rendu `Verification: OK` et s’est arrêté avant l’authentification. L’import et la recette en ligne restent ouverts. [Guide de mise en service](MISE_EN_SERVICE_DEMO_V1_5.md)

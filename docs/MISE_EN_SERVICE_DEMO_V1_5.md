@@ -6,11 +6,11 @@
 | --- | --- |
 | Candidat Git | `demo/leyisa-v1` pointe vers `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Les deux exécutions de CI sont vertes. La PR #8 est en brouillon et sans revue GitHub. |
 | Neon | Projet Free dédié **LEYISA School Demo V1**, région Frankfurt, PostgreSQL 18. Branche par défaut `demo-v1`, base `leyisa_demo` et rôle propriétaire `leyisa_demo_owner`. Le contrôle catalogue confirme zéro objet public et aucun registre de migration. |
-| Render | `leyisa-nestjs.onrender.com` répond en HTTPS. `/health` renvoie un message texte et les routes attendues `/api/v1/auth/csrf` et `/api/v1/bulletins` renvoient 404. L’autorisation du compte Render est requise pour confirmer la configuration et déployer V1.5. |
-| Vercel | L’accès au tableau de bord n’a pas été établi. La voie retenue pour les essais personnels non commerciaux est un projet Hobby avec déploiement manuel. |
+| Render | L’accès au projet indiqué a été vérifié. Le service `leyisa-nestjs` est sur le plan Free à Frankfurt. Son déploiement actif est `dep-dbqss6tg1s2s73f9ld10` au commit `17df06bac29740a6b550f701c04056c63f870e29`, sur `feat/render-nestjs`. Le service de départ répond en HTTPS sur `/health` et renvoie 404 sur les routes V1.5. |
+| Vercel | Le projet `visio-tech-lab/leyisa-v1-5-demo` est créé sur un espace Hobby actif. L’API confirme Vite, Node.js `24.x` et **Vercel Authentication → All Deployments**. Le projet n’est lié à aucun dépôt Git et ne contient encore aucun déploiement. |
 | Recette | Restauration locale intégrale vérifiée. Les URL de démonstration et la recette hébergée restent à valider. |
 
-Le feu vert de Melvin a été transmis par le demandeur pour la mise en ligne isolée. La revue humaine de la PR demeure nécessaire pour fusionner. L’accès PostgreSQL direct à la cible portée par le point d’accès Neon est refusé en TCP 5432 depuis l’environnement de préparation. Le point d’accès WebSocket répond, mais refuse la négociation TLS native de PostgreSQL. Le test s’est arrêté avant l’authentification. L’import et l’attribution des droits distants restent à exécuter depuis un poste habilité.
+Le feu vert de Melvin a été transmis par le demandeur pour la mise en ligne isolée. La revue humaine de la PR demeure nécessaire pour fusionner. Le TCP 5432 est refusé depuis le poste de préparation. Un test de connexion depuis un bac à sable Vercel éphémère à Frankfurt, sans port public, a négocié TLS 1.3 sur le point d’accès direct Neon et vérifié le nom du serveur. Ce test n’a utilisé aucun identifiant et n’a exécuté aucune requête SQL. L’autorisation d’utiliser ce poste de migration a été demandée avant tout transfert de la sauvegarde et de l’accès propriétaire.
 
 [CI et bundle récupérable](https://github.com/VisioTechLab/LEYISA/actions/runs/44574188498) · [PR #8](https://github.com/VisioTechLab/LEYISA/pull/8)
 
@@ -73,4 +73,4 @@ Sur le projet Hobby authentifié et protégé, lier le dossier exporté au proje
 
 Suspendre la saisie et révoquer les accès de présentation avant la bascule. Si une version hébergée précédente est compatible avec le schéma, rétablir ensemble le SHA Render et le déploiement Vercel correspondant. Conserver les sauvegardes et les références de chaque déploiement. Pour un retour touchant au schéma, restaurer le dump vérifié sur une nouvelle cible isolée, vérifier migrations, droits, compteurs et ouverture des PDF, puis faire approuver la bascule par Melvin. Un incident de session ou de relais impose la révocation des sessions et la rotation coordonnée des secrets. [Conservation et retour](MIGRATIONS_V1.md)
 
-**Verdict** — Démonstration locale validée sous réserves. Démonstration en ligne en attente de l’import direct et de l’accès aux hébergeurs. Exploitation scolaire réelle soumise à la validation des règles pédagogiques et de la recette en établissement.
+**Verdict** — Démonstration locale validée sous réserves. Accès aux hébergeurs vérifiés et projet Vercel protégé. La démonstration en ligne reste en attente de l’import direct, du déploiement et de la recette hébergée. Exploitation scolaire réelle soumise à la validation des règles pédagogiques et de la recette en établissement.
