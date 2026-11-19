@@ -57,3 +57,19 @@
 
 - Le service Free `leyisa-nestjs` a été réutilisé avec la branche `demo/leyisa-v1`, le répertoire `backend` et le déploiement automatique désactivé. Le déploiement manuel `dep-dbvklqflk1mc73e1cqog` est actif au SHA `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Render reçoit uniquement la chaîne groupée du compte runtime, avec TLS `verify-full`.
 - Depuis l’extérieur, `GET /health` répond 200 et un accès direct à `GET /api/v1/auth/csrf` sans authentification du relais répond 403.
+
+## 19 novembre 2026 — recette de la démonstration hébergée
+
+- Vercel Hobby a publié `dpl_5ZodKxRmTSRNPwsJWpy6GECVk8Sp`, associé au SHA `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Sans accès, l’alias stable et l’URL du déploiement redirigent vers Vercel (302). Avec l’accès de recette temporaire, l’accueil répond 200. L’accès technique a ensuite été révoqué et la protection a été recontrôlée. [Démonstration privée](https://leyisa-v1-5-demo.vercel.app/)
+- Deux sessions indépendantes du secrétariat ont téléchargé les cinq modèles V1.5 sur le domaine. Les PDF étaient identiques aux références locales, en téléchargement et sous `private, no-store`. Les sessions ADM, DIR et ENS ont également été vérifiées. Refus contrôlés sans session (401), hors rôle (403), sans jeton CSRF (403) et avec origine étrangère (403). La déconnexion renvoie 204 et le rechargement ne rétablit pas la session révoquée.
+- Sur une classe de recette fictive distincte, l’inscription a persisté et le doublon a renvoyé 409. Deux enseignants ont saisi les notes ; zéro a été accepté et 21/20 refusé. La direction a rejeté, validé la correction, clôturé le résultat 15/40 et publié. Le bulletin a renvoyé 404 avant publication, 403 à l’enseignant et 200 au secrétariat après publication. Le premier essai avait déclenché le verrou du programme après le début des évaluations. La recette a été rejouée avec les deux matières configurées d’abord.
+- Render a confirmé le redémarrage du service. Le point de santé a répondu 200 ensuite. La lecture de l’inscription et un nouveau téléchargement ont confirmé la persistance. SHA-256 du bulletin de recette avant et après redémarrage `4c2785952be97ac1af4ac30c7f88d9d2fa55e076f778e3cf22a080d0b9638531`.
+- Sur Chromium tactile, à 390 × 844, le formulaire se présente sans débordement. La connexion, le rechargement et la déconnexion 204 ont réussi sur le site hébergé. Confirmation nominative sur le téléphone de Melvin en attente. Les identifiants sont à remettre par coffre nominatif avec expiration. [Procédure et accès invité](MISE_EN_SERVICE_DEMO_V1_5.md#3-recette-hébergée-avec-melvin)
+
+| PDF V1.5 téléchargé | SHA-256 en ligne, identique à la référence |
+| --- | --- |
+| Carte maternelle | `ff7bc3440509786e54a66449bb2a3424f642727a3e8caabe1b1cb549699b1fb3` |
+| Bulletin primaire | `5e5f7e2a4fe01170b3849be940a688ac6d41c217aff4b508df3d8c5ff924fc4d` |
+| Bulletin secondaire | `492c7c41216e57f11fad3200e6dfd69b9d88c0b23c75f590b4067ec65b150457` |
+| Bulletin secondaire annuel | `4de7f4f763279dba72ccb96794ca1634822b8e6496bcc5075f56b68ff1e59712` |
+| Repêchage | `a0b5b1664d1cf8416ba13b063df0d8e9dce95627cb9099ffd35b6d77ed230e68` |
