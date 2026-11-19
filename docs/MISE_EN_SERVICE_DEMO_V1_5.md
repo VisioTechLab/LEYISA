@@ -6,7 +6,7 @@
 | --- | --- |
 | Candidat Git | `demo/leyisa-v1` pointe vers `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Les deux exécutions de CI sont vertes. La PR #8 est en brouillon et sans revue GitHub. |
 | Neon | Projet Free dédié **LEYISA School Demo V1**, région Frankfurt, PostgreSQL 18. Branche par défaut `demo-v1`, base `leyisa_demo` et rôle propriétaire `leyisa_demo_owner`. Le contrôle catalogue confirme zéro objet public et aucun registre de migration. |
-| Render | L’accès au tableau de bord n’a pas été établi. La disponibilité de `leyisa-nestjs` pour la démonstration reste à confirmer. |
+| Render | `leyisa-nestjs.onrender.com` répond en HTTPS. `/health` renvoie un message texte et les routes attendues `/api/v1/auth/csrf` et `/api/v1/bulletins` renvoient 404. L’autorisation du compte Render est requise pour confirmer la configuration et déployer V1.5. |
 | Vercel | L’accès au tableau de bord n’a pas été établi. La voie retenue pour les essais personnels non commerciaux est un projet Hobby avec déploiement manuel. |
 | Recette | Restauration locale intégrale vérifiée. Les URL de démonstration et la recette hébergée restent à valider. |
 
