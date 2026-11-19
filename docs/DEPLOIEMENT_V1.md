@@ -1,3 +1,5 @@
+> Mise à jour de reprise qualité : une V1.5 distincte est signalée par le responsable projet à https://leyisa-v1-5-demo.vercel.app/. La reprise `fix/v1-quality-recovery` n’y est pas encore publiée. Son déploiement Git Vercel reste désactivé ; mise à jour du frontend et du backend uniquement après autorisation explicite, sans migration/seed Neon pour ce correctif. Le reste du document décrit la préparation historique et ne constitue pas un constat actuel des services hébergés.
+
 # Préparation du déploiement de démonstration
 
 ## État du 19 novembre 2026

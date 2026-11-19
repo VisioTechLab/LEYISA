@@ -12,7 +12,9 @@ export function ValidationPage() { return <ResultsModulePage initialView="queue"
 export function FinalResultsPage() { return <ResultsModulePage initialView="final" />; }
 
 export function ResultsModulePage({ initialView }: { initialView: View }) {
-  const [view, setView] = useState<View>(initialView);
+  // La route est l’unique source de la vue : aucun formulaire transitoire
+  // ne doit accepter une saisie avant son démontage par le changement de hash.
+  const view = initialView;
   const [periods, setPeriods] = useState<Period[]>([]);
   const [periodId, setPeriodId] = useWorkspaceState('results-period', '');
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -112,7 +114,6 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
       const result = await resultsApi.preview(classPeriodId);
       if (!mounted.current || classPeriodId !== activeClassPeriod.current) return;
       setPreview(result);
-      if (view !== 'close') setView('preview');
       setMessage('');
     } catch (error) {
       if (mounted.current && classPeriodId === activeClassPeriod.current) { setFailed(true); setMessage(errorMessage(error)); }
@@ -155,7 +156,6 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
       const result = await resultsApi.finalResults(classPeriodId);
       if (!mounted.current || classPeriodId !== activeClassPeriod.current) return;
       setFinalResults(result);
-      setView('final');
       setMessage('');
     } catch (error) {
       if (mounted.current && classPeriodId === activeClassPeriod.current) { setFailed(true); setMessage(errorMessage(error)); }
@@ -179,10 +179,10 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
     {loading && <p role="status">Chargement des soumissions et des classes…</p>}{message && <p className="results-message" role={failed ? 'alert' : 'status'}>{message}</p>}
     {view === 'queue' && !loading && !failed && <Queue submissions={submissions} onOpen={openDetail} />}
     {(view==='detail'||view==='reject')&&!selected&&!loading&&!failed&&<Queue submissions={submissions} onOpen={openDetail}/>}
-    {view === 'detail' && selected && <Detail submission={selected} pending={pendingDecision} onApprove={approve} onReject={() => { setView('reject'); window.location.hash='#rejet'; }} />}
-    {view === 'reject' && selected && <Reject submission={selected} pending={pendingDecision} reason={reason} onReason={setReason} onCancel={() => { setView('detail'); window.location.hash='#detail-soumission'; }} onConfirm={reject} />}
-    {view === 'preview' && <PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={() => { setView('close'); window.location.hash='#cloture'; }} />}
-    {view==='close'&&!preview&&<PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={()=>{setView('close');window.location.hash='#cloture';}}/>}
+    {view === 'detail' && selected && <Detail submission={selected} pending={pendingDecision} onApprove={approve} onReject={() => { window.location.hash='#rejet'; }} />}
+    {view === 'reject' && selected && <Reject submission={selected} pending={pendingDecision} reason={reason} onReason={setReason} onCancel={() => { window.location.hash='#detail-soumission'; }} onConfirm={reject} />}
+    {view === 'preview' && <PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={() => { window.location.hash='#cloture'; }} />}
+    {view==='close'&&!preview&&<PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={()=>{window.location.hash='#cloture';}}/>}
     {view === 'close' && <CloseScreen preview={preview} confirmed={confirmed} pending={pendingDecision} onConfirm={setConfirmed} onClose={closePeriod} />}
     {view === 'final' && <>
       <FinalScreen results={finalResults} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadFinal} onPublish={publishResults} pending={pendingDecision} />

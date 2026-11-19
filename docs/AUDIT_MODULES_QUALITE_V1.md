@@ -71,3 +71,9 @@ PostgreSQL18 sur127.0.0.1:55433 ; base `leyisa_quality_modules_release_20261119`
 ## Suite et revue
 
 Conserver les sources et sauvegardes ; faire revoir la branche et les contrats communs avant intégration. Poursuivre les scénarios d'édition des autres modules et le modèle primaire selon références/décision explicite, sans déduire d'une CI verte que tous les cas d'exploitation sont couverts. Aucune fusion, suppression, migration partagée ou mise en ligne ne découle de ce contre-audit.
+
+## Q11 — contre-audit après la première CI
+
+Le premier run distant de86be613 a réellement exécuté26 tests navigateur :25 réussis,1 en échec lors du rejet. Défaut confirmé, gravité moyenne, confiance haute : une double gestion de la vue (état local puis route) montait le formulaire avant son démontage de navigation ; le motif saisi pouvait être perdu. Le bouton restait désactivé. Source : `frontend/src/features/results/ResultsModulePage.tsx`, ancien état `view` et callbacks rejet/clôture.
+
+Correction : la route devient l’unique source de la vue. Aucun calcul, contrat, droit ni modèle ne change. Les assertions contrôlent la conservation du motif et de la confirmation après navigation. Le parcours corrigé a réussi localement1/1 jusqu’au PDF ; build et lint réussis. [Journal et captures](reprise-ci/README.md). La suite complète et le nouveau run distant restent à observer après le push ; l’échec initial n’est pas requalifié en succès.

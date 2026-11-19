@@ -1,0 +1,73 @@
+diff --git a/frontend/src/features/results/ResultsModulePage.tsx b/frontend/src/features/results/ResultsModulePage.tsx
+index 1c98993..37cabfd 100644
+--- a/frontend/src/features/results/ResultsModulePage.tsx
++++ b/frontend/src/features/results/ResultsModulePage.tsx
+@@ -12,7 +12,9 @@ export function ValidationPage() { return <ResultsModulePage initialView="queue"
+ export function FinalResultsPage() { return <ResultsModulePage initialView="final" />; }
+ 
+ export function ResultsModulePage({ initialView }: { initialView: View }) {
+-  const [view, setView] = useState<View>(initialView);
++  // La route est l’unique source de la vue : aucun formulaire transitoire
++  // ne doit accepter une saisie avant son démontage par le changement de hash.
++  const view = initialView;
+   const [periods, setPeriods] = useState<Period[]>([]);
+   const [periodId, setPeriodId] = useWorkspaceState('results-period', '');
+   const [submissions, setSubmissions] = useState<Submission[]>([]);
+@@ -112,7 +114,6 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
+       const result = await resultsApi.preview(classPeriodId);
+       if (!mounted.current || classPeriodId !== activeClassPeriod.current) return;
+       setPreview(result);
+-      if (view !== 'close') setView('preview');
+       setMessage('');
+     } catch (error) {
+       if (mounted.current && classPeriodId === activeClassPeriod.current) { setFailed(true); setMessage(errorMessage(error)); }
+@@ -155,7 +156,6 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
+       const result = await resultsApi.finalResults(classPeriodId);
+       if (!mounted.current || classPeriodId !== activeClassPeriod.current) return;
+       setFinalResults(result);
+-      setView('final');
+       setMessage('');
+     } catch (error) {
+       if (mounted.current && classPeriodId === activeClassPeriod.current) { setFailed(true); setMessage(errorMessage(error)); }
+@@ -179,10 +179,10 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
+     {loading && <p role="status">Chargement des soumissions et des classes…</p>}{message && <p className="results-message" role={failed ? 'alert' : 'status'}>{message}</p>}
+     {view === 'queue' && !loading && !failed && <Queue submissions={submissions} onOpen={openDetail} />}
+     {(view==='detail'||view==='reject')&&!selected&&!loading&&!failed&&<Queue submissions={submissions} onOpen={openDetail}/>}
+-    {view === 'detail' && selected && <Detail submission={selected} pending={pendingDecision} onApprove={approve} onReject={() => { setView('reject'); window.location.hash='#rejet'; }} />}
+-    {view === 'reject' && selected && <Reject submission={selected} pending={pendingDecision} reason={reason} onReason={setReason} onCancel={() => { setView('detail'); window.location.hash='#detail-soumission'; }} onConfirm={reject} />}
+-    {view === 'preview' && <PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={() => { setView('close'); window.location.hash='#cloture'; }} />}
+-    {view==='close'&&!preview&&<PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={()=>{setView('close');window.location.hash='#cloture';}}/>}
++    {view === 'detail' && selected && <Detail submission={selected} pending={pendingDecision} onApprove={approve} onReject={() => { window.location.hash='#rejet'; }} />}
++    {view === 'reject' && selected && <Reject submission={selected} pending={pendingDecision} reason={reason} onReason={setReason} onCancel={() => { window.location.hash='#detail-soumission'; }} onConfirm={reject} />}
++    {view === 'preview' && <PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={() => { window.location.hash='#cloture'; }} />}
++    {view==='close'&&!preview&&<PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={()=>{window.location.hash='#cloture';}}/>}
+     {view === 'close' && <CloseScreen preview={preview} confirmed={confirmed} pending={pendingDecision} onConfirm={setConfirmed} onClose={closePeriod} />}
+     {view === 'final' && <>
+       <FinalScreen results={finalResults} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadFinal} onPublish={publishResults} pending={pendingDecision} />
+diff --git a/frontend/tests/modules.spec.ts b/frontend/tests/modules.spec.ts
+index c7b30cc..5173a46 100644
+--- a/frontend/tests/modules.spec.ts
++++ b/frontend/tests/modules.spec.ts
+@@ -201,7 +201,10 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
+  await page.locator('.results-list article').filter({hasText:evaluations[0].title}).getByRole('button',{name:'Ouvrir',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'Détail d’une soumission'})).toBeVisible();await capture(page,'W20-detail-reel');
+  await page.getByRole('button',{name:'Rejeter avec motif',exact:true}).click();
+- await page.getByLabel('Motif du rejet').fill('Vérifier la première note fictive.');await capture(page,'W21-rejet-reel');
++ await page.getByLabel('Motif du rejet').fill('Vérifier la première note fictive.');
++ await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#rejet');
++ await expect(page.getByLabel('Motif du rejet')).toHaveValue('Vérifier la première note fictive.');
++ await expect(page.getByRole('button',{name:'Confirmer le rejet',exact:true})).toBeEnabled();await capture(page,'W21-rejet-reel');
+  const rejected=page.waitForResponse(r=>r.url().endsWith('/reject')&&r.request().method()==='POST');
+  await page.getByRole('button',{name:'Confirmer le rejet',exact:true}).click();expect((await rejected).status()).toBe(200);
+  await login(page,'ens-demo-live-1');await page.goto(`/#corrections?id=${evaluations[0].id}`);
+@@ -222,7 +225,9 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
+  await page.getByRole('button',{name:'Continuer vers clôture'}).click();
+  await expect(page.getByLabel('Je confirme la clôture de la période.')).toBeVisible();
+  await expect(page.getByRole('button',{name:'Confirmer la clôture',exact:true})).toBeDisabled();
+- await page.getByLabel('Je confirme la clôture de la période.').check();await capture(page,'W23-confirmation-reelle');
++ await page.getByLabel('Je confirme la clôture de la période.').check();
++ await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#cloture');
++ await expect(page.getByLabel('Je confirme la clôture de la période.')).toBeChecked();await capture(page,'W23-confirmation-reelle');
+  const closed=page.waitForResponse(r=>r.url().endsWith(`/class-periods/${classPeriod.id}/close`)&&r.request().method()==='POST');
+  await page.getByRole('button',{name:'Confirmer la clôture',exact:true}).click();expect((await closed).status()).toBe(201);
+  await expect(page.getByRole('button',{name:'Publier les résultats clôturés'})).toBeVisible();

@@ -201,7 +201,10 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
  await page.locator('.results-list article').filter({hasText:evaluations[0].title}).getByRole('button',{name:'Ouvrir',exact:true}).click();
  await expect(page.getByRole('heading',{name:'Détail d’une soumission'})).toBeVisible();await capture(page,'W20-detail-reel');
  await page.getByRole('button',{name:'Rejeter avec motif',exact:true}).click();
- await page.getByLabel('Motif du rejet').fill('Vérifier la première note fictive.');await capture(page,'W21-rejet-reel');
+ await page.getByLabel('Motif du rejet').fill('Vérifier la première note fictive.');
+ await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#rejet');
+ await expect(page.getByLabel('Motif du rejet')).toHaveValue('Vérifier la première note fictive.');
+ await expect(page.getByRole('button',{name:'Confirmer le rejet',exact:true})).toBeEnabled();await capture(page,'W21-rejet-reel');
  const rejected=page.waitForResponse(r=>r.url().endsWith('/reject')&&r.request().method()==='POST');
  await page.getByRole('button',{name:'Confirmer le rejet',exact:true}).click();expect((await rejected).status()).toBe(200);
  await login(page,'ens-demo-live-1');await page.goto(`/#corrections?id=${evaluations[0].id}`);
@@ -222,7 +225,9 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
  await page.getByRole('button',{name:'Continuer vers clôture'}).click();
  await expect(page.getByLabel('Je confirme la clôture de la période.')).toBeVisible();
  await expect(page.getByRole('button',{name:'Confirmer la clôture',exact:true})).toBeDisabled();
- await page.getByLabel('Je confirme la clôture de la période.').check();await capture(page,'W23-confirmation-reelle');
+ await page.getByLabel('Je confirme la clôture de la période.').check();
+ await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#cloture');
+ await expect(page.getByLabel('Je confirme la clôture de la période.')).toBeChecked();await capture(page,'W23-confirmation-reelle');
  const closed=page.waitForResponse(r=>r.url().endsWith(`/class-periods/${classPeriod.id}/close`)&&r.request().method()==='POST');
  await page.getByRole('button',{name:'Confirmer la clôture',exact:true}).click();expect((await closed).status()).toBe(201);
  await expect(page.getByRole('button',{name:'Publier les résultats clôturés'})).toBeVisible();

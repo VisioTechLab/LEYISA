@@ -1,0 +1,16 @@
+
+> leyisa-frontend@0.0.0 test:e2e
+> playwright test tests/modules.spec.ts --grep Parcours métier
+
+
+Running 1 test using 1 worker
+
+(node:64033) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Parcours local : création de l’évaluation 1.
+Parcours local : grille 1 créée.
+Parcours local : création de l’évaluation 2.
+Parcours local : grille 2 créée.
+  ✓  1 tests/modules.spec.ts:145:1 › Parcours métier navigateur : affectation, zéro, rejet, correction, validation, clôture, publication et PDF (48.3s)
+
+  1 passed (52.6s)
