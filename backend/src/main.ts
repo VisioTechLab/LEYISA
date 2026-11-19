@@ -3,6 +3,7 @@ import { existsSync } from "node:fs";
 import { loadEnvFile } from "node:process";
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import { createRenderProxyMiddleware } from "./common/render-proxy.js";
 
 async function bootstrap(): Promise<void> {
   const envFile = new URL("../../.env", import.meta.url);
@@ -18,6 +19,9 @@ async function bootstrap(): Promise<void> {
     throw new Error("PORT doit être un entier compris entre 1 et 65535.");
   }
 
+  const renderProxy = process.env.LEYISA_DEPLOYMENT === "render"
+    ? createRenderProxyMiddleware(process.env.LEYISA_PROXY_SECRET)
+    : undefined;
   const app = await NestFactory.create(AppModule, { abortOnError: false });
   app.setGlobalPrefix("api/v1", { exclude: ["health"] });
   app.use((_req: unknown, res: { setHeader(name: string, value: string): void }, next: () => void) => {
@@ -26,6 +30,7 @@ async function bootstrap(): Promise<void> {
     res.setHeader("Referrer-Policy", "same-origin");
     next();
   });
+  if (renderProxy) app.use(renderProxy);
   app.enableShutdownHooks();
   try {
     await app.listen(port, host);

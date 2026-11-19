@@ -24,3 +24,9 @@
 - Le jeton CSRF reste utilisable dans le premier onglet quand un second le charge. Le test API ajouté a passé avec l’ancienne session toujours valide. Les bulletins V1.3 affichent la mention DEMO-V1 et conservent une pagination sobre.
 - Nouvelle base vierge, Node 24.22.1, PostgreSQL 18.7. **72 tests réussis**, **0 échec**, **0 ignoré**, **39 contrôles DB réussis** et contrôle du rôle runtime réussi. Builds, lint et validation de schéma réussis.
 - Chromium 156 a capturé les 31 vues à 1440 × 1000 et la liste élèves à 390 et 320 px. Le scénario de saisie, rejet, correction, validation, clôture et publication a produit un PDF. Après redémarrage de NestJS, les empreintes des notes, des résultats et du PDF sont identiques. [Preuves](preuves/)
+
+## Préparation Render, Vercel et Neon
+
+- Blueprint Render NestJS avec déploiement manuel, contrôle de santé et variables de coffre. Configuration Vercel Vite en même origine, relais serveur HTTPS authentifié, cookies conservés et réponses privées.
+- Trois tests ciblés du relais réussis. Ils couvrent le refus API direct, le contrôle de santé, le transfert de l’IP attestée par Vercel et des cookies, la réponse PDF sans exposition d’en-têtes internes, et le refus des redirections amont.
+- Neon a été consulté en lecture seule. Cinq branches ont été observées dans le projet indiqué et la cible `demo-v1` reste à créer. Aucun service distant ni aucune base Neon n’a été modifié. [Guide de préparation](DEPLOIEMENT_V1.md)

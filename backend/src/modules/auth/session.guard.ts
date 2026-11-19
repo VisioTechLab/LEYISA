@@ -12,6 +12,7 @@ import { readCookie } from "./session-token.js";
 
 /** Champs de la requête HTTP utilisés par le module (évite une dépendance aux types Express). */
 export interface AuthRequest {
+  leyisaClientIp?: string;
   headers: { cookie?: string; origin?: string; "x-csrf-token"?: string };
   method?: string;
   ip?: string;

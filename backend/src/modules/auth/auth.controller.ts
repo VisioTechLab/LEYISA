@@ -88,7 +88,7 @@ export class AuthController {
     const result = await this.auth.login({
       login,
       password,
-      ip: request.ip ?? "inconnue",
+      ip: request.leyisaClientIp ?? request.ip ?? "inconnue",
       previousToken: readCookie(request.headers.cookie, SESSION_COOKIE_NAME),
     });
     response.cookie(SESSION_COOKIE_NAME, result.token, { ...cookieOptions(), expires: result.expiresAt });

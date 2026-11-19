@@ -1,0 +1,27 @@
+services:
+  - name: leyisa-school-v1-demo
+    type: web
+    runtime: node
+    branch: integration/leyisa-v1-cloud
+    rootDir: backend
+    autoDeployTrigger: "off"
+    buildCommand: npm ci --include=dev && npm run db:validate && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "24.22.1"
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: LEYISA_DEPLOYMENT
+        value: render
+      - key: LEYISA_DB_MODE
+        value: shared
+      - key: APP_ORIGINS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: LEYISA_PROXY_SECRET
+        sync: false
