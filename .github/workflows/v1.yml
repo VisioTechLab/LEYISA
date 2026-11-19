@@ -2,7 +2,7 @@ name: Validation applicative V1
 on:
   pull_request:
   push:
-    branches: ['integration/**']
+    branches: ['integration/**', 'fix/bulletins-conformite-v1']
 permissions:
   contents: read
 jobs:
@@ -57,6 +57,11 @@ jobs:
           npm test --prefix backend
           npm run db:verify --prefix backend
           npm run db:check-access --prefix backend
+      - name: Contrôler la géométrie et rastériser les formulaires A4
+        run: |
+          python3 -m venv "$RUNNER_TEMP/bulletin-pdf"
+          "$RUNNER_TEMP/bulletin-pdf/bin/pip" install --only-binary=:all: 'PyMuPDF==1.26.6'
+          "$RUNNER_TEMP/bulletin-pdf/bin/python" backend/scripts/verify-bulletin-pdfs.py "$LEYISA_V1_PROOFS"
       - name: Contrôles de livraison
         run: |
           node backend/scripts/check-release.mjs
@@ -69,11 +74,11 @@ jobs:
           name: preuves-api-v1
           path: /tmp/leyisa-ci-proofs/
           if-no-files-found: ignore
-          retention-days: 7
+          retention-days: 30
       # Aucun identifiant ni clé TLS de test dans le dossier de preuves.
 
   sauvegarde-git:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/integration/leyisa-v1-cloud'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/integration/leyisa-v1-cloud' || github.ref == 'refs/heads/fix/bulletins-conformite-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

@@ -114,7 +114,7 @@ test('T15 — dossier séparé, réinscription concurrente et atomicité',{skip}
  assert.deepEqual(calls.map(r=>r.status).sort(),[201,409]);assert.equal(await db.enrollment.count({where:{studentId:student.id}}),1);
 });
 
-async function workflow(code,{publish=true,components=['P1']}={}) {
+async function workflow(code,{publish=true,components=['P1'],unpublished=[]}={}) {
  const schoolClass=await db.schoolClass.findFirst({where:{code},include:{subjects:{include:{assignments:{include:{teacher:true}}}},classPeriods:{include:{period:true}}}});
  assert.ok(schoolClass);const produced=[];
  for(const component of components) {
@@ -147,7 +147,7 @@ async function workflow(code,{publish=true,components=['P1']}={}) {
    const close=await Promise.all([dir.request(`/results/class-periods/${cp.id}/close`,'POST',{confirmed:true}),dir.request(`/results/class-periods/${cp.id}/close`,'POST',{confirmed:true})]);assert.deepEqual(close.map(r=>r.status).sort(),[201,409]);
    assert.equal(await db.resultSnapshot.count({where:{classPeriodId:cp.id}}),3);
   }
-  if(publish) {
+  if(publish&&!unpublished.includes(component)) {
     if(cp.period.kind==='ANNUEL'&&code!=='DEMO-MAT') {
       const profiles=await ok(adm,'/results/profiles');
       let profile=profiles.find(p=>p.schoolYearId===schoolClass.schoolYearId&&p.cycle===schoolClass.cycle&&p.level===schoolClass.level&&p.optionCode===schoolClass.optionCode);
@@ -166,18 +166,111 @@ async function workflow(code,{publish=true,components=['P1']}={}) {
  }
  return produced;
 }
-test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, publication, PDF trois cycles',{skip,timeout:180000},async()=>{
- for(const code of ['DEMO-SEC','DEMO-PRI','DEMO-MAT']) {
+const primaryProof = 'BULLETIN_PRIMAIRE_DEMO-V1.pdf';
+const maternalProof = 'BULLETIN_MATERNEL_DEMO-V1.pdf';
+const annualProof = 'BULLETIN_SECONDAIRE_ANNUEL_DEMO-V1.pdf';
+
+async function extendBulletinProgram(code, rows) {
+ const schoolClass=await db.schoolClass.findFirstOrThrow({where:{code},include:{schoolYear:true}});
+ const teacher=await db.teacher.findUniqueOrThrow({where:{userId:credentials[`ens-${code.toLowerCase()}-1`].id}});
+ for(const [index,[label,maximum]] of rows.entries()) {
+  const position=index+3;
+  const subject=await ok(adm,'/school/subjects','POST',{code:`${code}-${String(position).padStart(2,'0')}`,label},201);
+  const components=code==='DEMO-PRI'?['P1','P2','P3','P4','P5','P6','E1','E2','E3']:['P1','P2','P3','P4','E1','E2'];
+  const componentMaxima=Object.fromEntries(components.map(period=>[period,String(period.startsWith('E')?maximum*2:maximum)]));
+  const course=await ok(adm,'/school/program','POST',{classId:schoolClass.id,subjectId:subject.id,resultMaxScore:String(maximum),position,
+   componentMaxima,source:'DEMO_PROPOSE : programme fictif, fixture de conformité documentaire'},201);
+  await ok(dir,'/assignments','POST',{teacherId:teacher.id,classSubjectId:course.id,
+   startsOn:schoolClass.schoolYear.startsOn.toISOString().slice(0,10)},201);
+ }
+}
+
+async function pdfProof(result, filename) {
+ const resource=`/bulletins/${result.id}/pdf`;
+ const pdf=await sec.request(resource);
+ assert.equal(pdf.status,200);
+ assert.equal(new TextDecoder().decode(pdf.bytes.slice(0,8)),'%PDF-1.7');
+ assert.match(pdf.headers.get('content-type'),/application\/pdf/);
+ assert.match(pdf.headers.get('content-disposition'),/^attachment/);
+ assert.equal(pdf.headers.get('cache-control'),'private, no-store');
+ const repeat=await sec.request(resource);
+ assert.deepEqual(pdf.bytes,repeat.bytes);
+ await writeFile(`${proofDir}/${filename}`,pdf.bytes);
+ await writeFile(`${proofDir}/${filename.replace('.pdf','.json')}`,JSON.stringify({
+  identity:result.identitySnapshot,subjects:result.subjectResults
+ },null,2));
+ return pdf.bytes;
+}
+
+test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, publication, PDF trois cycles',{skip,timeout:360000},async()=>{
+ await extendBulletinProgram('DEMO-PRI',[
+  ['Anglais',20],['Physique',20],['Chimie',20],['Biologie',20],['Histoire',20],['Géographie',20],['Informatique',20],['Éducation civique et morale',20]
+ ]);
+ await extendBulletinProgram('DEMO-SEC',[
+  ['Religion',10],['Éducation civique et morale',10],['Éducation physique',10],['Histoire',15],
+  ['Technologie',15],['Sciences',30],['Informatique',30],['Géographie',30]
+ ]);
+ for(const [code,name] of [['DEMO-SEC',annualProof],['DEMO-PRI',primaryProof],['DEMO-MAT',maternalProof]]) {
   const components=code==='DEMO-SEC'?['P1','P2','E1','S1','P3','P4','E2','S2','ANNEE']:code==='DEMO-PRI'?['P1','P2','E1','T1','P3','P4','E2','T2','P5','P6','E3','T3','ANNEE']:['P1','P2','P3','P4','P5','P6','T1','T2','T3','ANNEE'];
-  const contexts=await workflow(code,{components});const cp=contexts.at(-1);
-  const snapshots=await db.resultSnapshot.findMany({where:{classPeriodId:cp.id},orderBy:{id:'asc'}});const result=snapshots[0];
-  const generated=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);const again=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);assert.equal(generated.id,again.id);
-  const pdf=await sec.request(`/bulletins/${result.id}/pdf`);assert.equal(pdf.status,200);assert.equal(new TextDecoder().decode(pdf.bytes.slice(0,8)),'%PDF-1.7');assert.match(pdf.headers.get('content-type'),/application\/pdf/);
-  const repeat=await sec.request(`/bulletins/${result.id}/pdf`);assert.deepEqual(pdf.bytes,repeat.bytes);
-  await writeFile(`${proofDir}/bulletin-${code}.pdf`,pdf.bytes);
-  await writeFile(`${proofDir}/result-${code}.json`,JSON.stringify({identity:result.identitySnapshot,subjects:result.subjectResults},null,2));
+  const contexts=await workflow(code,{components,unpublished:code==='DEMO-PRI'?['P6']:[]});
+  const snapshots=await db.resultSnapshot.findMany({where:{classPeriodId:contexts.at(-1).id}});
+  const result=snapshots.find(snapshot=>snapshot.identitySnapshot.matricule.endsWith('-2'));
+  assert.equal(result.subjectResults.length,10);
+  if(code==='DEMO-PRI') {
+   const closed=await db.resultSnapshot.findFirstOrThrow({where:{classPeriodId:contexts.find(cp=>cp.period.code==='P6').id}});
+   assert.equal((await sec.request(`/bulletins/${closed.id}/pdf`)).status,404);
+   const zero=snapshots.find(snapshot=>snapshot.identitySnapshot.totalEarned==='0');
+   assert.equal((await sec.request(`/bulletins/${zero.id}/generate`,'POST',{})).status,409);
+   const preview=await ok(sec,`/bulletins/${zero.id}`);
+   assert.equal(preview.identity.totalEarned,null);
+   assert.equal(preview.subjects[0].earned,null);
+   assert.ok(!('components' in preview.subjects[0]));
+   const incomplete=await pdfProof(zero,'primaire-periode-non-publiee.pdf');
+   await ok(dir,`/results/class-periods/${closed.classPeriodId}/publish`,'POST',{});
+   assert.equal((await ok(sec,`/bulletins/${zero.id}`)).identity.totalEarned,'0');
+   const issued=await ok(sec,`/bulletins/${zero.id}/generate`,'POST',{},201);
+   assert.notDeepEqual((await sec.request(`/bulletins/${zero.id}/pdf`)).bytes,incomplete);
+   assert.equal((await ok(sec,`/bulletins/${zero.id}/generate`,'POST',{},201)).id,issued.id);
+  }
+  await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.3',notice:'DEMO-V1'}});
+  const archived=await sec.request(`/bulletins/${result.id}/pdf`);
+  const historicPath=`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.3`;
+  assert.equal(archived.status,200);
+  assert.deepEqual(archived.bytes,(await sec.request(historicPath)).bytes);
+  const v14Path=`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.4`;
+  assert.equal((await sec.request(v14Path)).status,404);
+  await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.4',notice:'DEMO-V1'}});
+  const v14=await sec.request(v14Path);
+  assert.equal(v14.status,200);
+  const generated=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
+  const again=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
+  assert.equal(generated.templateVersion,'DEMO-V1.5');
+  assert.equal(generated.id,again.id);
+  assert.notDeepEqual(await pdfProof(result,name),v14.bytes);
+  assert.deepEqual((await sec.request(v14Path)).bytes,v14.bytes);
+  assert.deepEqual((await sec.request(historicPath)).bytes,archived.bytes);
+  assert.equal((await teacher.request(historicPath)).status,403);
+  assert.equal((await new Browser().request(historicPath)).status,401);
+  assert.equal((await sec.request(`/bulletins/${result.id}/pdf?templateVersion=inconnue`)).status,404);
+  await writeFile(`${proofDir}/AVANT-${name}`,v14.bytes);
  }
 });
+
+test('Bulletin CTEB de vingt branches, ventilation des maxima P1 et option scientifique distincte',{skip,timeout:180000},async()=>{
+ for(const [code,filename] of [['CTEB7','BULLETIN_SECONDAIRE_DEMO-V1.pdf'],['DEMO-1H','secondaire-option-scientifique.pdf']]) {
+  const [cp]=await workflow(code);
+  const result=await db.resultSnapshot.findFirstOrThrow({where:{classPeriodId:cp.id,identitySnapshot:{path:['totalEarned'],equals:'0'}}});
+  assert.equal(result.identitySnapshot.optionCode,code==='CTEB7'?null:'1.02');
+  assert.equal(result.identitySnapshot.totalMaximum,code==='CTEB7'?'400':'40');
+  assert.equal(result.subjectResults.length,code==='CTEB7'?20:2);
+  await pdfProof(result,filename);
+  await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.4',notice:'DEMO-V1'}});
+  const historical=await sec.request(`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.4`);
+  assert.equal(historical.status,200);
+  await writeFile(`${proofDir}/AVANT-${filename}`,historical.bytes);
+ }
+});
+
 test('T16 — compte runtime sans DDL ni accès migrations, audit append-only',{skip},async()=>{
  const [row]=await db.$queryRaw`SELECT has_schema_privilege(current_user,'public','CREATE') AS create, has_table_privilege(current_user,'"_prisma_migrations"','SELECT') AS migrations`;
  assert.equal(row.create,false);assert.equal(row.migrations,false);
@@ -200,13 +293,22 @@ test('Deuxième session DEMO — autorisation, validation, remplacement E2 et co
  await ok(browser,`/evaluations/${detail.id}/submission`,'POST',{version:detail.version},201);
  const submission=await db.submission.findFirst({where:{evaluationId:detail.id,status:'PENDING'}});await ok(dir,`/results/submissions/${submission.id}/approve`,'POST',{});
  const preview=await ok(dir,`/results/class-periods/${cp.id}/preview`);assert.equal(preview.readyToClose,true,JSON.stringify(preview.problems));
- const corrected=preview.students.find(s=>s.enrollmentId===decision.resultSnapshot.enrollmentId);assert.equal(corrected.totalEarned,'40');assert.equal(corrected.totalMaximum,'320');
+ const corrected=preview.students.find(s=>s.enrollmentId===decision.resultSnapshot.enrollmentId);assert.equal(corrected.totalEarned,'40');assert.equal(corrected.totalMaximum,'1520');
  await ok(dir,`/results/class-periods/${cp.id}/close`,'POST',{confirmed:true},201);
  const results=await db.resultSnapshot.findMany({where:{classPeriodId:cp.id}});
  for(const result of results)await ok(dir,`/results/snapshots/${result.id}/decisions`,'POST',{profileId:decision.profileId,outcome:'A_VERIFIER',courses:[],reason:'Deuxième session fictive : décision du conseil à confirmer.'},201);
  await ok(dir,`/results/class-periods/${cp.id}/publish`,'POST',{});
  assert.equal(JSON.stringify(await db.resultSnapshot.findUnique({where:{id:decision.resultSnapshot.id}})),original);
- const snapshot=results.find(r=>r.enrollmentId===decision.resultSnapshot.enrollmentId);const pdf=await sec.request(`/bulletins/${snapshot.id}/pdf`);assert.equal(pdf.status,200);await writeFile(`${proofDir}/bulletin-DEMO-REPECHAGE.pdf`,pdf.bytes);
+ const snapshot=results.find(r=>r.enrollmentId===decision.resultSnapshot.enrollmentId);
+ const name='BULLETIN_REPECHAGE_DEMO-V1.pdf';
+ await pdfProof(snapshot,name);
+ await db.reportCard.create({data:{resultSnapshotId:snapshot.id,templateVersion:'DEMO-V1.4',notice:'DEMO-V1'}});
+ const historical=await sec.request(`/bulletins/${snapshot.id}/pdf?templateVersion=DEMO-V1.4`);
+ assert.equal(historical.status,200);
+ await writeFile(`${proofDir}/AVANT-${name}`,historical.bytes);
+ await writeFile(`${proofDir}/REPECHAGE-premiere-session.json`,JSON.stringify({
+  identity:decision.resultSnapshot.identitySnapshot,subjects:decision.resultSnapshot.subjectResults,authorized:decision.courses,
+ },null,2));
 });
 
 async function courseFixture(label,{maximum='40',cycle='SECONDAIRE_TECHNIQUE',maxima={P1:'40'},owner='ens'}={}) {

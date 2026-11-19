@@ -1,0 +1,12 @@
+{
+  "W12": {
+    "route": "bulletins",
+    "role": "sec",
+    "downloadBytes": 32673
+  },
+  "W25": {
+    "route": "bulletin",
+    "role": "dir",
+    "downloadBytes": 32673
+  }
+}
