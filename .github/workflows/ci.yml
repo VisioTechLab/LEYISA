@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, chore/bootstrap-leyisa]
+    branches: [main, chore/bootstrap-leyisa, integration/leyisa-v1-cloud]
 permissions:
   contents: read
 jobs:
