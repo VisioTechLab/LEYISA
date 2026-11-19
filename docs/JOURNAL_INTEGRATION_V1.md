@@ -52,3 +52,8 @@
 - `pg_restore` 18.7 a restauré la sauvegarde en une transaction sur la connexion PostgreSQL directe `verify-full`. Les six lignes terminées du registre Prisma portent exactement les noms et empreintes des migrations versionnées. La base contient 84 utilisateurs fictifs, 21 élèves et 105 résultats publiés. Elle ne contient aucune session importée, aucun compteur de connexion et aucun accès élève actif.
 - Le compte `leyisa_demo_runtime` a réussi le contrôle par la connexion groupée en TLS `verify-full`. Les droits des 24 tables sont conformes, dont le registre Prisma inaccessible et les tables d’audit en ajout seul. Le compte ne peut ni administrer le schéma ni créer des rôles ou des bases. L’accès propriétaire temporaire a été révoqué. L’API Vercel confirme la destruction du bac à sable de restauration.
 - Les cinq résultats de référence ont été retrouvés en base. Le téléchargement HTTPS des PDF reste à vérifier après déploiement.
+
+## 19 novembre 2026 — API Render de démonstration active
+
+- Le service Free `leyisa-nestjs` a été réutilisé avec la branche `demo/leyisa-v1`, le répertoire `backend` et le déploiement automatique désactivé. Le déploiement manuel `dep-dbvklqflk1mc73e1cqog` est actif au SHA `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Render reçoit uniquement la chaîne groupée du compte runtime, avec TLS `verify-full`.
+- Depuis l’extérieur, `GET /health` répond 200 et un accès direct à `GET /api/v1/auth/csrf` sans authentification du relais répond 403.
