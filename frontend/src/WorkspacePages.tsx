@@ -1,4 +1,5 @@
 import { RetakeDecisionField } from './features/results/DeliberationPanel';
+import { BulletinWorkspace } from './features/bulletins/BulletinWorkspace';
 import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { api, post } from './shared/api';
 import { useSession } from './shared/session';
@@ -164,6 +165,11 @@ export function EvaluationsHome({create=false}:{create?:boolean}) {
 }
 
 export function BulletinsPage({ catalog = false }: { catalog?: boolean }) {
+ return catalog ? <LegacyBulletinsCatalog/> : <BulletinWorkspace/>;
+}
+
+function LegacyBulletinsCatalog() {
+ const catalog = true;
  const list = useResource<Row[]>('/bulletins');
  const [id, setId] = useState('');
  const rows = list.data ?? [];

@@ -217,11 +217,15 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   const result=snapshots.find(snapshot=>snapshot.identitySnapshot.matricule.endsWith('-2'));
   assert.equal(result.subjectResults.length,10);
   if(code==='DEMO-PRI') {
+   const p1=await db.resultSnapshot.findFirstOrThrow({where:{classPeriodId:contexts.find(cp=>cp.period.code==='P1').id}});
+   assert.equal((await ok(sec,`/bulletins/${p1.id}`)).documentPeriodSupported,false,'P1 ne correspond pas aux colonnes T1/T2/T3 du PDF primaire');
+   assert.equal((await ok(sec,`/bulletins/${result.id}`)).documentPeriodSupported,true);
    const closed=await db.resultSnapshot.findFirstOrThrow({where:{classPeriodId:contexts.find(cp=>cp.period.code==='P6').id}});
    assert.equal((await sec.request(`/bulletins/${closed.id}/pdf`)).status,404);
    const zero=snapshots.find(snapshot=>snapshot.identitySnapshot.totalEarned==='0');
    assert.equal((await sec.request(`/bulletins/${zero.id}/generate`,'POST',{})).status,409);
    const preview=await ok(sec,`/bulletins/${zero.id}`);
+   assert.equal(preview.publicationComplete,false);
    assert.equal(preview.identity.totalEarned,null);
    assert.equal(preview.subjects[0].earned,null);
    assert.ok(!('components' in preview.subjects[0]));
@@ -242,12 +246,16 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.4',notice:'DEMO-V1'}});
   const v14=await sec.request(v14Path);
   assert.equal(v14.status,200);
+  await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.5',notice:'DEMO-V1'}});
+  const v15Path=`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.5`;
+  const v15=await sec.request(v15Path);assert.equal(v15.status,200);
   const generated=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
   const again=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
-  assert.equal(generated.templateVersion,'DEMO-V1.5');
+  assert.equal(generated.templateVersion,'DEMO-V1.6');
   assert.equal(generated.id,again.id);
   assert.notDeepEqual(await pdfProof(result,name),v14.bytes);
   assert.deepEqual((await sec.request(v14Path)).bytes,v14.bytes);
+  assert.deepEqual((await sec.request(v15Path)).bytes,v15.bytes);
   assert.deepEqual((await sec.request(historicPath)).bytes,archived.bytes);
   assert.equal((await teacher.request(historicPath)).status,403);
   assert.equal((await new Browser().request(historicPath)).status,401);

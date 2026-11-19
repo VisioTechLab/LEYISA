@@ -204,6 +204,19 @@ export async function renderSecondary(data: BulletinData) {
   form.row([branch, firstSem, secondSem + main[8] + gutter, side],
     [{ text: 'SIGN. DU RESPONSABLE' }, {}, {}, {}], { ...body, size: 6.7 });
 
+  if (data.isRetake && data.releaseVisible) {
+    // Les valeurs viennent du résultat de deuxième session et des seules épreuves autorisées.
+    // Aucun pourcentage, transfert ou point supplémentaire n'est calculé par le PDF.
+    const retakeRows = data.baseSubjects.flatMap(subject => {
+      const score = data.retakeScores.get(subject.subjectId);
+      return score ? [`${subject.label} : ${display(score.earned)} / ${display(score.maximum)}`] : [];
+    });
+    form.room(52);
+    form.row([wide], [label('DEUXIÈME SESSION — RÉSULTAT DU REPÊCHAGE')], { size: 8, min: 16 });
+    form.row([wide], [{ text: retakeRows.join(' ; ') || 'Aucune épreuve autorisée renseignée.' }], { size: 8, min: 16 });
+    form.row([wide], [{ text: `TOTAL : ${display(identity.totalEarned)} / ${display(identity.totalMaximum)} — POURCENTAGE : ${display(identity.percentage)} %` }], { size: 8, min: 16 });
+  }
+
   const footerContext = () => form.text(`BULLETIN SECONDAIRE — ${nameOf(identity)}`, 8, true, true);
   const decisionOptions = [
     ['– L’élève passe dans la classe supérieure (1)', 'ADMIS'],

@@ -181,6 +181,10 @@ for stem in ["BULLETIN_SECONDAIRE_DEMO-V1", "BULLETIN_SECONDAIRE_ANNUEL_DEMO-V1"
         if is_retake:
             assert frozen["identity"]["totalEarned"] == "40"
             assert page.search_for("en Mathématiques")
+            assert page.search_for("DEUXIÈME SESSION")
+            assert page.search_for("Mathématiques : 40 / 40")
+            assert page.search_for("TOTAL : 40 / 1520")
+            assert page.search_for(frozen["identity"]["percentage"])
 
 long = documents["secondaire-pagine"]
 assert len(long) > 2

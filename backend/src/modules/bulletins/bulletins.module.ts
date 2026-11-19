@@ -14,13 +14,14 @@ import { renderSecondary } from "./secondary-bulletin.js";
 import { renderMaternal as renderMaternalV14 } from "./v14/maternal-bulletin.js";
 import { renderPrimary as renderPrimaryV14 } from "./v14/primary-bulletin.js";
 import { renderSecondary as renderSecondaryV14 } from "./v14/secondary-bulletin.js";
+import { renderSecondary as renderSecondaryV15 } from "./v15/secondary-bulletin.js";
 
 type PdfResponse = { setHeader(name: string, value: string): void; send(body: Buffer): void };
 
-const currentVersion = 'DEMO-V1.5';
+const currentVersion = 'DEMO-V1.6';
 const previousVersion = 'DEMO-V1.4';
 const legacyVersion = (value: unknown): value is 'DEMO-V1.2' | 'DEMO-V1.3' => value === 'DEMO-V1.2' || value === 'DEMO-V1.3';
-const archivedVersion = (value: unknown) => legacyVersion(value) || value === previousVersion;
+const archivedVersion = (value: unknown) => legacyVersion(value) || value === previousVersion || value === 'DEMO-V1.5';
 const decisionOrder = { orderBy: { version: 'desc' as const }, take: 1 };
 const periodDetails = { include: { period: true } };
 const canReadAll = (auth: AuthContext) => auth.roles.some(role => role === 'DIR' || role === 'SEC');
@@ -38,8 +39,8 @@ export class BulletinsController {
       take: 500
     });
     return rows.map(row => {
-      const { lastName, firstName, classLabel, periodCode } = object(row.identitySnapshot);
-      return { ...row, identitySnapshot: { lastName, firstName, classLabel, periodCode } };
+      const { lastName, postName, firstName, classLabel, periodCode, yearCode, matricule, cycle } = object(row.identitySnapshot);
+      return { ...row, identitySnapshot: { lastName, postName, firstName, classLabel, periodCode, yearCode, matricule, cycle } };
     });
   }
 
@@ -76,7 +77,11 @@ export class BulletinsController {
     if (!data.releaseVisible) Object.assign(identity, { totalEarned: null, totalMaximum: null, percentage: null, rank: null, effectif: null, decision: null });
     return {
       id: result.id, identity, subjects: data.slimSubjects, profile: result.calculationProfile,
-      templateVersion: currentVersion, archivedTemplates: result.reportCards.map(card => card.templateVersion).filter(archivedVersion)
+      templateVersion: currentVersion, archivedTemplates: result.reportCards.map(card => card.templateVersion).filter(archivedVersion),
+      publicationComplete: data.releaseVisible,
+      // Les colonnes du gabarit primaire sont T1/T2/T3, pas P1/P2/etc.
+      // Signaler l'incompatibilité évite de proposer un PDF sans les notes sélectionnées.
+      documentPeriodSupported: data.identity.cycle !== 'PRIMAIRE' || ['T1', 'T2', 'T3', 'ANNEE'].includes(result.classPeriod.period.code)
     };
   }
 
@@ -109,11 +114,11 @@ export class BulletinsController {
       if (!data.releaseVisible) throw new NotFoundException("Bulletin historique indisponible avant publication des composantes.");
       bytes = await renderLegacyBulletin({ ...data.identity, decision: data.decision?.outcome ?? data.identity.decision },
         result.subjectResults as unknown as Record<string, unknown>[], version);
-    } else if (version === currentVersion || version === previousVersion && issued) {
+    } else if (version === currentVersion || (version === previousVersion || version === 'DEMO-V1.5') && issued) {
       const data = await this.data(result, issued?.generatedAt ?? new Date());
       const renderers = version === previousVersion
         ? { maternal: renderMaternalV14, primary: renderPrimaryV14, secondary: renderSecondaryV14 }
-        : { maternal: renderMaternal, primary: renderPrimary, secondary: renderSecondary };
+        : { maternal: renderMaternal, primary: renderPrimary, secondary: version === 'DEMO-V1.5' ? renderSecondaryV15 : renderSecondary };
       const render = data.identity.cycle === 'MATERNEL' ? renderers.maternal : data.identity.cycle === 'PRIMAIRE' ? renderers.primary : renderers.secondary;
       bytes = await render(data);
     } else {
