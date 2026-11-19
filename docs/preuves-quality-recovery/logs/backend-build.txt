@@ -1,0 +1,14 @@
+
+> leyisa-backend@0.1.0 build
+> npm run db:generate && tsc -p tsconfig.json
+
+
+> leyisa-backend@0.1.0 db:generate
+> prisma generate
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+
+✔ Generated Prisma Client (7.10.1) to ./generated/prisma in 227ms
+

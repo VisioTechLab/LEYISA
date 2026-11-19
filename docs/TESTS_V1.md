@@ -1,5 +1,7 @@
 # Tests exécutés sur LEYISA SCHOOL V1
 
+> Reprise qualité du19novembre2026 : les résultats ci-dessous décrivent la recette Cloud historique. Pour la tranche W25 et le gabarit V1.6, consulter [le contre-audit de reprise](AUDIT_QUALITY_RECOVERY.md) :79 tests backend,15 tests navigateur et39 contrôles PostgreSQL exécutés localement sur le correctif6555bf1.
+
 La recette du 19 novembre 2026 a utilisé Node 24.22.1, PostgreSQL 18.7 en loopback et Chromium 156, avec des comptes et données synthétiques. [Journal des lots et SHA](JOURNAL_INTEGRATION_V1.md)
 
 | Contrôle | Résultat observé |

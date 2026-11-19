@@ -1,0 +1,1 @@
+Hygiène Git et motifs de secrets vérifiés ; aucune valeur sensible détectée dans les sources et bundles inspectés. Ce contrôle ne constitue pas une certification exhaustive.

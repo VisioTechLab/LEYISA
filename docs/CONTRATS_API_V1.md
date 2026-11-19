@@ -1,5 +1,7 @@
 # Contrats API V1 — état implémenté localement
 
+Extension proposée sur `fix/v1-quality-recovery` (MOC M02, revue en attente) : liste `/bulletins` enrichie des seuls champs d'identité figés année/postnom/matricule/cycle ; détail enrichi de `publicationComplete` et `documentPeriodSupported`. Le consommateur W25 les utilise pour filtrer et éviter un document incomplet/inadapté. Le gabarit courant devient DEMO-V1.6 ; V1.5 reste accessible si une émission historique existe. Aucun changement de permission ni migration. Voir [comparaison et stratégie](REPRISE_QUALITE_V1.md).
+
 Préfixe `/api/v1`, JSON UTF-8. `/health` public minimal. Identifiants UUID ; dates civiles AAAA-MM-JJ, bornes inclusives sauf fin d'affectation exclusive ; décimaux transmis en chaînes. Cookie HttpOnly commun, aucun Bearer alternatif. Toute écriture exige Origin autorisée et `X-CSRF-Token` obtenu par GET `/auth/csrf` ; token uniquement en mémoire. Authentification et permissions restent vérifiées côté serveur pour les accès directs.
 
 Statut : C01 suit la cible approuvée feuille09 ; C02–C09 ci-dessous sont des **identifiants de contrats intermodules proposés** à la MOC. Ils ne remplacent pas les identifiants C01–C09 des contrôles de sécurité feuille08 (mot de passe, identifiants, brute force, cookie, stockage session, expiration, CSRF, RBAC, ABAC). Ces nouvelles routes ne sont pas présumées approuvées par les propriétaires. Pas de DELETE exposé.

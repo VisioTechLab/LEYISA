@@ -1,0 +1,26 @@
+
+> leyisa-frontend@0.0.0 test:e2e
+> playwright test
+
+
+Running 15 tests using 1 worker
+
+(node:35860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/bulletins.spec.ts:48:29 › PDF maternelle : aperçu et téléchargement identiques (4.0s)
+  ✓   2 tests/bulletins.spec.ts:48:29 › PDF primaire annuel : aperçu et téléchargement identiques (3.2s)
+  ✓   3 tests/bulletins.spec.ts:48:29 › PDF secondaire P1 : aperçu et téléchargement identiques (2.5s)
+  ✓   4 tests/bulletins.spec.ts:48:29 › PDF secondaire annuel : aperçu et téléchargement identiques (4.1s)
+  ✓   5 tests/bulletins.spec.ts:48:29 › PDF repêchage : aperçu et téléchargement identiques (2.4s)
+  ✓   6 tests/bulletins.spec.ts:74:1 › Primaire P1 : aucun document sans les notes de la période sélectionnée (2.6s)
+  ✓   7 tests/bulletins.spec.ts:82:1 › Refus PDF403 visible, aucun téléchargement trompeur et reprise après erreur (2.5s)
+  ✓   8 tests/bulletins.spec.ts:92:1 › Les versions archivées affichent et téléchargent le même document (4.3s)
+  ✓   9 tests/bulletins.spec.ts:102:1 › Repêchage V1.5 archivé : octets antérieurs conservés ; V1.6 affiche les40 points (3.8s)
+  ✓  10 tests/bulletins.spec.ts:111:1 › Téléphone390px et320px : PDF lisible au zoom sans débordement de la page (2.7s)
+  ✓  11 tests/bulletins.spec.ts:124:1 › ENS : accès direct au bulletin refusé par la vue et par l’API (963ms)
+  ✓  12 tests/bulletins.spec.ts:130:1 › Liste vide : explication et retour utiles sans formulaire ni faux document (966ms)
+  ✓  13 tests/bulletins.spec.ts:139:1 › Chargement PDF : état explicite et émission indisponible tant que le document manque (2.5s)
+  ✓  14 tests/bulletins.spec.ts:150:1 › Conflit409 d’émission : erreur visible, aucun message de succès et PDF conservé (2.5s)
+  ✓  15 tests/bulletins.spec.ts:159:1 › PDF paginé : toutes les pages sont navigables et les boutons respectent les bornes (3.1s)
+
+  15 passed (43.6s)
