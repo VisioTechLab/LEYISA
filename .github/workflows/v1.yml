@@ -2,7 +2,7 @@ name: Validation applicative V1
 on:
   pull_request:
   push:
-    branches: ['integration/**']
+    branches: ['integration/**', 'fix/bulletins-conformite-v1']
 permissions:
   contents: read
 jobs:
@@ -73,7 +73,7 @@ jobs:
       # Aucun identifiant ni clé TLS de test dans le dossier de preuves.
 
   sauvegarde-git:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/integration/leyisa-v1-cloud'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/integration/leyisa-v1-cloud' || github.ref == 'refs/heads/fix/bulletins-conformite-v1')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
