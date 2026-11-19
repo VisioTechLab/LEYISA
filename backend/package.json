@@ -35,5 +35,10 @@
     "@types/node": "24.19.2",
     "prisma": "7.10.1",
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "@prisma/config": {
+      "effect": "3.22.1"
+    }
   }
 }

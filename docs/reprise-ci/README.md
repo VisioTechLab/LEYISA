@@ -15,3 +15,7 @@ Aucune publication Vercel/Render, fusion de main ou mutation Neon n’est autori
 ## Environnement de recette
 
 Frontend127.0.0.1:5176, backend127.0.0.1:53110, PostgreSQL127.0.0.1:55433 ; base fictive `leyisa_quality_modules_final_20261119`. Fichier privé des comptes : `/tmp/leyisa-quality-modules-final-credentials.json`, jamais à publier. Les anciennes bases, contributions et sauvegardes sont conservées.
+
+## Suite après reprise
+
+Les26 tests navigateur ont ensuite réussi ensemble en local avec Q11. Le second run distant `44633997879` a dépassé la recette et les contrôles PDF, puis s’est arrêté sur une alerte `effect` indirecte de Prisma. Q12 fixe uniquement cette dépendance à3.22.1, conserve Prisma7.10.1 et ne change aucune migration. Installation, validation, build, audits et cas de régression de l’avis réussis localement ; journaux dans `preuves-locales/`. La CI de la révision finale reste à observer après la sauvegarde de Q12.

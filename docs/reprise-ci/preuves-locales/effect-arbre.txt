@@ -1,0 +1,4 @@
+leyisa-backend@0.1.0 /home/bmk/Documents/ChatGPT/VisioTech/LEYISA-quality-recovery/backend
+└─┬ prisma@7.10.1
+  └─┬ @prisma/config@7.10.1 overridden
+    └── effect@3.22.1 overridden
