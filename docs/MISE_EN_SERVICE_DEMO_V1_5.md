@@ -7,7 +7,7 @@
 | Candidat Git | `demo/leyisa-v1` pointe vers `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Les deux exécutions de CI sont vertes. La PR #8 est en brouillon et sans revue GitHub. |
 | Neon | Projet Free dédié **LEYISA School Demo V1**, région Frankfurt, PostgreSQL 18. Branche par défaut `demo-v1`, base `leyisa_demo` et rôle propriétaire `leyisa_demo_owner`. Le contrôle catalogue confirme zéro objet public et aucun registre de migration. |
 | Render | L’accès au tableau de bord n’a pas été établi. La disponibilité de `leyisa-nestjs` pour la démonstration reste à confirmer. |
-| Vercel | L’accès au tableau de bord n’a pas été établi. L’équipe Pro ou Enterprise à utiliser reste à identifier. |
+| Vercel | L’accès au tableau de bord n’a pas été établi. La voie retenue pour les essais personnels non commerciaux est un projet Hobby avec déploiement manuel. |
 | Recette | Restauration locale intégrale vérifiée. Les URL de démonstration et la recette hébergée restent à valider. |
 
 Le feu vert de Melvin a été transmis par le demandeur pour la mise en ligne isolée. La revue humaine de la PR demeure nécessaire pour fusionner. L’accès PostgreSQL direct à la cible portée par le point d’accès Neon est refusé en TCP 5432 depuis l’environnement de préparation. Le point d’accès WebSocket répond, mais refuse la négociation TLS native de PostgreSQL. Le test s’est arrêté avant l’authentification. L’import et l’attribution des droits distants restent à exécuter depuis un poste habilité.
@@ -37,17 +37,30 @@ Exporter au format custom PostgreSQL avec `--no-owner --no-acl` et exclure les d
 
 | Service et menu | Champ et valeur |
 | --- | --- |
-| Vercel, **Team Settings → Billing** | Confirmer l’équipe Pro ou Enterprise déjà autorisée et sa capacité à héberger la démonstration sans frais supplémentaires. Vérifier aussi **Spend Management**. |
-| Vercel, **Project Settings → Build and Deployment** | Dépôt `VisioTechLab/LEYISA`, branche de démonstration `demo/leyisa-v1`, **Root Directory** = `frontend`, framework Vite, Node.js 24.x. Le fichier `frontend/vercel.json` fixe les autres paramètres. |
-| Vercel, **Project Settings → Deployment Protection** | Activer **Vercel Authentication** pour l’URL diffusée. Accorder l’accès par déploiement aux destinataires nominatifs et vérifier ce réglage avant diffusion. Relever l’origine HTTPS publique de ce déploiement. |
+| Vercel, **Team Settings → Billing** | Confirmer le périmètre personnel Hobby et l’usage non commercial de la démo. |
+| Vercel, **Project Settings → Build and Deployment** | Projet réservé aux essais. Le dossier exporté `frontend` constitue la racine du projet. Framework Vite et Node.js 24.x. Le fichier `vercel.json` fixe les autres paramètres. |
+| Vercel, **Project Settings → Deployment Protection** | Activer **Vercel Authentication → All Deployments** avant le premier déploiement. Accorder l’accès par déploiement aux destinataires nominatifs et vérifier ce réglage avant diffusion. Relever l’origine HTTPS publique de ce déploiement. |
 | Render, **Dashboard → leyisa-nestjs → Settings** | Vérifier que le service peut être réservé à cette démonstration et que ses réglages actuels permettent un retour. Dépôt `VisioTechLab/LEYISA`, branche `demo/leyisa-v1`, **Root Directory** = `backend`, **Auto-Deploy** = Off, **Health Check Path** = `/health`. Pour un service neuf, confirmer explicitement l’option **Free** avant de créer la ressource. |
 | Render, **Settings → Build & Deploy** | **Build Command** = `npm ci --include=dev && npm run db:validate && npm run build`. **Start Command** = `npm start`. Pour réutiliser le service, appliquer à la main les valeurs du Blueprint et la branche démo. |
 | Render, **Environment** | `NODE_VERSION=24.22.1`, `NODE_ENV=production`, `HOST=0.0.0.0`, `LEYISA_DEPLOYMENT=render`, `LEYISA_DB_MODE=shared`. `APP_ORIGINS` contient l’origine Vercel exacte sans slash. `DATABASE_URL` contient uniquement la chaîne runtime pooled. `LEYISA_PROXY_SECRET` est stocké dans le coffre. |
 | Render, **Deploys → Manual Deploy → Deploy a specific commit** | Saisir `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Vérifier le SHA affiché et la réponse TLS de `/health` avant d’activer le frontend. |
 | Vercel, **Project Settings → Environment Variables** | `LEYISA_RENDER_ORIGIN` = origine HTTPS Render exacte. `LEYISA_PROXY_SECRET` = la même valeur générée de 32 octets encodés en hexadécimal, stockée côté serveur sur les deux plateformes. |
-| Vercel, **Deployments** | Déployer le SHA V1.5, vérifier le SHA affiché, puis utiliser l’URL exacte du déploiement protégé. Vérifier côté navigateur que le relais bénéficie de la même origine et que le cache des réponses API est privé. |
+| Vercel, **Deployments** | Déployer par la CLI l’export du SHA V1.5 et l’identifier avec la métadonnée `leyisaSourceSha`. Utiliser l’URL exacte du déploiement protégé. Vérifier côté navigateur que le relais bénéficie de la même origine et que le cache des réponses API est privé. |
 
-Vercel Hobby est limité à l’usage personnel non commercial. Le prix de base de Pro est de 20 USD par mois hors suppléments. Render Free est une offre de prévisualisation qui peut se mettre en veille après 15 minutes d’inactivité. Contrôler le réveil et la durée réelle d’une première requête PDF à froid. [Vercel Fair Use](https://vercel.com/docs/limits/fair-use-guidelines) · [Vercel Pro](https://vercel.com/docs/plans/pro-plan) · [Protection Vercel](https://vercel.com/docs/deployment-protection) · [Render Free](https://render.com/docs/free) · [Déploiement par SHA sur Render](https://render.com/docs/deploys)
+Le propriétaire a retenu Vercel Hobby pour les tests personnels non commerciaux. La CLI Vercel accepte un dossier local sur un projet sans connexion Git. Render Free est une offre de prévisualisation qui peut se mettre en veille après 15 minutes d’inactivité. Contrôler le réveil et la durée réelle d’une première requête PDF à froid. [Vercel Fair Use](https://vercel.com/docs/limits/fair-use-guidelines) · [Vercel Pro](https://vercel.com/docs/plans/pro-plan) · [Protection Vercel](https://vercel.com/docs/deployment-protection) · [Render Free](https://render.com/docs/free) · [Déploiement par SHA sur Render](https://render.com/docs/deploys)
+
+### Export Vercel vérifié
+
+Depuis un clone du dépôt ayant récupéré le candidat, exporter le seul frontend dans un répertoire vide et compiler avec Node.js 24. La CI du SHA et le build de cet export autonome ont été vérifiés. L’archive ne contient ni métadonnées Git, ni dépendances installées, ni paramètres secrets.
+
+```sh
+sha=7783483d59e5f64f5d7e9e54ecb609a28be4e9a3
+dossier=$(mktemp -d)
+git archive "$sha:frontend" | tar -xf - -C "$dossier"
+(cd "$dossier" && npm ci && npm run build)
+```
+
+Sur le projet Hobby authentifié et protégé, lier le dossier exporté au projet Vercel par `vercel link --cwd "$dossier"`. Après mise en place du relais et de ses variables, déployer via `vercel deploy --cwd "$dossier" --meta "leyisaSourceSha=$sha"`. Vercel peut classer le premier déploiement du projet en production. Le réglage **All Deployments** protège aussi cette URL. [Déploiement sans liaison Git](https://vercel.com/docs/deployments#vercel-cli) · [Protection gratuite de tous les déploiements](https://vercel.com/changelog/protect-production-deployments-for-free-on-every-plan)
 
 ## 3. Recette hébergée avec Melvin
 
