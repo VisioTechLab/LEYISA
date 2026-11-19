@@ -67,9 +67,10 @@ export class AuthController {
 
   @Public()
   @Get("csrf")
-  csrf(@Res({ passthrough: true }) response: AuthResponse) {
-    const csrfToken = randomBytes(32).toString("hex");
-    response.cookie(CSRF_COOKIE, csrfToken, cookieOptions());
+  csrf(@Req() request: AuthRequest, @Res({ passthrough: true }) response: AuthResponse) {
+    const current = readCookie(request.headers.cookie, CSRF_COOKIE);
+    const csrfToken = current && /^[a-f0-9]{64}$/.test(current) ? current : randomBytes(32).toString("hex");
+    if (csrfToken !== current) response.cookie(CSRF_COOKIE, csrfToken, cookieOptions());
     response.setHeader("Cache-Control", "no-store");
     return { csrfToken };
   }

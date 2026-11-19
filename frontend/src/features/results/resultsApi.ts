@@ -32,4 +32,4 @@ export type Preview = {
   readyToClose: boolean; problems: string[];
   students: Array<{ id?:string;identity: { matricule?: string; firstName?: string; lastName?: string }; subjectResults: Array<{ label: string; earned: number | null; maximum: number }>; totalEarned: number; totalMaximum: number }>;
 };
-export type FinalResults = { classPeriod: { classLabel: string; periodLabel: string; status: string }; students: Preview['students'] };
+export type FinalResults = { classPeriod: { id: string; classLabel: string; periodLabel: string; status: string }; students: Preview['students'] };

@@ -1,0 +1,9 @@
+✔ T02/T03/T04 — réponses indifférenciées et limitation persistante après redémarrage serveur (998.016783ms)
+ℹ tests 72
+ℹ suites 4
+ℹ pass 72
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47554.986768

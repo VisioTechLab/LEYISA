@@ -33,8 +33,8 @@ export class BulletinsController {
   const result=await this.load(raw,auth);
   return this.prisma.client.$transaction(async tx=>{
    // Création idempotente : aucune réécriture d'un document déjà enregistré.
-   await tx.reportCard.createMany({data:[{resultSnapshotId:result.id,templateVersion:'DEMO-V1.2',notice:'DEMO-V1'}],skipDuplicates:true});
-   const report=await tx.reportCard.findUnique({where:{resultSnapshotId_templateVersion:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.2'}}});
+   await tx.reportCard.createMany({data:[{resultSnapshotId:result.id,templateVersion:'DEMO-V1.3',notice:'DEMO-V1'}],skipDuplicates:true});
+   const report=await tx.reportCard.findUnique({where:{resultSnapshotId_templateVersion:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.3'}}});
    await tx.auditEntry.create({data:{actorId:auth.userId,action:'REPORT_GENERATED',targetType:'ReportCard',targetId:report!.id}});return report;
   });
  }
@@ -71,7 +71,7 @@ export async function renderBulletin(identity:Record<string,unknown>,subjects:Re
    lines.push(current);return lines;
   });
   height=Math.max(height,...cells.map(c=>c.length*10+6));
-  if(y-height<55) {page=doc.addPage(size);y=size[1]-35;line('DEMO-V1 - suite',12,true);if(tableHeader&&!header)row(tableHeader.values,tableHeader.widths,tableHeader.height,true);}
+  if(y-height<55) {page=doc.addPage(size);y=size[1]-35;line('DEMO-V1',12,true);if(tableHeader&&!header)row(tableHeader.values,tableHeader.widths,tableHeader.height,true);}
   if(header)tableHeader={values,widths,height};
   let x=margin;
   values.forEach((value,i)=>{
@@ -85,7 +85,7 @@ export async function renderBulletin(identity:Record<string,unknown>,subjects:Re
  line(school.name||'Établissement fictif LEYISA',13,true);
  line(`Province : ${school.province??''}    Ville / territoire : ${school.city??''}    Commune : ${school.commune??''}`);
  line(`Code école : ${school.code??''}    Année scolaire : ${identity.yearCode??''}`);
- line(maternal?"CARTE D'APPRECIATION PERIODIQUE":primary?"BULLETIN PRIMAIRE - SYNTHÈSES TRIMESTRIELLES (DEMO)":"BULLETIN SECONDAIRE",11,true);
+ line(maternal?"CARTE D'APPRECIATION PERIODIQUE":primary?"BULLETIN PRIMAIRE - SYNTHÈSES TRIMESTRIELLES":"BULLETIN SECONDAIRE",11,true);
  line(`Élève : ${identity.lastName??''} ${identity.postName??''} ${identity.firstName??''}    Sexe : ${identity.sex??''}`);
  line(`Classe : ${identity.classLabel??''}    Niveau / option : ${identity.level??''} ${identity.optionCode??''}    ${identity.periodLabel??''}`);
  line(`Matricule : ${identity.matricule??''}    N° permanent : ${identity.permanentNumber??''}`);
@@ -127,7 +127,7 @@ export async function renderBulletin(identity:Record<string,unknown>,subjects:Re
  line(`Profil : ${identity.profile??''}    Programme : ${identity.programVersion??''}`,8);
  line('Observations :');line('Titulaire / institutrice :                 Direction :                 Parent / tuteur :',8);
  line('Signatures :                              Sceau :',8);
- for(const [index,p] of doc.getPages().entries())p.drawText(`DEMO-V1 | ${index+1}/${doc.getPageCount()} | Document de démonstration`,{x:margin,y:20,size:8,font});
+ for(const [index,p] of doc.getPages().entries())p.drawText(`DEMO-V1 | ${index+1}/${doc.getPageCount()}`,{x:margin,y:20,size:8,font});
  return doc.save({useObjectStreams:false});
 }
 @Module({imports:[PrismaModule],controllers:[BulletinsController]})

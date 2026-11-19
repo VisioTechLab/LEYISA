@@ -56,6 +56,14 @@ test('T08/T09/T10 — refus CSRF, privilèges verticaux et horizontaux',{skip},a
  assert.ok(foreign);assert.equal((await teacher.request(`/students/${foreign.id}`)).status,404);
  assert.equal((await teacher.request(`/students?classId=${foreign.enrollments[0].classId}`)).body.length,0);
 });
+test('T08 — le chargement du jeton dans un autre onglet ne rend pas le premier inutilisable',{skip},async()=>{
+ const browser=new Browser();await browser.login('ens');
+ const before=browser.csrf;
+ const reloaded=await browser.request('/auth/csrf');
+ assert.equal(reloaded.body.csrfToken,before);
+ assert.equal(reloaded.headers.getSetCookie().length,0);
+ await ok(browser,'/auth/logout','POST',{},204);
+});
 test('T12 — rôles modifiés, sessions révoquées et audit persistant',{skip},async()=>{
  const password=randomUUID();
  const user=await ok(adm,'/users','POST',{login:`role-${suffix}@demo.test`,firstName:'Compte',lastName:'Fictif',initialPassword:password,roles:['ENS']},201);

@@ -1,0 +1,254 @@
+{
+  "identity": {
+    "sex": "F",
+    "kind": "ANNUEL",
+    "rank": 3,
+    "cycle": "PRIMAIRE",
+    "level": "3e primaire",
+    "school": {
+      "city": "Ville de démonstration",
+      "code": "DEMO-001",
+      "name": "École fictive LEYISA",
+      "commune": "Commune démo",
+      "province": "Province fictive"
+    },
+    "profile": "DEMO-V1.PERIOD_TOTAL_V1.2",
+    "decision": "A_VERIFIER",
+    "effectif": 3,
+    "lastName": "Fictif",
+    "postName": "Exemple",
+    "yearCode": "DEMO-2025-2026",
+    "birthDate": "2013-03-10",
+    "firstName": "Élève 1",
+    "matricule": "DEMO-DEMO-PRI-1",
+    "birthPlace": "Ville fictive",
+    "classLabel": "Classe primaire DEMO",
+    "optionCode": null,
+    "percentage": "0",
+    "periodCode": "ANNEE",
+    "periodLabel": "Annuel PRIMAIRE / DEMO-2025-2026",
+    "totalEarned": "0",
+    "enrollmentId": "3445ccf7-309e-4fb0-be6c-ab5dcb6c653a",
+    "totalMaximum": "480",
+    "programVersion": "DEMO-V1.1",
+    "permanentNumber": null
+  },
+  "subjects": [
+    {
+      "label": "Mathématiques",
+      "earned": "0",
+      "maximum": "240",
+      "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+      "components": {
+        "T1": {
+          "label": "Mathématiques",
+          "earned": "0",
+          "maximum": "80",
+          "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+          "components": {
+            "E1": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "40",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            },
+            "P1": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            },
+            "P2": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            }
+          },
+          "subjectCode": "DEMO-PRI-01"
+        },
+        "T2": {
+          "label": "Mathématiques",
+          "earned": "0",
+          "maximum": "80",
+          "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+          "components": {
+            "E2": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "40",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            },
+            "P3": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            },
+            "P4": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            }
+          },
+          "subjectCode": "DEMO-PRI-01"
+        },
+        "T3": {
+          "label": "Mathématiques",
+          "earned": "0",
+          "maximum": "80",
+          "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+          "components": {
+            "E3": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "40",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            },
+            "P5": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            },
+            "P6": {
+              "label": "Mathématiques",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "components": {},
+              "subjectCode": "DEMO-PRI-01"
+            }
+          },
+          "subjectCode": "DEMO-PRI-01"
+        }
+      },
+      "subjectCode": "DEMO-PRI-01"
+    },
+    {
+      "label": "Français",
+      "earned": "0",
+      "maximum": "240",
+      "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+      "components": {
+        "T1": {
+          "label": "Français",
+          "earned": "0",
+          "maximum": "80",
+          "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+          "components": {
+            "E1": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "40",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            },
+            "P1": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            },
+            "P2": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            }
+          },
+          "subjectCode": "DEMO-PRI-02"
+        },
+        "T2": {
+          "label": "Français",
+          "earned": "0",
+          "maximum": "80",
+          "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+          "components": {
+            "E2": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "40",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            },
+            "P3": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            },
+            "P4": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            }
+          },
+          "subjectCode": "DEMO-PRI-02"
+        },
+        "T3": {
+          "label": "Français",
+          "earned": "0",
+          "maximum": "80",
+          "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+          "components": {
+            "E3": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "40",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            },
+            "P5": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            },
+            "P6": {
+              "label": "Français",
+              "earned": "0",
+              "maximum": "20",
+              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "components": {},
+              "subjectCode": "DEMO-PRI-02"
+            }
+          },
+          "subjectCode": "DEMO-PRI-02"
+        }
+      },
+      "subjectCode": "DEMO-PRI-02"
+    }
+  ]
+}

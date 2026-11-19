@@ -1,0 +1,1358 @@
+{
+  "identity": {
+    "sex": "F",
+    "kind": "ANNUEL",
+    "rank": null,
+    "cycle": "MATERNEL",
+    "level": "3e maternelle",
+    "school": {
+      "city": "Ville de démonstration",
+      "code": "DEMO-001",
+      "name": "École fictive LEYISA",
+      "commune": "Commune démo",
+      "province": "Province fictive"
+    },
+    "profile": "DEMO-V1.PERIOD_TOTAL_V1.2",
+    "decision": "A_VERIFIER",
+    "effectif": 3,
+    "lastName": "Fictif",
+    "postName": "Exemple",
+    "yearCode": "DEMO-2025-2026",
+    "birthDate": "2020-03-10",
+    "firstName": "Élève 3",
+    "matricule": "DEMO-DEMO-MAT-3",
+    "birthPlace": "Ville fictive",
+    "classLabel": "Classe maternelle DEMO",
+    "optionCode": null,
+    "percentage": null,
+    "periodCode": "ANNEE",
+    "periodLabel": "Annuel MATERNEL / DEMO-2025-2026",
+    "totalEarned": "0",
+    "enrollmentId": "0b9b98c2-4bb4-4ac4-9460-e13fedb35ed7",
+    "totalMaximum": "0",
+    "programVersion": "DEMO-V1.1",
+    "permanentNumber": null
+  },
+  "subjects": [
+    {
+      "label": "Intégration au groupe école",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+      "components": {
+        "T1": {
+          "label": "Intégration au groupe école",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+          "components": {
+            "P1": {
+              "label": "Intégration au groupe école",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-01",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Intégration au groupe école",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-01",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-01"
+        },
+        "T2": {
+          "label": "Intégration au groupe école",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+          "components": {
+            "P3": {
+              "label": "Intégration au groupe école",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-01",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Intégration au groupe école",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-01",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-01"
+        },
+        "T3": {
+          "label": "Intégration au groupe école",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+          "components": {
+            "P5": {
+              "label": "Intégration au groupe école",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-01",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Intégration au groupe école",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "f3ff2186-453c-44ce-af45-9c019d50461c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-01",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-01"
+        }
+      },
+      "subjectCode": "DEMO-MAT-01"
+    },
+    {
+      "label": "Participation aux activités et application",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+      "components": {
+        "T1": {
+          "label": "Participation aux activités et application",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+          "components": {
+            "P1": {
+              "label": "Participation aux activités et application",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+              "components": {},
+              "subjectCode": "DEMO-MAT-02",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Participation aux activités et application",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+              "components": {},
+              "subjectCode": "DEMO-MAT-02",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-02"
+        },
+        "T2": {
+          "label": "Participation aux activités et application",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+          "components": {
+            "P3": {
+              "label": "Participation aux activités et application",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+              "components": {},
+              "subjectCode": "DEMO-MAT-02",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Participation aux activités et application",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+              "components": {},
+              "subjectCode": "DEMO-MAT-02",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-02"
+        },
+        "T3": {
+          "label": "Participation aux activités et application",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+          "components": {
+            "P5": {
+              "label": "Participation aux activités et application",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+              "components": {},
+              "subjectCode": "DEMO-MAT-02",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Participation aux activités et application",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "000b1ca2-6edf-4749-bfc7-282a2b1f47cd",
+              "components": {},
+              "subjectCode": "DEMO-MAT-02",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-02"
+        }
+      },
+      "subjectCode": "DEMO-MAT-02"
+    },
+    {
+      "label": "Respect/protection de l’environnement et soi-même",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+      "components": {
+        "T1": {
+          "label": "Respect/protection de l’environnement et soi-même",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+          "components": {
+            "P1": {
+              "label": "Respect/protection de l’environnement et soi-même",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+              "components": {},
+              "subjectCode": "DEMO-MAT-03",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Respect/protection de l’environnement et soi-même",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+              "components": {},
+              "subjectCode": "DEMO-MAT-03",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-03"
+        },
+        "T2": {
+          "label": "Respect/protection de l’environnement et soi-même",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+          "components": {
+            "P3": {
+              "label": "Respect/protection de l’environnement et soi-même",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+              "components": {},
+              "subjectCode": "DEMO-MAT-03",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Respect/protection de l’environnement et soi-même",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+              "components": {},
+              "subjectCode": "DEMO-MAT-03",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-03"
+        },
+        "T3": {
+          "label": "Respect/protection de l’environnement et soi-même",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+          "components": {
+            "P5": {
+              "label": "Respect/protection de l’environnement et soi-même",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+              "components": {},
+              "subjectCode": "DEMO-MAT-03",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Respect/protection de l’environnement et soi-même",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "fdff12eb-09c7-4f0b-8abf-b1290387afdc",
+              "components": {},
+              "subjectCode": "DEMO-MAT-03",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-03"
+        }
+      },
+      "subjectCode": "DEMO-MAT-03"
+    },
+    {
+      "label": "Réaction aux consignes et autres sollicitations",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+      "components": {
+        "T1": {
+          "label": "Réaction aux consignes et autres sollicitations",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+          "components": {
+            "P1": {
+              "label": "Réaction aux consignes et autres sollicitations",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+              "components": {},
+              "subjectCode": "DEMO-MAT-04",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Réaction aux consignes et autres sollicitations",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+              "components": {},
+              "subjectCode": "DEMO-MAT-04",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-04"
+        },
+        "T2": {
+          "label": "Réaction aux consignes et autres sollicitations",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+          "components": {
+            "P3": {
+              "label": "Réaction aux consignes et autres sollicitations",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+              "components": {},
+              "subjectCode": "DEMO-MAT-04",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Réaction aux consignes et autres sollicitations",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+              "components": {},
+              "subjectCode": "DEMO-MAT-04",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-04"
+        },
+        "T3": {
+          "label": "Réaction aux consignes et autres sollicitations",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+          "components": {
+            "P5": {
+              "label": "Réaction aux consignes et autres sollicitations",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+              "components": {},
+              "subjectCode": "DEMO-MAT-04",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Réaction aux consignes et autres sollicitations",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "5f94c840-fca4-4acd-bb83-143e8cb2d22f",
+              "components": {},
+              "subjectCode": "DEMO-MAT-04",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-04"
+        }
+      },
+      "subjectCode": "DEMO-MAT-04"
+    },
+    {
+      "label": "Sens de responsabilité et esprit d’affirmation",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+      "components": {
+        "T1": {
+          "label": "Sens de responsabilité et esprit d’affirmation",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+          "components": {
+            "P1": {
+              "label": "Sens de responsabilité et esprit d’affirmation",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+              "components": {},
+              "subjectCode": "DEMO-MAT-05",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Sens de responsabilité et esprit d’affirmation",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+              "components": {},
+              "subjectCode": "DEMO-MAT-05",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-05"
+        },
+        "T2": {
+          "label": "Sens de responsabilité et esprit d’affirmation",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+          "components": {
+            "P3": {
+              "label": "Sens de responsabilité et esprit d’affirmation",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+              "components": {},
+              "subjectCode": "DEMO-MAT-05",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Sens de responsabilité et esprit d’affirmation",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+              "components": {},
+              "subjectCode": "DEMO-MAT-05",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-05"
+        },
+        "T3": {
+          "label": "Sens de responsabilité et esprit d’affirmation",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+          "components": {
+            "P5": {
+              "label": "Sens de responsabilité et esprit d’affirmation",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+              "components": {},
+              "subjectCode": "DEMO-MAT-05",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Sens de responsabilité et esprit d’affirmation",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "19191975-ee79-4485-9168-691fdbbbf687",
+              "components": {},
+              "subjectCode": "DEMO-MAT-05",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-05"
+        }
+      },
+      "subjectCode": "DEMO-MAT-05"
+    },
+    {
+      "label": "Prudence dans le choix et les actions",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+      "components": {
+        "T1": {
+          "label": "Prudence dans le choix et les actions",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+          "components": {
+            "P1": {
+              "label": "Prudence dans le choix et les actions",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-06",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Prudence dans le choix et les actions",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-06",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-06"
+        },
+        "T2": {
+          "label": "Prudence dans le choix et les actions",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+          "components": {
+            "P3": {
+              "label": "Prudence dans le choix et les actions",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-06",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Prudence dans le choix et les actions",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-06",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-06"
+        },
+        "T3": {
+          "label": "Prudence dans le choix et les actions",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+          "components": {
+            "P5": {
+              "label": "Prudence dans le choix et les actions",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-06",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Prudence dans le choix et les actions",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "446e9e1e-d581-450f-a4dc-3f31df1cbb6c",
+              "components": {},
+              "subjectCode": "DEMO-MAT-06",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-06"
+        }
+      },
+      "subjectCode": "DEMO-MAT-06"
+    },
+    {
+      "label": "Fréquentation de l’école et amour aux études",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+      "components": {
+        "T1": {
+          "label": "Fréquentation de l’école et amour aux études",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+          "components": {
+            "P1": {
+              "label": "Fréquentation de l’école et amour aux études",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+              "components": {},
+              "subjectCode": "DEMO-MAT-07",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Fréquentation de l’école et amour aux études",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+              "components": {},
+              "subjectCode": "DEMO-MAT-07",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-07"
+        },
+        "T2": {
+          "label": "Fréquentation de l’école et amour aux études",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+          "components": {
+            "P3": {
+              "label": "Fréquentation de l’école et amour aux études",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+              "components": {},
+              "subjectCode": "DEMO-MAT-07",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Fréquentation de l’école et amour aux études",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+              "components": {},
+              "subjectCode": "DEMO-MAT-07",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-07"
+        },
+        "T3": {
+          "label": "Fréquentation de l’école et amour aux études",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+          "components": {
+            "P5": {
+              "label": "Fréquentation de l’école et amour aux études",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+              "components": {},
+              "subjectCode": "DEMO-MAT-07",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Fréquentation de l’école et amour aux études",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "663ed86c-0a56-4c28-8bff-758e76a03868",
+              "components": {},
+              "subjectCode": "DEMO-MAT-07",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-07"
+        }
+      },
+      "subjectCode": "DEMO-MAT-07"
+    },
+    {
+      "label": "Sensibilité aux genres et confiance en soi",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+      "components": {
+        "T1": {
+          "label": "Sensibilité aux genres et confiance en soi",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+          "components": {
+            "P1": {
+              "label": "Sensibilité aux genres et confiance en soi",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+              "components": {},
+              "subjectCode": "DEMO-MAT-08",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Sensibilité aux genres et confiance en soi",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+              "components": {},
+              "subjectCode": "DEMO-MAT-08",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-08"
+        },
+        "T2": {
+          "label": "Sensibilité aux genres et confiance en soi",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+          "components": {
+            "P3": {
+              "label": "Sensibilité aux genres et confiance en soi",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+              "components": {},
+              "subjectCode": "DEMO-MAT-08",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Sensibilité aux genres et confiance en soi",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+              "components": {},
+              "subjectCode": "DEMO-MAT-08",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-08"
+        },
+        "T3": {
+          "label": "Sensibilité aux genres et confiance en soi",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+          "components": {
+            "P5": {
+              "label": "Sensibilité aux genres et confiance en soi",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+              "components": {},
+              "subjectCode": "DEMO-MAT-08",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Sensibilité aux genres et confiance en soi",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "ac5ba920-e8c3-4190-9e4a-598092fab4b4",
+              "components": {},
+              "subjectCode": "DEMO-MAT-08",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-08"
+        }
+      },
+      "subjectCode": "DEMO-MAT-08"
+    },
+    {
+      "label": "Sensibilité aux valeurs de son milieu",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+      "components": {
+        "T1": {
+          "label": "Sensibilité aux valeurs de son milieu",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+          "components": {
+            "P1": {
+              "label": "Sensibilité aux valeurs de son milieu",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+              "components": {},
+              "subjectCode": "DEMO-MAT-09",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Sensibilité aux valeurs de son milieu",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+              "components": {},
+              "subjectCode": "DEMO-MAT-09",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-09"
+        },
+        "T2": {
+          "label": "Sensibilité aux valeurs de son milieu",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+          "components": {
+            "P3": {
+              "label": "Sensibilité aux valeurs de son milieu",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+              "components": {},
+              "subjectCode": "DEMO-MAT-09",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Sensibilité aux valeurs de son milieu",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+              "components": {},
+              "subjectCode": "DEMO-MAT-09",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-09"
+        },
+        "T3": {
+          "label": "Sensibilité aux valeurs de son milieu",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+          "components": {
+            "P5": {
+              "label": "Sensibilité aux valeurs de son milieu",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+              "components": {},
+              "subjectCode": "DEMO-MAT-09",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Sensibilité aux valeurs de son milieu",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "db1ae16f-b318-4f17-bbe9-c86710ff6f89",
+              "components": {},
+              "subjectCode": "DEMO-MAT-09",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-09"
+        }
+      },
+      "subjectCode": "DEMO-MAT-09"
+    },
+    {
+      "label": "Maintien de son corps",
+      "earned": null,
+      "maximum": "0",
+      "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+      "components": {
+        "T1": {
+          "label": "Maintien de son corps",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+          "components": {
+            "P1": {
+              "label": "Maintien de son corps",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+              "components": {},
+              "subjectCode": "DEMO-MAT-10",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P2": {
+              "label": "Maintien de son corps",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+              "components": {},
+              "subjectCode": "DEMO-MAT-10",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-10"
+        },
+        "T2": {
+          "label": "Maintien de son corps",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+          "components": {
+            "P3": {
+              "label": "Maintien de son corps",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+              "components": {},
+              "subjectCode": "DEMO-MAT-10",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P4": {
+              "label": "Maintien de son corps",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+              "components": {},
+              "subjectCode": "DEMO-MAT-10",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-10"
+        },
+        "T3": {
+          "label": "Maintien de son corps",
+          "earned": null,
+          "maximum": "0",
+          "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+          "components": {
+            "P5": {
+              "label": "Maintien de son corps",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+              "components": {},
+              "subjectCode": "DEMO-MAT-10",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            },
+            "P6": {
+              "label": "Maintien de son corps",
+              "earned": null,
+              "maximum": "0",
+              "subjectId": "70918b38-b9e2-4b1f-8efa-ac1771082a96",
+              "components": {},
+              "subjectCode": "DEMO-MAT-10",
+              "appreciation": [
+                {
+                  "QLT": "D2",
+                  "QTE": "D1",
+                  "COUL": "D3",
+                  "observation": "Observation fictive"
+                }
+              ]
+            }
+          },
+          "subjectCode": "DEMO-MAT-10"
+        }
+      },
+      "subjectCode": "DEMO-MAT-10"
+    }
+  ]
+}
