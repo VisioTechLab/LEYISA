@@ -149,17 +149,74 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
     {view === 'preview' && <PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={() => setView('close')} />}
     {view==='close'&&!preview&&<PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={()=>setView('close')}/>}
     {view === 'close' && <CloseScreen preview={preview} confirmed={confirmed} pending={pendingDecision} onConfirm={setConfirmed} onClose={closePeriod} />}
-    {view==='final'&&finalResults&&<><DeliberationPanel key={classPeriodId} students={finalResults.students}/><button className="leyisa-button" disabled={pendingDecision || finalResults.classPeriod.status!=='CLOSED'} onClick={publishResults}>Publier les résultats clôturés</button></>}
-    {view === 'final' && <FinalScreen results={finalResults} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadFinal} pending={pendingDecision} />}
+    {view === 'final' && <>
+      <FinalScreen results={finalResults} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadFinal} onPublish={publishResults} pending={pendingDecision} />
+      {finalResults && <details className="leyisa-card result-deliberation">
+        <summary>Délibération et repêchage</summary>
+        <DeliberationPanel key={classPeriodId} students={finalResults.students}/>
+      </details>}
+    </>}
   </main>;
 }
 
-function Queue({ submissions, onOpen }: { submissions: Submission[]; onOpen: (submission: Submission) => void }) { return <section className="leyisa-card"><h2>Soumissions à examiner</h2><p className="leyisa-description">File de validation de toutes les classes de la période ouverte.</p><div className="results-list">{submissions.length ? submissions.map(item => <article key={item.id}><div><strong>{item.evaluation.title}</strong><small>{item.author.label} · {item.schoolClass.label} · {item.subject} · tentative {item.attempt}</small></div><button className="leyisa-button leyisa-button-secondary" onClick={() => onOpen(item)}>Ouvrir</button></article>) : <p>Aucune soumission PENDING pour cette période.</p>}</div></section>; }
+function Queue({ submissions, onOpen }: { submissions: Submission[]; onOpen: (submission: Submission) => void }) {
+ const next = submissions[0];
+ return <div className="leyisa-grid results-detail-grid">
+  <section className="leyisa-card">
+   <h2>Soumissions à examiner</h2>
+   <div className="results-list">
+    {submissions.length ? submissions.map(item => (
+     <article key={item.id}>
+      <div><strong>{item.evaluation.title}</strong><small>{item.author.label} · {item.schoolClass.label} · {item.subject}</small></div>
+      <button className="leyisa-button leyisa-button-secondary" onClick={() => onOpen(item)}>Ouvrir</button>
+     </article>
+    )) : <p>Aucune soumission en attente pour cette période.</p>}
+   </div>
+  </section>
+  <aside className="leyisa-card">
+   <h2>Première soumission</h2>
+   {next ? <>
+    <dl><dt>Classe</dt><dd>{next.schoolClass.label}</dd><dt>Matière</dt><dd>{next.subject}</dd><dt>Tentative</dt><dd>{next.attempt}</dd></dl>
+    <button className="leyisa-button" onClick={() => onOpen(next)}>Consulter le détail</button>
+   </> : <p>Choisissez une autre période pour consulter sa file.</p>}
+  </aside>
+ </div>;
+}
 function Detail({ submission, onApprove, onReject }: { submission: Submission & { grades?: Array<{ matricule: string; student: string; score: string | number | null }> }; onApprove: () => void; onReject: () => void }) { return <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Détail d’une soumission</h2><p className="leyisa-description">Tentative {submission.attempt} · lecture seule.</p><ResultTable students={(submission.grades ?? []).map(grade => ({ label: `${grade.matricule} · ${grade.student}`, values: [grade.score === null ? 'Absente' : `${grade.score} / ${submission.evaluation.maxScore}`] }))} headings={['Élève', 'Note']} /><div className="preview-actions"><button className="leyisa-button" onClick={onApprove}>Accepter la soumission</button><button className="leyisa-button leyisa-button-secondary" onClick={onReject}>Rejeter avec motif</button></div></section><aside className="leyisa-card"><h2>Décision de la Direction</h2><p>Auteur : {submission.author.label}</p><p>Évaluation : {submission.evaluation.title}</p><p>Statut : {submission.status}</p><p className="leyisa-description">L’auteur ne peut jamais décider sur sa propre soumission.</p></aside></div>; }
 function Reject({ submission, reason, onReason, onCancel, onConfirm }: { submission: Submission; reason: string; onReason: (value: string) => void; onCancel: () => void; onConfirm: () => void }) { return <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Rejeter la soumission</h2><p className="leyisa-description">Le motif est obligatoire et visible par l’enseignant.</p><label>Évaluation<input disabled value={submission.evaluation.title} /></label><label>Motif du rejet<textarea value={reason} onChange={event => onReason(event.target.value)} placeholder="Veuillez préciser la correction attendue…" /></label><div className="preview-actions"><button className="leyisa-button" disabled={!reason.trim()} onClick={onConfirm}>Confirmer le rejet</button><button className="leyisa-button leyisa-button-secondary" onClick={onCancel}>Annuler</button></div></section><aside className="leyisa-card"><h2>Traçabilité</h2><p>La version soumise est conservée.</p><p>État suivant : REJECTED</p><p>Après correction : nouvelle soumission obligatoire.</p></aside></div>; }
 function PreviewScreen({ preview, contexts, classPeriodId, onSelect, onLoad, onClose }: { preview: Preview | null; contexts: ClassPeriod[]; classPeriodId: string; onSelect: (value: string) => void; onLoad: () => void; onClose: () => void }) { return <><section className="results-toolbar"><label>Classe-période<select aria-label="Classe-période" value={classPeriodId} onChange={event => onSelect(event.target.value)}>{contexts.map(context => <option key={context.id} value={context.id}>{context.classLabel} · {context.periodLabel} · {context.status}</option>)}</select></label><button className="leyisa-button" onClick={onLoad}>Vérifier</button></section>{preview && <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Aperçu des résultats</h2><p className="leyisa-description">Moyennes par matière uniquement ; aucune moyenne générale avant clôture.</p><StudentResults students={preview.students} /></section><aside className="leyisa-card"><h2>Contrôles avant clôture</h2>{preview.problems.length ? <ul>{preview.problems.map(problem => <li key={problem}>{problem}</li>)}</ul> : <p>Toutes les matières et soumissions sont validées.</p>}<button className="leyisa-button" disabled={!preview.readyToClose} onClick={onClose}>Continuer vers clôture</button></aside></div>}</>; }
 function CloseScreen({ preview, confirmed, pending, onConfirm, onClose }: { preview: Preview | null; confirmed: boolean; pending: boolean; onConfirm: (value: boolean) => void; onClose: () => void }) { return <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Confirmer la clôture</h2><p className="results-warning">Cette opération est irréversible : les résultats sont figés et toute modification est refusée.</p><p>Classe / période : {preview?.classPeriod.classLabel} / {preview?.classPeriod.periodLabel}</p><label className="results-check"><input type="checkbox" checked={confirmed} onChange={event => onConfirm(event.target.checked)} /> Je confirme la clôture de la période.</label><button className="leyisa-button" disabled={!preview?.readyToClose || !confirmed || pending} onClick={onClose}>Confirmer la clôture</button></section><aside className="leyisa-card"><h2>Contrôle transactionnel</h2><ol><li>Vérifier les soumissions et les notes.</li><li>Calculer les résultats.</li><li>Créer les instantanés.</li><li>Passer OPEN à CLOSED.</li></ol></aside></div>; }
-function FinalScreen({ results, contexts, classPeriodId, onSelect, onLoad, pending }: { results: FinalResults | null; contexts: ClassPeriod[]; classPeriodId: string; pending: boolean; onSelect: (value: string) => void; onLoad: () => void }) { return <><section className="results-toolbar"><label>Classe-période<select aria-label="Classe-période" value={classPeriodId} disabled={pending} onChange={event => onSelect(event.target.value)}>{contexts.map(context => <option key={context.id} value={context.id}>{context.classLabel} · {context.periodLabel} · {context.status}</option>)}</select></label><button className="leyisa-button" onClick={onLoad}>Afficher</button></section>{results && <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Résultats figés</h2><StudentResults students={results.students} final /></section><aside className="leyisa-card"><h2>Clôture de la période</h2><p>Statut : {results.classPeriod.status}</p><p>Les résultats sont figés.</p><a className="leyisa-button" href="#bulletins">Préparer bulletin</a></aside></div>}</>; }
+function FinalScreen({ results, contexts, classPeriodId, onSelect, onLoad, onPublish, pending }: {
+ results: FinalResults | null;
+ contexts: ClassPeriod[];
+ classPeriodId: string;
+ onSelect: (value: string) => void;
+ onLoad: () => void;
+ onPublish: () => void;
+ pending: boolean;
+}) {
+ return <>
+  <section className="results-toolbar">
+   <label>Classe-période
+    <select aria-label="Classe-période" value={classPeriodId} disabled={pending} onChange={event => onSelect(event.target.value)}>
+     {contexts.map(context => <option key={context.id} value={context.id}>{context.classLabel} · {context.periodLabel} · {context.status}</option>)}
+    </select>
+   </label>
+   <button className="leyisa-button" disabled={!classPeriodId || pending} onClick={onLoad}>Afficher</button>
+  </section>
+  {results && <div className="leyisa-grid results-detail-grid">
+   <section className="leyisa-card"><h2>Résultats figés</h2><StudentResults students={results.students} final/></section>
+   <aside className="leyisa-card">
+    <h2>Clôture de la période</h2>
+    <p>{results.classPeriod.classLabel} · {results.classPeriod.periodLabel}</p>
+    <p>Statut : {results.classPeriod.status}</p>
+    {results.classPeriod.status === 'CLOSED'
+     ? <button className="leyisa-button" disabled={pending} onClick={onPublish}>Publier les résultats clôturés</button>
+     : <a className="leyisa-button" href="#bulletin">Préparer un bulletin</a>}
+   </aside>
+  </div>}
+ </>;
+}
 function StudentResults({ students, final = false }: { students: Preview['students']; final?: boolean }) { const subjects = students[0]?.subjectResults ?? []; return <ResultTable headings={['Élève', ...subjects.map(subject => subject.label), ...(final ? ['Total'] : [])]} students={students.map(student => ({ label: `${student.identity.matricule ?? ''} ${student.identity.firstName ?? ''} ${student.identity.lastName ?? ''}`.trim(), values: [...student.subjectResults.map(subject => subject.earned === null ? '—' : `${displayNumber.format(subject.earned)}/${subject.maximum}`), ...(final ? [`${displayNumber.format(student.totalEarned)}/${displayNumber.format(student.totalMaximum)}`] : [])] }))} />; }
 function ResultTable({ headings, students }: { headings: string[]; students: Array<{ label: string; values: string[] }> }) { return <div className="leyisa-table-wrap"><table><thead><tr>{headings.map(heading => <th key={heading}>{heading}</th>)}</tr></thead><tbody>{students.map(student => <tr key={student.label}><td>{student.label}</td>{student.values.map((value, index) => <td key={`${student.label}-${index}`}>{value}</td>)}</tr>)}</tbody></table></div>; }
 function titleFor(view: View) { return ({ queue: 'Validation des notes', detail: 'Détail d’une soumission', reject: 'Rejeter avec motif', preview: 'Prévisualiser les résultats', close: 'Confirmer la clôture', final: 'Résultats et clôture' })[view]; }

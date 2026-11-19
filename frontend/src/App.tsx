@@ -32,7 +32,7 @@ const routes=[
  {hash:'#previsualisation',label:'Prévisualiser résultats',permission:'results.preview',render:()=> <ResultsModulePage initialView="preview"/>},
  {hash:'#cloture',label:'Clôturer',permission:'results.close',render:()=> <ResultsModulePage initialView="close"/>},
  {hash:'#resultats',label:'Résultats et publication',permission:'results.preview',render:()=> <ResultsModulePage initialView="final"/>},
- {hash:'#bulletins',label:'Bulletins disponibles',permission:'bulletins.download',render:()=> <BulletinsPage/>},
+ {hash:'#bulletins',label:'Bulletins disponibles',permission:'bulletins.download',render:()=> <BulletinsPage catalog/>},
  {hash:'#bulletin',label:'Générer un bulletin',permission:'bulletins.produce',render:()=> <BulletinsPage/>},
  {hash:'#audit',label:'Journal d’audit',permission:'audit.read',render:()=> <AuditPage/>},
  {hash:'#acces',label:'Accès / conflits',permission:'',render:()=> <AccessPage/>},

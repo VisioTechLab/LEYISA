@@ -13,3 +13,7 @@
 .results-list strong, .results-list small { display: block; }.results-list small { margin-top: .3rem; color: #647986; }
 .results-detail-grid { grid-template-columns: minmax(0, 1.65fr) minmax(17rem, .75fr); }.results-warning { padding: 1rem; border-left: 4px solid #36556d; background: #eaf0f3; }.results-check { display: flex !important; grid-template-columns: auto 1fr; align-items: center; }.results-check input { min-width: auto; }.results-module-page .leyisa-button { display: inline-block; text-decoration: none; cursor: pointer; }
 @media (max-width: 760px) { .results-toolbar, .results-steps { display: grid; }.results-detail-grid { grid-template-columns: 1fr; }.results-toolbar select { width: 100%; } }
+
+.result-deliberation { margin-top: 20px; }
+.results-detail-grid dt { margin-top: 12px; font-weight: 600; }
+.results-detail-grid dd { margin-inline-start: 0; }

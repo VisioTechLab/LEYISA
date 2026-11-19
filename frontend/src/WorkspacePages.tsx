@@ -1,21 +1,44 @@
 import { RetakeDecisionField } from './features/results/DeliberationPanel';
-import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { api, post } from './shared/api';
 import { useSession } from './shared/session';
 import { can } from './features/auth/authApi';
 
 // Contrats d'écran : données réseau uniquement, aucun jeu de démonstration embarqué.
 type Row=Record<string,any>;
-export function useResource<T>(path:string) {
- const [data,setData]=useState<T|null>(null),[error,setError]=useState(''),[loading,setLoading]=useState(true);
- async function refresh(){setLoading(true);try{setData(await api<T>(path));setError('');}catch(e){setError(e instanceof Error?e.message:'Chargement impossible.');}finally{setLoading(false);}}
- useEffect(()=>{let active=true;setLoading(true);api<T>(path).then(d=>{if(active){setData(d);setError('');}}).catch(e=>{if(active)setError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[path]);
- return {data,error,loading,refresh};
+export function useResource<T>(path: string | null) {
+ const [state, setState] = useState({ path, data: null as T | null, error: '', loading: path !== null });
+ const generation = useRef(0);
+ const activePath = useRef<string | null>(null);
+ const refresh = useCallback(async () => {
+  if (!path || activePath.current !== path) return;
+  const request = ++generation.current;
+  setState(current => ({ path, data: current.path === path ? current.data : null, error: '', loading: true }));
+  try {
+   const data = await api<T>(path);
+   if (request === generation.current) setState({ path, data, error: '', loading: false });
+  } catch (error) {
+   if (request === generation.current) {
+    setState({ path, data: null, error: error instanceof Error ? error.message : 'Chargement impossible.', loading: false });
+   }
+  }
+ }, [path]);
+ useEffect(() => {
+  activePath.current = path;
+  void refresh();
+  return () => {
+   activePath.current = null;
+   generation.current += 1;
+  };
+ }, [path, refresh]);
+ return state.path === path
+  ? { ...state, refresh }
+  : { data: null, error: '', loading: path !== null, refresh };
 }
 function Feedback({error,loading}:{error:string;loading:boolean}) {return error?<p role="alert" className="form-feedback feedback-error">{error}</p>:loading?<p role="status">Chargement…</p>:null;}
 export function Panel({title,children}:{title:string;children:ReactNode}) {return <section className="leyisa-card"><h2>{title}</h2>{children}</section>;}
 export function Field({label,name,type='text',required=true,value,children}:{label:string;name:string;type?:string;required?:boolean;value?:string;children?:ReactNode}) {return <label><span>{label}{required?' *':''}</span>{children?<select name={name} required={required} defaultValue={value}>{children}</select>:<input name={name} type={type} required={required} defaultValue={value} maxLength={type==='password'?256:200}/>}</label>;}
-export function ActionForm({children,action,label='Enregistrer',done}:{children:ReactNode;action:(d:Record<string,string>)=>Promise<unknown>;label?:string;done?:()=>void}) {
+export function ActionForm({children,action,label='Enregistrer',done}:{children?:ReactNode;action:(d:Record<string,string>)=>Promise<unknown>;label?:string;done?:()=>void}) {
  const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');
  async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();if(busy)return;const d=Object.fromEntries(new FormData(e.currentTarget).entries()) as Record<string,string>;setBusy(true);setError('');setMessage('');try{await action(d);setMessage('Enregistrement confirmé par le serveur.');done?.();}catch(e){setError(e instanceof Error?e.message:'Action impossible.');}finally{setBusy(false);}}
  return <form className="leyisa-form" onSubmit={submit}>{children}{error&&<p role="alert" className="feedback-error">{error}</p>}{message&&<p role="status">{message}</p>}<button className="leyisa-button" disabled={busy}>{busy?'Traitement…':label}</button></form>;
@@ -24,14 +47,95 @@ function Options({rows,label='label'}:{rows:Row[];label?:string}) {return <><opt
 function Page({title,description,children}:{title:string;description?:string;children:ReactNode}) {return <main className="leyisa-page"><header className="leyisa-page-heading"><h1>{title}</h1><p>{description}</p></header>{children}</main>;}
 export function AccessPage(){return <Page title="Accès refusé ou conflit"><div className="leyisa-grid"><Panel title="401 — Session absente ou révoquée"><a href="#connexion">Se connecter</a></Panel><Panel title="403 — Permissions insuffisantes"><a href="#accueil">Retour à mon espace</a></Panel><Panel title="409 — Conflit de version ou ressource clôturée"><button onClick={()=>window.location.reload()}>Recharger les données</button></Panel><Panel title="400 — Données invalides"><p>Corrigez les champs indiqués puis renvoyez le formulaire.</p><a href="#accueil">Retour à mon espace</a></Panel></div></Page>;}
 
-export function Dashboard({role}:{role:string}) {
- const path=role==='ADM'?'/school/bootstrap':role==='SEC'?'/students':role==='ENS'?'/assignments/mine':role==='ELEVE'?'/bulletins':'/results/class-periods';
- const r=useResource<any>(path);const extra=useResource<any>(role==='ADM'?'/users':role==='SEC'?'/bulletins':role==='ENS'?'/evaluations':role==='ELEVE'?'/bulletins':'/results/submissions');
- const titles:Record<string,string>={ADM:'Tableau de bord Administration',SEC:'Tableau de bord Secrétariat',ENS:'Mon espace Enseignant',DIR:'Tableau de bord Direction',ELEVE:'Mes bulletins publiés'};
- const shortcuts:Record<string,[string,string][]>={ADM:[['Configurer l’année','#scolarite'],['Gérer les comptes','#comptes'],['Classes et matières','#classes']],SEC:[['Liste des élèves','#eleves'],['Nouveau dossier','#dossier'],['Inscription annuelle','#inscription']],ENS:[['Mes cours','#cours'],['Nouvelle évaluation','#evaluation'],['Saisie des notes','#notes']],DIR:[['File de validation','#validation'],['Prévisualiser résultats','#previsualisation'],['Enseignants et affectations','#affectations']]};
- const count=Array.isArray(r.data)?r.data.length:r.data?.years?.reduce((n:number,y:Row)=>n+y.classes.length,0)??0;
- const count2=Array.isArray(extra.data)?extra.data.length:extra.data?.total??0;
- return <Page title={titles[role]??'Mon espace'} description="Les actions disponibles dépendent des droits de votre session."><Feedback error={r.error||extra.error} loading={r.loading||extra.loading}/><div className="leyisa-stats"><Panel title={role==='ADM'?'Classes':role==='SEC'?'Dossiers élèves':role==='ENS'?'Cours affectés':'Classes-périodes'}><strong>{count}</strong></Panel><Panel title={role==='ADM'?'Comptes':role==='SEC'?'Bulletins publiés':role==='ENS'?'Évaluations':'Soumissions à examiner'}><strong>{count2}</strong></Panel><Panel title="Session"><p>{useSession()?.firstName} {useSession()?.lastName}</p><span className="leyisa-chip">{role} · DEMO-V1</span></Panel></div><div className="leyisa-grid"><Panel title="Accès rapides"><ul className="action-list">{(shortcuts[role]??[]).map(([title,link])=><li key={link}><span>{title}</span><a className="leyisa-button leyisa-button-secondary" href={link}>Ouvrir</a></li>)}</ul></Panel><Panel title="Vue d’ensemble"><p>{count} ressource(s) accessibles dans votre périmètre.</p><p>Les écritures, validations et publications sont conservées par le serveur.</p><a href={shortcuts[role]?.[0]?.[1]??'#bulletins'} className="leyisa-button">Ouvrir le module</a></Panel></div></Page>;
+const dashboards = {
+ ADM: {
+  title: 'Tableau de bord Administration', main: '/school/bootstrap', related: '/assignments',
+  links: [['Configurer l’année', '#scolarite'], ['Classes et matières', '#classes'], ['Gérer les comptes', '#comptes']],
+ },
+ SEC: {
+  title: 'Tableau de bord Secrétariat', main: '/students', related: '/bulletins',
+  links: [['Liste des élèves', '#eleves'], ['Nouveau dossier', '#dossier'], ['Inscription annuelle', '#inscription']],
+ },
+ ENS: {
+  title: 'Mon espace Enseignant', main: '/assignments/mine', related: '/evaluations',
+  links: [['Mes cours', '#cours'], ['Nouvelle évaluation', '#evaluation'], ['Saisie des notes', '#notes']],
+ },
+ DIR: {
+  title: 'Tableau de bord Direction', main: '/results/class-periods', related: '/results/submissions',
+  links: [['File de validation', '#validation'], ['Prévisualiser les résultats', '#previsualisation'], ['Clôturer une période', '#cloture']],
+ },
+ ELEVE: {
+  title: 'Mes bulletins publiés', main: '/bulletins', related: null,
+  links: [['Bulletins disponibles', '#bulletins']],
+ },
+};
+
+export function Dashboard({ role }: { role: string }) {
+ const view = dashboards[role as keyof typeof dashboards] ?? dashboards.ELEVE;
+ const current = useResource<Row | Row[]>(view.main);
+ const related = useResource<Row | Row[]>(view.related);
+ const rows = Array.isArray(current.data) ? current.data : [];
+ const other = Array.isArray(related.data) ? related.data : [];
+ const loading = current.loading || related.loading;
+ const error = current.error || related.error;
+
+ let stats: [string, string | number][];
+ let columns: [string, string];
+ let overview: [string, string, string][];
+ switch (role) {
+  case 'ADM': {
+   const years: Row[] = current.data && !Array.isArray(current.data) ? current.data.years : [];
+   const activeYear = years[0];
+   const teachers = related.data && !Array.isArray(related.data) ? related.data.teachers.length : 0;
+   stats = [['Année scolaire', activeYear?.code ?? '—'], ['Classes', activeYear?.classes.length ?? 0], ['Enseignants', teachers]];
+   columns = ['Année', 'Classes'];
+   overview = years.map(year => [year.id, year.code, String(year.classes.length)]);
+   break;
+  }
+  case 'SEC':
+   stats = [['Dossiers affichés', rows.length], ['Inscriptions associées', rows.reduce((sum, row) => sum + row.enrollments.length, 0)], ['Bulletins disponibles', other.length]];
+   columns = ['Élève', 'Dernière classe'];
+   overview = rows.map(row => [row.id, `${row.user.lastName} ${row.user.firstName}`, row.enrollments[0]?.schoolClass.label ?? '—']);
+   break;
+  case 'ENS':
+   stats = [['Cours affectés', rows.length], ['Évaluations', other.length], ['Corrections', other.filter(row => row.state === 'REJECTED').length]];
+   columns = ['Matière', 'Classe'];
+   overview = rows.map(row => [row.id, row.classSubject.subject.label, row.classSubject.schoolClass.label]);
+   break;
+  case 'DIR':
+   stats = [['À valider', other.length], ['Périodes ouvertes', rows.filter(row => row.status === 'OPEN').length], ['Périodes clôturées', rows.filter(row => row.status !== 'OPEN').length]];
+   columns = ['Soumission', 'Classe'];
+   overview = other.map(row => [row.id, row.evaluation.title, row.schoolClass.label]);
+   break;
+  default:
+   stats = [['Bulletins disponibles', rows.length]];
+   columns = ['Classe', 'Période'];
+   overview = rows.map(row => [row.id, row.identitySnapshot.classLabel, row.identitySnapshot.periodLabel]);
+ }
+ return (
+  <Page title={view.title}>
+   <Feedback error={error} loading={loading}/>
+   <div className="leyisa-stats">
+    {stats.map(([label, value]) => <Panel key={label} title={label}><strong>{loading || error ? '—' : value}</strong></Panel>)}
+   </div>
+   <div className="leyisa-grid">
+    <Panel title="Accès rapides">
+     <ul className="action-list">{view.links.map(([label, link]) => (
+      <li key={link}><span>{label}</span><a className="leyisa-button leyisa-button-secondary" href={link} aria-label={label}>Ouvrir</a></li>
+     ))}</ul>
+    </Panel>
+    <Panel title="Vue d’ensemble">
+     {overview.length > 0 ? (
+      <table className="dashboard-overview">
+       <thead><tr>{columns.map(column => <th key={column} scope="col">{column}</th>)}</tr></thead>
+       <tbody>{overview.slice(0, 5).map(([id, label, value]) => <tr key={id}><td>{label}</td><td>{value}</td></tr>)}</tbody>
+      </table>
+     ) : !loading && !error && <p>Aucun élément à afficher.</p>}
+     <a href={view.links[0][1]} className="leyisa-button">Ouvrir le module</a>
+    </Panel>
+   </div>
+  </Page>
+ );
 }
 
 export function AccountsPage(){const [page,setPage]=useState(1);const r=useResource<Row>(`/users?page=${page}`);const user=useSession();const [selected,setSelected]=useState<Row|null>(null);return <Page title="Comptes et rôles" description="Créer un compte inactif, puis l’activer après remise sécurisée des identifiants."><Feedback error={r.error} loading={r.loading}/><div className="leyisa-grid"><Panel title="Comptes utilisateurs"><div className="leyisa-table-wrap"><table><thead><tr><th>Utilisateur</th><th>Rôles</th><th>Statut</th><th>Action</th></tr></thead><tbody>{r.data?.items.map((row:Row)=><tr key={row.id}><td>{row.login}</td><td>{row.roles.map((r:Row)=>r.role).join(', ')}</td><td>{row.loginEnabled?'Actif':'Inactif'}</td><td><button onClick={()=>setSelected(row)} disabled={row.id===user?.id}>Ouvrir</button></td></tr>)}</tbody></table></div><div className="workspace-controls"><button disabled={page===1} onClick={()=>setPage(page-1)}>Précédent</button><span>Page {page}</span><button disabled={page*50>=(r.data?.total??0)} onClick={()=>setPage(page+1)}>Suivant</button></div>{selected&&<div key={selected.id}><h3>{selected.login}</h3><ActionForm action={d=>api(`/users/${selected.id}/status`,{method:'PATCH',body:JSON.stringify({enabled:d.enabled==='true'})})} done={r.refresh} label="Modifier le statut"><Field label="Statut" name="enabled" value={String(selected.loginEnabled)}><option value="true">Actif</option><option value="false">Inactif</option></Field></ActionForm><ActionForm action={d=>api(`/users/${selected.id}/roles`,{method:'PUT',body:JSON.stringify({roles:[d.role]})})} done={r.refresh} label="Attribuer le rôle"><Field label="Rôle" name="role">{['ENS','SEC','DIR','ADM'].map(role=><option key={role}>{role}</option>)}</Field></ActionForm></div>}</Panel><Panel title="Nouveau compte"><ActionForm action={d=>post('/users',{...d,roles:[d.role]} )} done={r.refresh}><Field label="Identifiant" name="login"/><Field label="Nom" name="lastName"/><Field label="Prénom" name="firstName"/><Field label="Mot de passe initial (12 caractères minimum)" name="initialPassword" type="password"/><Field label="Rôle initial" name="role">{['ENS','SEC','DIR','ADM'].map(role=><option key={role}>{role}</option>)}</Field><p>Le compte est créé inactif. Vos propres rôles et votre statut sont protégés.</p></ActionForm></Panel></div></Page>;}
@@ -51,7 +155,7 @@ export function TeacherPages({view='assignments'}:{view?:'teachers'|'assignments
 export function StudentRecordPages({view}:{view:'record'|'history'|'enroll'}) {
  const [search,setSearch]=useState('');const r=useResource<Row[]>(`/students?search=${encodeURIComponent(search)}`);const school=useResource<Row[]>('/students/registration-options');const [id,setId]=useState('');const selected=r.data?.find(s=>s.id===id)??r.data?.[0];const user=useSession();const write=can(user,'students.enroll');
  const fields=<><Field label="Matricule permanent" name="matricule"/><Field label="Nom" name="lastName"/><Field label="Postnom" name="postName" required={false}/><Field label="Prénom" name="firstName"/><Field label="Date de naissance" name="birthDate" type="date" required={false}/><Field label="Lieu de naissance" name="birthPlace" required={false}/><Field label="Sexe" name="sex" required={false}><option value="">Non renseigné</option><option value="F">Féminin</option><option value="M">Masculin</option></Field><Field label="Numéro permanent" name="permanentNumber" required={false}/><Field label="Responsable" name="guardian" required={false}/><Field label="Contact" name="contact" required={false}/></>;
- return <Page title={view==='record'?'Nouveau dossier élève':view==='history'?'Fiche et historique scolaire':'Inscription annuelle'} description="Une identité permanente ; une inscription distincte pour chaque année."><Feedback error={r.error||school.error} loading={r.loading||school.loading}/>{view!=='record'&&<label>Rechercher un dossier<input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Matricule ou nom"/></label>}{view!=='record'&&<label>Élève<select aria-label="Élève" value={selected?.id??''} onChange={e=>setId(e.target.value)}><Options rows={(r.data??[]).map(s=>({...s,label:`${s.matricule} — ${s.user.lastName} ${s.user.firstName}`}))}/></select></label>}<div className="leyisa-grid"><Panel title={view==='record'?'Créer un dossier élève':view==='history'?'Fiche élève':'Nouvelle inscription annuelle'}>{view==='record'?(write?<ActionForm action={d=>post('/students/records',d)} done={r.refresh} label="Enregistrer le dossier">{fields}</ActionForm>:<p>Création réservée au secrétariat.</p>):view==='history'?<><p>{selected?.matricule}</p><h3>{selected?.user.lastName} {selected?.postName} {selected?.user.firstName}</h3><p>Naissance : {selected?.birthDate?.slice(0,10)??'—'}</p>{write&&<a className="leyisa-button" href="#inscription">Inscrire à une nouvelle année</a>}</>:write&&selected?<ActionForm key={selected.id} action={d=>post(`/students/${selected.id}/enrollments`,{classId:d.classId,schoolYearId:school.data?.find(y=>y.classes.some((c:Row)=>c.id===d.classId))?.id})} done={r.refresh} label="Confirmer l’inscription"><Field label="Classe / année scolaire" name="classId"><Options rows={school.data?.flatMap(y=>y.classes.map((c:Row)=>({...c,label:`${c.label} — ${y.code}`})))??[]}/></Field></ActionForm>:<p>Choisissez un dossier ; inscription réservée au secrétariat.</p>}</Panel><Panel title={view==='history'?'Historique scolaire':'Contrôles indispensables'}>{view==='history'?<ul>{selected?.enrollments.map((en:Row)=><li key={en.id}>{en.schoolClass.schoolYear.code} — {en.schoolClass.label}</li>)}</ul>:<><p>Matricule unique, homonymes autorisés.</p><p>Une inscription par année, dans une classe de la même année.</p><p>Les anciens dossiers et résultats sont conservés.</p></>}</Panel></div></Page>;
+ return <Page title={view==='record'?'Nouveau dossier élève':view==='history'?'Fiche et historique scolaire':'Inscription annuelle'} description="Une identité permanente ; une inscription distincte pour chaque année."><Feedback error={r.error||school.error} loading={r.loading||school.loading}/>{view!=='record'&&<label>Rechercher un dossier<input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Matricule ou nom"/></label>}{view!=='record'&&<label>Élève<select aria-label="Élève" value={selected?.id??''} onChange={e=>setId(e.target.value)}><Options rows={(r.data??[]).map(s=>({...s,label:`${s.matricule} — ${s.user.lastName} ${s.user.firstName}`}))}/></select></label>}<div className="leyisa-grid"><Panel title={view==='record'?'Créer un dossier élève':view==='history'?'Fiche élève':'Nouvelle inscription annuelle'}>{view==='record'?(write?<ActionForm action={d=>post('/students/records',d)} done={r.refresh} label="Enregistrer le dossier"><div className="leyisa-fields-grid">{fields}</div></ActionForm>:<p>Création réservée au secrétariat.</p>):view==='history'?<><p>{selected?.matricule}</p><h3>{selected?.user.lastName} {selected?.postName} {selected?.user.firstName}</h3><p>Naissance : {selected?.birthDate?.slice(0,10)??'—'}</p>{write&&<a className="leyisa-button" href="#inscription">Inscrire à une nouvelle année</a>}</>:write&&selected?<ActionForm key={selected.id} action={d=>post(`/students/${selected.id}/enrollments`,{classId:d.classId,schoolYearId:school.data?.find(y=>y.classes.some((c:Row)=>c.id===d.classId))?.id})} done={r.refresh} label="Confirmer l’inscription"><Field label="Classe / année scolaire" name="classId"><Options rows={school.data?.flatMap(y=>y.classes.map((c:Row)=>({...c,label:`${c.label} — ${y.code}`})))??[]}/></Field></ActionForm>:<p>Choisissez un dossier ; inscription réservée au secrétariat.</p>}</Panel><Panel title={view==='history'?'Historique scolaire':'Contrôles indispensables'}>{view==='history'?<ul>{selected?.enrollments.map((en:Row)=><li key={en.id}>{en.schoolClass.schoolYear.code} — {en.schoolClass.label}</li>)}</ul>:<><p>Matricule unique, homonymes autorisés.</p><p>Une inscription par année, dans une classe de la même année.</p><p>Les anciens dossiers et résultats sont conservés.</p></>}</Panel></div></Page>;
 }
 
 export function EvaluationsHome({create=false}:{create?:boolean}) {
@@ -59,9 +163,72 @@ export function EvaluationsHome({create=false}:{create?:boolean}) {
  return <Page title={create?'Créer une évaluation':'Mes évaluations'} description="Le cours, le composant et le barème sont vérifiés côté serveur."><Feedback error={r.error} loading={r.loading}/><div className="leyisa-grid"><Panel title={create?'Créer une évaluation':'Mes évaluations'}>{create?<><label>Cours affecté<select aria-label="Cours affecté" value={assignment?.id??''} onChange={e=>setAssignmentId(e.target.value)}><Options rows={rows.map(a=>({...a,label:`${a.classSubject.schoolClass.label} — ${a.classSubject.subject.label}`}))}/></select></label><ActionForm key={assignment?.id} action={async d=>{const result=await post<Row>('/evaluations',{...d,assignmentId:assignment?.id});window.location.hash=`#notes?id=${result.id}`;}} label="Créer l’évaluation"><Field label="Composant de résultat" name="classPeriodId"><Options rows={assignment?.classSubject.schoolClass.classPeriods.filter((cp:Row)=>!cp.closedAt).map((cp:Row)=>({...cp,label:`${cp.period.code} — ${cp.period.kind}`}))??[]}/></Field><RetakeDecisionField/><Field label="Intitulé" name="title"/><Field label="Type" name="kind">{['TRAVAIL_JOURNALIER','EXAMEN','APPRECIATION','REPECHAGE'].map(k=><option key={k}>{k}</option>)}</Field><Field label="Barème maximum (hors appréciation)" name="maxScore" type="number" value="20"/><Field label="Date" name="heldOn" type="date"/></ActionForm></>:<div className="leyisa-table-wrap"><table><thead><tr><th>Évaluation</th><th>Barème</th><th>État</th><th>Action</th></tr></thead><tbody>{rows.map(e=><tr key={e.id}><td>{e.title} · {e.subject.label}</td><td>{e.maxScore}</td><td>{e.state}</td><td><a href={`#notes?id=${e.id}`}>{e.editable?'Saisir / corriger':'Lire'}</a></td></tr>)}</tbody></table></div>}</Panel><Panel title={create?'Vérification métier':'Nouvelle évaluation'}><p>Affectation active, période ouverte, date cohérente et barème strictement positif.</p><p>La note zéro est distincte d’une note vide. La direction décide des soumissions sans modifier les notes.</p>{!create&&<a className="leyisa-button" href="#evaluation">Créer une évaluation</a>}</Panel></div></Page>;
 }
 
-export function BulletinsPage(){const r=useResource<Row[]>('/bulletins');const [id,setId]=useState('');const selected=r.data?.find(b=>b.id===id)??r.data?.[0];const detail=useResource<Row>(`/bulletins/${selected?.id??'00000000-0000-0000-0000-000000000000'}`);const user=useSession();return <Page title="Bulletins scolaires" description="Documents issus uniquement de résultats publiés et figés."><Feedback error={r.error} loading={r.loading}/><div className="leyisa-grid"><Panel title="Bulletins disponibles"><label>Élève / classe / composant<select aria-label="Élève / classe / composant" value={selected?.id??''} onChange={e=>setId(e.target.value)}><Options rows={(r.data??[]).map(row=>({...row,label:`${row.identitySnapshot.lastName} ${row.identitySnapshot.firstName} — ${row.identitySnapshot.classLabel} / ${row.identitySnapshot.periodCode}`}))}/></select></label>{!r.loading&&!r.data?.length&&<p>Aucun bulletin publié dans votre périmètre.</p>}{selected&&<>{can(user,'bulletins.produce')&&<ActionForm action={()=>post(`/bulletins/${selected.id}/generate`,{})} label="Générer le bulletin"> <p>Création du document depuis la version figée.</p></ActionForm>}<a className="leyisa-button" href={`/api/v1/bulletins/${selected.id}/pdf`}>Télécharger PDF</a></>}</Panel><Panel title="Aperçu du document">{selected&&detail.data?<div className="document-preview"><h2>{detail.data.identity.school?.name??'LEYISA SCHOOL'}</h2><strong>DEMO-V1</strong><p>{detail.data.identity.lastName} {detail.data.identity.firstName}</p><p>{detail.data.identity.classLabel} — {detail.data.identity.yearCode} / {detail.data.identity.periodCode}</p><table><thead><tr><th>Branche</th><th>Résultat figé</th></tr></thead><tbody>{detail.data.subjects.map((s:Row)=><tr key={s.subjectId}><td>{s.label}</td><td>{detail.data?.identity.cycle==='MATERNEL'?'Appréciation publiée':`${s.earned??'N/A'} / ${s.maximum}`}</td></tr>)}</tbody></table><p>{detail.data.identity.cycle==='MATERNEL'?'':`${detail.data.identity.totalEarned} / ${detail.data.identity.totalMaximum} — ${detail.data.identity.percentage} %`}</p></div>:<p>Sélectionnez un résultat publié.</p>}</Panel></div></Page>;}
+export function BulletinsPage({ catalog = false }: { catalog?: boolean }) {
+ const list = useResource<Row[]>('/bulletins');
+ const [id, setId] = useState('');
+ const rows = list.data ?? [];
+ const selected = rows.find(row => row.id === id) ?? rows[0];
+ const detail = useResource<Row>(selected ? `/bulletins/${selected.id}` : null);
+ const user = useSession();
+ const document = detail.data?.id === selected?.id ? detail.data : null;
 
-export function AuditPage(){const [page,setPage]=useState(1),[action,setAction]=useState('');const r=useResource<Row>(`/audit?page=${page}${action?`&action=${encodeURIComponent(action)}`:''}`);return <Page title="Journal d’audit" description="Événements append-only. Consultation réservée à l’administration."><Feedback error={r.error} loading={r.loading}/><div className="leyisa-grid"><Panel title="Événements récents"><div className="leyisa-table-wrap"><table><thead><tr><th>Date</th><th>Acteur</th><th>Événement</th><th>Objet</th></tr></thead><tbody>{r.data?.items.map((e:Row)=><tr key={e.id}><td>{new Date(e.occurredAt).toLocaleString('fr-FR',{timeZone:'Africa/Kinshasa'})}</td><td>{e.actorId??'Inconnu'}</td><td>{e.action}</td><td>{e.targetType}</td></tr>)}</tbody></table></div><button disabled={page===1} onClick={()=>setPage(page-1)}>Précédent</button> Page {page} <button disabled={page*50>=(r.data?.total??0)} onClick={()=>setPage(page+1)}>Suivant</button></Panel><Panel title="Filtres"><ActionForm action={async d=>{setAction(d.action);setPage(1);}} label="Appliquer les filtres"><Field label="Type d’action exact" name="action" required={false}/></ActionForm></Panel></div></Page>;}
+ return (
+  <Page title="Bulletins scolaires" description="Documents issus des résultats publiés.">
+   <Feedback error={list.error || detail.error} loading={list.loading || detail.loading}/>
+   <div className="leyisa-grid">
+    <Panel title={catalog ? 'Bulletins disponibles' : 'Choix du bulletin'}>
+     {rows.length > 0 && (
+      <label className="leyisa-field">Élève / classe / composant
+       <select aria-label="Élève / classe / composant" value={selected?.id ?? ''} onChange={event => setId(event.target.value)}>
+        <Options rows={rows.map(row => {
+         const person = row.identitySnapshot;
+         return { id: row.id, label: `${person.lastName} ${person.firstName} — ${person.classLabel} / ${person.periodCode}` };
+        })}/>
+       </select>
+      </label>
+     )}
+     {catalog && rows.length > 0 && <div className="leyisa-table-wrap bulletin-list">
+      <table>
+       <thead><tr><th scope="col">Élève</th><th scope="col">Classe</th><th scope="col">Période</th><th scope="col">Action</th></tr></thead>
+       <tbody>{rows.map(row => {
+        const person = row.identitySnapshot;
+        return <tr key={row.id}>
+         <td>{person.lastName} {person.firstName}</td><td>{person.classLabel}</td><td>{person.periodCode}</td>
+         <td><button type="button" onClick={() => setId(row.id)} aria-pressed={row.id === selected?.id}>Afficher</button></td>
+        </tr>;
+       })}</tbody>
+      </table>
+     </div>}
+     {!list.loading && !list.error && rows.length === 0 && <p>Aucun bulletin publié dans votre périmètre.</p>}
+     {!catalog && selected && can(user, 'bulletins.produce') && (
+      <ActionForm key={selected.id} action={() => post(`/bulletins/${selected.id}/generate`, {})} label="Générer le bulletin"/>
+     )}
+    </Panel>
+    <Panel title="Aperçu du document">
+     {document && selected && (
+      <>
+       <div className="document-preview">
+        <h2>{document.identity.school?.name ?? 'LEYISA SCHOOL'}</h2><strong>DEMO-V1</strong>
+        <p>{document.identity.lastName} {document.identity.firstName}</p>
+        <p>{document.identity.classLabel} — {document.identity.yearCode} / {document.identity.periodCode}</p>
+        <table><thead><tr><th scope="col">Branche</th><th scope="col">Résultat figé</th></tr></thead>
+         <tbody>{document.subjects.map((subject: Row) => (
+          <tr key={subject.subjectId}><td>{subject.label}</td><td>{document.identity.cycle === 'MATERNEL' ? 'Appréciation publiée' : `${subject.earned ?? 'N/A'} / ${subject.maximum}`}</td></tr>
+         ))}</tbody>
+        </table>
+        {document.identity.cycle !== 'MATERNEL' && <p>{document.identity.totalEarned} / {document.identity.totalMaximum} — {document.identity.percentage} %</p>}
+       </div>
+       <a className="leyisa-button bulletin-download" href={`/api/v1/bulletins/${selected.id}/pdf`}>Télécharger PDF</a>
+      </>
+     )}
+     {!selected && !list.loading && <p>Sélectionnez un résultat publié.</p>}
+    </Panel>
+   </div>
+  </Page>
+ );
+}
+
+export function AuditPage(){const [page,setPage]=useState(1),[action,setAction]=useState(''),[actor,setActor]=useState('');const r=useResource<Row>(`/audit?${new URLSearchParams({page:String(page),...(action?{action}:{}),...(actor?{actorId:actor}:{})})}`);return <Page title="Journal d’audit" description="Événements append-only. Consultation réservée à l’administration."><Feedback error={r.error} loading={r.loading}/><div className="leyisa-grid"><Panel title="Événements récents"><div className="leyisa-table-wrap"><table><thead><tr><th>Date</th><th>Acteur</th><th>Événement</th><th>Objet</th></tr></thead><tbody>{r.data?.items.map((e:Row)=><tr key={e.id}><td>{new Date(e.occurredAt).toLocaleString('fr-FR',{timeZone:'Africa/Kinshasa'})}</td><td>{e.actorId??'Inconnu'}</td><td>{e.action}</td><td>{e.targetType}</td></tr>)}</tbody></table></div><button disabled={page===1} onClick={()=>setPage(page-1)}>Précédent</button> Page {page} <button disabled={page*50>=(r.data?.total??0)} onClick={()=>setPage(page+1)}>Suivant</button></Panel><Panel title="Filtres"><ActionForm action={async d=>{setAction(d.action.trim());setActor(d.actorId.trim());setPage(1);}} label="Appliquer les filtres"><Field label="Type d’action exact" name="action" required={false}/><Field label="Identifiant de l’acteur" name="actorId" required={false}/></ActionForm></Panel></div></Page>;}
 
 function DemoProfileForm({year,schoolClass}:{year:Row;schoolClass:Row}) {
  return <Panel title="Préparer un profil de délibération DEMO"><p>{year.code} · {schoolClass.cycle} · {schoolClass.level}. Une nouvelle version conserve les anciennes décisions.</p><ActionForm action={d=>post('/results/profiles',{code:d.code,version:Number(d.version),schoolYearId:year.id,cycle:schoolClass.cycle,level:schoolClass.level,optionCode:schoolClass.optionCode,status:'DEMO_PROPOSE',source:d.source,config:{admissionThreshold:d.admissionThreshold,failureThreshold:d.failureThreshold,retakeMode:d.retakeMode}})}><Field label="Code du profil" name="code"/><Field label="Version" name="version" type="number" value="1"/><Field label="Seuil proposé de passage (%)" name="admissionThreshold" type="number" value="50"/><Field label="Seuil proposé d’échec par cours (%)" name="failureThreshold" type="number" value="50"/><Field label="Deuxième session" name="retakeMode"><option value="MANUAL_ONLY">À vérifier manuellement</option><option value="REPLACE_E2_DEMO">DEMO : remplacement E2, sans modifier la première session</option></Field><Field label="Source et limites" name="source" value="DEMO_PROPOSE : scénario fictif, aucune norme scolaire affirmée"/></ActionForm></Panel>;

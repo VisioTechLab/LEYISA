@@ -1,8 +1,8 @@
 {
   "identity": {
-    "sex": "F",
+    "sex": "M",
     "kind": "ANNUEL",
-    "rank": 3,
+    "rank": 1,
     "cycle": "PRIMAIRE",
     "level": "3e primaire",
     "school": {
@@ -19,16 +19,16 @@
     "postName": "Exemple",
     "yearCode": "DEMO-2025-2026",
     "birthDate": "2013-03-10",
-    "firstName": "Élève 1",
-    "matricule": "DEMO-DEMO-PRI-1",
+    "firstName": "Élève 2",
+    "matricule": "DEMO-DEMO-PRI-2",
     "birthPlace": "Ville fictive",
     "classLabel": "Classe primaire DEMO",
     "optionCode": null,
-    "percentage": "0",
+    "percentage": "75",
     "periodCode": "ANNEE",
     "periodLabel": "Annuel PRIMAIRE / DEMO-2025-2026",
-    "totalEarned": "0",
-    "enrollmentId": "3445ccf7-309e-4fb0-be6c-ab5dcb6c653a",
+    "totalEarned": "360",
+    "enrollmentId": "b9c2215e-7a54-4f77-8319-eb9e284fd87d",
     "totalMaximum": "480",
     "programVersion": "DEMO-V1.1",
     "permanentNumber": null
@@ -36,37 +36,37 @@
   "subjects": [
     {
       "label": "Mathématiques",
-      "earned": "0",
+      "earned": "180",
       "maximum": "240",
-      "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+      "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
       "components": {
         "T1": {
           "label": "Mathématiques",
-          "earned": "0",
+          "earned": "60",
           "maximum": "80",
-          "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+          "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
           "components": {
             "E1": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "30",
               "maximum": "40",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             },
             "P1": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             },
             "P2": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             }
@@ -75,31 +75,31 @@
         },
         "T2": {
           "label": "Mathématiques",
-          "earned": "0",
+          "earned": "60",
           "maximum": "80",
-          "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+          "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
           "components": {
             "E2": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "30",
               "maximum": "40",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             },
             "P3": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             },
             "P4": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             }
@@ -108,31 +108,31 @@
         },
         "T3": {
           "label": "Mathématiques",
-          "earned": "0",
+          "earned": "60",
           "maximum": "80",
-          "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+          "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
           "components": {
             "E3": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "30",
               "maximum": "40",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             },
             "P5": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             },
             "P6": {
               "label": "Mathématiques",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "bccc0047-e082-43d2-96ed-9058057a2b81",
+              "subjectId": "d39a8d8a-42a5-44ae-89fd-e9d1b957bcb1",
               "components": {},
               "subjectCode": "DEMO-PRI-01"
             }
@@ -144,37 +144,37 @@
     },
     {
       "label": "Français",
-      "earned": "0",
+      "earned": "180",
       "maximum": "240",
-      "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+      "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
       "components": {
         "T1": {
           "label": "Français",
-          "earned": "0",
+          "earned": "60",
           "maximum": "80",
-          "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+          "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
           "components": {
             "E1": {
               "label": "Français",
-              "earned": "0",
+              "earned": "30",
               "maximum": "40",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             },
             "P1": {
               "label": "Français",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             },
             "P2": {
               "label": "Français",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             }
@@ -183,31 +183,31 @@
         },
         "T2": {
           "label": "Français",
-          "earned": "0",
+          "earned": "60",
           "maximum": "80",
-          "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+          "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
           "components": {
             "E2": {
               "label": "Français",
-              "earned": "0",
+              "earned": "30",
               "maximum": "40",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             },
             "P3": {
               "label": "Français",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             },
             "P4": {
               "label": "Français",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             }
@@ -216,31 +216,31 @@
         },
         "T3": {
           "label": "Français",
-          "earned": "0",
+          "earned": "60",
           "maximum": "80",
-          "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+          "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
           "components": {
             "E3": {
               "label": "Français",
-              "earned": "0",
+              "earned": "30",
               "maximum": "40",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             },
             "P5": {
               "label": "Français",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             },
             "P6": {
               "label": "Français",
-              "earned": "0",
+              "earned": "15",
               "maximum": "20",
-              "subjectId": "b4077bac-1c32-43e5-a20c-f850a3513b90",
+              "subjectId": "090fed5e-804a-4baf-964a-7b5a12caae2c",
               "components": {},
               "subjectCode": "DEMO-PRI-02"
             }

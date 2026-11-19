@@ -25,13 +25,27 @@ function hasPrismaErrorCode(error: unknown, code: string): boolean {
 export class StudentsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  list(auth:AuthContext,query:Record<string,string>={}) {
+  list(auth: AuthContext, query: Record<string, string> = {}) {
+    const scope = enrollmentScope(auth);
+    const search = query.search ? text(query.search, "Recherche", 100) : undefined;
+    const classId = query.classId ? uuid(query.classId) : undefined;
+    const schoolYearId = query.schoolYearId ? uuid(query.schoolYearId) : undefined;
     return this.prisma.client.student.findMany({
-      where: {AND:[studentScope(auth)],...(query.search?{OR:[{matricule:{contains:text(query.search,"Recherche",100),mode:"insensitive" as const}},{user:{lastName:{contains:query.search,mode:"insensitive" as const}}},{user:{firstName:{contains:query.search,mode:"insensitive" as const}}}]}:{}),...(query.classId?{enrollments:{some:{classId:uuid(query.classId)}}}:{}),...(query.schoolYearId?{enrollments:{some:{schoolYearId:uuid(query.schoolYearId),...(query.classId?{classId:uuid(query.classId)}:{})}}}:{})},
+      where: {
+        ...(scope || classId || schoolYearId
+          ? { enrollments: { some: { ...scope, classId, schoolYearId } } }
+          : {}),
+        ...(search ? { OR: [
+          { matricule: { contains: search, mode: "insensitive" as const } },
+          { user: { lastName: { contains: search, mode: "insensitive" as const } } },
+          { user: { firstName: { contains: search, mode: "insensitive" as const } } },
+        ] } : {}),
+      },
       skip:(page(query.page)-1)*50,take:50,
       include: {
         user: { select: { id: true, firstName: true, lastName: true } },
         enrollments: {
+          ...(scope ? { where: scope } : {}),
           include: {
             schoolClass: {
               select: {
@@ -62,11 +76,13 @@ export class StudentsService {
 
   async findById(id: unknown,auth:AuthContext) {
     const studentId = parseStudentId(id);
+    const scope = enrollmentScope(auth);
     const student = await this.prisma.client.student.findFirst({
-      where: { id: studentId,...studentScope(auth) },
+      where: { id: studentId, ...(scope ? { enrollments: { some: scope } } : {}) },
       include: {
         user: { select: { id: true, firstName: true, lastName: true } },
         enrollments: {
+          ...(scope ? { where: scope } : {}),
           include: {
             schoolClass: {
               select: {
@@ -175,9 +191,22 @@ function recordData(d:Record<string,unknown>) {
  const birthDate=d.birthDate?day(d.birthDate):null;if(birthDate&&birthDate.toISOString().slice(0,10)>todayCivil())throw new BadRequestException("Date de naissance future refusée.");
  return {postName:optionalText(d.postName,"Postnom")??"",sex,birthDate,birthPlace:optionalText(d.birthPlace,"Lieu de naissance"),permanentNumber:optionalText(d.permanentNumber,"Numéro permanent",80),guardian:optionalText(d.guardian,"Responsable"),contact:optionalText(d.contact,"Contact",100)};
 }
-function studentScope(auth:AuthContext) {
- if(auth.roles.some(r=>r==='SEC'||r==='DIR'))return {};
- // Filtre par affectation active, appliqué aussi aux accès directs.
- const now=day(todayCivil());
- return {enrollments:{some:{schoolClass:{subjects:{some:{assignments:{some:{teacher:{userId:auth.userId},startsOn:{lte:now},OR:[{endsOn:null},{endsOn:{gt:now}}]}}}}}}}};
+function enrollmentScope(auth: AuthContext) {
+  if (auth.roles.some(role => role === "SEC" || role === "DIR")) return undefined;
+  const now = day(todayCivil());
+  return {
+    schoolClass: {
+      subjects: {
+        some: {
+          assignments: {
+            some: {
+              teacher: { userId: auth.userId },
+              startsOn: { lte: now },
+              OR: [{ endsOn: null }, { endsOn: { gt: now } }],
+            },
+          },
+        },
+      },
+    },
+  };
 }

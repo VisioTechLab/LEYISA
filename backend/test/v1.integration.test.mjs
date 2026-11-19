@@ -5,6 +5,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../dist/app.module.js';
+import { day, todayCivil } from '../dist/common/input.js';
 import { createClient } from '../prisma/client.mjs';
 import { requireLocalFixtures } from '../prisma/env.mjs';
 
@@ -56,6 +57,34 @@ test('T08/T09/T10 — refus CSRF, privilèges verticaux et horizontaux',{skip},a
  assert.ok(foreign);assert.equal((await teacher.request(`/students/${foreign.id}`)).status,404);
  assert.equal((await teacher.request(`/students?classId=${foreign.enrollments[0].classId}`)).body.length,0);
 });
+test('T10 — historique et filtres restent dans la classe de l’enseignant',{skip},async()=>{
+ const today=day(todayCivil());
+ const dateAt=offset=>new Date(today.getTime()+offset*86400000);
+ const current=await db.schoolYear.create({data:{code:`ACTIVE-${suffix}`,startsOn:dateAt(-5),endsOn:dateAt(30)}});
+ const past=await db.schoolYear.create({data:{code:`PAST-${suffix}`,startsOn:dateAt(-400),endsOn:dateAt(-20)}});
+ const [currentClass,pastClass]=await Promise.all([current,past].map(year=>db.schoolClass.create({
+  data:{schoolYearId:year.id,code:`SCOPE-${suffix}`,label:'Classe fictive contrôle du périmètre'},
+ })));
+ const staff=await db.teacher.findUniqueOrThrow({where:{userId:credentials['ens-demo-sec-1'].id}});
+ const subject=await db.subject.create({data:{code:`SCOPE-${suffix}`,label:'Matière fictive'}});
+ const course=await db.classSubject.create({data:{classId:currentClass.id,subjectId:subject.id}});
+ await db.teacherAssignment.create({data:{classId:currentClass.id,classSubjectId:course.id,teacherId:staff.id,startsOn:dateAt(-2),endsOn:dateAt(15)}});
+ const student=await ok(sec,'/students/records','POST',{matricule:`SCOPE-${suffix}`,firstName:'Fictive',lastName:'Élève'},201);
+ for(const [year,schoolClass] of [[past,pastClass],[current,currentClass]]) {
+  await ok(sec,`/students/${student.id}/enrollments`,'POST',{schoolYearId:year.id,classId:schoolClass.id},201);
+ }
+
+ const history=await ok(teacher,`/students/${student.id}`);
+ assert.deepEqual(history.enrollments.map(row=>row.classId),[currentClass.id]);
+ const filtered=await ok(teacher,`/students?search=SCOPE-${suffix}&schoolYearId=${past.id}&classId=${pastClass.id}`);
+ assert.deepEqual(filtered,[]);
+ const visible=await ok(teacher,`/students?search=SCOPE-${suffix}&classId=${currentClass.id}`);
+ assert.equal(visible.length,1);
+ assert.deepEqual(visible[0].enrollments.map(row=>row.classId),[currentClass.id]);
+ const secretary=await ok(sec,`/students/${student.id}`);
+ assert.equal(secretary.enrollments.length,2);
+});
+
 test('T08 — le chargement du jeton dans un autre onglet ne rend pas le premier inutilisable',{skip},async()=>{
  const browser=new Browser();await browser.login('ens');
  const before=browser.csrf;

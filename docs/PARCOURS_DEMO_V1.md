@@ -1,14 +1,12 @@
 # Parcours de démonstration V1
 
-> Les résultats décrits dans cette version sont les éléments historiques de la sauvegarde de travail. Voir le journal d’intégration pour les exécutions réalisées à la reprise.
-
 Tous les noms sont fictifs. Marque DEMO-V1, maxima et décisions de démonstration explicitement proposés. Aucun accès élève activé et aucune décision réglementaire certifiée.
 
 ## Environnement local vérifié
 
-Worktree `LEYISA-integration-v1`, branche `integration/leyisa-v1`. Node24.22.3, PostgreSQL18.6 isolé, port55432. Backend loopback53100, frontend loopback5173 avec proxy même origine. PostgreSQL et processus de démo peuvent être arrêtés à la fermeture de la session : contrôler `/health` avant présentation.
+Recette sur integration/leyisa-v1-cloud, Node 24.22.1 et PostgreSQL 18.7 sur le port local 55432. Le backend écoute sur 53100 et Vite sur 5173. Suivre le [README](../README.md) pour préparer une base neuve.
 
-Identifiants du jeu de recette : fichier privé `/tmp/leyisa-v1-release-credentials.json` (permissions600). Clés `adm`, `sec`, `dir`, `ens-demo-live-1`, `ens-demo-live-2`, `ens-demo-mat-1` etc. Récupérer uniquement le compte utile localement, ne pas afficher tout le fichier à l'écran partagé ni le joindre au rapport. Le compte navigateur complémentaire est conservé séparément dans `/tmp/leyisa-v1-browser-credentials.json`, également600. Ces fichiers ne sont pas versionnés.
+Les identifiants aléatoires des comptes adm, sec, dir, ens-demo-live-1 et ens-demo-live-2 sont écrits dans le fichier privé désigné par LEYISA_DEMO_CREDENTIALS_FILE. Les identifiants restent hors du dépôt et des preuves.
 
 Démarrage du backend (depuis backend, avec runtime local déjà attribué) :
 
@@ -22,7 +20,7 @@ Frontend : `LEYISA_API_TARGET=http://127.0.0.1:53100 npm run dev -- --host 127.0
 
 ## Scénario à rejouer par rôle
 
-Le parcours navigateur exécuté a créé une année passée, une période P1, une classe et deux cours supplémentaires ; il a créé/activé le compte ENS, lié Teacher, affecté les deux cours, créé un dossier et son inscription, saisi/soumis, rejeté/corrigé/resoumis, approuvé, clôturé, publié et téléchargé le PDF. Les captures et le journal `docs/preuves/browser.json` en conservent les étapes ; des essais intermédiaires fictifs sont conservés, sans effacement de données.
+La dernière recette Chromium a ouvert les quatre accueils, consulté la configuration et les affectations, créé un dossier et son inscription puis vérifié le refus du doublon. Elle a enchaîné saisie, rejet, correction, approbation, prévisualisation, clôture, publication et téléchargement. Les tests API et PostgreSQL vérifient les créations de configuration, le cycle des comptes et les conflits d’affectation. Après redémarrage du backend, les données relues et le PDF ont des empreintes identiques. [Parcours exécuté](preuves/browser.json)
 
 Pour une nouvelle présentation, utiliser la classe **DEMO-LIVE — Classe ouverte pour le parcours en direct** de l'année **DEMO-2025-2026**, restée disponible après les tests automatiques. Avant de l'utiliser, confirmer qu'elle est toujours OPEN. Le calendrier démo passé autorise une vraie clôture sans changer l'horloge.
 

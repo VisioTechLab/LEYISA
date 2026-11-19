@@ -30,3 +30,11 @@
 - Blueprint Render NestJS avec déploiement manuel, contrôle de santé et variables de coffre. Configuration Vercel Vite en même origine, relais serveur HTTPS authentifié, cookies conservés et réponses privées.
 - Trois tests ciblés du relais réussis. Ils couvrent le refus API direct, le contrôle de santé, le transfert de l’IP attestée par Vercel et des cookies, la réponse PDF sans exposition d’en-têtes internes, et le refus des redirections amont.
 - Neon a été consulté en lecture seule. Cinq branches ont été observées dans le projet indiqué et la cible `demo-v1` reste à créer. Aucun service distant ni aucune base Neon n’a été modifié. [Guide de préparation](DEPLOIEMENT_V1.md)
+
+## Candidat de démonstration locale et audit de release
+
+- [La CI du lot Render/Vercel](https://github.com/VisioTechLab/LEYISA/actions/runs/44548064758) a réussi. Le manifeste Vercel a aussi été validé contre son schéma publié et Prisma a validé le schéma en mode shared local, sans connexion distante.
+- T10 a reproduit un défaut de filtrage de l’historique élève sur 88e4998. Après correction, liste et détail ne renvoient que les inscriptions correspondant aux affectations actives de l’enseignant. Les recherches par année et classe respectent le même périmètre. Le secrétariat conserve les deux inscriptions.
+- Les quatre accueils présentent les données réelles avec tableau d’aperçu. W01, W09, W12, W19, W24–26 ont été rapprochés des maquettes existantes. Chromium a rejoué le parcours sur une nouvelle classe-période ouverte et produit les 31 captures de recette ainsi que le PDF. Relecture réussie après redémarrage.
+- Vérification finale locale avec PostgreSQL 18.7 et Node 24.22.1 : 76 tests réussis, aucun échec ni ignoré, 39 vérifications DB et droits du rôle runtime validés. Compilations des deux applications, lint, scan de motifs et comparaison du manifeste des preuves réussis.
+- La [matrice des 31 vues](CONFORMITE_WIREFRAMES_V1.md), le [rapport d’audit](AUDIT_RELEASE_V1.md), les [tests](TESTS_V1.md) et les [migrations](MIGRATIONS_V1.md) documentent les résultats et les écarts. Les verdicts se prononcent sur la démo locale, la démo hébergée et l’exploitation réelle.

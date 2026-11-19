@@ -216,3 +216,18 @@
 .leyisa-card{border-radius:4px}.leyisa-chip{width:auto;min-width:0}.session-controls>button{padding:7px 12px;background:white;border:1px solid var(--leyisa-line);border-radius:4px}
 .leyisa-form .required{display:inline}details>summary{cursor:pointer;font-weight:600;padding:14px 0}.leyisa-table-wrap td>button{min-height:34px}
 .leyisa-table-wrap{max-height:65vh}.leyisa-table-wrap thead{position:sticky;top:0;z-index:1;background:var(--leyisa-tint)}
+
+.leyisa-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.dashboard-overview { width: 100%; margin-bottom: 18px; }
+.dashboard-overview th, .dashboard-overview td { padding: 10px; overflow-wrap: anywhere; }
+.bulletin-list { max-height: 440px; margin-top: 16px; }
+.bulletin-download { margin-top: 14px; }
+
+@media (max-width: 760px) {
+  .leyisa-fields-grid { grid-template-columns: 1fr; }
+}

@@ -17,10 +17,10 @@
     "W07": "Enseignants et affectations",
     "D-ENS": "Mon espace Enseignant",
     "W13": "Mes cours",
-    "W14": "Mes évaluations",
     "W15": "Créer une évaluation",
     "noteHorsBareme": "21/20 refusé dans la grille",
     "W16": "Saisie des notes",
+    "W14": "Mes évaluations",
     "W17": "Confirmation de soumission",
     "W19": "Validation des notes",
     "W20": "Détail d’une soumission",
@@ -31,7 +31,6 @@
     "W23": "Confirmer la clôture",
     "W24": "Résultats et clôture",
     "contextePublication": "La publication disparaît quand une autre classe est sélectionnée sans charger ses résultats.",
-    "publication": "Publication de la classe contrôlée par retour API HTTP 200 puis statut PUBLISHED.",
     "W12": "Bulletins scolaires",
     "W25": "Bulletins scolaires",
     "W27": "Accès refusé ou conflit",
@@ -41,8 +40,8 @@
     "parcours": "Dossier, inscription, doublon 409, note zéro, rejet/correction, validation, clôture, publication et PDF."
   },
   "values": {
-    "evaluation": "891cc30d-64c2-4be6-95d6-b0688ef7aa48",
-    "classPeriod": "56c1928f-1afe-4705-9476-e2dd50aa927a",
-    "bulletin": "dff7afe4-3061-4347-acf0-c53424da7058"
+    "evaluation": "07ca677d-9334-4ee8-ad7a-c6083c9d75bb",
+    "classPeriod": "ef15cb72-36c6-4859-abb8-5df2b4c6baf3",
+    "bulletin": "1649efcd-b584-4f06-ab8e-0511f17f3ac3"
   }
 }

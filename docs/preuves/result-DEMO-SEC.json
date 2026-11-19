@@ -1,8 +1,8 @@
 {
   "identity": {
-    "sex": "M",
+    "sex": "F",
     "kind": "ANNUEL",
-    "rank": 1,
+    "rank": 3,
     "cycle": "SECONDAIRE_TECHNIQUE",
     "level": "7e EB",
     "school": {
@@ -19,16 +19,16 @@
     "postName": "Exemple",
     "yearCode": "DEMO-2025-2026",
     "birthDate": "2013-03-10",
-    "firstName": "Élève 2",
-    "matricule": "DEMO-DEMO-SEC-2",
+    "firstName": "Élève 1",
+    "matricule": "DEMO-DEMO-SEC-1",
     "birthPlace": "Ville fictive",
     "classLabel": "Classe secondaire DEMO",
     "optionCode": null,
-    "percentage": "75",
+    "percentage": "0",
     "periodCode": "ANNEE",
     "periodLabel": "Annuel SECONDAIRE_TECHNIQUE / DEMO-2025-2026",
-    "totalEarned": "240",
-    "enrollmentId": "0ff50ca7-4a57-4402-bde6-a67da27ab31a",
+    "totalEarned": "0",
+    "enrollmentId": "99ff0dfe-b08f-4a5e-98b4-7c2c201f318b",
     "totalMaximum": "320",
     "programVersion": "DEMO-V1.1",
     "permanentNumber": null
@@ -36,37 +36,37 @@
   "subjects": [
     {
       "label": "Mathématiques",
-      "earned": "120",
+      "earned": "0",
       "maximum": "160",
-      "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+      "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
       "components": {
         "S1": {
           "label": "Mathématiques",
-          "earned": "60",
+          "earned": "0",
           "maximum": "80",
-          "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+          "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
           "components": {
             "E1": {
               "label": "Mathématiques",
-              "earned": "30",
+              "earned": "0",
               "maximum": "40",
-              "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+              "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
               "components": {},
               "subjectCode": "DEMO-SEC-01"
             },
             "P1": {
               "label": "Mathématiques",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+              "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
               "components": {},
               "subjectCode": "DEMO-SEC-01"
             },
             "P2": {
               "label": "Mathématiques",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+              "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
               "components": {},
               "subjectCode": "DEMO-SEC-01"
             }
@@ -75,31 +75,31 @@
         },
         "S2": {
           "label": "Mathématiques",
-          "earned": "60",
+          "earned": "0",
           "maximum": "80",
-          "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+          "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
           "components": {
             "E2": {
               "label": "Mathématiques",
-              "earned": "30",
+              "earned": "0",
               "maximum": "40",
-              "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+              "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
               "components": {},
               "subjectCode": "DEMO-SEC-01"
             },
             "P3": {
               "label": "Mathématiques",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+              "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
               "components": {},
               "subjectCode": "DEMO-SEC-01"
             },
             "P4": {
               "label": "Mathématiques",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "cf28678d-4966-49f3-944b-62077f82cd09",
+              "subjectId": "4f63789e-2615-475f-b63f-f6678421c941",
               "components": {},
               "subjectCode": "DEMO-SEC-01"
             }
@@ -111,37 +111,37 @@
     },
     {
       "label": "Français",
-      "earned": "120",
+      "earned": "0",
       "maximum": "160",
-      "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+      "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
       "components": {
         "S1": {
           "label": "Français",
-          "earned": "60",
+          "earned": "0",
           "maximum": "80",
-          "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+          "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
           "components": {
             "E1": {
               "label": "Français",
-              "earned": "30",
+              "earned": "0",
               "maximum": "40",
-              "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+              "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
               "components": {},
               "subjectCode": "DEMO-SEC-02"
             },
             "P1": {
               "label": "Français",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+              "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
               "components": {},
               "subjectCode": "DEMO-SEC-02"
             },
             "P2": {
               "label": "Français",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+              "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
               "components": {},
               "subjectCode": "DEMO-SEC-02"
             }
@@ -150,31 +150,31 @@
         },
         "S2": {
           "label": "Français",
-          "earned": "60",
+          "earned": "0",
           "maximum": "80",
-          "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+          "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
           "components": {
             "E2": {
               "label": "Français",
-              "earned": "30",
+              "earned": "0",
               "maximum": "40",
-              "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+              "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
               "components": {},
               "subjectCode": "DEMO-SEC-02"
             },
             "P3": {
               "label": "Français",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+              "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
               "components": {},
               "subjectCode": "DEMO-SEC-02"
             },
             "P4": {
               "label": "Français",
-              "earned": "15",
+              "earned": "0",
               "maximum": "20",
-              "subjectId": "233f1758-c973-487e-9ef9-fea0840439de",
+              "subjectId": "283f5dde-6f54-4aad-b7b0-651fbc4f29cf",
               "components": {},
               "subjectCode": "DEMO-SEC-02"
             }
