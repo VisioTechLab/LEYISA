@@ -11,10 +11,16 @@ import { renderMaternal } from "./maternal-bulletin.js";
 import { renderPrimary } from "./primary-bulletin.js";
 import { renderSecondary } from "./secondary-bulletin.js";
 
+import { renderMaternal as renderMaternalV14 } from "./v14/maternal-bulletin.js";
+import { renderPrimary as renderPrimaryV14 } from "./v14/primary-bulletin.js";
+import { renderSecondary as renderSecondaryV14 } from "./v14/secondary-bulletin.js";
+
 type PdfResponse = { setHeader(name: string, value: string): void; send(body: Buffer): void };
 
-const currentVersion = 'DEMO-V1.4';
+const currentVersion = 'DEMO-V1.5';
+const previousVersion = 'DEMO-V1.4';
 const legacyVersion = (value: unknown): value is 'DEMO-V1.2' | 'DEMO-V1.3' => value === 'DEMO-V1.2' || value === 'DEMO-V1.3';
+const archivedVersion = (value: unknown) => legacyVersion(value) || value === previousVersion;
 const decisionOrder = { orderBy: { version: 'desc' as const }, take: 1 };
 const periodDetails = { include: { period: true } };
 const canReadAll = (auth: AuthContext) => auth.roles.some(role => role === 'DIR' || role === 'SEC');
@@ -70,7 +76,7 @@ export class BulletinsController {
     if (!data.releaseVisible) Object.assign(identity, { totalEarned: null, totalMaximum: null, percentage: null, rank: null, effectif: null, decision: null });
     return {
       id: result.id, identity, subjects: data.slimSubjects, profile: result.calculationProfile,
-      templateVersion: currentVersion, archivedTemplates: result.reportCards.map(card => card.templateVersion).filter(legacyVersion)
+      templateVersion: currentVersion, archivedTemplates: result.reportCards.map(card => card.templateVersion).filter(archivedVersion)
     };
   }
 
@@ -95,7 +101,7 @@ export class BulletinsController {
   async pdf(@Param("id") raw: string, @CurrentAuth() auth: AuthContext, @Res() response: PdfResponse, @Query("templateVersion") requested?: string) {
     const result = await this.load(raw, auth);
     const version = requested ?? result.reportCards.find(card => card.templateVersion === currentVersion)?.templateVersion
-      ?? result.reportCards.find(card => legacyVersion(card.templateVersion))?.templateVersion ?? currentVersion;
+      ?? result.reportCards.find(card => archivedVersion(card.templateVersion))?.templateVersion ?? currentVersion;
     const issued = result.reportCards.find(card => card.templateVersion === version);
     let bytes: Uint8Array;
     if (legacyVersion(version) && issued) {
@@ -103,9 +109,12 @@ export class BulletinsController {
       if (!data.releaseVisible) throw new NotFoundException("Bulletin historique indisponible avant publication des composantes.");
       bytes = await renderLegacyBulletin({ ...data.identity, decision: data.decision?.outcome ?? data.identity.decision },
         result.subjectResults as unknown as Record<string, unknown>[], version);
-    } else if (version === currentVersion) {
+    } else if (version === currentVersion || version === previousVersion && issued) {
       const data = await this.data(result, issued?.generatedAt ?? new Date());
-      const render = data.identity.cycle === 'MATERNEL' ? renderMaternal : data.identity.cycle === 'PRIMAIRE' ? renderPrimary : renderSecondary;
+      const renderers = version === previousVersion
+        ? { maternal: renderMaternalV14, primary: renderPrimaryV14, secondary: renderSecondaryV14 }
+        : { maternal: renderMaternal, primary: renderPrimary, secondary: renderSecondary };
+      const render = data.identity.cycle === 'MATERNEL' ? renderers.maternal : data.identity.cycle === 'PRIMAIRE' ? renderers.primary : renderers.secondary;
       bytes = await render(data);
     } else {
       throw new NotFoundException("Version de bulletin introuvable.");

@@ -10,13 +10,13 @@ const fontFiles = Promise.all([
   readFile(new URL('../../../assets/fonts/LiberationSans-Bold.ttf', import.meta.url))
 ]);
 
-type Cell = { text?: string; bold?: boolean; shaded?: boolean; center?: boolean; top?: boolean; size?: number };
+export type Cell = { edges?: string; fill?: number; text?: string; bold?: boolean; shaded?: boolean; center?: boolean; top?: boolean; size?: number };
 type Line = { pieces: string[]; font: PDFFont; size: number; step: number };
 export const label = (text: string, shaded = false): Cell => ({ text, shaded, bold: true });
 export const centered = (text = "", bold = false, shaded = false): Cell => ({ text, center: true, bold, shaded });
 
 export class PdfForm {
-  static async create(title: string, landscape = false) {
+  static async create(title: string, landscape = false, margins: { left: number; top: number; rowPadding?: number } = { left: 25, top: 25 }) {
     const doc = await PDFDocument.create();
     doc.setTitle(title + ' — DEMO-V1');
     doc.setAuthor('LEYISA SCHOOL');
@@ -27,26 +27,27 @@ export class PdfForm {
     const normal = await doc.embedFont(fonts[0], { subset: true });
     const bold = await doc.embedFont(fonts[1], { subset: true });
     const [width, height] = PageSizes.A4;
-    return new PdfForm(doc, normal, bold, landscape ? [height, width] : [width, height]);
+    return new PdfForm(doc, normal, bold, landscape ? [height, width] : [width, height], margins);
   }
 
-  readonly left = 25;
+  readonly left: number;
   readonly bottom = 38;
   readonly width: number;
   page: PDFPage;
   y: number;
   private readonly alphabet: Set<number>;
 
-  private constructor(private doc: PDFDocument, private normal: PDFFont, private bold: PDFFont, private size: [number, number]) {
+  private constructor(private doc: PDFDocument, private normal: PDFFont, private bold: PDFFont, private size: [number, number], private margins: { left: number; top: number; rowPadding?: number }) {
+    this.left = margins.left;
     this.width = size[0] - 2 * this.left;
     this.page = doc.addPage(size);
-    this.y = size[1] - this.left;
+    this.y = size[1] - this.margins.top;
     this.alphabet = new Set(normal.getCharacterSet());
   }
 
   next() {
     this.page = this.doc.addPage(this.size);
-    this.y = this.size[1] - this.left;
+    this.y = this.size[1] - this.margins.top;
   }
 
   room(height: number, repeat?: () => void) {
@@ -100,36 +101,51 @@ export class PdfForm {
     });
   }
 
-  private box(x: number, top: number, width: number, height: number, shaded: boolean) {
-    if (shaded) this.page.drawRectangle({ x, y: top - height, width, height, color: gray });
-    const line = (x1: number, y1: number, x2: number, y2: number) =>
-      this.page.drawLine({ start: { x: x1, y: y1 }, end: { x: x2, y: y2 }, color: black, thickness: .55 });
-    line(x, top, x, top - height);
-    line(x + width, top, x + width, top - height);
-    line(x, top, x + width, top);
-    line(x, top - height, x + width, top - height);
+  rule(x1: number, y1: number, x2: number, y2: number, thickness = .55, dashArray?: number[]) {
+    this.page.drawLine({ start: { x: x1, y: y1 }, end: { x: x2, y: y2 }, color: black, thickness, ...(dashArray ? { dashArray } : {}) });
+  }
+
+  private box(x: number, top: number, width: number, height: number, cell: Cell) {
+    const fill = cell.fill;
+    if (fill !== undefined || cell.shaded) {
+      const color = fill === undefined ? gray : rgb(fill, fill, fill);
+      this.page.drawRectangle({ x, y: top - height, width, height, color });
+    }
+    const edges = cell.edges ?? 'lrtb';
+    if (edges.includes('l')) this.rule(x, top, x, top - height);
+    if (edges.includes('r')) this.rule(x + width, top, x + width, top - height);
+    if (edges.includes('t')) this.rule(x, top, x + width, top);
+    if (edges.includes('b')) this.rule(x, top - height, x + width, top - height);
   }
 
   cell(x: number, top: number, width: number, height: number, cell: Cell, size = 8) {
-    this.box(x, top, width, height, !!cell.shaded);
+    this.box(x, top, width, height, cell);
     this.print(this.content(cell, width, size), cell, x, top, width, height);
+  }
+
+  rowHeight(widths: number[], cells: Cell[], min: number, size: number) {
+    return Math.max(min, ...cells.map((cell, i) => {
+      const line = this.content(cell, widths[i], size);
+      return line.pieces.length * line.step + (this.margins.rowPadding ?? 4);
+    }));
   }
 
   row(widths: number[], cells: Cell[], { min = 13, size = 8, x = this.left, repeat }: { min?: number; size?: number; x?: number; repeat?: () => void } = {}) {
     const lines = cells.map((cell, i) => this.content(cell, widths[i], size));
-    const height = Math.max(min, ...lines.map(line => line.pieces.length * line.step + 4));
+    const padding = this.margins.rowPadding ?? 4;
+    const height = Math.max(min, ...lines.map(line => line.pieces.length * line.step + padding));
     this.room(Math.min(height, 75), repeat);
     // Les champs enregistrés peuvent dépasser une page : la suite conserve les colonnes et toutes les valeurs.
     const count = Math.max(...lines.map(line => line.pieces.length));
     let offset = 0;
     while (offset < count) {
       const step = Math.max(...lines.map(line => line.step));
-      const span = Math.min(count - offset, Math.max(1, Math.floor((this.y - this.bottom - 4) / step)));
-      const heightHere = Math.min(this.y - this.bottom, Math.max(offset === 0 && span === count ? min : 0, span * step + 4));
+      const span = Math.min(count - offset, Math.max(1, Math.floor((this.y - this.bottom - padding) / step)));
+      const heightHere = Math.min(this.y - this.bottom, Math.max(offset === 0 && span === count ? min : 0, span * step + padding));
       let left = x;
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
-        this.box(left, this.y, widths[i], heightHere, !!cell.shaded);
+        this.box(left, this.y, widths[i], heightHere, cell);
         const line = lines[i];
         this.print({ ...line, pieces: line.pieces.slice(offset, offset + span) }, cell, left, this.y, widths[i], heightHere);
         left += widths[i];

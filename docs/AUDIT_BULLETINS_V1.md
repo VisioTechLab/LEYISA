@@ -61,3 +61,34 @@ Les comparatifs reposent sur les mêmes instantanés fictifs pour les deux versi
 | Sécurité documentaire | Contrôles locaux d’accès, de publication et d’archivage réussis. | DEMO-V1 figure sur chaque page. L’établissement devra valider les champs d’identification, signatures, cachets et modalités de remise des documents avant usage réel. |
 | Démonstration | Apte en local sous réserves. | Examiner les comparatifs et accepter les écarts avant fusion. |
 | Exploitation réelle | Validation requise. | Validation pédagogique et administrative des formulaires, épreuve papier et recette hébergée restent ouvertes. |
+
+## V1.5 — Reprise graphique depuis 63f07cf
+
+La reprise a utilisé les deux captures originales du maternel, les trois captures du primaire et l’image originale du secondaire. Les recouvrements des captures maternelles et primaires ont permis de reconstituer chaque référence complète. Les mises en page V1.2 à V1.4 restent accessibles pour les émissions archivées. Le changement porte sur les gabarits et leurs preuves, avec le moteur de résultats, les gardes et les instantanés existants.
+
+| Point ouvert en V1.4 | Correction V1.5 |
+| --- | --- |
+| Identité secondaire | En-tête administratif, bandeau provincial et deux panneaux continus sans traits entre les lignes. Cadres de 27 et 11 cases pour le N° ID et le N° permanent. Les cases vides restent visibles. |
+| Repêchage secondaire | Bande grise continue et deux colonnes seulement, **%** et **SIGN. PROF.**, sous le titre fusionné. Le pourcentage par branche n’est pas défini dans les données validées. La valeur de deuxième session reste consultable dans l’instantané et, pour une édition déjà délivrée, dans son PDF V1.4. |
+| Délibération secondaire | Un encadré latéral fusionné de la ligne TOTAUX à la ligne CONDUITE. Application et conduite partagent les plages grisées de la référence. Les formulations du pied sont des rubriques préimprimées. Seule une décision enregistrée peut être mise en évidence. La ligne de repêchage reprend les branches explicitement autorisées. |
+| Carte maternelle | En-tête ministériel de la référence, inspection conditionnée par la valeur configurée, titre encadré, lignes d’identité alternativement cadrées et libres. Numéro et libellé de la première attitude alignés avec le sous-en-tête. Trait à droite de QLT en P4 prolongé dans l’observation. Les cadres de signatures s’alignent sur les limites de la grille. |
+| Primaire | Marges et hiérarchie des titres, largeurs des colonnes, bordures extérieures, choix dans une cellule commune, observations sur lignes pointillées et signatures sur deux rangées. |
+| Marges, traits et fusions | Proportions relevées sur les sources. Les cinq cas de recette tiennent chacun sur une page A4. Les formulaires conservent leur pagination pour les jeux plus longs. |
+
+### Rendus complets
+
+| Formulaire | PDF A4 | Original / V1.4 / V1.5 |
+| --- | --- | --- |
+| Carte maternelle | [PDF](preuves-bulletins-v15/BULLETIN_MATERNEL_DEMO-V1.pdf) | [Comparaison à 220 ppp](preuves-bulletins-v15/COMPARAISON_MATERNEL_220PPP.png) |
+| Primaire annuel | [PDF](preuves-bulletins-v15/BULLETIN_PRIMAIRE_DEMO-V1.pdf) | [Comparaison à 220 ppp](preuves-bulletins-v15/COMPARAISON_PRIMAIRE_220PPP.png) |
+| Secondaire CTEB | [PDF](preuves-bulletins-v15/BULLETIN_SECONDAIRE_DEMO-V1.pdf) | [Comparaison à 220 ppp](preuves-bulletins-v15/COMPARAISON_SECONDAIRE_220PPP.png) |
+| Secondaire annuel | [PDF](preuves-bulletins-v15/BULLETIN_SECONDAIRE_ANNUEL_DEMO-V1.pdf) | [Comparaison à 220 ppp](preuves-bulletins-v15/COMPARAISON_SECONDAIRE_ANNUEL_220PPP.png) |
+| Deuxième session | [PDF](preuves-bulletins-v15/BULLETIN_REPECHAGE_DEMO-V1.pdf) | [Comparaison à 220 ppp](preuves-bulletins-v15/COMPARAISON_REPECHAGE_220PPP.png) |
+
+Les deux colonnes LEYISA sont rasterisées à 220 ppp sans réduction. Le panneau de référence est mis à cette échelle depuis les captures natives, dont la définition varie. Les armoiries et données identifiantes visibles dans les sources ont été masquées dans les comparatifs. Les preuves V1.4 restent à leur emplacement d’origine. [Empreintes des preuves V1.5](preuves-bulletins-v15/SHA256SUMS.txt).
+
+Deux adaptations rendent les champs utilisables avec des données fictives à l’impression. La première attitude maternelle conserve un espace de saisie sous les sigles, aligné dans le même bloc horizontal. Le secondaire intègre le code de la période ou la mention de repêchage dans le bandeau existant. Les heures de publication, les valeurs calculées et la première session restent figées par résultat.
+
+Le contrôle local couvre la géométrie des cinq modèles et les jeux partiels et paginés. Il vérifie notamment les 11 cases du N° permanent avec et sans données, la fusion des colonnes du repêchage et du cadre latéral, l’absence d’une note de repêchage reconstruite et la position du trait d’observation maternel. Les cinq rendus V1.4 ont été reproduits octet pour octet à partir des mêmes instantanés que les rendus archivés sous `preuves-bulletins/`.
+
+Les décisions pédagogiques ouvertes et l’épreuve papier auprès de l’établissement restent à valider. Les comparatifs documentent la structure reconstruite et servent à la validation humaine de la PR.

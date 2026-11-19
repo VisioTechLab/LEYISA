@@ -237,16 +237,22 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   const historicPath=`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.3`;
   assert.equal(archived.status,200);
   assert.deepEqual(archived.bytes,(await sec.request(historicPath)).bytes);
+  const v14Path=`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.4`;
+  assert.equal((await sec.request(v14Path)).status,404);
+  await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.4',notice:'DEMO-V1'}});
+  const v14=await sec.request(v14Path);
+  assert.equal(v14.status,200);
   const generated=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
   const again=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
-  assert.equal(generated.templateVersion,'DEMO-V1.4');
+  assert.equal(generated.templateVersion,'DEMO-V1.5');
   assert.equal(generated.id,again.id);
-  assert.notDeepEqual(await pdfProof(result,name),archived.bytes);
+  assert.notDeepEqual(await pdfProof(result,name),v14.bytes);
+  assert.deepEqual((await sec.request(v14Path)).bytes,v14.bytes);
   assert.deepEqual((await sec.request(historicPath)).bytes,archived.bytes);
   assert.equal((await teacher.request(historicPath)).status,403);
   assert.equal((await new Browser().request(historicPath)).status,401);
   assert.equal((await sec.request(`/bulletins/${result.id}/pdf?templateVersion=inconnue`)).status,404);
-  await writeFile(`${proofDir}/AVANT-${name}`,archived.bytes);
+  await writeFile(`${proofDir}/AVANT-${name}`,v14.bytes);
  }
 });
 
@@ -257,9 +263,11 @@ test('Bulletin CTEB de vingt branches, ventilation des maxima P1 et option scien
   assert.equal(result.identitySnapshot.optionCode,code==='CTEB7'?null:'1.02');
   assert.equal(result.identitySnapshot.totalMaximum,code==='CTEB7'?'400':'40');
   assert.equal(result.subjectResults.length,code==='CTEB7'?20:2);
-  const {renderLegacyBulletin}=await import('../dist/modules/bulletins/legacy-bulletin.js');
-  await writeFile(`${proofDir}/AVANT-${filename}`,await renderLegacyBulletin(result.identitySnapshot,result.subjectResults,'DEMO-V1.3'));
   await pdfProof(result,filename);
+  await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.4',notice:'DEMO-V1'}});
+  const historical=await sec.request(`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.4`);
+  assert.equal(historical.status,200);
+  await writeFile(`${proofDir}/AVANT-${filename}`,historical.bytes);
  }
 });
 
@@ -294,8 +302,10 @@ test('Deuxième session DEMO — autorisation, validation, remplacement E2 et co
  const snapshot=results.find(r=>r.enrollmentId===decision.resultSnapshot.enrollmentId);
  const name='BULLETIN_REPECHAGE_DEMO-V1.pdf';
  await pdfProof(snapshot,name);
- const {renderLegacyBulletin}=await import('../dist/modules/bulletins/legacy-bulletin.js');
- await writeFile(`${proofDir}/AVANT-${name}`,await renderLegacyBulletin(snapshot.identitySnapshot,snapshot.subjectResults,'DEMO-V1.3'));
+ await db.reportCard.create({data:{resultSnapshotId:snapshot.id,templateVersion:'DEMO-V1.4',notice:'DEMO-V1'}});
+ const historical=await sec.request(`/bulletins/${snapshot.id}/pdf?templateVersion=DEMO-V1.4`);
+ assert.equal(historical.status,200);
+ await writeFile(`${proofDir}/AVANT-${name}`,historical.bytes);
  await writeFile(`${proofDir}/REPECHAGE-premiere-session.json`,JSON.stringify({
   identity:decision.resultSnapshot.identitySnapshot,subjects:decision.resultSnapshot.subjectResults,authorized:decision.courses,
  },null,2));

@@ -11,7 +11,8 @@ const enrollmentId = 'inscription-fictive';
 const names = Array.from({ length: 48 }, (_, index) =>
   `Matière ${String(index + 1).padStart(2, '0')} — Études interdisciplinaires, géographie, éthique et recherches expérimentales approfondies — Repère-final-${String(index + 1).padStart(2, '0')}`);
 const longName = 'Éléonore-Fictive-aux-accents-préservés Mwali-démo Nomextrêmementlongsansaucuneespacedanslemotfinal';
-const identity = { enrollmentId, firstName: longName, lastName: 'Élève', programVersion: 'DEMO-V1.TEST', school: {},
+const permanentNumber = '01234567890';
+const identity = { enrollmentId, permanentNumber, firstName: longName, lastName: 'Élève', programVersion: 'DEMO-V1.TEST', school: {},
   classLabel: 'Classe fictive, option coopérative et étude des sociétés', optionCode: 'OPTION-FICTIVE', yearCode: 'DEMO-2025-2026',
   cycle: 'SECONDAIRE_TECHNIQUE', level: '1re H', totalMaximum: '720', totalEarned: '0', rank: 1, effectif: 3, percentage: '0' };
 const subjects = names.map((label, index) => ({ subjectId: String(index), label,
@@ -56,6 +57,6 @@ test('Un formulaire A4 paginé préserve les matières longues, les noms et les 
   if (process.env.LEYISA_V1_PROOFS) {
     await mkdir(process.env.LEYISA_V1_PROOFS, { recursive: true });
     await writeFile(`${process.env.LEYISA_V1_PROOFS}/secondaire-pagine.pdf`, pdf);
-    await writeFile(`${process.env.LEYISA_V1_PROOFS}/secondaire-pagine.json`, JSON.stringify({ names, longName }));
+    await writeFile(`${process.env.LEYISA_V1_PROOFS}/secondaire-pagine.json`, JSON.stringify({ names, longName, permanentNumber }));
   }
 });
