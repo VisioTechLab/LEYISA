@@ -18,3 +18,11 @@ Quatre PDFs ont été téléchargés depuis l’API locale sur PostgreSQL isolé
 | W12 et W25 | Wireframes W12 (p. 16) et W25 (p. 29) | Téléchargement et génération | Le PDF imprimé et l’aperçu web répondent à deux usages distincts | Préserver les parcours W12/W25 et les permissions qui leur sont associées | Parcours de téléchargement réel |
 
 Les captures de pondération des différents niveaux et options et le calendrier déterminent les entrées du moteur de résultats. La structure des formulaires provient des six images pédagogiques. Les signatures, sceaux, armoiries et identifiants visibles dans les références ne sont pas des données du formulaire de démonstration.
+
+## Journal des corrections
+
+| Lot | État vérifié |
+| --- | --- |
+| Audit préalable | Branche créée depuis le SHA d’intégration vérifié. Matrice publiée dans le commit `b852c6f`. |
+| Formulaires et versions | Commit `86130b5` publié. Builds réussis. Sur une restauration locale de PostgreSQL, trois PDF archivés V1.3 ont été comparés aux octets téléchargés à la révision initiale. Quatre formulaires V1.4 ont été téléchargés via NestJS. |
+| Recette élargie | 79 tests réussis, 39 contrôles PostgreSQL réussis et six migrations rejouées sur une base locale vide. Les coordonnées et valeurs de huit documents ont été contrôlées et chaque page rasterisée à 200 ppp. W12 et W25 ont téléchargé le PDF V1.4 dans Chromium depuis le frontend local. |

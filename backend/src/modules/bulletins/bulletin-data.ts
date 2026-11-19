@@ -14,6 +14,7 @@ export type FrozenBulletin = {
 
 export type BulletinSubject = {
   subjectId: string;
+  subjectCode?: string;
   label: string;
   earned?: string | null;
   maximum?: string | null;
@@ -21,6 +22,12 @@ export type BulletinSubject = {
   components?: Record<string, BulletinSubject>;
   appreciation?: Array<RecordValue>;
 };
+
+function isNotApplicable(subject: BulletinSubject): boolean {
+  if (subject.nonApplicable) return true;
+  const parts = Object.values(subject.components ?? {});
+  return parts.length > 0 && parts.every(isNotApplicable);
+}
 
 export const subjectsOf = (value: unknown) => Array.isArray(value) ? value as BulletinSubject[] : [];
 export const display = (value: unknown) => typeof value === "string" || typeof value === "number" ? String(value) : "";
@@ -66,7 +73,10 @@ export function prepareBulletin(root: FrozenBulletin, snapshots: FrozenBulletin[
   const baseSubjects = subjectsOf(base?.subjectResults ?? root.subjectResults);
   const componentSubjects = new Map([...byCode].map(([code, snapshot]) =>
     [code, new Map(subjectsOf(snapshot.subjectResults).map(subject => [subject.subjectId, subject]))]));
-  const component = (subject: BulletinSubject, code: string) => componentSubjects.get(code)?.get(subject.subjectId);
+  const component = (subject: BulletinSubject, code: string) => {
+    const match = componentSubjects.get(code)?.get(subject.subjectId);
+    return match && isNotApplicable(match) ? { ...match, nonApplicable: true } : match;
+  };
   const identityFor = (code: string) => {
     const snapshot = byCode.get(code);
     return snapshot ? object(snapshot.identitySnapshot) : {};
@@ -92,11 +102,9 @@ export function prepareBulletin(root: FrozenBulletin, snapshots: FrozenBulletin[
     isRetake,
     retakeScores,
     releaseVisible,
-    slimSubjects: subjectsOf(root.subjectResults).map(({ components: _components, earned, appreciation, ...subject }) => ({
-      ...subject,
-      earned: releaseVisible ? earned : null,
-      ...(releaseVisible && appreciation ? { appreciation } : {})
-    }))
+    slimSubjects: subjectsOf(root.subjectResults).map(subject => releaseVisible
+      ? { ...subject, ...(isNotApplicable(subject) ? { nonApplicable: true } : {}) }
+      : { subjectId: subject.subjectId, subjectCode: subject.subjectCode, label: subject.label, earned: null, maximum: null })
   };
 }
 

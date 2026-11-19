@@ -19,21 +19,21 @@ export async function renderSecondary(data: BulletinData) {
   const widths = [name, ...Array<number>(9).fill(column), gap, exam, percent, sign];
   const wide = form.width;
   const middle = wide / 2;
-  const body = { min: 13, size: 7.5 };
+  const body = { min: 12.8, size: 7.3 };
 
-  form.row([wide], [centered('RÉPUBLIQUE DÉMOCRATIQUE DU CONGO\nMINISTÈRE DE L’ENSEIGNEMENT PRIMAIRE, SECONDAIRE\nET PROFESSIONNEL', true)], { size: 10, min: 46 });
+  form.row([wide], [centered('RÉPUBLIQUE DÉMOCRATIQUE DU CONGO\nMINISTÈRE DE L’ENSEIGNEMENT PRIMAIRE, SECONDAIRE\nET PROFESSIONNEL', true)], { size: 10, min: 42 });
   const id = display(school.educationId);
-  form.room(33);
-  form.cell(form.left, form.y, wide, 33, label('N° ID.'));
+  form.room(29);
+  form.cell(form.left, form.y, wide, 29, label('N° ID.'));
   const idSlots = 26;
   if ([...id].length <= idSlots) {
     const slot = (wide - 136) / idSlots;
     for (let index = 0; index < idSlots; index++) {
-      form.cell(form.left + 94 + index * slot, form.y - 8, slot, 17, centered([...id][index] ?? ''), 8);
+      form.cell(form.left + 94 + index * slot, form.y - 6, slot, 17, centered([...id][index] ?? ''), 8);
     }
-    form.y -= 33;
+    form.y -= 29;
   } else {
-    form.y -= 33;
+    form.y -= 29;
     form.row([wide], [{ text: id }]);
   }
   form.row([wide], [label(`PROVINCE   ${display(school.province)}`)], { min: 15 });
@@ -58,24 +58,26 @@ export async function renderSecondary(data: BulletinData) {
     const x = form.left;
     const y = form.y;
     const head = 14;
-    form.cell(x, y, name, head * 3, label('BRANCHES'), 8.4);
+    const last = 17;
+    const height = head * 2 + last;
+    form.cell(x, y, name, height, label('BRANCHES'), 8.4);
     for (const [semester, number] of ['PREMIER SEMESTRE', 'SECOND SEMESTRE'].entries()) {
       const start = x + name + semester * 4 * column;
       form.cell(start, y, 4 * column, head, centered(number, true), 8.4);
       form.cell(start, y - head, 2 * column, head, centered('TR. JOURNAL.', true), 7.4);
       const ordinal = semester === 0 ? ['1re période', '2e période'] : ['3e période', '4e période'];
-      ordinal.forEach((period, i) => form.cell(start + i * column, y - head * 2, column, head, centered(period, true), 5.6));
-      form.cell(start + 2 * column, y - head, column, 2 * head, centered('EXAMEN', true), 6.2);
-      form.cell(start + 3 * column, y - head, column, 2 * head, centered('TOTAL', true), 6.6);
+      ordinal.forEach((period, i) => form.cell(start + i * column, y - head * 2, column, last, centered(period, true), 5.6));
+      form.cell(start + 2 * column, y - head, column, head + last, centered('EXAMEN', true), 6.2);
+      form.cell(start + 3 * column, y - head, column, head + last, centered('TOTAL', true), 6.6);
     }
-    form.cell(x + name + 8 * column, y, column, 3 * head, centered('T.G.', true), 8.4);
-    form.cell(x + name + 9 * column, y, gap, 3 * head, centered('', false, true));
+    form.cell(x + name + 8 * column, y, column, height, centered('T.G.', true), 8.4);
+    form.cell(x + name + 9 * column, y, gap, height, centered('', false, true));
     const after = x + name + 9 * column + gap;
     form.cell(after, y, exam + percent + sign, 2 * head, centered('EXAMEN DE REPÊCHAGE', true), 8);
-    form.cell(after, y - 2 * head, exam, head, centered('NOTE', true), 7);
-    form.cell(after + exam, y - 2 * head, percent, head, centered('%', true), 7);
-    form.cell(after + exam + percent, y - 2 * head, sign, head, centered('SIGN. PROF.', true), 6.6);
-    form.y -= 3 * head;
+    form.cell(after, y - 2 * head, exam, last, centered('NOTE', true), 7);
+    form.cell(after + exam, y - 2 * head, percent, last, centered('%', true), 7);
+    form.cell(after + exam + percent, y - 2 * head, sign, last, centered('SIGN. PROF.', true), 6.6);
+    form.y -= height;
   }
 
   const groups = new Map<string, { maxima: string[]; subjects: BulletinSubject[] }>();
@@ -89,15 +91,17 @@ export async function renderSecondary(data: BulletinData) {
   form.room(68);
   heading();
   for (const group of groups.values()) {
+    const maximaRow = () => form.row([name, ...Array<number>(9).fill(column), gap, exam + percent + sign],
+      [label('MAXIMA', true), ...group.maxima.map(value => centered(value, true, true)), divider, divider], { ...body });
     form.room(27, heading);
-    form.row([name, ...Array<number>(9).fill(column), gap, exam + percent + sign],
-      [label('MAXIMA', true), ...group.maxima.map(value => centered(value, true, true)), divider, divider], { ...body, repeat: heading });
+    maximaRow();
+    const repeat = () => { heading(); maximaRow(); };
     for (const subject of group.subjects) {
       form.row(widths, [
         { text: subject.label },
         ...codes.map(code => centered(marks(data.component(subject, code)))),
         divider, centered(marks(data.retakeScores.get(subject.subjectId))), {}, {}
-      ], { ...body, repeat: heading });
+      ], { ...body, repeat });
     }
   }
 
@@ -119,11 +123,12 @@ export async function renderSecondary(data: BulletinData) {
         [label(title), ...cells.slice(0, 2), divider, ...cells.slice(4, 6), divider, divider, {}], { ...body, repeat: heading });
     } else {
       form.row([name, ...Array<number>(9).fill(column), gap, exam + percent + sign],
-        [label(title), ...cells, divider, centered(secondSession ? value(identity) : '')], { ...body, repeat: heading });
+        [{ ...label(title), size: title === 'SIGNATURE DU RESPONSABLE' ? 6.6 : undefined }, ...cells, divider, centered(secondSession ? value(identity) : '')], { ...body, repeat: heading });
     }
   }
 
-  form.room(111);
+  const footerContext = () => form.text(`BULLETIN SECONDAIRE — ${nameOf(identity)}`, 8, true, true);
+  form.room(111, footerContext);
   const decisions = [
     ['Passe dans la classe supérieure', 'ADMIS'],
     ['Double sa classe', 'REDOUBLEMENT'],
@@ -144,9 +149,9 @@ export async function renderSecondary(data: BulletinData) {
     form.row([wide], [{ text: `DÉCISION DE DEUXIÈME SESSION   ${outcome}` }], { size: 8 });
   }
   form.row([wide], [{ text: ['OBSERVATIONS', record?.reason, data.isRetake ? data.decision?.reason : ''].filter(Boolean).join('\n'), top: true }], { min: 23, size: 7.6 });
-  form.room(46);
+  form.room(39, footerContext);
   form.row([wide / 3, wide / 3, wide / 3],
     ['Signature de l’élève', 'Sceau de l’école', 'Nom et signature du chef d’établissement'].map(title => ({ ...centered(title), top: true })),
-    { min: 46, size: 8 });
+    { min: 39, size: 8 });
   return form.save();
 }

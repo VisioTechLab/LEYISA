@@ -1,4 +1,4 @@
-import { Controller, ForbiddenException, Get, Module, NotFoundException, Param, Post, Query, Res } from "@nestjs/common";
+import { ConflictException, Controller, ForbiddenException, Get, Module, NotFoundException, Param, Post, Query, Res } from "@nestjs/common";
 import { PrismaService } from "../../common/prisma.service.js";
 import { PrismaModule } from "../../common/prisma.module.js";
 import { object, uuid } from "../../common/input.js";
@@ -77,6 +77,10 @@ export class BulletinsController {
   @Post(":id/generate") @Requires("bulletins.produce")
   async generate(@Param("id") raw: string, @CurrentAuth() auth: AuthContext) {
     const result = await this.load(raw, auth);
+    if (!result.reportCards.some(card => card.templateVersion === currentVersion)
+      && !(await this.data(result, new Date())).releaseVisible) {
+      throw new ConflictException("La génération définitive exige la publication de toutes les composantes.");
+    }
     return this.prisma.client.$transaction(async tx => {
       await tx.reportCard.createMany({ data: [{ resultSnapshotId: result.id, templateVersion: currentVersion, notice: 'DEMO-V1' }], skipDuplicates: true });
       const report = await tx.reportCard.findUniqueOrThrow({
