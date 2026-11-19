@@ -35,11 +35,12 @@ export class StudentsService {
         ...(scope || classId || schoolYearId
           ? { enrollments: { some: { ...scope, classId, schoolYearId } } }
           : {}),
-        ...(search ? { OR: [
-          { matricule: { contains: search, mode: "insensitive" as const } },
-          { user: { lastName: { contains: search, mode: "insensitive" as const } } },
-          { user: { firstName: { contains: search, mode: "insensitive" as const } } },
-        ] } : {}),
+        ...(search ? { AND: search.split(/\s+/).map(term => ({ OR: [
+          { matricule: { contains: term, mode: "insensitive" as const } },
+          { postName: { contains: term, mode: "insensitive" as const } },
+          { user: { lastName: { contains: term, mode: "insensitive" as const } } },
+          { user: { firstName: { contains: term, mode: "insensitive" as const } } },
+        ] })) } : {}),
       },
       skip:(page(query.page)-1)*50,take:50,
       include: {

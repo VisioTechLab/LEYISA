@@ -1,7 +1,7 @@
 import { ConflictException, Controller, ForbiddenException, Get, Module, NotFoundException, Param, Post, Query, Res } from "@nestjs/common";
 import { PrismaService } from "../../common/prisma.service.js";
 import { PrismaModule } from "../../common/prisma.module.js";
-import { object, uuid } from "../../common/input.js";
+import { object, optionalText, uuid } from "../../common/input.js";
 import { CurrentAuth } from "../auth/session.guard.js";
 import { Requires } from "../auth/permission.guard.js";
 import type { AuthContext } from "../auth/auth-context.js";
@@ -25,15 +25,26 @@ const archivedVersion = (value: unknown) => legacyVersion(value) || value === pr
 const decisionOrder = { orderBy: { version: 'desc' as const }, take: 1 };
 const periodDetails = { include: { period: true } };
 const canReadAll = (auth: AuthContext) => auth.roles.some(role => role === 'DIR' || role === 'SEC');
+// Les droits et la publication sont contrôlés avant ce contrôle de présentation.
+// Une archive reste stockée, mais ne permet pas de contourner une incompatibilité.
+const periodSupported = (cycle: unknown, code: string) => cycle === 'PRIMAIRE'
+  ? ['T1', 'T2', 'T3', 'ANNEE'].includes(code)
+  : cycle === 'MATERNEL'
+    ? ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'T1', 'T2', 'T3', 'ANNEE'].includes(code)
+    : ['P1', 'P2', 'P3', 'P4', 'E1', 'E2', 'S1', 'S2', 'ANNEE', 'REPECHAGE'].includes(code);
 
 @Controller("bulletins")
 export class BulletinsController {
   constructor(private readonly prisma: PrismaService) {}
 
   @Get() @Requires("bulletins.download")
-  async list(@CurrentAuth() auth: AuthContext) {
+  async list(@CurrentAuth() auth: AuthContext, @Query("search") rawSearch?: string) {
+    const terms = (optionalText(rawSearch, 'Recherche', 120) ?? '').split(/\s+/).filter(Boolean);
     const rows = await this.prisma.client.resultSnapshot.findMany({
-      where: { classPeriod: { publishedAt: { not: null } }, ...(!canReadAll(auth) ? { enrollment: { student: { userId: auth.userId } } } : {}) },
+      where: { classPeriod: { publishedAt: { not: null } }, ...(!canReadAll(auth) ? { enrollment: { student: { userId: auth.userId } } } : {}),
+        AND: terms.map(term => ({ OR: ['lastName', 'postName', 'firstName', 'matricule'].map(field => ({
+          identitySnapshot: { path: [field], string_contains: term, mode: 'insensitive' as const }
+        })) })) },
       select: { id: true, identitySnapshot: true, calculationProfile: true },
       orderBy: { id: 'asc' },
       take: 500
@@ -68,6 +79,15 @@ export class BulletinsController {
     return prepareBulletin(result, snapshots, cutoff);
   }
 
+  private requireDownloadable(result: Awaited<ReturnType<BulletinsController["load"]>>, data: Awaited<ReturnType<BulletinsController["data"]>>) {
+    if (!periodSupported(data.identity.cycle, result.classPeriod.period.code)) {
+      throw new ConflictException('Aucun gabarit adapté à cette période. Choisissez une synthèse publiée compatible.');
+    }
+    if (!data.releaseVisible) {
+      throw new ConflictException('Le document exige la publication de toutes les composantes.');
+    }
+  }
+
   @Get(":id") @Requires("bulletins.download")
   async detail(@Param("id") raw: string, @CurrentAuth() auth: AuthContext) {
     const result = await this.load(raw, auth);
@@ -81,17 +101,15 @@ export class BulletinsController {
       publicationComplete: data.releaseVisible,
       // Les colonnes du gabarit primaire sont T1/T2/T3, pas P1/P2/etc.
       // Signaler l'incompatibilité évite de proposer un PDF sans les notes sélectionnées.
-      documentPeriodSupported: data.identity.cycle !== 'PRIMAIRE' || ['T1', 'T2', 'T3', 'ANNEE'].includes(result.classPeriod.period.code)
+      documentPeriodSupported: periodSupported(data.identity.cycle, result.classPeriod.period.code)
     };
   }
 
   @Post(":id/generate") @Requires("bulletins.produce")
   async generate(@Param("id") raw: string, @CurrentAuth() auth: AuthContext) {
     const result = await this.load(raw, auth);
-    if (!result.reportCards.some(card => card.templateVersion === currentVersion)
-      && !(await this.data(result, new Date())).releaseVisible) {
-      throw new ConflictException("La génération définitive exige la publication de toutes les composantes.");
-    }
+    const issued = result.reportCards.find(card => card.templateVersion === currentVersion);
+    this.requireDownloadable(result, await this.data(result, issued?.generatedAt ?? new Date()));
     return this.prisma.client.$transaction(async tx => {
       await tx.reportCard.createMany({ data: [{ resultSnapshotId: result.id, templateVersion: currentVersion, notice: 'DEMO-V1' }], skipDuplicates: true });
       const report = await tx.reportCard.findUniqueOrThrow({
@@ -111,11 +129,12 @@ export class BulletinsController {
     let bytes: Uint8Array;
     if (legacyVersion(version) && issued) {
       const data = await this.data(result, new Date());
-      if (!data.releaseVisible) throw new NotFoundException("Bulletin historique indisponible avant publication des composantes.");
+      this.requireDownloadable(result, data);
       bytes = await renderLegacyBulletin({ ...data.identity, decision: data.decision?.outcome ?? data.identity.decision },
         result.subjectResults as unknown as Record<string, unknown>[], version);
     } else if (version === currentVersion || (version === previousVersion || version === 'DEMO-V1.5') && issued) {
       const data = await this.data(result, issued?.generatedAt ?? new Date());
+      this.requireDownloadable(result, data);
       const renderers = version === previousVersion
         ? { maternal: renderMaternalV14, primary: renderPrimaryV14, secondary: renderSecondaryV14 }
         : { maternal: renderMaternal, primary: renderPrimary, secondary: version === 'DEMO-V1.5' ? renderSecondaryV15 : renderSecondary };

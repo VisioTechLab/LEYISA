@@ -11,6 +11,7 @@ import {
   type EvaluationSummary,
 } from './evaluationsApi';
 import './evaluations.css';
+import { locationValue, rememberLocation, useWorkspaceState } from '../../shared/workspaceState';
 
 const STATE_LABELS: Record<EvaluationState, string> = {
   DRAFT: 'Brouillon',
@@ -50,7 +51,8 @@ export function EvaluationsPage() {
   const correctionMode=window.location.hash.startsWith('#corrections');
   const [evaluations, setEvaluations] = useState<EvaluationSummary[] | null>(null);
   const [listError, setListError] = useState('');
-  const [selectedId, setSelectedId] = useState('');
+  const [selectedId, setSelectedId] = useWorkspaceState('evaluation', '');
+  const requested = locationValue('id');
   const [detail, setDetail] = useState<EvaluationDetail | null>(null);
   const [fields, setFields] = useState<Record<string, string>>({});
   const [serverErrors, setServerErrors] = useState<Record<string, string>>({});
@@ -71,8 +73,7 @@ export function EvaluationsPage() {
         if (ignore) return;
         setEvaluations(list);
         // Ouvrir d'abord une évaluation encore modifiable, s'il y en a une.
-        const requested=new URLSearchParams(window.location.hash.split('?')[1]).get('id');
-        setSelectedId((list.find(item=>item.id===requested)??list.find(item => item.editable) ?? list[0])?.id ?? '');
+        setSelectedId((list.find(item=>item.id===requested)??list.find(item=>item.id===selectedId)??list.find(item => item.editable) ?? list[0])?.id ?? '');
       })
       .catch((error: unknown) => {
         if (!ignore) setListError(error instanceof Error ? error.message : 'Chargement impossible.');
@@ -91,10 +92,16 @@ export function EvaluationsPage() {
     return () => { ignore = true; };
   }, [selectedId, showDetail]);
 
+  useEffect(() => { if (requested && requested !== selectedId) selectEvaluation(requested); }, [requested]);
+
+  useEffect(() => { if (selectedId && (!requested || requested === selectedId)) rememberLocation('id', selectedId); }, [selectedId]);
+
   function selectEvaluation(id: string) {
+    if (id === selectedId) return;
     setDetail(null);
     setNotice(null);
     setSelectedId(id);
+    rememberLocation('id', id);
   }
 
   const fieldErrors: Record<string, string> = {};
@@ -170,7 +177,7 @@ export function EvaluationsPage() {
       <section className="leyisa-card evaluations-picker" aria-labelledby="evaluations-picker-title">
         <h2 id="evaluations-picker-title">Évaluation</h2>
         {listError && <p className="evaluations-notice" data-kind="error" role="alert">{listError}</p>}
-        {!listError && evaluations === null && <p className="leyisa-description">Chargement des évaluations…</p>}
+        {!listError && evaluations === null && <p className="leyisa-description" role="status">Chargement des évaluations…</p>}
         {evaluations?.length === 0 && (
           <p className="leyisa-description">Aucune évaluation n’est enregistrée pour le moment.</p>
         )}
@@ -194,7 +201,7 @@ export function EvaluationsPage() {
         </p>
       )}
 
-      {selectedId && !detail && !notice && <p className="leyisa-description">Chargement de la grille…</p>}
+      {selectedId && !detail && !notice && <p className="leyisa-description" role="status">Chargement de la grille…</p>}
 
       {detail && (
         <>
@@ -259,7 +266,7 @@ export function EvaluationsPage() {
                                   type="text"
                                   inputMode="decimal"
                                   autoComplete="off"
-                                  aria-label={`Note de ${grade.firstName} ${grade.lastName}`}
+                                  aria-label={`Note de ${grade.firstName} ${grade.lastName} · ${grade.matricule}`}
                                   aria-invalid={error ? true : undefined}
                                   aria-describedby={error ? errorId : undefined}
                                   value={fields[grade.enrollmentId] ?? ''}

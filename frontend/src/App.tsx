@@ -6,6 +6,7 @@ import { EvaluationsPage } from './features/evaluations/EvaluationsPage';
 import { ResultsModulePage } from './features/results/ResultsModulePage';
 import { SchoolLogo } from './SchoolLogo';
 import { SessionContext } from './shared/session';
+import { WorkspaceStateProvider } from './shared/workspaceState';
 import { AccessPage, AccountsPage, AuditPage, BulletinsPage, Dashboard, EvaluationsHome, SchoolPages, StudentRecordPages, TeacherPages } from './WorkspacePages';
 
 const routes=[
@@ -37,9 +38,19 @@ const routes=[
  {hash:'#audit',label:'Journal d’audit',permission:'audit.read',render:()=> <AuditPage/>},
  {hash:'#acces',label:'Accès / conflits',permission:'',render:()=> <AccessPage/>},
 ];
+const modules = [
+ { label: 'Mon espace', routes: ['#accueil'] },
+ { label: 'Scolarité', routes: ['#scolarite', '#classes', '#programme'] },
+ { label: 'Dossiers élèves', routes: ['#eleves', '#dossier', '#historique', '#inscription'] },
+ { label: 'Enseignement', routes: ['#enseignants', '#affectations', '#cours', '#evaluations', '#evaluation', '#notes', '#soumission', '#corrections'] },
+ { label: 'Validation et résultats', routes: ['#validation', '#detail-soumission', '#rejet', '#previsualisation', '#cloture', '#resultats'] },
+ { label: 'Documents scolaires', routes: ['#bulletins', '#bulletin'] },
+ { label: 'Administration', routes: ['#comptes', '#audit', '#acces'] },
+];
 function subscribe(onChange:()=>void){window.addEventListener('hashchange',onChange);return()=>window.removeEventListener('hashchange',onChange);}
 export default function App(){
  const hash=useSyncExternalStore(subscribe,()=>window.location.hash||'#accueil');
+ const [menuOpen,setMenuOpen]=useState(false);
  const [user,setUser]=useState<CurrentUser|null>(null),[loading,setLoading]=useState(true),[chosenRole,setChosenRole]=useState(''),[error,setError]=useState('');
  useEffect(()=>{let active=true;const refresh=()=>{void fetchCurrentUser().then(u=>{if(active){setUser(u);setLoading(false);}});};const expire=()=>{setUser(null);};refresh();window.addEventListener('leyisa:login',refresh);window.addEventListener('leyisa:session-expired',expire);return()=>{active=false;window.removeEventListener('leyisa:login',refresh);window.removeEventListener('leyisa:session-expired',expire);};},[]);
  const role=user?.roles.includes(chosenRole as never)?chosenRole:user?.roles[0]??'';
@@ -49,5 +60,5 @@ export default function App(){
  if(!user)return <LoginPage/>;
  async function signOut(){try{await logout();setUser(null);window.location.hash='#connexion';}catch(e){setError(e instanceof Error?e.message:'Déconnexion impossible.');}}
  const available=routes.filter(r=>!r.permission||can(user,r.permission));
- return <SessionContext.Provider value={user}><div className="leyisa-shell"><aside className="leyisa-sidebar"><a className="leyisa-brand" href="#accueil"><SchoolLogo/><span><strong>Leyisa School</strong><small>Espace de gestion</small></span></a><nav className="leyisa-nav" aria-label="Navigation principale">{available.map(r=><a key={r.hash} href={r.hash} aria-current={r.hash===route.hash?'page':undefined}>{r.label}</a>)}</nav><p className="leyisa-sidebar-note">VISIO TECH · DEMO-V1<br/>Données de démonstration</p></aside><div className="leyisa-workspace"><header className="leyisa-topbar"><p><span>Leyisa School</span><span aria-hidden="true">/</span>{route.label}</p><div className="session-controls"><span className="leyisa-chip">DEMO-V1</span><label className="sr-only" htmlFor="session-role">Rôle de la session</label><select id="session-role" value={role} onChange={e=>setChosenRole(e.target.value)}>{user.roles.map(r=><option key={r}>{r}</option>)}</select><button onClick={()=>void signOut()}>Déconnexion</button></div></header>{error&&<p role="alert">{error}</p>}<div key={hash}>{route.permission&&!can(user,route.permission)?<AccessPage/>:route.render(role)}</div></div></div></SessionContext.Provider>;
+ return <SessionContext.Provider value={user}><WorkspaceStateProvider key={user.id}><div className="leyisa-shell"><aside className="leyisa-sidebar" data-open={menuOpen}><a className="leyisa-brand" href="#accueil"><SchoolLogo/><span><strong>Leyisa School</strong><small>Espace de gestion</small></span></a><button type="button" className="leyisa-menu-toggle" aria-expanded={menuOpen} aria-controls="leyisa-navigation" onClick={() => setMenuOpen(open => !open)}>{menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}</button><nav id="leyisa-navigation" className="leyisa-nav" aria-label="Navigation principale">{modules.map((module,index)=>{const links=available.filter(item=>module.routes.includes(item.hash));return links.length>0&&<section key={module.label} className="leyisa-nav-module" aria-labelledby={`navigation-module-${index}`}><h2 id={`navigation-module-${index}`}>{module.label}</h2><ul>{links.map(r=><li key={r.hash}><a href={r.hash} onClick={()=>setMenuOpen(false)} aria-current={r.hash===route.hash?'page':undefined}>{r.label}</a></li>)}</ul></section>;})}</nav><p className="leyisa-sidebar-note">VISIO TECH · DEMO-V1<br/>Données de démonstration</p></aside><div className="leyisa-workspace"><header className="leyisa-topbar"><p><span>Leyisa School</span><span aria-hidden="true">/</span>{route.label}</p><div className="session-controls"><span className="leyisa-chip">DEMO-V1</span><label className="sr-only" htmlFor="session-role">Rôle de la session</label><select id="session-role" value={role} onChange={e=>setChosenRole(e.target.value)}>{user.roles.map(r=><option key={r}>{r}</option>)}</select><button onClick={()=>void signOut()}>Déconnexion</button></div></header>{error&&<p role="alert">{error}</p>}<div key={route.hash}>{route.permission&&!can(user,route.permission)?<AccessPage/>:route.render(role)}</div></div></div></WorkspaceStateProvider></SessionContext.Provider>;
 }

@@ -1,0 +1,72 @@
+/* Direction W25 approuvée : règles communes, sans changer la palette du socle. */
+.leyisa-workspace { min-width: 0; }
+.leyisa-workspace .leyisa-page { width: 100%; max-width: 1640px; margin: 0 auto; padding-top: 32px; }
+.leyisa-workspace .leyisa-page-heading { margin-bottom: 28px; }
+.leyisa-workspace .leyisa-page-heading h1 { font-size: 28px; letter-spacing: -.5px; line-height: 1.25; }
+.leyisa-workspace .leyisa-page-heading p { font-size: 14px; line-height: 1.6; }
+.leyisa-workspace .leyisa-card { padding: 22px; border-radius: 5px; min-height: 0; }
+.leyisa-workspace .leyisa-card h2 { font-size: 16px; line-height: 1.4; }
+.leyisa-workspace .leyisa-card + .leyisa-card, .leyisa-workspace .leyisa-grid + .leyisa-grid, .leyisa-workspace .leyisa-grid + .leyisa-card { margin-top: 24px; }
+.leyisa-workspace .leyisa-grid > .leyisa-card { margin-top: 0; }
+.leyisa-workspace .leyisa-stats .leyisa-card { padding: 15px 20px; border: 0; border-left: 2px solid var(--leyisa-line); border-radius: 0; background: transparent; }
+.leyisa-workspace .leyisa-stats h2 { font-size: 12px; color: var(--leyisa-muted); font-weight: 500; }
+.leyisa-workspace .leyisa-stats strong { display: block; margin-top: 6px; font-size: 19px; font-weight: 600; overflow-wrap: anywhere; }
+.leyisa-workspace .leyisa-form { margin-top: 22px; gap: 17px; }
+.leyisa-workspace label { min-width: 0; font-size: 12px; color: #405563; font-weight: 600; }
+.leyisa-workspace :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) { min-width: 0; max-width: 100%; min-height: 42px; padding: 9px 10px; border: 1px solid var(--leyisa-line); border-radius: 4px; background: #fff; color: var(--leyisa-ink); font: inherit; font-size: 13px; font-weight: 400; }
+.leyisa-workspace input:disabled, .leyisa-workspace select:disabled, .leyisa-workspace textarea:disabled { background: #f5f7f8; color: var(--leyisa-muted); }
+.leyisa-workspace .leyisa-form :is(input,select,textarea) { width: 100%; }
+.leyisa-workspace .leyisa-form fieldset { min-width: 0; margin: 0; padding: 0; border: 0; display: grid; gap: 17px; }
+.leyisa-workspace .leyisa-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; border-radius: 4px; padding: 9px 14px; font-size: 13px; line-height: 1.4; text-decoration: none; font-weight: 600; text-align: center; }
+.leyisa-workspace button:not(.leyisa-button):not(.bulletin-catalog button):not(.bulletin-clear):not(.bulletin-pdf-toolbar button), .session-controls button { min-height: 36px; padding: 7px 12px; border: 1px solid var(--leyisa-line); border-radius: 4px; color: var(--leyisa-navy); background: #fff; cursor: pointer; font-size: 12px; }
+.leyisa-workspace button:disabled { cursor: default; opacity: .5; }
+.leyisa-workspace .leyisa-table-wrap { margin-top: 22px; border-radius: 4px; max-height: 65vh; }
+.leyisa-workspace table { font-size: 13px; border-collapse: collapse; text-align: left; }
+.leyisa-workspace .leyisa-table-wrap th { font-size: 11px; font-weight: 600; padding: 11px 14px; background: #f5f7f8; }
+.leyisa-workspace .leyisa-table-wrap td { height: auto; min-height: 48px; padding: 13px 14px; color: var(--leyisa-ink); line-height: 1.6; }
+.leyisa-workspace .leyisa-table-wrap td:first-child { font-weight: 500; }
+.leyisa-workspace .leyisa-table-wrap tbody tr:nth-child(even) { background: #fafbfc; }
+.leyisa-workspace .leyisa-table-wrap tr:hover { background: #f2f5f7; }
+.leyisa-workspace .leyisa-table-wrap td a { color: var(--leyisa-navy); text-underline-offset: 3px; }
+.leyisa-workspace .leyisa-table-wrap th { white-space: normal; min-width: 95px; }
+.leyisa-workspace .leyisa-table-wrap td { overflow-wrap: anywhere; }
+.leyisa-workspace .dashboard-overview { margin-top: 16px; }.dashboard-overview th { color: var(--leyisa-muted); font-size: 12px; background: #f5f7f8; }.dashboard-overview td { border-bottom: 1px solid #e7edef; }
+.leyisa-workspace .workspace-controls, .leyisa-workspace .results-toolbar { gap: 16px; align-items: end; flex-wrap: wrap; margin-bottom: 24px; }
+.workspace-controls > label { flex: 1 1 200px; max-width: 440px; }.workspace-controls select { width: 100%; }
+.leyisa-workspace .panel-description, .leyisa-workspace .form-note, .leyisa-workspace .student-note { font-size: 12px; color: var(--leyisa-muted); }
+.leyisa-workspace .search-form { display: grid; gap: 7px; margin-top: 20px; }.leyisa-workspace .search-controls { gap: 10px; grid-template-columns: minmax(0,1fr) auto; }
+.leyisa-workspace [role="status"]:not(.sr-only):not(.bulletin-message) { font-size: 13px; color: var(--leyisa-muted); line-height: 1.6; }
+.leyisa-workspace [role="alert"], .leyisa-workspace .feedback-error { color: #823b3b; line-height: 1.6; }
+.leyisa-workspace p[role="alert"] { border-left: 3px solid #a94343; background: #faf1f1; padding: 12px 16px; }
+.leyisa-workspace .results-toolbar label { margin: 0; max-width: 100%; }.leyisa-workspace .results-toolbar select { max-width: 100%; }
+.leyisa-workspace .results-module-page textarea { min-height: 120px; }.leyisa-workspace .results-check input { width: 18px; height: 18px; flex-shrink: 0; }
+.leyisa-workspace .results-steps { padding-bottom: 14px; gap: 10px; flex-wrap: wrap; }
+.leyisa-workspace .results-list article { border: 0; border-radius: 0; border-bottom: 1px solid #e7edef; padding: 16px 0; }
+.leyisa-workspace .results-list small { line-height: 1.6; }.leyisa-workspace .preview-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+.leyisa-sidebar { height: 100dvh; min-height: 0; }.leyisa-brand { flex-shrink: 0; }
+.leyisa-nav { display: block; padding: 20px 12px; max-height: none; overflow-y: auto; min-height: 0; flex: 1; }
+.leyisa-nav-module + .leyisa-nav-module { margin-top: 22px; }.leyisa-nav-module h2 { color: var(--leyisa-muted); font-size: 10px; line-height: 1.5; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin: 0 18px 7px; }
+.leyisa-nav-module ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }.leyisa-nav a { min-height: 38px; font-size: 13px; padding: 8px 18px; border-radius: 4px; white-space: normal; }
+.leyisa-sidebar-note { margin: 0 24px 20px; padding-top: 12px; font-size: 10px; flex-shrink: 0; }
+.leyisa-topbar .leyisa-chip { min-width: 0; }.leyisa-menu-toggle { display: none; }
+.leyisa-topbar p { overflow-wrap: anywhere; }.leyisa-topbar .session-controls { flex-shrink: 0; }
+.leyisa-skip { position: fixed; top: 8px; left: 270px; transform: translateY(-160%); padding: 10px; background: #fff; z-index: 5; }.leyisa-skip:focus { transform: none; }
+@media (max-width: 1100px) { .leyisa-workspace .leyisa-grid { grid-template-columns: minmax(0,1fr); }.leyisa-workspace .student-registration-form { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 850px) {
+ .leyisa-sidebar { position: static; height: auto; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; }
+ .leyisa-brand { margin: 0 16px; min-height: 64px; }.leyisa-menu-toggle { display: block; margin-right: 16px; padding: 8px 10px; min-height: 36px; background: #fff; border: 1px solid var(--leyisa-line); border-radius: 4px; font-size: 12px; color: var(--leyisa-navy); }
+ .leyisa-sidebar .leyisa-nav { display: none; grid-column: 1/-1; max-height: 65vh; border-top: 1px solid var(--leyisa-line); }
+ .leyisa-sidebar[data-open="true"] .leyisa-nav { display: block; }.leyisa-nav a { justify-content: flex-start; text-align: left; }
+ .leyisa-nav-module + .leyisa-nav-module { margin-top: 16px; }.leyisa-workspace .leyisa-page { padding: 26px 20px 40px; }
+ .leyisa-topbar { padding: 12px 20px; }.leyisa-skip { left: 10px; }
+}
+@media (max-width: 480px) {
+ .leyisa-workspace .leyisa-page { padding: 24px 16px 36px; }.leyisa-workspace .leyisa-card { padding: 17px; }.leyisa-workspace .leyisa-page-heading h1 { font-size: 25px; }
+ .leyisa-workspace .student-registration-form { grid-template-columns: minmax(0,1fr); }.leyisa-workspace .search-controls { grid-template-columns: minmax(0,1fr); }
+ .leyisa-workspace .results-toolbar > *, .leyisa-workspace .results-steps > * { max-width: 100%; }.leyisa-topbar { padding-inline: 16px; }
+ .session-controls { gap: 8px; }.leyisa-workspace .results-list article { align-items: flex-start; flex-wrap: wrap; }
+}
+.programme-maxima { display: flex; flex-wrap: wrap; gap: 5px 14px; margin: 0 0 8px; font-size: 12px; font-variant-numeric: tabular-nums; }.programme-maxima > div { display: flex; gap: 5px; }.programme-maxima dt { font-weight: 600; color: var(--leyisa-muted); }.programme-maxima dd { margin: 0; }.programme-source { display: block; color: var(--leyisa-muted); line-height: 1.6; }
+.results-module-page .leyisa-table-wrap :is(th,td):first-child { position: sticky; left: 0; min-width: 200px; max-width: 240px; background: #fff; z-index: 1; border-right: 1px solid #e7edef; }
+.results-module-page .leyisa-table-wrap th:first-child { background: #f5f7f8; z-index: 2; }
+@media (max-width: 480px) { .results-module-page .leyisa-table-wrap :is(th,td):first-child { min-width: 150px; max-width: 160px; } }

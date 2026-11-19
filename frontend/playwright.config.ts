@@ -12,8 +12,8 @@ export default defineConfig({
   reporter: [['list']],
   outputDir: './test-results',
   use: {
-    baseURL, viewport: { width: 1440, height: 1080 },
-    launchOptions: { executablePath: process.env.CHROME_PATH ?? '/opt/google/chrome/chrome', args: ['--no-sandbox'] },
+    baseURL, actionTimeout: 15_000, navigationTimeout: 30_000, viewport: { width: 1440, height: 1080 },
+    launchOptions: { ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : process.env.CI ? {} : { executablePath: '/opt/google/chrome/chrome' }), args: ['--no-sandbox'] },
     screenshot: 'only-on-failure',
     // Les traces/vidéos peuvent contenir les champs de connexion : ne pas en produire.
     trace: 'off', video: 'off',

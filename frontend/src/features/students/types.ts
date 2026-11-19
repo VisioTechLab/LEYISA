@@ -1,6 +1,7 @@
 export interface Student {
   id: string;
   matricule: string;
+  postName?: string;
   lastName: string;
   firstName: string;
   birthDate: string | null;

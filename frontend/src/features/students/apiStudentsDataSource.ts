@@ -4,6 +4,7 @@ import type { NewStudent, Student, StudentsDataSource } from "./types";
 interface ApiStudent {
   id: string;
   matricule: string;
+  postName?: string;
   birthDate: string | null;
   user: { firstName: string; lastName: string };
   enrollments: Array<{
@@ -25,6 +26,7 @@ function toStudent(row: ApiStudent): Student {
     id: row.id,
     matricule: row.matricule,
     lastName: row.user.lastName,
+    postName: row.postName,
     firstName: row.user.firstName,
     birthDate: row.birthDate?.slice(0, 10) ?? null,
     className: enrollment?.schoolClass?.label ?? "—",

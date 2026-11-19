@@ -110,6 +110,8 @@ test('T15 — dossier séparé, réinscription concurrente et atomicité',{skip}
  // Classe ouverte créée via la configuration scolaire réelle.
  const cls=await ok(adm,'/school/classes','POST',{schoolYearId:year.id,code:`TEST-${suffix}`,label:'Classe fictive concurrence',cycle:'PRIMAIRE',level:'3e primaire',programVersion:'DEMO-V1.1'},201);
  const student=await ok(sec,'/students/records','POST',{matricule:`TEST-${suffix}`,firstName:'Fictive',lastName:'Élève',postName:'Test',birthDate:'2014-01-02'},201);
+ assert.ok((await ok(sec,'/students?search='+encodeURIComponent('Élève Test Fictive'))).some(row=>row.id===student.id));
+ assert.deepEqual((await ok(sec,`/students?search=test-${suffix}`)).map(row=>row.id),[student.id]);
  const calls=await Promise.all([sec.request(`/students/${student.id}/enrollments`,'POST',{classId:cls.id,schoolYearId:year.id}),sec.request(`/students/${student.id}/enrollments`,'POST',{classId:cls.id,schoolYearId:year.id})]);
  assert.deepEqual(calls.map(r=>r.status).sort(),[201,409]);assert.equal(await db.enrollment.count({where:{studentId:student.id}}),1);
 });
@@ -219,6 +221,14 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   if(code==='DEMO-PRI') {
    const p1=await db.resultSnapshot.findFirstOrThrow({where:{classPeriodId:contexts.find(cp=>cp.period.code==='P1').id}});
    assert.equal((await ok(sec,`/bulletins/${p1.id}`)).documentPeriodSupported,false,'P1 ne correspond pas aux colonnes T1/T2/T3 du PDF primaire');
+   const before=await db.reportCard.count({where:{resultSnapshotId:p1.id}});
+   assert.equal((await sec.request(`/bulletins/${p1.id}/pdf`)).status,409);
+   assert.equal((await sec.request(`/bulletins/${p1.id}/pdf?templateVersion=DEMO-V1.6`)).status,409);
+   assert.equal((await sec.request(`/bulletins/${p1.id}/generate`,'POST',{})).status,409);
+   assert.equal(await db.reportCard.count({where:{resultSnapshotId:p1.id}}),before,'Aucune émission incompatible créée');
+   await db.reportCard.create({data:{resultSnapshotId:p1.id,templateVersion:'DEMO-V1.5',notice:'DEMO-V1'}});
+   assert.equal((await sec.request(`/bulletins/${p1.id}/pdf?templateVersion=DEMO-V1.5`)).status,409,'Une archive ne contourne pas le contrôle');
+   assert.equal(await db.reportCard.count({where:{resultSnapshotId:p1.id}}),before+1,'Archive conservée');
    assert.equal((await ok(sec,`/bulletins/${result.id}`)).documentPeriodSupported,true);
    const closed=await db.resultSnapshot.findFirstOrThrow({where:{classPeriodId:contexts.find(cp=>cp.period.code==='P6').id}});
    assert.equal((await sec.request(`/bulletins/${closed.id}/pdf`)).status,404);
@@ -229,11 +239,12 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
    assert.equal(preview.identity.totalEarned,null);
    assert.equal(preview.subjects[0].earned,null);
    assert.ok(!('components' in preview.subjects[0]));
-   const incomplete=await pdfProof(zero,'primaire-periode-non-publiee.pdf');
+   assert.equal((await sec.request(`/bulletins/${zero.id}/pdf`)).status,409,'Pas de PDF partiellement publié');
+   assert.equal((await sec.request(`/bulletins/${zero.id}/pdf?templateVersion=DEMO-V1.6`)).status,409);
    await ok(dir,`/results/class-periods/${closed.classPeriodId}/publish`,'POST',{});
    assert.equal((await ok(sec,`/bulletins/${zero.id}`)).identity.totalEarned,'0');
    const issued=await ok(sec,`/bulletins/${zero.id}/generate`,'POST',{},201);
-   assert.notDeepEqual((await sec.request(`/bulletins/${zero.id}/pdf`)).bytes,incomplete);
+   assert.equal((await sec.request(`/bulletins/${zero.id}/pdf`)).status,200);
    assert.equal((await ok(sec,`/bulletins/${zero.id}/generate`,'POST',{},201)).id,issued.id);
   }
   await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.3',notice:'DEMO-V1'}});
@@ -260,6 +271,11 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   assert.equal((await teacher.request(historicPath)).status,403);
   assert.equal((await new Browser().request(historicPath)).status,401);
   assert.equal((await sec.request(`/bulletins/${result.id}/pdf?templateVersion=inconnue`)).status,404);
+  const byMatricule=await ok(sec,`/bulletins?search=${encodeURIComponent(result.identitySnapshot.matricule.toLowerCase())}`);
+  assert.ok(byMatricule.length>0);
+  assert.ok(byMatricule.every(row=>row.identitySnapshot.matricule===result.identitySnapshot.matricule));
+  assert.ok((await ok(sec,`/bulletins?search=${encodeURIComponent('Fictif Élève 2')}`)).some(row=>row.id===result.id));
+  assert.equal((await sec.request(`/bulletins?search=${'x'.repeat(121)}`)).status,400);
   await writeFile(`${proofDir}/AVANT-${name}`,v14.bytes);
  }
 });
@@ -314,6 +330,12 @@ test('Deuxième session DEMO — autorisation, validation, remplacement E2 et co
  const historical=await sec.request(`/bulletins/${snapshot.id}/pdf?templateVersion=DEMO-V1.4`);
  assert.equal(historical.status,200);
  await writeFile(`${proofDir}/AVANT-${name}`,historical.bytes);
+ await db.reportCard.create({data:{resultSnapshotId:snapshot.id,templateVersion:'DEMO-V1.5',notice:'DEMO-V1'}});
+ const archivedV15=await sec.request(`/bulletins/${snapshot.id}/pdf?templateVersion=DEMO-V1.5`);
+ assert.equal(archivedV15.status,200);
+ await ok(sec,`/bulletins/${snapshot.id}/generate`,'POST',{},201);
+ assert.deepEqual((await sec.request(`/bulletins/${snapshot.id}/pdf?templateVersion=DEMO-V1.5`)).bytes,archivedV15.bytes);
+ await writeFile(`${proofDir}/AVANT-REPECHAGE-V15.pdf`,archivedV15.bytes);
  await writeFile(`${proofDir}/REPECHAGE-premiere-session.json`,JSON.stringify({
   identity:decision.resultSnapshot.identitySnapshot,subjects:decision.resultSnapshot.subjectResults,authorized:decision.courses,
  },null,2));
@@ -377,6 +399,8 @@ test('T17 — contrôle propre bulletin au service ; ouverture de session élèv
  const rows=await db.resultSnapshot.findMany({where:{classPeriod:{publishedAt:{not:null}}},include:{enrollment:{include:{student:true}}},take:20});
  const own=rows[0],foreign=rows.find(r=>r.enrollment.student.userId!==own.enrollment.student.userId);assert.ok(foreign);
  const controller=new BulletinsController({client:db});const auth={userId:own.enrollment.student.userId,roles:['ELEVE']};
+ assert.ok((await controller.list(auth)).every(row=>row.identitySnapshot.matricule===own.identitySnapshot.matricule));
+ assert.deepEqual(await controller.list(auth,foreign.identitySnapshot.matricule),[],'La recherche ne contourne pas le périmètre élève');
  assert.equal((await controller.detail(own.id,auth)).id,own.id);
  await assert.rejects(()=>controller.detail(foreign.id,auth),error=>error.getStatus()===403);
  assert.equal((await db.user.findUnique({where:{id:auth.userId}})).loginEnabled,false);

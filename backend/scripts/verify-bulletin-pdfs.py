@@ -92,7 +92,7 @@ for index, subject in enumerate(fixtures("BULLETIN_MATERNEL_DEMO-V1")["subjects"
         y0, y1 = second_tier.y1, row_range(maternal, "Participation")[0]
     assert at_y(maternal, attitudes_end, maternal.rect.width - 29, y0, y1).split() == ["D1", "D2", "D3"] * 6
 
-for stem in ["BULLETIN_PRIMAIRE_DEMO-V1", "primaire-periode-non-publiee"]:
+for stem in ["BULLETIN_PRIMAIRE_DEMO-V1"]:
     page = single(stem)
     identity = fixtures(stem)["identity"]
     subjects = fixtures(stem)["subjects"]
