@@ -213,12 +213,15 @@ export function BulletinsPage({ catalog = false }: { catalog?: boolean }) {
         <p>{document.identity.classLabel} — {document.identity.yearCode} / {document.identity.periodCode}</p>
         <table><thead><tr><th scope="col">Branche</th><th scope="col">Résultat figé</th></tr></thead>
          <tbody>{document.subjects.map((subject: Row) => (
-          <tr key={subject.subjectId}><td>{subject.label}</td><td>{document.identity.cycle === 'MATERNEL' ? 'Appréciation publiée' : `${subject.earned ?? 'N/A'} / ${subject.maximum}`}</td></tr>
+          <tr key={subject.subjectId}><td>{subject.label}</td><td>{document.identity.cycle === 'MATERNEL' ? 'Appréciation publiée' : subject.nonApplicable ? 'N/A' : subject.earned == null ? '—' : `${subject.earned} / ${subject.maximum}`}</td></tr>
          ))}</tbody>
         </table>
-        {document.identity.cycle !== 'MATERNEL' && <p>{document.identity.totalEarned} / {document.identity.totalMaximum} — {document.identity.percentage} %</p>}
+        {document.identity.cycle !== 'MATERNEL' && document.identity.totalEarned != null && <p>{document.identity.totalEarned} / {document.identity.totalMaximum} — {document.identity.percentage} %</p>}
        </div>
-       <a className="leyisa-button bulletin-download" href={`/api/v1/bulletins/${selected.id}/pdf`}>Télécharger PDF</a>
+       <a className="leyisa-button bulletin-download" href={`/api/v1/bulletins/${selected.id}/pdf?templateVersion=${encodeURIComponent(document.templateVersion)}`}>Télécharger PDF</a>
+       {document.archivedTemplates.map((version: string) => (
+        <p key={version}><a href={`/api/v1/bulletins/${selected.id}/pdf?templateVersion=${encodeURIComponent(version)}`}>Bulletin archivé ({version})</a></p>
+       ))}
       </>
      )}
      {!selected && !list.loading && <p>Sélectionnez un résultat publié.</p>}
