@@ -10,7 +10,7 @@
 | Vercel | L’accès au tableau de bord n’a pas été établi. L’équipe Pro ou Enterprise à utiliser reste à identifier. |
 | Recette | Restauration locale intégrale vérifiée. Les URL de démonstration et la recette hébergée restent à valider. |
 
-Le feu vert de Melvin a été transmis par le demandeur pour la mise en ligne isolée. La revue humaine de la PR demeure nécessaire pour fusionner. L’accès PostgreSQL direct à la cible portée par le point d’accès Neon est refusé en TCP 5432 depuis l’environnement de préparation. L’import et l’attribution des droits distants restent à exécuter depuis un poste habilité.
+Le feu vert de Melvin a été transmis par le demandeur pour la mise en ligne isolée. La revue humaine de la PR demeure nécessaire pour fusionner. L’accès PostgreSQL direct à la cible portée par le point d’accès Neon est refusé en TCP 5432 depuis l’environnement de préparation. Le point d’accès WebSocket répond, mais refuse la négociation TLS native de PostgreSQL. Le test s’est arrêté avant l’authentification. L’import et l’attribution des droits distants restent à exécuter depuis un poste habilité.
 
 [CI et bundle récupérable](https://github.com/VisioTechLab/LEYISA/actions/runs/44574188498) · [PR #8](https://github.com/VisioTechLab/LEYISA/pull/8)
 
@@ -23,6 +23,15 @@ Le feu vert de Melvin a été transmis par le demandeur pour la mise en ligne is
 5. Appliquer `backend/prisma/access/shared-runtime.sql` avec le propriétaire. Créer par SQL un login dédié avec un mot de passe du coffre, membre du seul rôle `leyisa_runtime`, sans `CREATEDB`, `CREATEROLE` ni appartenance à `neon_superuser`. Dans **Neon → Connect**, sélectionner ce login et **Pooled connection**. Vérifier `sslmode=verify-full` puis les droits avec `npm run db:check-access --prefix backend` sur cette seule connexion runtime. La chaîne propriétaire reste séparée.
 
 La restauration locale vérifiée contient 84 utilisateurs fictifs, 21 élèves, 105 résultats publiés, zéro session à l’export, zéro compte élève actif et six migrations appliquées. Les évaluations comprennent un brouillon, une soumission en attente, un rejet et des évaluations validées. `DEMO-LIVE / P1` reste ouverte. Les cinq PDF ont été téléchargés et comparés après deux démarrages du backend local.
+
+Le dump et les comptes peuvent aussi être régénérés sur le poste de migration depuis le SHA du candidat. Avec PostgreSQL 18 en loopback et une base jetable, suivre le seed et les privilèges runtime de [MIGRATIONS_V1.md](MIGRATIONS_V1.md), puis lancer les trois parcours publiés avec le runtime local.
+
+```sh
+LEYISA_V1_TESTS=1 node --test   --test-name-pattern='Parcours réel|Bulletin CTEB|Deuxième session DEMO'   backend/test/v1.integration.test.mjs
+```
+
+Exporter au format custom PostgreSQL avec `--no-owner --no-acl` et exclure les données des tables `Session` et `LoginLimit`. Restaurer ce dump une fois dans une base locale vierge, contrôler son empreinte et conserver séparément le fichier des comptes généré par le seed. La sauvegarde privée de préparation inclut en plus des évaluations de présentation en brouillon, en attente et rejetées.
+
 
 ## 2. Réglages des deux hébergeurs
 
