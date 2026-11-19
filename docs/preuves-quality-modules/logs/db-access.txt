@@ -1,0 +1,6 @@
+
+> leyisa-backend@0.1.0 db:check-access
+> node --env-file-if-exists=../.env scripts/check-db-access.mjs
+
+../.env not found. Continuing without it.
+Accès applicatif vérifié. Le compte ne peut pas administrer le schéma ni lire les migrations.

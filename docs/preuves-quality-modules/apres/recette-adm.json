@@ -1,0 +1,68 @@
+[
+  {
+    "screen": "D-ADM",
+    "route": "accueil",
+    "role": "adm",
+    "heading": "Tableau de bord Administration",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W02",
+    "route": "comptes",
+    "role": "adm",
+    "heading": "Comptes et rôles",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W03",
+    "route": "scolarite",
+    "role": "adm",
+    "heading": "Configuration scolaire",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W04",
+    "route": "classes",
+    "role": "adm",
+    "heading": "Classes et matières",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W05",
+    "route": "programme",
+    "role": "adm",
+    "heading": "Programme d’une classe",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W26",
+    "route": "audit",
+    "role": "adm",
+    "heading": "Journal d’audit",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  }
+]

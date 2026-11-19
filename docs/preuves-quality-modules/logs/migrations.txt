@@ -1,0 +1,35 @@
+
+> leyisa-backend@0.1.0 db:migrate
+> prisma migrate deploy
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+Datasource "db": PostgreSQL database "leyisa_quality_modules_release_20261119", schema "public" at "127.0.0.1:55433"
+
+6 migrations found in prisma/migrations
+
+Applying migration `20261112000000_initial_database`
+Applying migration `20261112010000_add_student_role`
+Applying migration `20261116000000_add_class_subject_result_maximum`
+Applying migration `20261119000000_integration_v1`
+Applying migration `20261119010000_audit_details`
+Applying migration `20261119020000_deliberation_demo`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20261112000000_initial_database/
+    └─ migration.sql
+  └─ 20261112010000_add_student_role/
+    └─ migration.sql
+  └─ 20261116000000_add_class_subject_result_maximum/
+    └─ migration.sql
+  └─ 20261119000000_integration_v1/
+    └─ migration.sql
+  └─ 20261119010000_audit_details/
+    └─ migration.sql
+  └─ 20261119020000_deliberation_demo/
+    └─ migration.sql
+
+All migrations have been successfully applied.

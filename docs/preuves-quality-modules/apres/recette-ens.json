@@ -1,0 +1,79 @@
+[
+  {
+    "screen": "D-ENS",
+    "route": "accueil",
+    "role": "ens",
+    "heading": "Mon espace Enseignant",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W13",
+    "route": "cours",
+    "role": "ens",
+    "heading": "Mes cours",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W14",
+    "route": "evaluations",
+    "role": "ens",
+    "heading": "Mes évaluations",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W15",
+    "route": "evaluation",
+    "role": "ens",
+    "heading": "Créer une évaluation",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W16",
+    "route": "notes",
+    "role": "ens",
+    "heading": "Saisie des notes",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W17",
+    "route": "soumission",
+    "role": "ens",
+    "heading": "Confirmation de soumission",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W18",
+    "route": "corrections",
+    "role": "ens",
+    "heading": "Correction après rejet",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  }
+]

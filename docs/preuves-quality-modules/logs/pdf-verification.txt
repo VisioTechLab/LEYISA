@@ -1,0 +1,3 @@
+/tmp/leyisa-quality-python/fitz/__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+7 documents contrôlés, chaque page rastérisée à 220 ppp.

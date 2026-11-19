@@ -1,3 +1,5 @@
+> Suite : direction graphique W25 approuvée par le responsable projet. La reprise de W12 et des modules est documentée dans [QUALITE_MODULES_V1](QUALITE_MODULES_V1.md). Le rapport ci-dessous décrit la tranche précédente.
+
 # Conformité des wireframes V1
 
 Les 31 pages du PDF principal ont été rendues et comparées aux captures Chromium 156 de l’application à 1440 × 1000. Les 31 pages du PDF de visualisation corrigé rendent des pixels identiques avec les mêmes paramètres. Le thème, le logo existant, la navigation latérale, le fil d’Ariane et la structure des panneaux ont servi de référence. Les droits du classeur du 14 novembre prévalent sur les rôles illustrés.

@@ -1,0 +1,242 @@
+[
+  {
+    "screen": "D-ADM",
+    "role": "adm",
+    "route": "accueil",
+    "heading": "Tableau de bord Administration",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W02",
+    "role": "adm",
+    "route": "comptes",
+    "heading": "Comptes et rôles",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W03",
+    "role": "adm",
+    "route": "scolarite",
+    "heading": "Configuration scolaire",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W04",
+    "role": "adm",
+    "route": "classes",
+    "heading": "Classes et matières",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W05",
+    "role": "adm",
+    "route": "programme",
+    "heading": "Programme d’une classe",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W26",
+    "role": "adm",
+    "route": "audit",
+    "heading": "Journal d’audit",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "D-SEC",
+    "role": "sec",
+    "route": "accueil",
+    "heading": "Tableau de bord Secrétariat",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W08",
+    "role": "sec",
+    "route": "eleves",
+    "heading": "Élèves et inscriptions",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W09",
+    "role": "sec",
+    "route": "dossier",
+    "heading": "Nouveau dossier élève",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W10",
+    "role": "sec",
+    "route": "historique",
+    "heading": "Fiche et historique scolaire",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W11",
+    "role": "sec",
+    "route": "inscription",
+    "heading": "Inscription annuelle",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W12",
+    "role": "sec",
+    "route": "bulletins",
+    "heading": "Bulletins scolaires",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W25",
+    "role": "sec",
+    "route": "bulletin",
+    "heading": "Bulletins scolaires",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W27",
+    "role": "sec",
+    "route": "acces",
+    "heading": "Accès refusé ou conflit",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "D-ENS",
+    "role": "ens",
+    "route": "accueil",
+    "heading": "Mon espace Enseignant",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W13",
+    "role": "ens",
+    "route": "cours",
+    "heading": "Mes cours",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W14",
+    "role": "ens",
+    "route": "evaluations",
+    "heading": "Mes évaluations",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W15",
+    "role": "ens",
+    "route": "evaluation",
+    "heading": "Créer une évaluation",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W16",
+    "role": "ens",
+    "route": "notes",
+    "heading": "Saisie des notes",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W17",
+    "role": "ens",
+    "route": "soumission",
+    "heading": "Confirmation de soumission",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W18",
+    "role": "ens",
+    "route": "corrections",
+    "heading": "Correction après rejet",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "D-DIR",
+    "role": "dir",
+    "route": "accueil",
+    "heading": "Tableau de bord Direction",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W06",
+    "role": "dir",
+    "route": "enseignants",
+    "heading": "Fiche enseignant",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W07",
+    "role": "dir",
+    "route": "affectations",
+    "heading": "Enseignants et affectations",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W19",
+    "role": "dir",
+    "route": "validation",
+    "heading": "Validation des notes",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W20",
+    "role": "dir",
+    "route": "detail-soumission",
+    "heading": "Détail d’une soumission",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W21",
+    "role": "dir",
+    "route": "rejet",
+    "heading": "Rejeter avec motif",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W22",
+    "role": "dir",
+    "route": "previsualisation",
+    "heading": "Prévisualiser les résultats",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W23",
+    "role": "dir",
+    "route": "cloture",
+    "heading": "Confirmer la clôture",
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "screen": "W24",
+    "role": "dir",
+    "route": "resultats",
+    "heading": "Résultats et clôture",
+    "errors": [],
+    "overflow": false
+  }
+]

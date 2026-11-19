@@ -1,0 +1,32 @@
+[
+  {
+    "telechargement": "bulletin-maternel.pdf",
+    "preuveAPI": "BULLETIN_MATERNEL_DEMO-V1.pdf",
+    "sha256": "ff7bc3440509786e54a66449bb2a3424f642727a3e8caabe1b1cb549699b1fb3",
+    "identiques": true
+  },
+  {
+    "telechargement": "bulletin-primaire-annuel.pdf",
+    "preuveAPI": "BULLETIN_PRIMAIRE_DEMO-V1.pdf",
+    "sha256": "5e5f7e2a4fe01170b3849be940a688ac6d41c217aff4b508df3d8c5ff924fc4d",
+    "identiques": true
+  },
+  {
+    "telechargement": "bulletin-secondaire-P1.pdf",
+    "preuveAPI": "BULLETIN_SECONDAIRE_DEMO-V1.pdf",
+    "sha256": "492c7c41216e57f11fad3200e6dfd69b9d88c0b23c75f590b4067ec65b150457",
+    "identiques": true
+  },
+  {
+    "telechargement": "bulletin-secondaire-annuel.pdf",
+    "preuveAPI": "BULLETIN_SECONDAIRE_ANNUEL_DEMO-V1.pdf",
+    "sha256": "4de7f4f763279dba72ccb96794ca1634822b8e6496bcc5075f56b68ff1e59712",
+    "identiques": true
+  },
+  {
+    "telechargement": "bulletin-repechage.pdf",
+    "preuveAPI": "BULLETIN_REPECHAGE_DEMO-V1.pdf",
+    "sha256": "efb5717a79d686f64aeaff11c89b5245c42cfc5af07b289bb1e2aa272a529888",
+    "identiques": true
+  }
+]

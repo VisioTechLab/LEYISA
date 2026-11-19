@@ -1,0 +1,45 @@
+
+> leyisa-backend@0.1.0 db:verify
+> node --env-file-if-exists=../.env scripts/verify-db-v1.mjs
+
+../.env not found. Continuing without it.
+OK — identité élève distincte du personnel
+OK — connexion élève désactivée par défaut
+OK — aucun identifiant de connexion élève implicite
+OK — aucune session élève créée par inscription
+OK — rôle élève cohérent
+OK — bulletin issu de résultat clôturé et publié
+OK — marque actuelle du bulletin
+OK — profil versionné explicitement démo
+OK — seules empreintes SHA-256 stockées
+OK — audit non modifiable
+OK — audit non supprimable
+OK — snapshot clôturé non modifiable
+OK — snapshot clôturé non supprimable
+OK — réouverture refusée
+OK — dépublication silencieuse refusée
+OK — bulletin logique non duplicable
+OK — nouveau bulletin avec ancienne marque refusé
+OK — identifiants élève non activables implicitement
+OK — rôle STAFF interdit à identité élève
+OK — même code et chevauchement permis entre cycles
+OK — créneau examen chevauchant période permis
+OK — périodes ordinaires du même cycle non chevauchantes
+OK — période hors année refusée
+OK — affectation simultanée refusée
+OK — double inscription annuelle refusée
+OK — classe et année incohérentes refusées
+OK — note vide distincte de zéro
+OK — note négative refusée
+OK — note NaN refusée
+OK — note hors barème refusée
+OK — grade d’une autre classe refusé
+OK — grade dupliqué refusé
+OK — programme utilisé non réécrit
+OK — clôture incomplète refusée
+OK — publication avant clôture refusée
+OK — zéro valide persisté
+OK — note soumise verrouillée
+OK — auto-décision refusée en DB
+OK — historique de soumission non effaçable
+39 contrôles réussis. Toutes les écritures de vérification ont été annulées.

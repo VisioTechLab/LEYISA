@@ -1,0 +1,1 @@
+YAML chargé et syntaxe Bash des étapes vérifiée. La validation GitHub Actions distante reste à observer après le push.

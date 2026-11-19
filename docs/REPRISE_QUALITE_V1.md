@@ -1,3 +1,5 @@
+> Suite : direction graphique W25 approuvée par le responsable projet. La reprise de W12 et des modules est documentée dans [QUALITE_MODULES_V1](QUALITE_MODULES_V1.md). Le rapport ci-dessous décrit la tranche précédente.
+
 # Reprise qualité — premier écran soumis à validation
 
 Demande du responsable projet : récupérer le travail Desktop, conserver la dernière logique métier, corriger les défauts et présenter un écran fonctionnel avant de généraliser le design. Branche `fix/v1-quality-recovery`, issue de `origin/demo/leyisa-v1` résolue à `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Les autorisations de correction et sauvegarde GitHub sont explicites ; aucune fusion ni mise en ligne n'est autorisée à ce stade.

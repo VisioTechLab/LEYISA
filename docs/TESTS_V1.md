@@ -1,3 +1,5 @@
+> Recette qualité des modules : [contre-audit exécuté](AUDIT_MODULES_QUALITE_V1.md), [26 scénarios navigateur et31 vues](preuves-quality-modules/README.md). Les résultats ci-dessous restent ceux des tranches précédentes.
+
 # Tests exécutés sur LEYISA SCHOOL V1
 
 > Reprise qualité du19novembre2026 : les résultats ci-dessous décrivent la recette Cloud historique. Pour la tranche W25 et le gabarit V1.6, consulter [le contre-audit de reprise](AUDIT_QUALITY_RECOVERY.md) :79 tests backend,15 tests navigateur et39 contrôles PostgreSQL exécutés localement sur le correctif6555bf1.

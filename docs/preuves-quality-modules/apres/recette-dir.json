@@ -1,0 +1,101 @@
+[
+  {
+    "screen": "D-DIR",
+    "route": "accueil",
+    "role": "dir",
+    "heading": "Tableau de bord Direction",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W06",
+    "route": "enseignants",
+    "role": "dir",
+    "heading": "Fiche enseignant",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W07",
+    "route": "affectations",
+    "role": "dir",
+    "heading": "Enseignants et affectations",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W19",
+    "route": "validation",
+    "role": "dir",
+    "heading": "Validation des notes",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W20",
+    "route": "detail-soumission",
+    "role": "dir",
+    "heading": "Détail d’une soumission",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W21",
+    "route": "rejet",
+    "role": "dir",
+    "heading": "Rejeter avec motif",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W22",
+    "route": "previsualisation",
+    "role": "dir",
+    "heading": "Prévisualiser les résultats",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W23",
+    "route": "cloture",
+    "role": "dir",
+    "heading": "Confirmer la clôture",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W24",
+    "route": "resultats",
+    "role": "dir",
+    "heading": "Résultats et clôture",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  }
+]

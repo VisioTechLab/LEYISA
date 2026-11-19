@@ -1,0 +1,15 @@
+
+> leyisa-frontend@0.0.0 test:e2e
+> playwright test tests/modules.spec.ts --grep Module (adm|sec|ens|dir)
+
+
+Running 4 tests using 1 worker
+
+(node:59999) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/modules.spec.ts:56:54 › Module adm : vues réelles, navigation et adaptation390/320px (13.9s)
+  ✓  2 tests/modules.spec.ts:56:54 › Module sec : vues réelles, navigation et adaptation390/320px (25.1s)
+  ✓  3 tests/modules.spec.ts:56:54 › Module ens : vues réelles, navigation et adaptation390/320px (11.3s)
+  ✓  4 tests/modules.spec.ts:56:54 › Module dir : vues réelles, navigation et adaptation390/320px (15.4s)
+
+  4 passed (1.1m)

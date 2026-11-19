@@ -1,3 +1,5 @@
+> Reprise qualité sur `fix/v1-quality-recovery` : [rapport et preuves](QUALITE_MODULES_V1.md). W12/W25 utilisent le même lecteur PDF, les dossiers portent leur matricule et les sélections sont conservées pendant la navigation. Les documents incompatibles/incomplets sont refusés par le serveur.
+
 # Parcours de démonstration V1
 
 Tous les noms sont fictifs. Marque DEMO-V1, maxima et décisions de démonstration explicitement proposés. Aucun accès élève activé et aucune décision réglementaire certifiée.

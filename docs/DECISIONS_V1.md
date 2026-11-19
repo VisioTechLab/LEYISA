@@ -24,3 +24,7 @@ Version locale 19/11/2026. Autorité : demande du responsable projet et prompt m
 Points à confirmer pour exploitation : politique officielle des maxima/groupes/sous-matières par niveau et option, portée annuelle des tableaux, légende maternelle, critères et compensation de délibération, conduite/application, signatures habilitées, validation du calendrier par l'école, activation des options et des comptes élèves. Aucun critère financier ou sanction automatique n'est implémenté.
 
 L'absence de maximum bloque la clôture. `null` explicite signifie non applicable, jamais zéro. Un programme utilisé est protégé ; une nouvelle configuration doit viser une classe/version prospective. Les profils restent DEMO_PROPOSE ; l'interface n'active aucune prétendue règle officielle.
+
+## Reprise qualité — validation graphique du responsable projet
+
+CONFIRME_PROJET : le responsable projet valide explicitement la direction W25 (sobriété, organisation, présentation) et autorise sa généralisation progressive, les corrections backend des bulletins, W12, recherche/homonymes, conservation de dossier, navigation par module et CI Playwright sur `fix/v1-quality-recovery`. Cette validation graphique ne vaut pas approbation pédagogique, fusion, déploiement ou migration Neon. Les garde-fous de la demande restent applicables. Preuves et limites dans [QUALITE_MODULES_V1](QUALITE_MODULES_V1.md).

@@ -1,3 +1,5 @@
+> Suite : direction graphique W25 approuvée par le responsable projet. La reprise de W12 et des modules est documentée dans [QUALITE_MODULES_V1](QUALITE_MODULES_V1.md). Le rapport ci-dessous décrit la tranche précédente.
+
 # Contre-audit Senior — reprise qualité, tranche W25
 
 Date :19 novembre2026. Modes AUDIT_DIFF, AUDIT_WORKFLOW, FIX_APPROVED, VERIFY_FIX. Référence V1.5 :`7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Correctif exécuté :`6555bf11d1bc091bdf024299881a03b9d184ab50`. Autorisation : demande explicite de correction et de sauvegarde du responsable projet ; validation du premier écran requise avant généralisation.
