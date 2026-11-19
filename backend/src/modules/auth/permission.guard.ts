@@ -13,7 +13,7 @@ import { FORBIDDEN_MESSAGE } from "./access-rules.js";
 import { type Permission, rolesAllow } from "./permissions.js";
 import { type AuthRequest, SessionGuard } from "./session.guard.js";
 
-const PERMISSION_KEY = "leyisa:permission";
+export const PERMISSION_KEY = "leyisa:permission";
 
 /** Vérifie, après la session, que les rôles du compte donnent la permission demandée. */
 @Injectable()

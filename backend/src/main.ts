@@ -3,11 +3,14 @@ import { existsSync } from "node:fs";
 import { loadEnvFile } from "node:process";
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module.js";
 
 async function bootstrap(): Promise<void> {
   const envFile = new URL("../../.env", import.meta.url);
   if (existsSync(envFile)) loadEnvFile(envFile);
+  const { AppModule } = await import("./app.module.js");
+  if(process.env.NODE_ENV==='production' && (!process.env.APP_ORIGINS || process.env.APP_ORIGINS.split(',').some(origin=>!origin.startsWith('https://')))) {
+    throw new Error("APP_ORIGINS HTTPS explicite requis en production.");
+  }
 
   const port = Number(process.env.PORT ?? "3000");
   const host = process.env.HOST ?? "0.0.0.0";
@@ -16,7 +19,13 @@ async function bootstrap(): Promise<void> {
   }
 
   const app = await NestFactory.create(AppModule, { abortOnError: false });
-  app.enableCors({ origin: process.env.CORS_ORIGIN ?? "http://127.0.0.1:5173" });
+  app.setGlobalPrefix("api/v1", { exclude: ["health"] });
+  app.use((_req: unknown, res: { setHeader(name: string, value: string): void }, next: () => void) => {
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("Referrer-Policy", "same-origin");
+    next();
+  });
   app.enableShutdownHooks();
   try {
     await app.listen(port, host);

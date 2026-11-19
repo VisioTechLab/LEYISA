@@ -12,7 +12,7 @@ export interface AuditEntryInput {
   /** Valeurs à fixer avec chaque responsable de module ; préfixe = module. */
   action: string;
   targetType: string;
-  targetId: string;
+  targetId: string | null;
 }
 
 /** Tout client Prisma (normal ou de transaction) qui sait écrire dans AuditEntry. */

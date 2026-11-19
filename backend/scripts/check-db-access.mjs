@@ -1,5 +1,13 @@
 import { createClient } from "../prisma/client.mjs";
 
+const readableWritableTables = new Set([
+  "User", "UserRole", "Session", "SchoolYear", "Period", "SchoolClass", "Subject",
+  "ClassSubject", "Student", "Enrollment", "Teacher", "TeacherAssignment", "Evaluation",
+  "Grade", "Submission", "ClassPeriod", "ResultSnapshot", "ReportCard",
+]);
+const appendOnlyTables = new Set(["AuditEntry", "CalculationProfile", "DeliberationDecision"]);
+const mutableTables = new Set(["SchoolSettings", "LoginLimit"]);
+
 let db;
 try {
   db = createClient({ connectionTimeoutMillis: 5_000, query_timeout: 5_000 });
@@ -34,17 +42,23 @@ try {
     if (role.elevated || role.create_schema || role.create_table) {
       failures.push("le rôle peut effectuer des opérations d’administration");
     }
-    for (const required of ["SchoolYear", "AuditEntry", "_prisma_migrations"]) {
-      if (!tables.some(({ name }) => name === required)) failures.push(`table absente : ${required}`);
+    const expectedTables = [
+      ...readableWritableTables, ...appendOnlyTables, ...mutableTables, "_prisma_migrations",
+    ];
+    for (const name of expectedTables) {
+      if (!tables.some((table) => table.name === name)) failures.push(`table absente : ${name}`);
     }
     for (const table of tables) {
       const { name, owner, can_read, can_insert, can_update, can_delete, extra_privileges, column_privileges } = table;
-      const common = !owner && !extra_privileges;
-      if (name === "_prisma_migrations") {
-        if (!common || can_delete || column_privileges) failures.push("le registre des migrations est accessible");
-      } else {
-        const canChange = name === "AuditEntry" ? !can_update && !can_delete : can_update && can_delete;
-        if (!common || !can_read || !can_insert || !canChange) failures.push(`droits inattendus sur ${name}`);
+      const allowDelete = readableWritableTables.has(name);
+      const allowUpdate = allowDelete || mutableTables.has(name);
+      const allowInsert = allowUpdate || appendOnlyTables.has(name);
+
+      if (owner || extra_privileges || can_read !== allowInsert || can_insert !== allowInsert ||
+          can_update !== allowUpdate || can_delete !== allowDelete || (!allowInsert && column_privileges)) {
+        failures.push(name === "_prisma_migrations"
+          ? "le registre des migrations est accessible"
+          : `droits inattendus sur ${name}`);
       }
     }
     return failures;

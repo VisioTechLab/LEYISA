@@ -1,43 +1,18 @@
-import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
-import { test } from "node:test";
-import { ForbiddenException, UnauthorizedException } from "@nestjs/common";
-import { StudentsSessionGuard } from "../dist/modules/students/students-session.guard.js";
-
-const token = "A".repeat(48);
-const contextFor = (authorization) => ({
-  switchToHttp: () => ({ getRequest: () => ({ headers: { authorization } }) }),
+// Contrat d'intégration : l'ancien nom de Franck réutilise maintenant la session de Sidonie.
+import assert from 'node:assert/strict';
+import {test} from 'node:test';
+import {UnauthorizedException} from '@nestjs/common';
+import {StudentsSessionGuard} from '../dist/modules/students/students-session.guard.js';
+import {SessionGuard} from '../dist/modules/auth/session.guard.js';
+test('le module élèves utilise la même garde cookie',()=>assert.equal(StudentsSessionGuard,SessionGuard));
+test('aucun Bearer ne remplace le cookie',async()=>{
+ const guard=new StudentsSessionGuard({resolveSession:async()=>{throw new Error('ne doit pas être appelé');}});
+ await assert.rejects(()=>guard.canActivate({switchToHttp:()=>({getRequest:()=>({headers:{authorization:'Bearer '+ 'A'.repeat(48)}})})}),UnauthorizedException);
 });
-
-function makeGuard(session) {
-  let lookup;
-  const guard = new StudentsSessionGuard({
-    client: { session: { findFirst: async (args) => { lookup = args; return session; } } },
-  });
-  return { guard, getLookup: () => lookup };
-}
-
-test("refuse une requête sans session bearer sans lire la base", async () => {
-  const { guard, getLookup } = makeGuard(null);
-  await assert.rejects(() => guard.canActivate(contextFor(undefined)), UnauthorizedException);
-  assert.equal(getLookup(), undefined);
+test('le contexte vérifié provient de la session commune',async()=>{
+ const auth={userId:'sec',roles:['SEC']};const request={headers:{cookie:'leyisa_session='+ 'A'.repeat(48)}};
+ const guard=new StudentsSessionGuard({resolveSession:async()=>auth});assert.equal(await guard.canActivate({switchToHttp:()=>({getRequest:()=>request})}),true);assert.equal(request.auth,auth);
 });
-
-test("autorise une session staff active avec le rôle SEC", async () => {
-  const { guard, getLookup } = makeGuard({
-    user: { kind: "STAFF", roles: [{ role: "SEC" }] },
-  });
-  assert.equal(await guard.canActivate(contextFor(`Bearer ${token}`)), true);
-  assert.equal(getLookup().where.tokenHash, createHash("sha256").update(token).digest("hex"));
-  assert.equal(getLookup().where.revokedAt, null);
-});
-
-test("refuse un rôle sans accès au module élèves", async () => {
-  const { guard } = makeGuard({ user: { kind: "STAFF", roles: [{ role: "ENS" }] } });
-  await assert.rejects(() => guard.canActivate(contextFor(`Bearer ${token}`)), ForbiddenException);
-});
-
-test("refuse une session qui ne représente pas un membre du personnel", async () => {
-  const { guard } = makeGuard({ user: { kind: "STUDENT", roles: [{ role: "ELEVE" }] } });
-  await assert.rejects(() => guard.canActivate(contextFor(`Bearer ${token}`)), UnauthorizedException);
+test('une session révoquée est refusée',async()=>{
+ const guard=new StudentsSessionGuard({resolveSession:async()=>null});await assert.rejects(()=>guard.canActivate({switchToHttp:()=>({getRequest:()=>({headers:{cookie:'leyisa_session='+ 'A'.repeat(48)}})})}),UnauthorizedException);
 });

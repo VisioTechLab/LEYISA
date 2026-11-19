@@ -23,7 +23,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE
   public."Evaluation", public."Grade", public."Submission",
   public."ClassPeriod", public."ResultSnapshot", public."ReportCard"
   TO leyisa_runtime;
-GRANT SELECT, INSERT ON TABLE public."AuditEntry" TO leyisa_runtime;
+GRANT SELECT, INSERT ON TABLE public."AuditEntry", public."CalculationProfile", public."DeliberationDecision" TO leyisa_runtime;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."SchoolSettings", public."LoginLimit" TO leyisa_runtime;
 REVOKE ALL PRIVILEGES ON TABLE public."_prisma_migrations" FROM PUBLIC, leyisa_runtime;
 
 COMMIT;

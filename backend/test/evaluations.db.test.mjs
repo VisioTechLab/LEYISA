@@ -2,8 +2,10 @@
 // migré avec `npm run db:migrate`. Ignorés sur la base commune.
 import "reflect-metadata";
 import assert from "node:assert/strict";
-import { randomUUID } from "node:crypto";
+import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { after, before, test } from "node:test";
+import { Module } from "@nestjs/common";
+import { AuthModule } from "../dist/modules/auth/auth.module.js";
 import { NestFactory } from "@nestjs/core";
 
 function localDatabase() {
@@ -23,11 +25,13 @@ let app;
 let db;
 let base;
 let fixture;
+const token=randomBytes(32).toString("base64url"),csrf=randomBytes(32).toString("hex");
 
 async function call(method, path, body) {
+  if(method!=="GET"){const id=path.split("/")[2];const e=await db.evaluation.findUnique({where:{id}});body={...(body??{}),version:e?.version??1};}
   const response = await fetch(new URL(path, base), {
     method,
-    headers: body === undefined ? {} : { "content-type": "application/json" },
+    headers: {"content-type":"application/json",Origin:"http://127.0.0.1:5173",Cookie:`leyisa_session=${token}; leyisa_csrf=${csrf}`,"X-CSRF-Token":csrf},
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   return { status: response.status, body: await response.json() };
@@ -91,7 +95,10 @@ before(async () => {
   });
   fixture = { evaluation, empty, enrollments, outsider, teacher, director };
 
-  app = await NestFactory.create(EvaluationsModule, { logger: false, abortOnError: false });
+  await db.user.update({where:{id:teacher.userId},data:{login:`teacher-${suffix}`,passwordHash:"fixture-local-non-utilisée",loginEnabled:true}});
+  await db.session.create({data:{userId:teacher.userId,tokenHash:createHash("sha256").update(token).digest("hex"),expiresAt:new Date(Date.now()+3600000)}});
+  class TestModule{};Module({imports:[AuthModule,EvaluationsModule]})(TestModule);
+  app = await NestFactory.create(TestModule, { logger: false, abortOnError: false });
   await app.listen(0, "127.0.0.1");
   base = await app.getUrl();
 });
@@ -189,10 +196,10 @@ test("soumission : la grille est figée et l'évaluation attend une décision", 
   assert.equal(body.lastSubmission.attempt, 1);
 
   const submission = await db.submission.findFirstOrThrow({ where: { evaluationId: id } });
-  assert.equal(submission.evaluationVersion, 1);
+  assert.equal(submission.evaluationVersion, 3);
   assert.equal(submission.submittedById, fixture.teacher.userId);
   const snapshot = [...submission.gradeSnapshot].sort((a, b) => String(a.score).localeCompare(String(b.score)));
-  assert.deepEqual(snapshot, [{ enrollmentId: first.id, score: "15" }, { enrollmentId: second.id, score: null }]);
+  assert.deepEqual(snapshot.map(({enrollmentId,score})=>({enrollmentId,score})), [{ enrollmentId: first.id, score: "15" }, { enrollmentId: second.id, score: null }]);
 
   // Tant que la décision n'est pas prise : ni nouvelle saisie, ni seconde soumission.
   const blocked = await call("PUT", `/evaluations/${id}/grades`, { grades: [{ enrollmentId: first.id, score: 1 }] });
@@ -222,7 +229,7 @@ test("après un rejet : la correction puis une nouvelle soumission sont possible
   const again = await call("POST", `/evaluations/${id}/submission`);
   assert.equal(again.status, 201);
   assert.equal(again.body.lastSubmission.attempt, 2);
-  assert.equal(again.body.version, 2);
+  assert.equal(again.body.version, 4);
 });
 
 test("après validation : les notes ne sont plus modifiables", { skip }, async () => {

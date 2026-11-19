@@ -10,7 +10,7 @@ Connexion → Configuration scolaire → Inscription → Affectation → Évalua
 | Affectation | Kevin | Enseignant fictif affecté selon le contrat convenu |
 | Évaluation, notes, soumission | Joel | Notes enregistrées et soumises selon les règles validées |
 | Validation, résultats, clôture | Melvin | Résultats vérifiables avec les calculs convenus |
-| Bulletin PDF | Jonathan | Document conforme au contrat et marqué DÉMONSTRATION - NON OFFICIEL |
+| Bulletin PDF | Jonathan | Document conforme au contrat et marqué DEMO-V1 |
 
 Ces preuves ne sont pas encore réalisées. Kevin coordonne l'assemblage ; chaque livraison précise ce qui est utilisable et ce qui dépend encore d'un autre module.
 

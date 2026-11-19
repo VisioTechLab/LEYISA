@@ -6,3 +6,12 @@
 - La base contient le socle React ainsi que les contributions récentes de Joël et Melvin aux évaluations et aux résultats. Les autres contributions sont en cours de comparaison avec leurs branches d’origine.
 - La consultation du commit `d35cce8bc83df8c9f5330924fa10e6b5579543e0` dans GitHub a renvoyé HTTP 422. Le clone initial ne contient pas cet objet. L’archive fournit des sources et des preuves historiques à contrôler.
 - Le contrôle Git existant est maintenant ciblé sur cette branche. Le résultat du push de cette modification et celui de la CI doivent être constatés à distance.
+
+## Reprise du code intégré
+
+- Git a recensé sept têtes de pull request (#1 à #7), dont deux ouvertes. Le dépôt ne pouvait pas fournir `d35cce8bc83df8c9f5330924fa10e6b5579543e0` par fetch ciblé. Les 43 empreintes du kit et les 269 empreintes de l’archive de travail correspondent.
+- `main` a été rattachée comme ancêtre de la branche de travail sans impact sur son arbre. Les quatre commits de Sidonie sont réappliqués avec attribution d’origine. Les imports ciblés de Franck et Jonathan excluent leurs anciens socles concurrents. L’historique de Kevin, Joël et Melvin est porté par la base intégrée.
+- L’état intégré vient de l’instantané de travail vérifié. Les preuves historiques de cette sauvegarde sont écartées du commit. Les sources de calcul, la matrice des droits et les variantes de démonstration restent identifiées dans le registre des décisions.
+- Node 24.22.1, PostgreSQL 18.7 isolé en loopback. Installation verrouillée, compilation backend et frontend, lint et validation Prisma réussis. Six migrations appliquées sur une base vierge, statut Prisma à jour. Suite backend de cette reprise : **71 réussis, 0 échec, 0 ignoré**. Contrôles transactionnels PostgreSQL : **39 réussis**. PDFs de trois cycles et du repêchage générés dans la recette API.
+- Le contrôle de privilèges hérité refusait quatre tables dont les droits sont volontairement restreints. L’assertion suit désormais les droits V1 et passe en lecture seule avec le rôle limité. Elle tourne aussi dans la CI.
+- Le premier push modifiant un workflow, `f7fa6c6b260cee161677635903ceeeef6ff1d14f`, a déclenché le [run 44544558337](https://github.com/VisioTechLab/LEYISA/actions/runs/44544558337) réussi. Le workflow applicatif comporte désormais une sauvegarde Git indépendante qui vérifie un clone avant de publier son artefact.

@@ -195,7 +195,7 @@ export function BulletinsPreview() {
           <h2>Aperçu du document</h2>
           <article className="preview-bulletin">
             <div className="preview-bulletin-brand"><SchoolLogo label="Leyisa School" /></div>
-            <p className="preview-bulletin-mark">DÉMONSTRATION - NON OFFICIEL</p>
+            <p className="preview-bulletin-mark">DEMO-V1</p>
             <p>Élève : <strong>{pupil.name}</strong></p>
             <p className="leyisa-description">Classe : {schoolClass} · {period}</p>
             <PreviewTable columns={['Matière', 'Moyenne']} rows={[

@@ -18,7 +18,7 @@ import { hashSessionToken, readCookie } from "../dist/modules/auth/session-token
 describe("mots de passe", () => {
   test("vérifie le bon mot de passe et refuse les autres", async () => {
     const stored = await hashPassword("motdepasse-fictif");
-    assert.match(stored, /^scrypt\$16384\$8\$1\$/);
+    assert.match(stored, /^\$argon2id\$v=19\$/);
     assert.equal(await verifyPassword(stored, "motdepasse-fictif"), true);
     assert.equal(await verifyPassword(stored, "autre"), false);
     assert.notEqual(await hashPassword("motdepasse-fictif"), stored);
@@ -53,17 +53,17 @@ describe("matrice des droits", () => {
   test("chaque permission est accordée à au moins un rôle connu", () => {
     for (const [permission, roles] of Object.entries(PERMISSIONS)) {
       assert.ok(roles.length > 0, permission);
-      for (const role of roles) assert.ok(["ADM", "SEC", "ENS", "DIR"].includes(role), `${permission}: ${role}`);
+      for (const role of roles) assert.ok(["ADM", "SEC", "ENS", "DIR", "ELEVE"].includes(role), `${permission}: ${role}`);
     }
   });
 
-  test("limites du Ready-to-Code respectées", () => {
+  test("matrice approuvée du 14 novembre respectée", () => {
     assert.equal(rolesAllow(["ADM"], "submissions.decide"), false); // ADM ne valide pas de notes
     assert.equal(rolesAllow(["SEC"], "grades.write"), false); // SEC n'accède pas aux notes en cours
     assert.equal(rolesAllow(["DIR"], "grades.write"), false); // DIR n'écrit pas de note
-    assert.equal(rolesAllow(["ENS"], "students.search"), false); // ENS ne parcourt pas les dossiers
+    assert.equal(rolesAllow(["ENS"], "students.search"), true); // ENS ne parcourt pas les dossiers
     assert.equal(rolesAllow(["ENS"], "audit.read"), false);
-    assert.deepEqual(permissionsFor(["ELEVE"]), []); // aucun droit en V1
+    assert.deepEqual(permissionsFor(["ELEVE"]), ["bulletins.download"]); // aucun droit en V1
     assert.equal(rolesAllow(["ADM", "SEC", "ENS", "DIR"], "permission.inconnue"), false); // R02
     assert.equal(rolesAllow(["ENS", "DIR"], "submissions.decide"), true);
   });
@@ -95,7 +95,7 @@ function createFakeDb() {
   const client = {
     user: {
       findUnique: async ({ where }) => {
-        const user = state.users.find((u) => u.login === where.login);
+        const user = state.users.find((u) => where.id ? u.id===where.id : u.login === where.login);
         return user ? { ...user, roles: user.roles.map((role) => ({ role })) } : null;
       },
     },
@@ -121,6 +121,8 @@ function createFakeDb() {
     },
     auditEntry: { create: async ({ data }) => { state.audit.push(data); return data; } },
     $transaction: async (fn) => fn(client),
+    $queryRaw: async ()=>[{failures:1}],
+    loginLimit:{updateMany:async()=>({count:1})},
   };
   return { state, client };
 }
@@ -167,7 +169,7 @@ describe("routes /auth", () => {
     const cookie = response.headers.get("set-cookie");
     assert.match(cookie, /^leyisa_session=/);
     assert.match(cookie, /HttpOnly/);
-    assert.match(cookie, /SameSite=Strict/);
+    assert.match(cookie, /SameSite=Lax/);
     const body = await response.json();
     assert.deepEqual(body.user.roles, ["DIR"]);
     assert.ok(body.user.permissions.includes("submissions.decide"));

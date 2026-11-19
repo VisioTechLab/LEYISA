@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=24.0.0"
+    "node": ">=24.7.0"
   },
   "scripts": {
     "db:validate": "prisma validate",
@@ -13,24 +13,27 @@
     "db:status": "prisma migrate status",
     "db:seed": "prisma db seed",
     "db:check-connection": "node --env-file-if-exists=../.env scripts/check-db-connection.mjs",
-    "db:verify": "node --env-file-if-exists=../.env scripts/verify-db.mjs",
+    "db:verify": "node --env-file-if-exists=../.env scripts/verify-db-v1.mjs",
     "build": "npm run db:generate && tsc -p tsconfig.json",
     "start": "node dist/main.js",
     "test": "npm run build && node --test test/*.test.mjs",
-    "db:check-access": "node --env-file-if-exists=../.env scripts/check-db-access.mjs"
+    "db:check-access": "node --env-file-if-exists=../.env scripts/check-db-access.mjs",
+    "demo:seed": "node --env-file-if-exists=../.env scripts/seed-v1.mjs"
   },
   "dependencies": {
     "@nestjs/common": "11.2.9",
     "@nestjs/core": "11.2.9",
     "@nestjs/platform-express": "11.2.9",
-    "@prisma/adapter-pg": "7.8.0",
-    "@prisma/client": "7.8.0",
+    "@pdf-lib/fontkit": "^1.1.1",
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "pdf-lib": "1.17.1",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2"
   },
   "devDependencies": {
     "@types/node": "24.19.2",
-    "prisma": "7.8.0",
+    "prisma": "7.10.1",
     "typescript": "5.9.3"
   }
 }

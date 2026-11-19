@@ -1,4 +1,5 @@
 import { BadRequestException } from "@nestjs/common";
+import { todayCivil } from "../../common/input.js";
 
 export interface RegisterStudentInput {
   firstName: string;
@@ -33,7 +34,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function requiredString(value: unknown, field: string): string {
-  if (typeof value !== "string" || value.trim() === "") {
+  if (typeof value !== "string" || value.trim() === "" || value.trim().length > 150) {
     throw new BadRequestException(`${field} est obligatoire.`);
   }
   return value.trim();
@@ -63,6 +64,7 @@ function optionalDate(value: unknown): Date | null {
   if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) {
     throw new BadRequestException("birthDate doit être une date valide.");
   }
+  if (date.toISOString().slice(0,10)>todayCivil()) throw new BadRequestException("Date de naissance future refusée.");
   return date;
 }
 

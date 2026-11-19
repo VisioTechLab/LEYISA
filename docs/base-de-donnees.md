@@ -78,7 +78,7 @@ npm run db:verify
   vérifier que toutes les matières attendues ont été traitées, créer les `ResultSnapshot`,
   renseigner la clôture et écrire l’audit. Une fois clôturés, les résultats ne sont plus
   modifiables. Renseigner la publication séparément. Le bulletin interne lit le snapshot
-  clôturé et porte la mention **DÉMONSTRATION - NON OFFICIEL**. Le module doit vérifier la
+  clôturé et publié et porte la mention **DEMO-V1** pour les nouveaux documents. Le module doit vérifier la
   publication et les droits avant toute diffusion. Aucun paiement ou code de consultation
   n’entre dans ce modèle. `DEMO_V1` est un profil de démonstration, sans formule officielle.
 - **Migration.** Les contraintes CHECK, exclusions GiST, index partiels et triggers sont

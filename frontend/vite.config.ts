@@ -7,10 +7,8 @@ export default defineConfig({
   server: {
     // En développement, les écrans appellent /api ; Vite relaie vers le backend NestJS local.
     proxy: {
-      '/auth': process.env.LEYISA_API_TARGET ?? 'http://127.0.0.1:3000',
       '/api': {
         target: process.env.LEYISA_API_TARGET ?? 'http://127.0.0.1:3000',
-        rewrite: path => path.replace(/^\/api/, ''),
       },
     },
   },

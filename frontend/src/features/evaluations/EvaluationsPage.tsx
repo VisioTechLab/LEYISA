@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { AppreciationsGrid } from './AppreciationsGrid';
 import {
   ApiError,
   getEvaluation,
@@ -45,6 +46,8 @@ function toScore(value: string): string | null {
 }
 
 export function EvaluationsPage() {
+  const confirmationMode=window.location.hash.startsWith('#soumission');
+  const correctionMode=window.location.hash.startsWith('#corrections');
   const [evaluations, setEvaluations] = useState<EvaluationSummary[] | null>(null);
   const [listError, setListError] = useState('');
   const [selectedId, setSelectedId] = useState('');
@@ -68,7 +71,8 @@ export function EvaluationsPage() {
         if (ignore) return;
         setEvaluations(list);
         // Ouvrir d'abord une évaluation encore modifiable, s'il y en a une.
-        setSelectedId((list.find(item => item.editable) ?? list[0])?.id ?? '');
+        const requested=new URLSearchParams(window.location.hash.split('?')[1]).get('id');
+        setSelectedId((list.find(item=>item.id===requested)??list.find(item => item.editable) ?? list[0])?.id ?? '');
       })
       .catch((error: unknown) => {
         if (!ignore) setListError(error instanceof Error ? error.message : 'Chargement impossible.');
@@ -116,7 +120,7 @@ export function EvaluationsPage() {
   }
 
   async function persist(current: EvaluationDetail) {
-    const saved = await saveGrades(current.id, current.grades.map(grade => ({
+    const saved = await saveGrades(current.id,current.version, current.grades.map(grade => ({
       enrollmentId: grade.enrollmentId,
       score: toScore(fields[grade.enrollmentId] ?? ''),
     })));
@@ -140,16 +144,14 @@ export function EvaluationsPage() {
 
   async function onSubmit() {
     if (!detail || busy || hasFieldErrors) return;
-    const missing = detail.grades.length - filled;
-    const question = missing > 0
-      ? `${missing} élève(s) sans note. Soumettre quand même ? Les notes ne seront plus modifiables tant qu'une décision n'est pas prise.`
-      : "Soumettre les notes ? Elles ne seront plus modifiables tant qu'une décision n'est pas prise.";
-    if (!window.confirm(question)) return;
+    if(!confirmationMode) {
+      setBusy(true);try{const saved=dirty?await persist(detail):detail;window.location.hash=`#soumission?id=${saved.id}`;}catch(error){reportFailure(error);}finally{setBusy(false);}return;
+    }
     setBusy(true);
     setNotice(null);
     try {
       const saved = dirty ? await persist(detail) : detail;
-      showDetail(await submitEvaluation(saved.id));
+      showDetail(await submitEvaluation(saved.id,saved.version));
       setNotice({ kind: 'success', text: 'Notes soumises. Elles attendent la décision de validation.' });
     } catch (error) {
       reportFailure(error);
@@ -161,7 +163,7 @@ export function EvaluationsPage() {
   return (
     <main className="leyisa-page leyisa-evaluations">
       <header className="leyisa-page-heading">
-        <h1>Saisie des notes</h1>
+        <h1>{confirmationMode?"Confirmation de soumission":correctionMode?"Correction après rejet":"Saisie des notes"}</h1>
         <p>Enregistrer les notes d’une évaluation, puis les soumettre pour validation.</p>
       </header>
 
@@ -224,7 +226,7 @@ export function EvaluationsPage() {
             </p>
           )}
 
-          <section className="leyisa-card" aria-labelledby="evaluations-grid-title">
+          {confirmationMode?<div className="leyisa-grid"><section className="leyisa-card"><h2>Résumé de la soumission</h2><p>{detail.title} · {detail.subject.label}</p><p>{filled} notes présentes / {detail.grades.length} inscrits · version {detail.version}</p><p>{filled<detail.grades.length?'La soumission est partielle ; la clôture restera bloquée tant que les notes manquent.':'Les notes saisies sont conservées dans un instantané.'}</p><button className="leyisa-button" disabled={!detail.editable||busy} onClick={onSubmit}>Confirmer la soumission</button> <a href={`#notes?id=${detail.id}`}>Annuler / revenir à la grille</a></section><section className="leyisa-card"><h2>Ce qui se passe ensuite</h2><p>La direction examine une copie immuable. Vous pourrez corriger uniquement après un rejet motivé.</p></section></div>:detail.kind==='APPRECIATION'?<AppreciationsGrid key={`${detail.id}-${detail.version}`} detail={detail} onChange={showDetail}/>:<section className="leyisa-card" aria-labelledby="evaluations-grid-title">
             <h2 id="evaluations-grid-title">Grille de notes</h2>
             <p className="leyisa-description">
               {filled} note(s) saisie(s) sur {detail.grades.length} élève(s) inscrit(s).
@@ -303,7 +305,8 @@ export function EvaluationsPage() {
                 </button>
               </div>
             )}
-          </section>
+          </section>}
+          {correctionMode&&<section className="leyisa-card"><h2>Historique des tentatives</h2><ul>{detail.history?.map(h=><li key={h.attempt}>Tentative {h.attempt} — {h.status} — {h.reason??'Sans motif de rejet'}</li>)}</ul></section>}
         </>
       )}
     </main>

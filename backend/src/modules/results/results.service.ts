@@ -5,6 +5,8 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
+import { Decimal } from "@prisma/client/runtime/client";
+import { object, todayCivil } from "../../common/input.js";
 import { PrismaService } from "../../common/prisma.service.js";
 
 const TRANSACTION = { maxWait: 10_000, timeout: 20_000 } as const;
@@ -17,21 +19,8 @@ export class ResultsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async bootstrap() {
-    const [classPeriods, reviewers] = await Promise.all([
-      this.prisma.client.classPeriod.findMany({
-        include: { period: true, schoolClass: true },
-        orderBy: [{ period: { position: "asc" } }, { schoolClass: { code: "asc" } }],
-      }),
-      this.prisma.client.user.findMany({
-        where: { roles: { some: { role: "DIR" } } },
-        select: { id: true, firstName: true, lastName: true },
-        orderBy: [{ lastName: "asc" }, { firstName: "asc" }],
-      }),
-    ]);
-    return {
-      periods: uniquePeriods(classPeriods),
-      reviewers: reviewers.map((user) => ({ id: user.id, label: `${user.firstName} ${user.lastName}` })),
-    };
+    const classPeriods=await this.prisma.client.classPeriod.findMany({include:{period:true},orderBy:{period:{position:"asc"}}});
+    return {periods:uniquePeriods(classPeriods)};
   }
 
   async listPendingSubmissions(periodId?: string) {
@@ -71,8 +60,7 @@ export class ResultsService {
     };
   }
 
-  async approveSubmission(id: string, body: unknown) {
-    const actorId = parseActorId(body);
+  async approveSubmission(id: string, actorId: string) {
     await this.prisma.client.$transaction(async (tx) => {
       const submission = await lockPendingSubmission(tx, id);
       await requireDirector(tx, actorId);
@@ -90,8 +78,8 @@ export class ResultsService {
     return this.submissionDetail(id);
   }
 
-  async rejectSubmission(id: string, body: unknown) {
-    const { actorId, reason } = parseRejection(body);
+  async rejectSubmission(id: string, actorId: string, body: unknown) {
+    const { reason } = parseRejection(body);
     await this.prisma.client.$transaction(async (tx) => {
       const submission = await lockPendingSubmission(tx, id);
       await requireDirector(tx, actorId);
@@ -125,7 +113,7 @@ export class ResultsService {
       classLabel: context.schoolClass.label,
       periodCode: context.period.code,
       periodLabel: context.period.label,
-      status: context.closedAt ? "CLOSED" : "OPEN",
+      status: context.publishedAt ? "PUBLISHED" : context.closedAt ? "CLOSED" : "OPEN",
       evaluationCount: context._count.evaluations,
       resultCount: context._count.results,
     }));
@@ -133,34 +121,55 @@ export class ResultsService {
 
   async previewClassPeriod(id: string) {
     const context = await loadClassPeriod(this.prisma.client, id);
-    return buildPreview(context, false);
+    return computePreview(this.prisma.client,context, false);
   }
 
-  async closeClassPeriod(id: string, body: unknown) {
-    const actorId = parseActorId(body);
+  async closeClassPeriod(id: string, actorId: string, body: unknown) {
+    if(object(body).confirmed!==true)throw new BadRequestException("Confirmation explicite requise.");
     return this.prisma.client.$transaction(async (tx) => {
       await requireDirector(tx, actorId);
+      await tx.$queryRaw`SELECT c.id FROM "SchoolClass" c JOIN "ClassPeriod" cp ON cp."classId"=c.id WHERE cp.id=${id}::uuid FOR UPDATE OF c`;
       await tx.$queryRaw`SELECT id FROM "ClassPeriod" WHERE id = ${id}::uuid FOR UPDATE`;
       const context = await loadClassPeriod(tx, id);
       if (context.closedAt) throw new ConflictException("La période est déjà clôturée.");
-      const preview = buildPreview(context, true);
+      const preview = await computePreview(tx,context, true);
+      if(context.period.endsOn.toISOString().slice(0,10)>todayCivil())throw new ConflictException("Le composant ne peut pas être clôturé avant sa fin.");
       const snapshots = await tx.resultSnapshot.createMany({
         data: preview.students.map((student) => ({
           classPeriodId: context.id,
           enrollmentId: student.enrollmentId,
           classId: context.classId,
-          identitySnapshot: student.identity,
-          subjectResults: student.subjectResults,
-          sourceVersions: preview.sourceVersions,
+          identitySnapshot: JSON.parse(JSON.stringify(student.identity)),
+          subjectResults: JSON.parse(JSON.stringify(student.subjectResults)),
+          sourceVersions: JSON.parse(JSON.stringify(preview.sourceVersions)),
           // Conserve une valeur normalisée pour la compatibilité du schéma ; l'écran final expose total/max.
-          overallMean: student.totalMaximum === 0 ? 0 : (student.totalEarned / student.totalMaximum) * 20,
-          calculationProfile: "PERIOD_TOTAL_V1",
+          overallMean: new Decimal(student.totalMaximum).isZero() ? "0" : new Decimal(student.totalEarned).div(student.totalMaximum).mul(20).toFixed(8),
+          calculationProfile: "DEMO-V1.PERIOD_TOTAL_V1.2",
         })),
       });
       await tx.classPeriod.update({ where: { id }, data: { closedAt: new Date(), closedById: actorId } });
       await writeAudit(tx, actorId, "CLASS_PERIOD_CLOSED", "ClassPeriod", id);
       return { classPeriodId: id, status: "CLOSED", snapshotsCreated: snapshots.count };
     }, TRANSACTION);
+  }
+
+  async publish(id:string,actorId:string) {
+    return this.prisma.client.$transaction(async tx=>{
+      await requireDirector(tx,actorId);
+      await tx.$queryRaw`SELECT id FROM "ClassPeriod" WHERE id=${id}::uuid FOR UPDATE`;
+      const context=await tx.classPeriod.findUnique({where:{id},include:{results:true}});
+      if(!context)throw new NotFoundException("Classe-période introuvable.");
+      if(!context.closedAt||context.results.length===0)throw new ConflictException("Publication exige résultats clôturés et validés.");
+      if(context.publishedAt)throw new ConflictException("Résultats déjà publiés.");
+      const period=await tx.period.findUnique({where:{id:context.periodId}});
+      const cls=await tx.schoolClass.findUnique({where:{id:context.classId}});
+      if(cls?.cycle!=='MATERNEL'&&['ANNUEL','REPECHAGE'].includes(period!.kind)) {
+        for(const result of context.results)if(!await tx.deliberationDecision.findFirst({where:{resultSnapshotId:result.id}}))throw new ConflictException("Une décision motivée de démonstration est requise pour chaque synthèse avant publication.");
+      }
+      await tx.classPeriod.update({where:{id},data:{publishedAt:new Date(),publishedById:actorId}});
+      await writeAudit(tx,actorId,"RESULTS_PUBLISHED","ClassPeriod",id);
+      return {classPeriodId:id,status:"PUBLISHED"};
+    },TRANSACTION);
   }
 
   async finalResults(id: string) {
@@ -175,7 +184,7 @@ export class ResultsService {
         id: classPeriod.id,
         classLabel: classPeriod.schoolClass.label,
         periodLabel: classPeriod.period.label,
-        status: "CLOSED",
+        status: classPeriod.publishedAt?"PUBLISHED":"CLOSED",
       },
       students: classPeriod.results.map((result) => formatFinalResult(result)),
     };
@@ -199,7 +208,8 @@ async function loadClassPeriod(client: WriteClient | PrismaService["client"], id
       period: true,
       schoolClass: {
         include: {
-          subjects: { include: { subject: true }, orderBy: { subject: { code: "asc" } } },
+          schoolYear:true,
+          subjects: { include: { subject: true }, orderBy: { position: "asc" } },
           enrollments: { include: { student: { include: { user: true } } }, orderBy: { student: { matricule: "asc" } } },
         },
       },
@@ -215,91 +225,151 @@ async function loadClassPeriod(client: WriteClient | PrismaService["client"], id
   return context;
 }
 
-function buildPreview(context: Awaited<ReturnType<typeof loadClassPeriod>>, requireReady: boolean) {
-  const problems: string[] = [];
-  const evaluationsBySubject = new Map<string, typeof context.evaluations>();
-  for (const evaluation of context.evaluations) {
-    const subjectId = evaluation.assignment.classSubject.subjectId;
-    const values = evaluationsBySubject.get(subjectId) ?? [];
-    values.push(evaluation);
-    evaluationsBySubject.set(subjectId, values);
-    if (evaluation.state !== "VALIDATED" || evaluation.submissions.length !== 1) {
-      problems.push(`L'évaluation « ${evaluation.title} » n'est pas validée.`);
-    }
-  }
-  for (const classSubject of context.schoolClass.subjects) {
-    if ((evaluationsBySubject.get(classSubject.subjectId) ?? []).length === 0) {
-      problems.push(`La matière « ${classSubject.subject.label} » n'a aucune évaluation traitée.`);
-    }
-  }
-  if (requireReady && problems.length > 0) {
-    throw new ConflictException({ message: "La clôture est bloquée.", problems });
-  }
+Decimal.set({precision:40});
+type Context=Awaited<ReturnType<typeof loadClassPeriod>>;
+type SubjectResult={subjectId:string;subjectCode:string;label:string;earned:string|null;maximum:string;appreciation?:unknown;components?:Record<string,unknown>;missing?:boolean;nonApplicable?:boolean};
+type StudentResult={enrollmentId:string;identity:Record<string,unknown>;subjectResults:SubjectResult[];totalEarned:string;totalMaximum:string;missingScores:string[];rank:number|null;percentage:string|null};
 
-  const sourceVersions = context.evaluations.flatMap((evaluation) => {
-    const submission = evaluation.submissions[0];
-    return submission ? [{ evaluationId: evaluation.id, submissionId: submission.id, attempt: submission.attempt, version: submission.evaluationVersion }] : [];
-  });
-  const students = context.schoolClass.enrollments.map((enrollment) =>
-    buildStudentResult(context, enrollment.id, evaluationsBySubject),
-  );
-  const missingScores = students.flatMap((student) => student.missingScores);
-  if (requireReady && missingScores.length > 0) {
-    throw new ConflictException({ message: "La clôture est bloquée par des notes manquantes.", problems: missingScores });
+async function computePreview(client:WriteClient|PrismaService["client"],context:Context,requireReady:boolean) {
+  if(context.period.kind==='REPECHAGE')return computeRetakePreview(client,context,requireReady);
+  const settings=await client.schoolSettings.findUnique({where:{id:"school"}});
+  const problems:string[]=[];
+  let sourceVersions:object[]=[];
+  let students:StudentResult[]=[];
+  if(context.schoolClass.subjects.length===0)problems.push("Le programme ne contient aucune matière/attitude.");
+  if(context.schoolClass.enrollments.length===0)problems.push("La classe ne contient aucune inscription.");
+  if(['TRIMESTRE','SEMESTRE','ANNUEL'].includes(context.period.kind)) {
+    const children=await client.classPeriod.findMany({where:{classId:context.classId,period:{parentCode:context.period.code,profile:context.period.profile,kind:{in:['PERIODE','EXAMEN','TRIMESTRE','SEMESTRE']}}},include:{period:true,results:true},orderBy:{period:{position:'asc'}}});
+    if(children.length===0)problems.push("Aucun composant enfant configuré.");
+    for(const child of children)if(!child.closedAt||child.results.length!==context.schoolClass.enrollments.length)problems.push(`Composant ${child.period.code} incomplet ou non clôturé.`);
+    sourceVersions=children.flatMap(c=>c.results.map(r=>({snapshotId:r.id,classPeriodId:c.id,code:c.period.code})));
+    students=context.schoolClass.enrollments.map(enrollment=>{
+      const snapshots=children.map(child=>({code:child.period.code,result:child.results.find(r=>r.enrollmentId===enrollment.id)}));
+      const first=snapshots.find(s=>s.result)?.result;
+      const identity={...object(first?.identitySnapshot??{}),periodCode:context.period.code,periodLabel:context.period.label,kind:context.period.kind};
+      const subjects:SubjectResult[]=context.schoolClass.subjects.map(cs=>{
+        const components:Record<string,unknown>={};let earned=new Decimal(0),maximum=new Decimal(0),missing=false;
+        for(const snapshot of snapshots) {
+          const rows=Array.isArray(snapshot.result?.subjectResults)?snapshot.result!.subjectResults as unknown as SubjectResult[]:[];
+          const row=rows.find(r=>r.subjectId===cs.subjectId);
+          if(!row)missing=true;
+          else {
+            components[snapshot.code]=row;
+            if(row.earned===null&&context.schoolClass.cycle!=='MATERNEL'&&!row.nonApplicable)missing=true;
+            if(row.earned!==null)earned=earned.add(row.earned);maximum=maximum.add(row.maximum);
+          }
+          if(snapshot.result && object(snapshot.result.identitySnapshot).programVersion!==object(first?.identitySnapshot??{}).programVersion)missing=true;
+        }
+        return {subjectId:cs.subjectId,subjectCode:cs.subject.code,label:cs.subject.label,earned:context.schoolClass.cycle==='MATERNEL'?null:missing?null:earned.toString(),maximum:maximum.toString(),components,missing};
+      });
+      return finishStudent(enrollment.id,identity,subjects,context.schoolClass.cycle==='MATERNEL');
+    });
+  } else {
+    const bySubject=new Map<string,typeof context.evaluations>();
+    for(const evaluation of context.evaluations) {
+      const key=evaluation.assignment.classSubject.subjectId;
+      bySubject.set(key,[...(bySubject.get(key)??[]),evaluation]);
+      if(evaluation.state!=='VALIDATED'||evaluation.submissions.length!==1||evaluation.submissions[0]?.evaluationVersion!==evaluation.version)problems.push(`Évaluation « ${evaluation.title} » non validée ou version incohérente.`);
+    }
+    for(const cs of context.schoolClass.subjects) {
+      const maxima=cs.componentMaxima as Record<string,string|null>;
+      if(context.schoolClass.cycle!=='MATERNEL' && (!Object.hasOwn(maxima,context.period.code)||cs.source==='A_CONFIRMER'))problems.push(`Maximum/source non configuré : ${cs.subject.label} / ${context.period.code}.`);
+      if(maxima[context.period.code]!==null && !(bySubject.get(cs.subjectId)?.length))problems.push(`Aucune évaluation approuvée pour ${cs.subject.label}.`);
+    }
+    sourceVersions=context.evaluations.flatMap(e=>e.submissions.map(s=>({evaluationId:e.id,submissionId:s.id,attempt:s.attempt,version:s.evaluationVersion})));
+    students=context.schoolClass.enrollments.map(enrollment=>{
+      const subjects:SubjectResult[]=context.schoolClass.subjects.map(cs=>{
+        const maxima=cs.componentMaxima as Record<string,string|null>;
+        if(maxima[context.period.code]===null)return {subjectId:cs.subjectId,subjectCode:cs.subject.code,label:cs.subject.label,earned:null,maximum:'0',nonApplicable:true};
+        const evaluations=bySubject.get(cs.subjectId)??[];
+        let earned=new Decimal(0),scale=new Decimal(0),missing=evaluations.length===0;const appreciations:unknown[]=[];
+        for(const evaluation of evaluations) {
+          const snap=evaluation.submissions[0]?.gradeSnapshot;
+          const entry=Array.isArray(snap)?snap.find(g=>g&&typeof g==='object'&&!Array.isArray(g)&&g.enrollmentId===enrollment.id) as Record<string,unknown>|undefined:undefined;
+          if(context.schoolClass.cycle==='MATERNEL') {
+            if(!entry?.appreciation)missing=true;else appreciations.push(entry.appreciation);
+          } else {
+            if(entry?.score===null||entry?.score===undefined||entry.status&&entry.status!=='PRESENT')missing=true;
+            else earned=earned.add(String(entry.score));
+            scale=scale.add(evaluation.maxScore.toString());
+          }
+        }
+        const maximum=context.schoolClass.cycle==='MATERNEL'?'0':maxima[context.period.code]??'0';
+        return {subjectId:cs.subjectId,subjectCode:cs.subject.code,label:cs.subject.label,earned:context.schoolClass.cycle==='MATERNEL'?null:missing||scale.isZero()?null:earned.div(scale).mul(maximum).toString(),maximum,missing,...(context.schoolClass.cycle==='MATERNEL'?{appreciation:appreciations}:{}),components:{}};
+      });
+      const student=enrollment.student;
+      const identity={enrollmentId:enrollment.id,matricule:student.matricule,firstName:student.user.firstName,lastName:student.user.lastName,postName:student.postName,sex:student.sex,birthDate:student.birthDate?.toISOString().slice(0,10)??null,birthPlace:student.birthPlace,permanentNumber:student.permanentNumber,classLabel:context.schoolClass.label,yearCode:context.schoolClass.schoolYear.code,cycle:context.schoolClass.cycle,level:context.schoolClass.level,optionCode:context.schoolClass.optionCode,programVersion:context.schoolClass.programVersion,periodCode:context.period.code,periodLabel:context.period.label,kind:context.period.kind,school:settings?.identity??{},profile:'DEMO-V1.PERIOD_TOTAL_V1.2',decision:'A_VERIFIER'};
+      return finishStudent(enrollment.id,identity,subjects,context.schoolClass.cycle==='MATERNEL');
+    });
   }
-  return {
-    classPeriod: { id: context.id, classLabel: context.schoolClass.label, periodLabel: context.period.label, status: context.closedAt ? "CLOSED" : "OPEN" },
-    readyToClose: !context.closedAt && problems.length === 0 && missingScores.length === 0,
-    problems: [...problems, ...missingScores],
-    sourceVersions,
-    students,
-  };
+  const missing=students.flatMap(s=>s.missingScores);problems.push(...missing);
+  const complete=problems.length===0;
+  if(context.schoolClass.cycle!=='MATERNEL'&&complete) {
+    const maxima=new Set(students.map(s=>s.totalMaximum));
+    if(maxima.size===1)for(const student of students)student.rank=1+students.filter(s=>new Decimal(s.totalEarned).gt(student.totalEarned)).length;
+  }
+  // Identité figée contient aussi les synthèses, sans recalcul lors du rendu PDF.
+  for(const student of students)student.identity={...student.identity,totalEarned:student.totalEarned,totalMaximum:student.totalMaximum,percentage:student.percentage,rank:student.rank,effectif:students.length};
+  if(requireReady&&!complete)throw new ConflictException({message:"Clôture bloquée : données ou règles incomplètes.",problems});
+  return {classPeriod:{id:context.id,classLabel:context.schoolClass.label,periodLabel:context.period.label,status:context.publishedAt?'PUBLISHED':context.closedAt?'CLOSED':'OPEN'},readyToClose:!context.closedAt&&complete,problems,sourceVersions,students};
+}
+async function computeRetakePreview(client:WriteClient|PrismaService["client"],context:Context,requireReady:boolean) {
+ const problems:string[]=[];
+ const originals=await client.resultSnapshot.findMany({where:{classId:context.classId,classPeriod:{period:{kind:'ANNUEL'},publishedAt:{not:null}}},include:{decisions:{include:{profile:true},orderBy:{version:'desc'},take:1}}});
+ if(originals.length!==context.schoolClass.enrollments.length)problems.push('Première session annuelle publiée incomplète.');
+ const sourceVersions:object[]=originals.map(r=>({snapshotId:r.id,session:1}));
+ const students:StudentResult[]=originals.map(original=>{
+  const identity={...object(original.identitySnapshot),periodCode:context.period.code,periodLabel:context.period.label,kind:'REPECHAGE',session:2,decision:'A_VERIFIER',originalSnapshotId:original.id};
+  const subjects=structuredClone(original.subjectResults) as unknown as SubjectResult[];
+  const decision=original.decisions[0];
+  if(decision?.outcome==='REPECHAGE') {
+   if(object(decision.profile.config).retakeMode!=='REPLACE_E2_DEMO')problems.push('Mode de deuxième session non configuré.');
+   for(const subjectId of decision.courses as string[]) {
+    const subject=subjects.find(s=>s.subjectId===subjectId);const oldExam=subject?findComponent(subject,'E2'):undefined;
+    if(!subject||!oldExam||oldExam.earned===null||new Decimal(oldExam.maximum).lte(0)){problems.push('Composant E2 source absent ou non applicable.');continue;}
+    const evaluations=context.evaluations.filter(e=>e.decisionId===decision.id&&e.assignment.classSubject.subjectId===subjectId);
+    if(!evaluations.length){problems.push(`Repêchage non évalué : ${subject.label}.`);continue;}
+    let points=new Decimal(0),maximum=new Decimal(0),missing=false;
+    for(const evaluation of evaluations) {
+     const submission=evaluation.submissions[0];
+     if(evaluation.state!=='VALIDATED'||!submission||submission.evaluationVersion!==evaluation.version){missing=true;continue;}
+     const entry=parseSnapshot(submission.gradeSnapshot).find(g=>g.enrollmentId===original.enrollmentId);
+     if(!entry||entry.score===null)missing=true;else points=points.add(entry.score);
+     maximum=maximum.add(evaluation.maxScore.toString());
+     sourceVersions.push({evaluationId:evaluation.id,submissionId:submission.id,version:submission.evaluationVersion,decisionId:decision.id,session:2});
+    }
+    if(missing||maximum.isZero()){problems.push(`Note de deuxième session incomplète : ${subject.label}.`);continue;}
+    const replacement=points.div(maximum).mul(oldExam.maximum);
+    const delta=replacement.sub(oldExam.earned!);
+    replaceComponent(subject,'E2',replacement.toString(),delta);
+   }
+  }
+  return finishStudent(original.enrollmentId,identity,subjects,false);
+ });
+ if(context.evaluations.some(e=>e.state!=='VALIDATED'))problems.push('Épreuves de deuxième session non validées.');
+ if(students.length && new Set(students.map(s=>s.totalMaximum)).size===1&&!problems.length)for(const student of students)student.rank=1+students.filter(s=>new Decimal(s.totalEarned).gt(student.totalEarned)).length;
+ for(const student of students)student.identity={...student.identity,totalEarned:student.totalEarned,totalMaximum:student.totalMaximum,percentage:student.percentage,rank:student.rank,effectif:students.length};
+ if(requireReady&&problems.length)throw new ConflictException({message:'Clôture de deuxième session bloquée.',problems});
+ return {classPeriod:{id:context.id,classLabel:context.schoolClass.label,periodLabel:context.period.label,status:context.publishedAt?'PUBLISHED':context.closedAt?'CLOSED':'OPEN'},readyToClose:!context.closedAt&&!problems.length&&students.length>0,problems,sourceVersions,students};
+}
+function findComponent(subject:SubjectResult,code:string):SubjectResult|undefined {
+ const children=subject.components as Record<string,SubjectResult>|undefined;
+ if(children?.[code])return children[code];
+ for(const child of Object.values(children??{})){const found=findComponent(child,code);if(found)return found;}
+}
+function replaceComponent(subject:SubjectResult,code:string,earned:string,delta:Decimal):boolean {
+ const children=subject.components as Record<string,SubjectResult>|undefined;let changed=false;
+ if(children?.[code]){children[code].earned=earned;changed=true;}
+ else for(const child of Object.values(children??{}))if(replaceComponent(child,code,earned,delta))changed=true;
+ if(changed&&subject.earned!==null)subject.earned=new Decimal(subject.earned).add(delta).toString();
+ return changed;
 }
 
-function buildStudentResult(context: Awaited<ReturnType<typeof loadClassPeriod>>, enrollmentId: string, evaluationsBySubject: Map<string, typeof context.evaluations>) {
-  const enrollment = context.schoolClass.enrollments.find((item) => item.id === enrollmentId);
-  const subjectResults = context.schoolClass.subjects.map((classSubject) => {
-    const evaluations = evaluationsBySubject.get(classSubject.subjectId) ?? [];
-    let earnedPoints = 0;
-    let evaluationMaximum = 0;
-    let missing = false;
-    for (const evaluation of evaluations) {
-      const entry = parseSnapshot(evaluation.submissions[0]?.gradeSnapshot).find((grade) => grade.enrollmentId === enrollmentId);
-      const score = entry ? numericScore(entry.score) : null;
-      if (score === null) missing = true;
-      else earnedPoints += score;
-      evaluationMaximum += Number(evaluation.maxScore);
-    }
-    const maximum = Number(classSubject.resultMaxScore);
-    return {
-      subjectId: classSubject.subjectId,
-      subjectCode: classSubject.subject.code,
-      label: classSubject.subject.label,
-      earned: missing || evaluationMaximum === 0 ? null : (earnedPoints / evaluationMaximum) * maximum,
-      maximum,
-      missing,
-    };
-  });
-  const missingScores = subjectResults.filter((subject) => subject.missing).map((subject) => `Note manquante pour ${subject.label}.`);
-  const totalEarned = subjectResults.reduce((total, subject) => total + (subject.earned ?? 0), 0);
-  const totalMaximum = subjectResults.reduce((total, subject) => total + subject.maximum, 0);
-  return {
-    enrollmentId,
-    identity: enrollment
-      ? {
-          enrollmentId,
-          matricule: enrollment.student.matricule,
-          firstName: enrollment.student.user.firstName,
-          lastName: enrollment.student.user.lastName,
-          classLabel: context.schoolClass.label,
-          periodCode: context.period.code,
-        }
-      : { enrollmentId },
-    subjectResults: subjectResults.map(({ missing, ...subject }) => subject),
-    totalEarned,
-    totalMaximum,
-    missingScores,
-  };
+function finishStudent(enrollmentId:string,identity:Record<string,unknown>,subjects:SubjectResult[],maternal:boolean):StudentResult {
+  const total=subjects.reduce((sum,s)=>sum.add(s.earned??'0'),new Decimal(0));
+  const maximum=subjects.reduce((sum,s)=>sum.add(s.maximum),new Decimal(0));
+  const missingScores=subjects.filter(s=>s.missing).map(s=>`Note/appréciation manquante : ${s.label}.`);
+  return {enrollmentId,identity,subjectResults:subjects.map(({missing,...s})=>s),totalEarned:total.toString(),totalMaximum:maximum.toString(),missingScores,rank:null,percentage:maternal||maximum.isZero()||missingScores.length?null:total.div(maximum).mul(100).toString()};
 }
 
 async function lockPendingSubmission(tx: WriteClient, id: string) {
@@ -318,7 +388,7 @@ async function lockPendingSubmission(tx: WriteClient, id: string) {
 }
 
 async function requireDirector(tx: WriteClient, actorId: string) {
-  const actor = await tx.user.findFirst({ where: { id: actorId, roles: { some: { role: "DIR" } } }, select: { id: true } });
+  const actor = await tx.user.findFirst({ where: { id: actorId, loginEnabled:true, roles: { some: { role: "DIR" } } }, select: { id: true } });
   if (!actor) throw new ForbiddenException("Cette action exige un compte Direction.");
 }
 
@@ -326,19 +396,11 @@ async function writeAudit(tx: WriteClient, actorId: string, action: string, targ
   await tx.auditEntry.create({ data: { actorId, action, targetType, targetId } });
 }
 
-function parseActorId(body: unknown) {
-  if (!isObject(body) || typeof body.actorId !== "string" || body.actorId.trim() === "") {
-    throw new BadRequestException("actorId est obligatoire pendant la démonstration sans authentification.");
-  }
-  return body.actorId;
-}
-
 function parseRejection(body: unknown) {
-  const actorId = parseActorId(body);
   if (!isObject(body) || typeof body.reason !== "string" || body.reason.trim() === "") {
     throw new BadRequestException("Le motif du rejet est obligatoire.");
   }
-  return { actorId, reason: body.reason.trim() };
+  return { reason: body.reason.trim() };
 }
 
 function parseSnapshot(value: unknown): GradeSnapshotEntry[] {
@@ -380,9 +442,7 @@ function uniquePeriods(classPeriods: Array<{ period: { id: string; code: string;
   return [...periods.values()];
 }
 
-function formatFinalResult(result: any) {
-  const subjectResults = Array.isArray(result.subjectResults) ? result.subjectResults : [];
-  const totalEarned = subjectResults.reduce((total: number, subject: any) => total + Number(subject.earned ?? 0), 0);
-  const totalMaximum = subjectResults.reduce((total: number, subject: any) => total + Number(subject.maximum ?? 0), 0);
-  return { identity: result.identitySnapshot, subjectResults, totalEarned, totalMaximum };
+function formatFinalResult(result:any) {
+  const identity=object(result.identitySnapshot);
+  return {id:result.id,identity,subjectResults:result.subjectResults,totalEarned:identity.totalEarned??"0",totalMaximum:identity.totalMaximum??"0",percentage:identity.percentage??null,rank:identity.rank??null};
 }

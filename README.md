@@ -1,37 +1,51 @@
-# LEYISA
-LEYISA_SCHOOL
+# LEYISA SCHOOL — intégration V1
 
+Application mono-établissement : React/Vite/TypeScript, NestJS, Prisma/PostgreSQL. Contributions des six membres conservées ; finalisation sur `integration/leyisa-v1`, sans modification de main ni migration Neon. Les nouveaux documents fictifs portent **DEMO-V1**. Les profils pédagogiques proposés ne certifient aucune règle officielle.
 
-## Leyisa School V1 — Visio Tech
+Commencer par [le rapport de release](docs/AUDIT_RELEASE_V1.md), [la recette](docs/TESTS_V1.md) et [le parcours démontrable](docs/PARCOURS_DEMO_V1.md). [Décisions](docs/DECISIONS_V1.md), [contrats réellement implémentés](docs/CONTRATS_API_V1.md), [intégration des contributions](docs/INTEGRATION_V1.md), [31 écrans et écarts](docs/CONFORMITE_WIREFRAMES_V1.md), [migrations](docs/MIGRATIONS_V1.md) et [déploiement à approuver](docs/DEPLOIEMENT_V1.md).
 
-Socle collaboratif pour la démonstration d'une application destinée à un seul établissement scolaire, à réaliser en cinq jours. La branche de la base de données fournit le socle PostgreSQL et Prisma pour le parcours de démonstration.
+## Démarrage local
 
-- Architecture : monolithe modulaire ; frontend prévu en React, Vite et TypeScript.
-- Base de données : PostgreSQL et Prisma. L’intégration au backend applicatif et la validation technique restent à coordonner avec Melvin.
-- Intégration : connexion → configuration scolaire → inscription → affectation → évaluation → notes → validation → résultats → bulletin PDF.
-- Chaque bulletin de démonstration doit porter **DÉMONSTRATION - NON OFFICIEL**.
+Node>=24.7 et PostgreSQL18. Préparer une base **locale jetable** et deux accès séparés propriétaire/runtime. Les commandes de seed et de vérification avec écritures refusent les hôtes distants et NODE_ENV=production. Ne jamais réutiliser une base partagée pour les tests.
 
-## Commencer
+```bash
+cd backend
+npm ci
+npm run build
+# DATABASE_URL propriétaire loopback ; LEYISA_DB_MODE=local
+npm run db:migrate
+LEYISA_DEMO_SEED=1 npm run demo:seed
+# Avec propriétaire : appliquer prisma/access/shared-runtime.sql,
+# puis attribuer leyisa_runtime à un login local dédié.
+# Remplacer DATABASE_URL par le login runtime limité avant le serveur.
+HOST=127.0.0.1 PORT=3000 npm start
+```
 
-Le [guide du socle commun](docs/integration-v1.md#contributions-reprises-dans-le-socle) indique où retrouver les contributions de l’équipe et leurs commits d’origine.
+Dans un autre terminal :
 
-1. Lire [les responsabilités](docs/equipe.md), [les règles communes](docs/regles-communes.md) et [le workflow Git](docs/workflow-git.md).
-2. Consulter [AGENTS.md](AGENTS.md) et le Skill de votre rôle dans `.agents/skills/`.
-3. Choisir une petite tranche du [parcours de démonstration](docs/parcours-demo.md), vérifier [les contrats](docs/contrats-api.md), puis créer une branche de fonctionnalité.
-4. Suivre le [guide du backend](docs/backend.md) pour démarrer NestJS avec PostgreSQL local ou Neon. Le [guide Neon](docs/connexion-neon.md) explique comment préparer les accès individuels.
+```bash
+cd frontend
+npm ci
+LEYISA_API_TARGET=http://127.0.0.1:3000 npm run dev -- --host 127.0.0.1
+```
 
-## Organisation
+Les secrets aléatoires sont écrits en600 dans le fichier désigné par LEYISA_DEMO_CREDENTIALS_FILE (par défaut `/tmp/leyisa-v1-credentials.json`), jamais affichés ni versionnés. Chaque cours fictif a son enseignant. Toutes les données métier de l'interface viennent des API, cookies HttpOnly et CSRF communs.
 
-`frontend/src/features/` et `backend/src/modules/` contiennent les mêmes domaines : `auth`, `school`, `students`, `assignments`, `evaluations`, `results`, `bulletins`. Les espaces `frontend/src/shared/` et `backend/src/common/` sont partagés et nécessitent une coordination. Les `.gitkeep` conservent uniquement les dossiers réservés.
+## Contrôles
 
-Voir [architecture](docs/architecture.md), [règles métier](docs/regles-metier.md) et [décisions API](docs/contrats-api.md). La répartition officielle figure dans [équipe](docs/equipe.md).
+```bash
+npm run db:validate --prefix backend
+npm run build --prefix backend
+npm run build --prefix frontend
+npm run lint --prefix frontend
+# Base locale neuve migrée/seedée, URL runtime :
+LEYISA_V1_TESTS=1 npm test --prefix backend
+npm run db:verify --prefix backend
+node backend/scripts/check-release.mjs
+npm audit --prefix backend --audit-level=moderate
+npm audit --prefix frontend --audit-level=moderate
+```
 
-## Utiliser les Skills
+La suite complète consomme un jeu local neuf : ne pas la rejouer sur les résultats déjà publiés d'une recette. Les tests d'intégration sont explicitement ignorés sans LEYISA_V1_TESTS=1 ; une exécution sans cette variable ne constitue pas une validation complète. Le workflow `.github/workflows/v1.yml` prépare une PostgreSQL éphémère et un rôle runtime sans DDL. Son exécution distante attend publication autorisée de la branche.
 
-Les six Skills sont livrés dans `.agents/skills/leyisa-<prenom>/SKILL.md`. Leur découverte et leur invocation dépendent de l'assistant utilisé : vérifier les mécanismes de votre environnement, installer ou enregistrer le dossier du Skill si nécessaire. Dans un outil compatible avec cette syntaxe, invoquer explicitement `$leyisa-jonathan`, par exemple. Sinon demander à l'assistant de lire le fichier du rôle avant la tâche. Un Skill n'est pas garanti d'être exécuté automatiquement dans tous les outils IA. Les chemins cités par les Skills sont relatifs à la racine du dépôt.
-
-## Contrôles et GitHub
-
-La CI `Contrôle du socle` vérifie les espaces en fin de ligne et la validité des changements Git. Elle ne compile pas d'application et ne teste aucune règle métier. Les vérifications applicatives seront ajoutées avec la stack et le code réels.
-
-CODEOWNERS contient uniquement des exemples commentés : les identifiants GitHub des six membres restent à renseigner. Les règles effectives de protection se vérifient dans GitHub ; consulter [workflow Git](docs/workflow-git.md).
+Les guides historiques, maquettes et anciens scripts sont conservés pour provenance. Les documents suffixés V1 ci-dessus prévalent pour les commandes de finalisation, droits approuvés, marque et limites. Aucun seed/migration n'est lancé au démarrage HTTP. Les responsabilités restent celles de [l'équipe](docs/equipe.md) et les changements communs suivent la MOC avant fusion.
