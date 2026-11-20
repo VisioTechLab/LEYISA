@@ -158,7 +158,7 @@ export class BulletinsController {
     const identity = { ...data.identity, decision: data.decision?.outcome ?? data.identity.decision };
     if (!data.releaseVisible) Object.assign(identity, { totalEarned: null, totalMaximum: null, percentage: null, rank: null, effectif: null, decision: null });
     return {
-      id: result.id, identity, subjects: data.slimSubjects, profile: result.calculationProfile,
+      id: result.id, classPeriodId:result.classPeriodId, identity, subjects: data.slimSubjects, profile: result.calculationProfile,
       templateVersion: currentVersion, archivedTemplates: result.reportCards.map(card => card.templateVersion).filter(archivedVersion),
       publicationComplete: data.releaseVisible,
       // Les colonnes du gabarit primaire sont T1/T2/T3, pas P1/P2/etc.
