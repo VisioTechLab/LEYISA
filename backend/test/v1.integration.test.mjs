@@ -223,7 +223,7 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
    assert.equal((await ok(sec,`/bulletins/${p1.id}`)).documentPeriodSupported,false,'P1 ne correspond pas aux colonnes T1/T2/T3 du PDF primaire');
    const before=await db.reportCard.count({where:{resultSnapshotId:p1.id}});
    assert.equal((await sec.request(`/bulletins/${p1.id}/pdf`)).status,409);
-   assert.equal((await sec.request(`/bulletins/${p1.id}/pdf?templateVersion=DEMO-V1.6`)).status,409);
+   assert.equal((await sec.request(`/bulletins/${p1.id}/pdf?templateVersion=DEMO-V1.7`)).status,409);
    assert.equal((await sec.request(`/bulletins/${p1.id}/generate`,'POST',{})).status,409);
    assert.equal(await db.reportCard.count({where:{resultSnapshotId:p1.id}}),before,'Aucune émission incompatible créée');
    await db.reportCard.create({data:{resultSnapshotId:p1.id,templateVersion:'DEMO-V1.5',notice:'DEMO-V1'}});
@@ -240,7 +240,7 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
    assert.equal(preview.subjects[0].earned,null);
    assert.ok(!('components' in preview.subjects[0]));
    assert.equal((await sec.request(`/bulletins/${zero.id}/pdf`)).status,409,'Pas de PDF partiellement publié');
-   assert.equal((await sec.request(`/bulletins/${zero.id}/pdf?templateVersion=DEMO-V1.6`)).status,409);
+   assert.equal((await sec.request(`/bulletins/${zero.id}/pdf?templateVersion=DEMO-V1.7`)).status,409);
    await ok(dir,`/results/class-periods/${closed.classPeriodId}/publish`,'POST',{});
    assert.equal((await ok(sec,`/bulletins/${zero.id}`)).identity.totalEarned,'0');
    const issued=await ok(sec,`/bulletins/${zero.id}/generate`,'POST',{},201);
@@ -262,7 +262,12 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   const v15=await sec.request(v15Path);assert.equal(v15.status,200);
   const generated=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
   const again=await ok(sec,`/bulletins/${result.id}/generate`,'POST',{},201);
-  assert.equal(generated.templateVersion,'DEMO-V1.6');
+  assert.equal(generated.templateVersion,'DEMO-V1.7');
+  const v16Path=`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.6`;
+  await db.reportCard.create({data:{resultSnapshotId:result.id,templateVersion:'DEMO-V1.6',notice:'DEMO-V1'}});
+  const archive16=await sec.request(v16Path);assert.equal(archive16.status,200);
+  assert.deepEqual((await sec.request(v16Path)).bytes,archive16.bytes);
+  if(code==='DEMO-PRI') assert.notDeepEqual(archive16.bytes,(await sec.request(`/bulletins/${result.id}/pdf?templateVersion=DEMO-V1.7`)).bytes);
   assert.equal(generated.id,again.id);
   assert.notDeepEqual(await pdfProof(result,name),v14.bytes);
   assert.deepEqual((await sec.request(v14Path)).bytes,v14.bytes);

@@ -1,0 +1,6686 @@
+{
+  "version": "RDC-CATALOGUE-RECETTE-V1",
+  "status": "DEMO_PROPOSE",
+  "referenceSchool": {
+    "name": "Complexe scolaire Cardinal Monsengwo",
+    "city": "Kinshasa",
+    "url": "https://csmonsengwo.com/",
+    "purpose": "Organisation des cycles seulement ; aucune affiliation, aucun effectif ni identité copiés."
+  },
+  "sources": [
+    "https://edu-nc.gouv.cd/programmes-nationaux",
+    "https://edu-nc.gouv.cd/wp-content/uploads/2023/06/RECUEIL-DE-NORMES-DE-LENSEIGNEMENT-PRESCOLAIRE-EN-REPUBLIQUE-DEMOCRATIQUE-DU-CONGO-06.06.2022-FINAL.pdf",
+    "https://edu-nc.gouv.cd/wp-content/uploads/2023/06/IFADEM_RDC-Kinshasa-Livret_4-Nouveau-Programme-Enseignement-Primaire.pdf",
+    "https://edu-nc.gouv.cd/wp-content/uploads/2023/06/Curriculum-Commerciale-et-Gestion.pdf",
+    "backend/prisma/reference-data.json",
+    "backend/prisma/primary-grade-profile-v1.json"
+  ],
+  "maternalActivities": [
+    "Langage",
+    "Éveil sensoriel",
+    "Mathématiques",
+    "Arts plastiques",
+    "Musique",
+    "Activités libres",
+    "Psychomotricité",
+    "Activités physiques",
+    "Comportement",
+    "Vie pratique",
+    "Exploration du milieu",
+    "Promotion de la santé"
+  ],
+  "classes": [
+    {
+      "code": "MAT1",
+      "label": "1re Maternelle",
+      "cycle": "MATERNEL",
+      "level": "1re maternelle",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "MAT-ATT-1",
+          "label": "Intégration au groupe école",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-2",
+          "label": "Participation aux activités et application",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-3",
+          "label": "Respect/protection de l’environnement et soi-même",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-4",
+          "label": "Réaction aux consignes et autres sollicitations",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-5",
+          "label": "Sens de responsabilité et esprit d’affirmation",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-6",
+          "label": "Prudence dans le choix et les actions",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-7",
+          "label": "Fréquentation de l’école et amour aux études",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-8",
+          "label": "Sensibilité aux genres et confiance en soi",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-9",
+          "label": "Sensibilité aux valeurs de son milieu",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-10",
+          "label": "Maintien de son corps",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        }
+      ],
+      "notes": [
+        "12 activités nationales recensées séparément ; la carte actuelle évalue 10 attitudes."
+      ]
+    },
+    {
+      "code": "MAT2",
+      "label": "2e Maternelle",
+      "cycle": "MATERNEL",
+      "level": "2e maternelle",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "MAT-ATT-1",
+          "label": "Intégration au groupe école",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-2",
+          "label": "Participation aux activités et application",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-3",
+          "label": "Respect/protection de l’environnement et soi-même",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-4",
+          "label": "Réaction aux consignes et autres sollicitations",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-5",
+          "label": "Sens de responsabilité et esprit d’affirmation",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-6",
+          "label": "Prudence dans le choix et les actions",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-7",
+          "label": "Fréquentation de l’école et amour aux études",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-8",
+          "label": "Sensibilité aux genres et confiance en soi",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-9",
+          "label": "Sensibilité aux valeurs de son milieu",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-10",
+          "label": "Maintien de son corps",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        }
+      ],
+      "notes": [
+        "12 activités nationales recensées séparément ; la carte actuelle évalue 10 attitudes."
+      ]
+    },
+    {
+      "code": "MAT3",
+      "label": "3e Maternelle",
+      "cycle": "MATERNEL",
+      "level": "3e maternelle",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "MAT-ATT-1",
+          "label": "Intégration au groupe école",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-2",
+          "label": "Participation aux activités et application",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-3",
+          "label": "Respect/protection de l’environnement et soi-même",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-4",
+          "label": "Réaction aux consignes et autres sollicitations",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-5",
+          "label": "Sens de responsabilité et esprit d’affirmation",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-6",
+          "label": "Prudence dans le choix et les actions",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-7",
+          "label": "Fréquentation de l’école et amour aux études",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-8",
+          "label": "Sensibilité aux genres et confiance en soi",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-9",
+          "label": "Sensibilité aux valeurs de son milieu",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        },
+        {
+          "code": "MAT-ATT-10",
+          "label": "Maintien de son corps",
+          "maximum": 1,
+          "groupCode": "ATTITUDES",
+          "componentMaxima": {
+            "P1": "1",
+            "P2": "1",
+            "P3": "1",
+            "P4": "1",
+            "P5": "1",
+            "P6": "1"
+          },
+          "source": "DEMO_PROPOSE : carte appréciation LEYISA ; maximum technique 1 sans note chiffrée"
+        }
+      ],
+      "notes": [
+        "12 activités nationales recensées séparément ; la carte actuelle évalue 10 attitudes."
+      ]
+    },
+    {
+      "code": "PRI1",
+      "label": "1re Primaire A",
+      "cycle": "PRIMAIRE",
+      "level": "1re primaire",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "PRI-LN",
+          "label": "Langue congolaise",
+          "maximum": 20,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-FR",
+          "label": "Français",
+          "maximum": 70,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-MA",
+          "label": "Mathématiques",
+          "maximum": 70,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SC",
+          "label": "Sciences de l’éveil",
+          "maximum": 20,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TECH",
+          "label": "Technologie",
+          "maximum": 10,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ECM",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SANTE",
+          "label": "Éducation pour la santé et l’environnement",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ART",
+          "label": "Éducation artistique",
+          "maximum": 30,
+          "groupCode": "ARTS",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "P5": "30",
+            "P6": "30",
+            "E1": "60",
+            "E2": "60",
+            "E3": "60"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-EPS",
+          "label": "Éducation physique et sports",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TP",
+          "label": "Initiation aux travaux productifs",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-REL",
+          "label": "Religion",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "PRI2",
+      "label": "2e Primaire A",
+      "cycle": "PRIMAIRE",
+      "level": "2e primaire",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "PRI-LN",
+          "label": "Langue congolaise",
+          "maximum": 20,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-FR",
+          "label": "Français",
+          "maximum": 70,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-MA",
+          "label": "Mathématiques",
+          "maximum": 70,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SC",
+          "label": "Sciences de l’éveil",
+          "maximum": 20,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TECH",
+          "label": "Technologie",
+          "maximum": 10,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ECM",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SANTE",
+          "label": "Éducation pour la santé et l’environnement",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ART",
+          "label": "Éducation artistique",
+          "maximum": 30,
+          "groupCode": "ARTS",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "P5": "30",
+            "P6": "30",
+            "E1": "60",
+            "E2": "60",
+            "E3": "60"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-EPS",
+          "label": "Éducation physique et sports",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TP",
+          "label": "Initiation aux travaux productifs",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-REL",
+          "label": "Religion",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "PRI3",
+      "label": "3e Primaire A",
+      "cycle": "PRIMAIRE",
+      "level": "3e primaire",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "PRI-LN",
+          "label": "Langue congolaise",
+          "maximum": 20,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-FR",
+          "label": "Français",
+          "maximum": 70,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-MA",
+          "label": "Mathématiques",
+          "maximum": 70,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SC",
+          "label": "Sciences de l’éveil",
+          "maximum": 20,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TECH",
+          "label": "Technologie",
+          "maximum": 10,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-GEOG",
+          "label": "Géographie",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-HIST",
+          "label": "Histoire",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ECM",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SANTE",
+          "label": "Éducation pour la santé et l’environnement",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ART",
+          "label": "Éducation artistique",
+          "maximum": 30,
+          "groupCode": "ARTS",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "P5": "30",
+            "P6": "30",
+            "E1": "60",
+            "E2": "60",
+            "E3": "60"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-EPS",
+          "label": "Éducation physique et sports",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TP",
+          "label": "Initiation aux travaux productifs",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-REL",
+          "label": "Religion",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "PRI4",
+      "label": "4e Primaire A",
+      "cycle": "PRIMAIRE",
+      "level": "4e primaire",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "PRI-LN",
+          "label": "Langue congolaise",
+          "maximum": 20,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-FR",
+          "label": "Français",
+          "maximum": 70,
+          "groupCode": "LANGUES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-MA",
+          "label": "Mathématiques",
+          "maximum": 70,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "P5": "70",
+            "P6": "70",
+            "E1": "140",
+            "E2": "140",
+            "E3": "140"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SC",
+          "label": "Sciences de l’éveil",
+          "maximum": 20,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TECH",
+          "label": "Technologie",
+          "maximum": 10,
+          "groupCode": "SCIENCES",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-GEOG",
+          "label": "Géographie",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-HIST",
+          "label": "Histoire",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ECM",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-SANTE",
+          "label": "Éducation pour la santé et l’environnement",
+          "maximum": 10,
+          "groupCode": "UNIVERS_SOCIAL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-ART",
+          "label": "Éducation artistique",
+          "maximum": 30,
+          "groupCode": "ARTS",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "P5": "30",
+            "P6": "30",
+            "E1": "60",
+            "E2": "60",
+            "E3": "60"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-EPS",
+          "label": "Éducation physique et sports",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-TP",
+          "label": "Initiation aux travaux productifs",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        },
+        {
+          "code": "PRI-REL",
+          "label": "Religion",
+          "maximum": 10,
+          "groupCode": "DEVELOPPEMENT_PERSONNEL",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : branches PNEP 2010 ; maxima adaptés du modèle 6e, non officiels"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "PRI5",
+      "label": "5e Primaire A",
+      "cycle": "PRIMAIRE",
+      "level": "5e primaire",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "P6-REL",
+          "label": "Religion",
+          "groupCode": "FORMATION_PERSONNELLE",
+          "maximum": 10,
+          "position": 1,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-ECM",
+          "label": "Éducation civique et morale",
+          "groupCode": "FORMATION_PERSONNELLE",
+          "maximum": 10,
+          "position": 2,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-EV",
+          "label": "Éducation à la vie",
+          "groupCode": "FORMATION_PERSONNELLE",
+          "maximum": 10,
+          "position": 3,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-LN-GRAM",
+          "label": "Langue nationale — grammaire, conjugaison et analyse",
+          "groupCode": "LANGUE_NATIONALE",
+          "maximum": 7,
+          "position": 4,
+          "componentMaxima": {
+            "P1": "7",
+            "P2": "7",
+            "P3": "7",
+            "P4": "7",
+            "P5": "7",
+            "P6": "7",
+            "E1": "14",
+            "E2": "14",
+            "E3": "14"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-LN-EXPR",
+          "label": "Langue nationale — expression et vocabulaire",
+          "groupCode": "LANGUE_NATIONALE",
+          "maximum": 6,
+          "position": 5,
+          "componentMaxima": {
+            "P1": "6",
+            "P2": "6",
+            "P3": "6",
+            "P4": "6",
+            "P5": "6",
+            "P6": "6",
+            "E1": "12",
+            "E2": "12",
+            "E3": "12"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-LN-ORTH",
+          "label": "Langue nationale — rédaction et orthographe",
+          "groupCode": "LANGUE_NATIONALE",
+          "maximum": 4,
+          "position": 6,
+          "componentMaxima": {
+            "P1": "4",
+            "P2": "4",
+            "P3": "4",
+            "P4": "4",
+            "P5": "4",
+            "P6": "4",
+            "E1": "8",
+            "E2": "8",
+            "E3": "8"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-LN-LECT",
+          "label": "Langue nationale — lecture",
+          "groupCode": "LANGUE_NATIONALE",
+          "maximum": 3,
+          "position": 7,
+          "componentMaxima": {
+            "P1": "3",
+            "P2": "3",
+            "P3": "3",
+            "P4": "3",
+            "P5": "3",
+            "P6": "3",
+            "E1": "6",
+            "E2": "6",
+            "E3": "6"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-FR-GRAM",
+          "label": "Français — grammaire, conjugaison et analyse",
+          "groupCode": "FRANCAIS",
+          "maximum": 20,
+          "position": 8,
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-FR-EXPR",
+          "label": "Français — expression et vocabulaire",
+          "groupCode": "FRANCAIS",
+          "maximum": 25,
+          "position": 9,
+          "componentMaxima": {
+            "P1": "25",
+            "P2": "25",
+            "P3": "25",
+            "P4": "25",
+            "P5": "25",
+            "P6": "25",
+            "E1": "50",
+            "E2": "50",
+            "E3": "50"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-FR-ORTH",
+          "label": "Français — rédaction et orthographe",
+          "groupCode": "FRANCAIS",
+          "maximum": 15,
+          "position": 10,
+          "componentMaxima": {
+            "P1": "15",
+            "P2": "15",
+            "P3": "15",
+            "P4": "15",
+            "P5": "15",
+            "P6": "15",
+            "E1": "30",
+            "E2": "30",
+            "E3": "30"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-FR-LECT",
+          "label": "Français — lecture",
+          "groupCode": "FRANCAIS",
+          "maximum": 10,
+          "position": 11,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-MT-NUM",
+          "label": "Mathématiques — numération et opérations",
+          "groupCode": "MATHEMATIQUES",
+          "maximum": 20,
+          "position": 12,
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-MT-GEO",
+          "label": "Mathématiques — grandeurs et géométrie",
+          "groupCode": "MATHEMATIQUES",
+          "maximum": 30,
+          "position": 13,
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "P5": "30",
+            "P6": "30",
+            "E1": "60",
+            "E2": "60",
+            "E3": "60"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-MT-PROB",
+          "label": "Mathématiques — problèmes",
+          "groupCode": "MATHEMATIQUES",
+          "maximum": 20,
+          "position": 14,
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-SANTE",
+          "label": "Éducation à la santé et à l’environnement",
+          "groupCode": "EVEIL_SCIENTIFIQUE",
+          "maximum": 10,
+          "position": 15,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-HIST",
+          "label": "Histoire",
+          "groupCode": "EVEIL_SCIENTIFIQUE",
+          "maximum": 10,
+          "position": 16,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-GEOG",
+          "label": "Géographie",
+          "groupCode": "EVEIL_SCIENTIFIQUE",
+          "maximum": 10,
+          "position": 17,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-SCN",
+          "label": "Sciences naturelles",
+          "groupCode": "EVEIL_SCIENTIFIQUE",
+          "maximum": 20,
+          "position": 18,
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "P5": "20",
+            "P6": "20",
+            "E1": "40",
+            "E2": "40",
+            "E3": "40"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-INFO",
+          "label": "Informatique",
+          "groupCode": "EVEIL_SCIENTIFIQUE",
+          "maximum": 10,
+          "position": 19,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-DESS",
+          "label": "Dessin",
+          "groupCode": "EVEIL_ARTISTIQUE",
+          "maximum": 10,
+          "position": 20,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-CALL",
+          "label": "Calligraphie",
+          "groupCode": "EVEIL_ARTISTIQUE",
+          "maximum": 10,
+          "position": 21,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-MUS",
+          "label": "Chant et musique",
+          "groupCode": "EVEIL_ARTISTIQUE",
+          "maximum": 10,
+          "position": 22,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-EPS",
+          "label": "Éducation physique et sportive",
+          "groupCode": "EVEIL_ARTISTIQUE",
+          "maximum": 10,
+          "position": 23,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        },
+        {
+          "code": "P6-TM",
+          "label": "Travail manuel",
+          "groupCode": "EVEIL_ARTISTIQUE",
+          "maximum": 10,
+          "position": 24,
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "P5": "10",
+            "P6": "10",
+            "E1": "20",
+            "E2": "20",
+            "E3": "20"
+          },
+          "source": "DEMO_PROPOSE : adaptation du degré terminal 6e au 5e, non homologuée"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "7EB",
+      "label": "7e Éducation de base",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "7e EB",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "SEC-CTEB7-1",
+          "label": "ALGEBRE",
+          "maximum": 40,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-2",
+          "label": "GEOMETRIE",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-3",
+          "label": "ARITHMETIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-4",
+          "label": "STATISTIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-5",
+          "label": "ANATOMIE",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-6",
+          "label": "BOTANIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-7",
+          "label": "ZOOLOGIE",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-8",
+          "label": "SCIENCE PHYSIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-9",
+          "label": "TECHNOLOGIE",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-10",
+          "label": "Technologies de l’information et de la communication",
+          "maximum": 10,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-11",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-12",
+          "label": "FRANÇAIS",
+          "maximum": 70,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "70",
+            "P2": "70",
+            "P3": "70",
+            "P4": "70",
+            "E1": "140",
+            "E2": "140"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-13",
+          "label": "RELIGION",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-14",
+          "label": "Éducation à la vie familiale",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-15",
+          "label": "Éducation civique et morale",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-16",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-17",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-18",
+          "label": "DESSIN",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-19",
+          "label": "MUSIQUE",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB7-20",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "CTEB7",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": [
+        "Maxima P1 transcrits ; autres maxima extrapolés."
+      ]
+    },
+    {
+      "code": "8EB",
+      "label": "8e Éducation de base",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "8e EB",
+      "optionCode": null,
+      "subjects": [
+        {
+          "code": "SEC-CTEB8-1",
+          "label": "ALGEBRE",
+          "maximum": 40,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-2",
+          "label": "GEOMETRIE",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-3",
+          "label": "ARITHMETIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-4",
+          "label": "STATISTIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-5",
+          "label": "ANATOMIE",
+          "maximum": 10,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-6",
+          "label": "BOTANIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-7",
+          "label": "ZOOLOGIE",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_01.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-8",
+          "label": "SCIENCE PHYSIQUE",
+          "maximum": 10,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-9",
+          "label": "TECHNOLOGIE",
+          "maximum": 10,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-10",
+          "label": "Technologies de l’information et de la communication",
+          "maximum": 10,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-11",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-12",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-13",
+          "label": "RELIGION",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-14",
+          "label": "Éducation à la vie familiale",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-15",
+          "label": "Éducation civique et morale",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_02.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-16",
+          "label": "GEOGRAPHIE",
+          "maximum": 30,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-17",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-18",
+          "label": "DESSIN",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-19",
+          "label": "MUSIQUE",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-CTEB8-20",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "CTEB8",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : CTEB_03.png P1 ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": [
+        "Maxima P1 transcrits ; autres maxima extrapolés."
+      ]
+    },
+    {
+      "code": "1H-SCI",
+      "label": "1re Humanité Scientifique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "1re Humanité",
+      "optionCode": "1.02",
+      "subjects": [
+        {
+          "code": "SEC-SCI1-1",
+          "label": "ALGEBRE, STATISTIQUE ET ANALYSE",
+          "maximum": 40,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-2",
+          "label": "GEOMETRIE ET TRIGONOMETRIE",
+          "maximum": 20,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-3",
+          "label": "DESSIN SCIENTIFIQUE",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-4",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-5",
+          "label": "MICROBIOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-6",
+          "label": "GEOLOGIE/ECOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-7",
+          "label": "CHIMIE",
+          "maximum": 30,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-8",
+          "label": "PHYSIQUE",
+          "maximum": 30,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-9",
+          "label": "INFORMATIQUE (T.I.C)",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-10",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-11",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-12",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-13",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-14",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-15",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-16",
+          "label": "SOCAF/ECOPOL/ESTHETIQUE",
+          "maximum": 20,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-17",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI1-18",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 10,
+          "groupCode": "SCI1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "1H-LIT",
+      "label": "1re Humanité Littéraire",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "1re Humanité",
+      "optionCode": "1.01",
+      "subjects": [
+        {
+          "code": "SEC-LIT1-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-4",
+          "label": "INFORMATIQUE",
+          "maximum": 10,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-5",
+          "label": "BIOL./MICRO.",
+          "maximum": 20,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-6",
+          "label": "CHIMIE",
+          "maximum": 20,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-7",
+          "label": "Éducation physique",
+          "maximum": 20,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-8",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-9",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-10",
+          "label": "PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-11",
+          "label": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-12",
+          "label": "ANGLAIS",
+          "maximum": 40,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-13",
+          "label": "MATHEMATIQUE",
+          "maximum": 40,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-14",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT1-15",
+          "label": "LATIN",
+          "maximum": 50,
+          "groupCode": "LIT1",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "1H-PED",
+      "label": "1re Humanité Pédagogique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "1re Humanité",
+      "optionCode": "2.01",
+      "subjects": [
+        {
+          "code": "SEC-PED1-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-4",
+          "label": "INFORMATIQUE",
+          "maximum": 20,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-5",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-6",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-7",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-8",
+          "label": "ECOPOL/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-9",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-10",
+          "label": "PEDAGOGIE",
+          "maximum": 40,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-11",
+          "label": "PSYCHOLOGIE",
+          "maximum": 40,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-14",
+          "label": "MATHEMATIQUE",
+          "maximum": 40,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-15",
+          "label": "PHYSIQUE",
+          "maximum": 40,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-16",
+          "label": "CHIMIE",
+          "maximum": 40,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-17",
+          "label": "ANGLAIS",
+          "maximum": 50,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED1-18",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "PED1",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": [
+        "Cellules sans maxima non intégrées, à confirmer : DIDACTIQUE GENERALE, DIDACTIQUE DES DISCIPLINES"
+      ]
+    },
+    {
+      "code": "1H-COM",
+      "label": "1re Humanité Commerciale et Gestion",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "1re Humanité",
+      "optionCode": "3.01",
+      "subjects": [
+        {
+          "code": "SEC-COM1-1",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-2",
+          "label": "Géographie économique",
+          "maximum": 10,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-3",
+          "label": "Éducation physique",
+          "maximum": 10,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-4",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-5",
+          "label": "DROIT",
+          "maximum": 10,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-6",
+          "label": "Mathématiques générales",
+          "maximum": 20,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png maxima substitué 20 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-7",
+          "label": "FISCALITE",
+          "maximum": 20,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-8",
+          "label": "MATH FINANCIERE",
+          "maximum": 20,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-9",
+          "label": "Correspondance commerciale française",
+          "maximum": 20,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-10",
+          "label": "Correspondance commerciale anglaise",
+          "maximum": 20,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-11",
+          "label": "Documentation commerciale",
+          "maximum": 30,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-12",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-13",
+          "label": "FRANÇAIS",
+          "maximum": 40,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-14",
+          "label": "Informatique",
+          "maximum": 40,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM1-15",
+          "label": "COMPTABILITE GENERALE",
+          "maximum": 60,
+          "groupCode": "COM1",
+          "componentMaxima": {
+            "P1": "60",
+            "P2": "60",
+            "P3": "60",
+            "P4": "60",
+            "E1": "120",
+            "E2": "120"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": [
+        "Mathématiques générales : 20 provisoire pour cellule masquée ; niveaux 3/4 adaptés du niveau 2."
+      ]
+    },
+    {
+      "code": "2H-SCI",
+      "label": "2e Humanité Scientifique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "2e Humanité",
+      "optionCode": "1.02",
+      "subjects": [
+        {
+          "code": "SEC-SCI2-1",
+          "label": "ALGEBRE, STATISTIQUE ET ANALYSE",
+          "maximum": 40,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-2",
+          "label": "GEOMETRIE ET TRIGONOMETRIE",
+          "maximum": 20,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-3",
+          "label": "DESSIN SCIENTIFIQUE",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-4",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-5",
+          "label": "MICROBIOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-6",
+          "label": "GEOLOGIE/ECOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-7",
+          "label": "CHIMIE",
+          "maximum": 30,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-8",
+          "label": "PHYSIQUE",
+          "maximum": 30,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-9",
+          "label": "INFORMATIQUE (T.I.C)",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-10",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-11",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-12",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-13",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-14",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-15",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-16",
+          "label": "SOCAF/ECOPOL/ESTHETIQUE",
+          "maximum": 20,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-17",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI2-18",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 10,
+          "groupCode": "SCI2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "2H-LIT",
+      "label": "2e Humanité Littéraire",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "2e Humanité",
+      "optionCode": "1.01",
+      "subjects": [
+        {
+          "code": "SEC-LIT2-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-4",
+          "label": "INFORMATIQUE",
+          "maximum": 10,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-5",
+          "label": "BIOL./MICRO.",
+          "maximum": 20,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-6",
+          "label": "CHIMIE",
+          "maximum": 20,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-7",
+          "label": "Éducation physique",
+          "maximum": 20,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-8",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-9",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-10",
+          "label": "PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-11",
+          "label": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-12",
+          "label": "ANGLAIS",
+          "maximum": 40,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-13",
+          "label": "MATHEMATIQUE",
+          "maximum": 40,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-14",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT2-15",
+          "label": "LATIN",
+          "maximum": 50,
+          "groupCode": "LIT2",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "2H-PED",
+      "label": "2e Humanité Pédagogique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "2e Humanité",
+      "optionCode": "2.01",
+      "subjects": [
+        {
+          "code": "SEC-PED2-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-4",
+          "label": "INFORMATIQUE",
+          "maximum": 20,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-5",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-6",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-7",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-8",
+          "label": "ECOPOL/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-9",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-10",
+          "label": "PEDAGOGIE",
+          "maximum": 40,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-11",
+          "label": "PSYCHOLOGIE",
+          "maximum": 40,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-12",
+          "label": "DIDACTIQUE GENERALE",
+          "maximum": 40,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-13",
+          "label": "DIDACTIQUE DES DISCIPLINES",
+          "maximum": 40,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-14",
+          "label": "MATHEMATIQUE",
+          "maximum": 40,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-15",
+          "label": "PHYSIQUE",
+          "maximum": 40,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-16",
+          "label": "CHIMIE",
+          "maximum": 40,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-17",
+          "label": "ANGLAIS",
+          "maximum": 50,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED2-18",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "PED2",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "2H-COM",
+      "label": "2e Humanité Commerciale et Gestion",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "2e Humanité",
+      "optionCode": "3.01",
+      "subjects": [
+        {
+          "code": "SEC-COM2-1",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-2",
+          "label": "Géographie économique",
+          "maximum": 10,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-3",
+          "label": "Éducation physique",
+          "maximum": 10,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-4",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-5",
+          "label": "DROIT",
+          "maximum": 10,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-6",
+          "label": "Mathématiques générales",
+          "maximum": 20,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png maxima substitué 20 ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-7",
+          "label": "FISCALITE",
+          "maximum": 20,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-8",
+          "label": "MATH FINANCIERE",
+          "maximum": 20,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-9",
+          "label": "Correspondance commerciale française",
+          "maximum": 20,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-10",
+          "label": "Correspondance commerciale anglaise",
+          "maximum": 20,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-11",
+          "label": "Documentation commerciale",
+          "maximum": 30,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-12",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-13",
+          "label": "FRANÇAIS",
+          "maximum": 40,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-14",
+          "label": "Informatique",
+          "maximum": 40,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-COM2-15",
+          "label": "COMPTABILITE GENERALE",
+          "maximum": 60,
+          "groupCode": "COM2",
+          "componentMaxima": {
+            "P1": "60",
+            "P2": "60",
+            "P3": "60",
+            "P4": "60",
+            "E1": "120",
+            "E2": "120"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": [
+        "Mathématiques générales : 20 provisoire pour cellule masquée ; niveaux 3/4 adaptés du niveau 2."
+      ]
+    },
+    {
+      "code": "3H-SCI",
+      "label": "3e Humanité Scientifique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "3e Humanité",
+      "optionCode": "1.02",
+      "subjects": [
+        {
+          "code": "SEC-SCI3-1",
+          "label": "ALGEBRE, STATISTIQUE ET ANALYSE",
+          "maximum": 40,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-2",
+          "label": "GEOMETRIE ET TRIGONOMETRIE",
+          "maximum": 20,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-3",
+          "label": "DESSIN SCIENTIFIQUE",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-4",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-5",
+          "label": "MICROBIOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-6",
+          "label": "GEOLOGIE/ECOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-7",
+          "label": "CHIMIE",
+          "maximum": 30,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-8",
+          "label": "PHYSIQUE",
+          "maximum": 30,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-9",
+          "label": "INFORMATIQUE (T.I.C)",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-10",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-11",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-12",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-13",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-14",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-15",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-16",
+          "label": "SOCAF/ECOPOL/ESTHETIQUE",
+          "maximum": 20,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-17",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI3-18",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 10,
+          "groupCode": "SCI3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "3H-LIT",
+      "label": "3e Humanité Littéraire",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "3e Humanité",
+      "optionCode": "1.01",
+      "subjects": [
+        {
+          "code": "SEC-LIT3-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-4",
+          "label": "INFORMATIQUE",
+          "maximum": 10,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-5",
+          "label": "BIOL./MICRO.",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-6",
+          "label": "CHIMIE",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-7",
+          "label": "Éducation physique",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-8",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-9",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-10",
+          "label": "PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-11",
+          "label": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-12",
+          "label": "ANGLAIS",
+          "maximum": 40,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-13",
+          "label": "MATHEMATIQUE",
+          "maximum": 20,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-14",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT3-15",
+          "label": "LATIN",
+          "maximum": 50,
+          "groupCode": "LIT3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "3H-PED",
+      "label": "3e Humanité Pédagogique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "3e Humanité",
+      "optionCode": "2.01",
+      "subjects": [
+        {
+          "code": "SEC-PED3-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-4",
+          "label": "INFORMATIQUE",
+          "maximum": 10,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-5",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-6",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-7",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-8",
+          "label": "ECOPOL/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-9",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-10",
+          "label": "PEDAGOGIE",
+          "maximum": 50,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-11",
+          "label": "PSYCHOLOGIE",
+          "maximum": 50,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-12",
+          "label": "DIDACTIQUE GENERALE",
+          "maximum": 50,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-13",
+          "label": "DIDACTIQUE DES DISCIPLINES",
+          "maximum": 50,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-14",
+          "label": "MATHEMATIQUE",
+          "maximum": 40,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-15",
+          "label": "PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-16",
+          "label": "CHIMIE",
+          "maximum": 40,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-17",
+          "label": "ANGLAIS",
+          "maximum": 40,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED3-18",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "PED3",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "3H-COM",
+      "label": "3e Humanité Commerciale et Gestion",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "3e Humanité",
+      "optionCode": "3.01",
+      "subjects": [
+        {
+          "code": "SEC-COM3-1",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-2",
+          "label": "Géographie économique",
+          "maximum": 10,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-3",
+          "label": "Éducation physique",
+          "maximum": 10,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-4",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-5",
+          "label": "DROIT",
+          "maximum": 10,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-6",
+          "label": "Mathématiques générales",
+          "maximum": 20,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png maxima substitué 20 ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-7",
+          "label": "FISCALITE",
+          "maximum": 20,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-8",
+          "label": "MATH FINANCIERE",
+          "maximum": 20,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-9",
+          "label": "Correspondance commerciale française",
+          "maximum": 20,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-10",
+          "label": "Correspondance commerciale anglaise",
+          "maximum": 20,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-11",
+          "label": "Documentation commerciale",
+          "maximum": 30,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-12",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-13",
+          "label": "FRANÇAIS",
+          "maximum": 40,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-14",
+          "label": "Informatique",
+          "maximum": 40,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM3-15",
+          "label": "COMPTABILITE GENERALE",
+          "maximum": 60,
+          "groupCode": "COM3",
+          "componentMaxima": {
+            "P1": "60",
+            "P2": "60",
+            "P3": "60",
+            "P4": "60",
+            "E1": "120",
+            "E2": "120"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        }
+      ],
+      "notes": [
+        "Mathématiques générales : 20 provisoire pour cellule masquée ; niveaux 3/4 adaptés du niveau 2."
+      ]
+    },
+    {
+      "code": "4H-SCI",
+      "label": "4e Humanité Scientifique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "4e Humanité",
+      "optionCode": "1.02",
+      "subjects": [
+        {
+          "code": "SEC-SCI4-1",
+          "label": "ALGEBRE, STATISTIQUE ET ANALYSE",
+          "maximum": 40,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-2",
+          "label": "GEOMETRIE ET TRIGONOMETRIE",
+          "maximum": 20,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-3",
+          "label": "DESSIN SCIENTIFIQUE",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-4",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-5",
+          "label": "MICROBIOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-6",
+          "label": "GEOLOGIE/ECOLOGIE",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-7",
+          "label": "CHIMIE",
+          "maximum": 30,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-8",
+          "label": "PHYSIQUE",
+          "maximum": 30,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-9",
+          "label": "INFORMATIQUE (T.I.C)",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-10",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-11",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-12",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-13",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-14",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-15",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-16",
+          "label": "SOCAF/ECOPOL/ESTHETIQUE",
+          "maximum": 20,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-17",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-SCI4-18",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 10,
+          "groupCode": "SCI4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : SCIENTIFIQUE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "code": "4H-LIT",
+      "label": "4e Humanité Littéraire",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "4e Humanité",
+      "optionCode": "1.01",
+      "subjects": [
+        {
+          "code": "SEC-LIT4-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-4",
+          "label": "INFORMATIQUE",
+          "maximum": 10,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-5",
+          "label": "BIOL./MICRO.",
+          "maximum": 20,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-7",
+          "label": "Éducation physique",
+          "maximum": 20,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-8",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-9",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-10",
+          "label": "PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-11",
+          "label": "SOCAF/ECOPOL ESTHETIQUE/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-12",
+          "label": "ANGLAIS",
+          "maximum": 40,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-13",
+          "label": "MATHEMATIQUE",
+          "maximum": 20,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-14",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-LIT4-15",
+          "label": "LATIN",
+          "maximum": 50,
+          "groupCode": "LIT4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : LATIN_PHILO_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": [
+        "Cellules sans maxima non intégrées, à confirmer : CHIMIE"
+      ]
+    },
+    {
+      "code": "4H-PED",
+      "label": "4e Humanité Pédagogique",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "4e Humanité",
+      "optionCode": "2.01",
+      "subjects": [
+        {
+          "code": "SEC-PED4-1",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-2",
+          "label": "Éducation à la vie familiale",
+          "maximum": 10,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-3",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-4",
+          "label": "INFORMATIQUE",
+          "maximum": 10,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-5",
+          "label": "EDUCATION PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_01.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-6",
+          "label": "GEOGRAPHIE",
+          "maximum": 20,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-7",
+          "label": "HISTOIRE",
+          "maximum": 20,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-8",
+          "label": "ECOPOL/PHILOSOPHIE",
+          "maximum": 20,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-9",
+          "label": "BIOLOGIE",
+          "maximum": 20,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-10",
+          "label": "PEDAGOGIE",
+          "maximum": 50,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-11",
+          "label": "PSYCHOLOGIE",
+          "maximum": 50,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-12",
+          "label": "DIDACTIQUE GENERALE",
+          "maximum": 50,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_02.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-13",
+          "label": "DIDACTIQUE DES DISCIPLINES",
+          "maximum": 50,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-14",
+          "label": "MATHEMATIQUE",
+          "maximum": 40,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-15",
+          "label": "PHYSIQUE",
+          "maximum": 20,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-17",
+          "label": "ANGLAIS",
+          "maximum": 40,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        },
+        {
+          "code": "SEC-PED4-18",
+          "label": "FRANÇAIS",
+          "maximum": 50,
+          "groupCode": "PED4",
+          "componentMaxima": {
+            "P1": "50",
+            "P2": "50",
+            "P3": "50",
+            "P4": "50",
+            "E1": "100",
+            "E2": "100"
+          },
+          "source": "DEMO_PROPOSE : PEDAGOGIE_03.png PORTEE_A_CONFIRMER ; P2–P4=P1, E1/E2=2×P1"
+        }
+      ],
+      "notes": [
+        "Cellules sans maxima non intégrées, à confirmer : CHIMIE"
+      ]
+    },
+    {
+      "code": "4H-COM",
+      "label": "4e Humanité Commerciale et Gestion",
+      "cycle": "SECONDAIRE_TECHNIQUE",
+      "level": "4e Humanité",
+      "optionCode": "3.01",
+      "subjects": [
+        {
+          "code": "SEC-COM4-1",
+          "label": "Éducation civique et morale",
+          "maximum": 10,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-2",
+          "label": "Géographie économique",
+          "maximum": 10,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-3",
+          "label": "Éducation physique",
+          "maximum": 10,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-4",
+          "label": "RELIGION",
+          "maximum": 10,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-5",
+          "label": "DROIT",
+          "maximum": 10,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "10",
+            "P2": "10",
+            "P3": "10",
+            "P4": "10",
+            "E1": "20",
+            "E2": "20"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-6",
+          "label": "Mathématiques générales",
+          "maximum": 20,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_01.png maxima substitué 20 ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-7",
+          "label": "FISCALITE",
+          "maximum": 20,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-8",
+          "label": "MATH FINANCIERE",
+          "maximum": 20,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-9",
+          "label": "Correspondance commerciale française",
+          "maximum": 20,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-10",
+          "label": "Correspondance commerciale anglaise",
+          "maximum": 20,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "20",
+            "P2": "20",
+            "P3": "20",
+            "P4": "20",
+            "E1": "40",
+            "E2": "40"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-11",
+          "label": "Documentation commerciale",
+          "maximum": 30,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-12",
+          "label": "ANGLAIS",
+          "maximum": 30,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "30",
+            "P2": "30",
+            "P3": "30",
+            "P4": "30",
+            "E1": "60",
+            "E2": "60"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_02.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-13",
+          "label": "FRANÇAIS",
+          "maximum": 40,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-14",
+          "label": "Informatique",
+          "maximum": 40,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "40",
+            "P2": "40",
+            "P3": "40",
+            "P4": "40",
+            "E1": "80",
+            "E2": "80"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        },
+        {
+          "code": "SEC-COM4-15",
+          "label": "COMPTABILITE GENERALE",
+          "maximum": 60,
+          "groupCode": "COM4",
+          "componentMaxima": {
+            "P1": "60",
+            "P2": "60",
+            "P3": "60",
+            "P4": "60",
+            "E1": "120",
+            "E2": "120"
+          },
+          "source": "DEMO_PROPOSE : COMMERCIALE_03.png P1_PARTIEL ; P2–P4=P1, E1/E2=2×P1 ; extrapolation 2e H"
+        }
+      ],
+      "notes": [
+        "Mathématiques générales : 20 provisoire pour cellule masquée ; niveaux 3/4 adaptés du niveau 2."
+      ]
+    }
+  ],
+  "secondaryCalendar": [
+    {
+      "code": "P1",
+      "label": "1re période — secondaire",
+      "kind": "PERIODE",
+      "parent": "S1",
+      "starts": "2026-09-01",
+      "ends": "2026-11-04",
+      "position": 1
+    },
+    {
+      "code": "P2",
+      "label": "P2 — SECONDAIRE_TECHNIQUE",
+      "kind": "PERIODE",
+      "parent": "S1",
+      "starts": "2026-11-09",
+      "ends": "2027-02-17",
+      "position": 2
+    },
+    {
+      "code": "P3",
+      "label": "P3 — SECONDAIRE_TECHNIQUE",
+      "kind": "PERIODE",
+      "parent": "S2",
+      "starts": "2027-02-22",
+      "ends": "2027-04-24",
+      "position": 3
+    },
+    {
+      "code": "P4",
+      "label": "P4 — SECONDAIRE_TECHNIQUE",
+      "kind": "PERIODE",
+      "parent": "S2",
+      "starts": "2027-04-26",
+      "ends": "2027-07-02",
+      "position": 4
+    },
+    {
+      "code": "S1",
+      "label": "S1 — SECONDAIRE_TECHNIQUE",
+      "kind": "SEMESTRE",
+      "parent": "ANNEE",
+      "starts": "2026-09-01",
+      "ends": "2027-02-17",
+      "position": 5
+    },
+    {
+      "code": "S2",
+      "label": "S2 — SECONDAIRE_TECHNIQUE",
+      "kind": "SEMESTRE",
+      "parent": "ANNEE",
+      "starts": "2027-02-22",
+      "ends": "2027-07-02",
+      "position": 6
+    },
+    {
+      "code": "E1",
+      "label": "E1 — SECONDAIRE_TECHNIQUE",
+      "kind": "EXAMEN",
+      "parent": "S1",
+      "starts": "2027-02-09",
+      "ends": "2027-02-17",
+      "position": 7
+    },
+    {
+      "code": "E2",
+      "label": "E2 — SECONDAIRE_TECHNIQUE",
+      "kind": "EXAMEN",
+      "parent": "S2",
+      "starts": "2027-05-24",
+      "ends": "2027-06-01",
+      "position": 8
+    },
+    {
+      "code": "REPECHAGE",
+      "label": "REPECHAGE — SECONDAIRE_TECHNIQUE",
+      "kind": "REPECHAGE",
+      "parent": "ANNEE",
+      "starts": "2027-06-15",
+      "ends": "2027-06-16",
+      "position": 9
+    },
+    {
+      "code": "ANNEE",
+      "label": "Année scolaire — secondaire",
+      "kind": "ANNUEL",
+      "parent": null,
+      "starts": "2026-09-01",
+      "ends": "2027-07-02",
+      "position": 1000
+    }
+  ],
+  "limitations": [
+    "Le moteur maternel actuel ne calcule pas les composants EVEIL : ne pas créer de contextes d'évaluation sur ces dates.",
+    "P1 historique conservée dans le profil réservé HISTORIQUE, exclue du calendrier pédagogique actif.",
+    "6A et ancienne 5A conservées sans changement de programme ; ne pas effacer les résultats figés.",
+    "Toutes les pondérations extrapolées sont provisoires ; aucune publication officielle."
+  ]
+}

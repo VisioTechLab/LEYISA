@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime/client";
 import { object } from "../../common/input.js";
 import { display, joined, nameOf, type BulletinData, type BulletinSubject } from "./bulletin-data.js";
 import { centered, label, PdfForm } from "./pdf-form.js";
@@ -12,9 +13,24 @@ function periodPoints(subject?: BulletinSubject) {
   return joined(subject.earned, subject.maximum);
 }
 
+// Échelle de recette uniquement : aucune mention ne constitue une décision du conseil.
+export function primaryAnnualCells(subject: BulletinSubject, visible: boolean, annual: boolean): [string, string] {
+  if (!visible || !annual) return ['', ''];
+  if (subject.nonApplicable) return ['N/A', ''];
+  if (subject.earned == null || subject.maximum == null) return ['', ''];
+  try {
+    const earned = new Decimal(subject.earned), maximum = new Decimal(subject.maximum);
+    if (!earned.isFinite() || !maximum.isFinite() || maximum.lte(0) || earned.lt(0) || earned.gt(maximum)) return ['', ''];
+    const score = earned.mul(100).div(maximum).toDecimalPlaces(2, Decimal.ROUND_HALF_UP);
+    const mention = score.gte(80) ? 'Très bien' : score.gte(70) ? 'Bien' : score.gte(60) ? 'Assez bien' : score.gte(50) ? 'Passable' : 'Insuffisant';
+    return [score.toFixed(2).replace(/0+$/, '').replace(/\.$/, '').replace('.', ','), mention];
+  } catch { return ['', '']; }
+}
+
 export async function renderPrimary(data: BulletinData) {
   const form = await PdfForm.create('Bulletin de fin d’année', false, { left: 25, top: 27 });
   const { identity } = data;
+  const annual = data.releaseVisible && identity.kind === 'ANNUEL';
   const school = object(identity.school ?? {});
   const fractions = (sizes: number[]) => sizes.map(size => size * form.width);
   // Proportions relevées entre les traits verticaux de la grille originale.
@@ -53,12 +69,21 @@ export async function renderPrimary(data: BulletinData) {
   heading();
   const gridPage = form.page;
   const gridTop = form.y + 22;
+  const repeatHeading = () => {
+    form.text('BULLETIN DE FIN D’ANNÉE — SUITE', 11, true, true);
+    form.text([nameOf(identity), display(identity.classLabel), display(identity.yearCode)].filter(Boolean).join(' — '), 9, false, true);
+    heading();
+  };
   data.baseSubjects.forEach((subject, i) => {
-    const notes = periods.map(code => centered(periodPoints(data.component(subject, code))));
-    form.row(widths, [centered(String(i + 1)), { text: subject.label }, ...notes, {}, {}], { min: 19, size: 9, repeat: heading });
+    // Deux pages équilibrées pour le programme terminal de 24 branches ; pas de corps en petits caractères.
+    if (data.baseSubjects.length === 24 && i === 14 && form.page === gridPage) {
+      form.next(); repeatHeading();
+    }
+    const notes = periods.map(code => centered(data.releaseVisible ? periodPoints(data.component(subject, code)) : ''));
+    const [total, mention] = primaryAnnualCells(subject, data.releaseVisible, annual);
+    form.row(widths, [centered(String(i + 1)), { text: subject.label }, ...notes, centered(total), centered(mention)], { min: 19, size: 9, repeat: repeatHeading });
   });
 
-  const annual = data.releaseVisible && identity.kind === 'ANNUEL';
   const summary = annual ? identity : {};
   const summaries = [
     ['TOTAL GÉNÉRAL', joined(summary.totalEarned, summary.totalMaximum)],
@@ -74,6 +99,10 @@ export async function renderPrimary(data: BulletinData) {
     form.rule(form.left, form.y, form.left + form.width, form.y, 1.15);
     form.rule(form.left, gridTop, form.left, form.y, 1.15);
     form.rule(form.left + form.width, gridTop, form.left + form.width, form.y, 1.15);
+  }
+  if (annual) {
+    form.y -= 5;
+    form.text('Mentions de recette non officielles : Très bien ≥ 80 ; Bien ≥ 70 ; Assez bien ≥ 60 ; Passable ≥ 50 ; sinon Insuffisant.', 8);
   }
   form.y -= 12;
 

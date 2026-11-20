@@ -39,6 +39,7 @@ export class SchoolController {
     const data={schoolYearId:uuid(d.schoolYearId),code:text(d.code,"Code",30),label:text(d.label,"Libellé"),position:Number(d.position),startsOn:day(d.startsOn),endsOn:day(d.endsOn),profile,kind,parentCode:optionalText(d.parentCode,"Parent",30),source:text(d.source,"Source",300)};
     if(id) {
       const old=await tx.period.findUnique({where:{id},include:{_count:{select:{classPeriods:true}}}});
+      if(old?.profile==='HISTORIQUE')throw new ConflictException('Période historique non modifiable.');
       if(old?._count.classPeriods && ['code','profile','kind','parentCode','schoolYearId'].some(key=>old[key as keyof typeof old]!==data[key as keyof typeof data]))throw new ConflictException("Calendrier utilisé : créez une version prospective.");
     }
     if(!Number.isInteger(data.position)||data.position<1)throw new BadRequestException("Position invalide.");

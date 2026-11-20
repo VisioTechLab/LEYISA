@@ -122,7 +122,7 @@ export class ResultsService {
       classCode: context.schoolClass.code,
       classLabel: context.schoolClass.label,
       periodCode: context.period.code,
-      periodLabel: context.period.label,
+      periodLabel: context.period.profile === 'HISTORIQUE' ? `${context.period.label} — historique` : context.period.label,
       status: context.publishedAt ? "PUBLISHED" : context.closedAt ? "CLOSED" : "OPEN",
       evaluationCount: context._count.evaluations,
       resultCount: context._count.results,
@@ -131,6 +131,7 @@ export class ResultsService {
 
   async previewClassPeriod(id: string) {
     const context = await loadClassPeriod(this.prisma.client, id);
+    if (context.period.profile === 'HISTORIQUE') throw new ConflictException('Période historique : consultez les résultats figés sans recalcul.');
     return computePreview(this.prisma.client,context, false);
   }
 
@@ -174,6 +175,7 @@ export class ResultsService {
       if(!context.closedAt||context.results.length===0)throw new ConflictException("Publication exige résultats clôturés et validés.");
       if(context.publishedAt)throw new ConflictException("Résultats déjà publiés.");
       const period=await tx.period.findUnique({where:{id:context.periodId}});
+      if(period?.profile==='HISTORIQUE')throw new ConflictException('Publication interdite pour cette période historique.');
       const cls=await tx.schoolClass.findUnique({where:{id:context.classId}});
       if(cls?.cycle!=='MATERNEL'&&['ANNUEL','REPECHAGE'].includes(period!.kind)) {
         for(const result of context.results)if(!await tx.deliberationDecision.findFirst({where:{resultSnapshotId:result.id}}))throw new ConflictException("Une décision motivée de démonstration est requise pour chaque synthèse avant publication.");

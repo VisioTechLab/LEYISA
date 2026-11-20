@@ -1,5 +1,6 @@
 """Contrôle la géométrie et les valeurs des PDF téléchargés dans la recette V1."""
 import json
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 import re
 import sys
@@ -108,7 +109,11 @@ for stem in ["BULLETIN_PRIMAIRE_DEMO-V1"]:
             if stem.endswith("non-publiee") and code == "T3":
                 expected = ""
             assert at_y(page, x, 25 + edges[i+1] / 771 * width, y0, y1) == expected, (stem, subject["label"], code)
-        assert at_y(page, 25 + 552 / 771 * width, page.rect.width - 25, y0, y1) == ""
+        score = (Decimal(subject["earned"]) * 100 / Decimal(subject["maximum"])).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+        expected = format(score, "f").rstrip("0").rstrip(".").replace(".", ",")
+        mention = "Très bien" if score >= 80 else "Bien" if score >= 70 else "Assez bien" if score >= 60 else "Passable" if score >= 50 else "Insuffisant"
+        assert at_y(page, 25 + 552 / 771 * width, 25 + 660 / 771 * width, y0, y1) == expected
+        assert at_y(page, 25 + 660 / 771 * width, page.rect.width - 25, y0, y1) == mention
     y0, y1 = row_range(page, "TOTAL GÉNÉRAL")
     value = "" if stem.endswith("non-publiee") else f"{identity['totalEarned']} / {identity['totalMaximum']}"
     assert at_y(page, 25 + 660 / 771 * width, page.rect.width - 25, y0, y1) == value
@@ -199,4 +204,38 @@ check_permanent_number(long[0], fixtures("secondaire-pagine")["permanentNumber"]
 long_name = fixtures("secondaire-pagine")["longName"]
 assert re.sub(r"\s+", "", long_name) in re.sub(r"\s+", "", text)
 assert "OPTION-FICTIVE" in text
+
+wide = documents["primaire-24-matieres"]
+assert len(wide) == 2
+fixture = fixtures("primaire-24-matieres")
+assert len(fixture["subjects"]) == 24
+assert fixture["identity"]["totalMaximum"] == "3600"
+for subject, ratio, mention in zip(fixture["subjects"], fixture["ratios"], fixture["labels"]):
+    # PyMuPDF search_for returns separate rectangles when a label wraps.
+    pages = [page for page in wide if page.search_for(subject["label"])]
+    assert len(pages) == 1, subject["label"]
+    page = pages[0]
+    y0, y1 = row_range(page, subject["label"])
+    width = page.rect.width - 50
+    assert at_y(page, 25 + 552 / 771 * width, 25 + 660 / 771 * width, y0, y1) == str(ratio), subject["label"]
+    assert at_y(page, 25 + 660 / 771 * width, page.rect.width - 25, y0, y1) == mention, subject["label"]
+    for i, code in enumerate(["T1", "T2", "T3"]):
+        edges = [275, 368, 460, 552]
+        part = subject["components"][code]
+        assert at_y(page, 25 + edges[i] / 771 * width, 25 + edges[i+1] / 771 * width, y0, y1) == f"{part['earned']} / {part['maximum']}", subject["label"]
+for page in wide:
+    assert page.search_for("BRANCHES") and page.search_for("Total /100") and page.search_for("Mention")
+last = wide[-1]
+assert last.search_for("Mentions de recette non officielles")
+assert last.search_for("Le titulaire") and last.search_for("Le directeur")
+assert last.search_for("TOTAL GÉNÉRAL")
+assert last.search_for("PLACE DE L’ÉLÈVE")
+unpublished = documents["primaire-24-non-publie"]
+for subject in fixture["subjects"]:
+    pages = [page for page in unpublished if page.search_for(subject["label"])]
+    assert len(pages) == 1, subject["label"]
+    page = pages[0]
+    y0, y1 = row_range(page, subject["label"])
+    assert at_y(page, 25 + 275 / 771 * (page.rect.width - 50), page.rect.width - 25, y0, y1) == ""
+
 print(f"{len(documents)} documents contrôlés, chaque page rastérisée à 220 ppp.")
