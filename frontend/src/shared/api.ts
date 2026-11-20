@@ -12,12 +12,9 @@ function jsonResponse(response:Response):boolean {
  return type==='application/json'||type.endsWith('+json');
 }
 async function csrf() {
- csrfPromise??=fetch('/api/v1/auth/csrf',{credentials:'same-origin'}).then(async response=>{
-  if(!response.ok||!jsonResponse(response))throw new Error('Le serveur est indisponible ou en cours de démarrage. Réessayez.');
-  const payload:unknown=await response.json();
-  const token=payload&&typeof payload==='object'&&'csrfToken' in payload?payload.csrfToken:undefined;
-  if(typeof token!=='string'||! /^[a-f0-9]{64}$/.test(token))throw new Error('Réponse de sécurité invalide. Réessayez.');
-  return token;
+ csrfPromise??=api<{csrfToken:string}>('/auth/csrf').then(body=>{
+  if(typeof body?.csrfToken!=='string'||!/^[a-f0-9]{64}$/.test(body.csrfToken))throw new HttpError(502,'La protection de session est momentanément indisponible. Réessayez.');
+  return body.csrfToken;
  }).catch(error=>{csrfPromise=undefined;throw error;});return csrfPromise;
 }
 export async function api<T>(path:string,init:RequestInit={}):Promise<T> {
@@ -35,7 +32,7 @@ export async function api<T>(path:string,init:RequestInit={}):Promise<T> {
   const message=typeof details.message==='string'?details.message:`Erreur ${response.status}.`;
   throw new HttpError(response.status,message,details);
  }
- if(body===null)throw new HttpError(502,'Réponse vide inattendue du serveur. Réessayez.');
+ if(response.status!==204&&(body===null||typeof body!=='object'))throw new HttpError(502,'Le serveur démarre ou a renvoyé une réponse inattendue. Réessayez dans quelques instants.');
  return body as T;
 }
 export const post=<T,>(path:string,data:unknown)=>api<T>(path,{method:'POST',body:JSON.stringify(data)});

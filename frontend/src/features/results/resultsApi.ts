@@ -31,6 +31,6 @@ export const resultsApi = {
 export type Preview = {
   classPeriod: { id: string; classId?: string; classCode?: string; yearCode?: string; classLabel: string; periodLabel: string; status: string };
   readyToClose: boolean; problems: string[];
-  students: Array<{ id?:string;identity: { matricule?: string; firstName?: string; lastName?: string }; subjectResults: Array<{ label: string; earned: number | null; maximum: number }>; totalEarned: number; totalMaximum: number }>;
+  students: Array<{ id?:string;identity: { matricule?: string; firstName?: string; lastName?: string }; subjectResults: Array<{ label?: string; subjectCode?: string; meanOn20?: number|string|null; earned?: number|string|null; maximum?: number|string|null }>; totalEarned: number|string|null; totalMaximum: number|string|null }>;
 };
 export type FinalResults = { classPeriod: { id: string; classId?: string; classCode?: string; yearCode?: string; classLabel: string; periodLabel: string; status: string }; students: Preview['students'] };

@@ -15,7 +15,7 @@ export class AssignmentsController {
   const [assignments,teachers,candidates]=await Promise.all([
    this.prisma.client.teacherAssignment.findMany({where:own?{teacher:{userId:auth.userId}}:{},include:{teacher:{include:{user:{select:{id:true,firstName:true,lastName:true}}}},classSubject:{include:{subject:true,schoolClass:{include:{schoolYear:true,classPeriods:{include:{period:true}}}}}}},orderBy:{startsOn:"desc"}}),
    this.prisma.client.teacher.findMany({where:own?{userId:auth.userId}:{},include:{user:{select:{id:true,firstName:true,lastName:true,loginEnabled:true}}}}),
-   auth.roles.includes("DIR")?this.prisma.client.user.findMany({where:{kind:"STAFF",loginEnabled:true,roles:{some:{role:"ENS"}}},select:{id:true,firstName:true,lastName:true}}):[],
+   auth.roles.includes("DIR")?this.prisma.client.user.findMany({where:{kind:"STAFF",loginEnabled:true,roles:{some:{role:"ENS"}},teacher:{is:null}},select:{id:true,firstName:true,lastName:true}}):[],
   ]);return {assignments,teachers,candidates};
  }
  @Get("mine") @Requires("assignments.readOwn")

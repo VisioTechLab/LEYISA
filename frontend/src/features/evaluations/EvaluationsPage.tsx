@@ -74,7 +74,7 @@ export function EvaluationsPage() {
         if (ignore) return;
         setEvaluations(list);
         // Ouvrir d'abord une évaluation encore modifiable, s'il y en a une.
-        setSelectedId((list.find(item=>item.id===requested)??list.find(item=>item.id===selectedId)??list.find(item => item.editable) ?? list[0])?.id ?? '');
+        if(!requested)setSelectedId(previous=>(list.find(item=>item.id===previous)??list.find(item=>item.editable)??list[0])?.id??'');
       })
       .catch((error: unknown) => {
         if (!ignore) setListError(error instanceof Error ? error.message : 'Chargement impossible.');

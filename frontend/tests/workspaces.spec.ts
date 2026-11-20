@@ -66,3 +66,35 @@ test('Changement de session et serveur indisponible : les données de l’ancien
  await expect(page.locator('.leyisa-nav')).toHaveCount(0);
  await expect(page.getByRole('button',{name:'Réessayer',exact:true})).toBeVisible();
 });
+
+test('Réveil Render : une réponse HTML200 ne devient pas un faux formulaire de connexion',async({page})=>{
+ await page.route('**/api/v1/auth/me',route=>route.fulfill({status:200,contentType:'text/html',body:'<html>Application loading</html>'}));
+ await page.goto('/');await expect(page.locator('main h1')).toHaveText('Connexion au service');
+ await expect(page.getByRole('alert')).toContainText('réponse inattendue');
+ await expect(page.getByLabel('Identifiant',{exact:true})).toHaveCount(0);
+});
+
+test('Réveil Render : une réponse HTML200 aux élèves affiche une erreur, pas une liste vide',async({page})=>{
+ await login(page,'sec');
+ await page.route('**/api/v1/students?*',route=>route.fulfill({status:200,contentType:'text/html',body:'<html>Application loading</html>'}));
+ await page.goto('/#eleves');await expect(page.getByRole('alert')).toContainText('réponse inattendue');
+ await expect(page.getByText('Aucun élève disponible.',{exact:true})).toHaveCount(0);
+});
+
+test('Résultats historiques : total inconnu distinct du zéro et moyenne ancienne lisible',async({page})=>{
+ await login(page,'dir');
+ const context={id:'00000000-0000-4000-8000-000000000001',classLabel:'Classe fictive historique',periodLabel:'P1',status:'CLOSED',resultCount:2,evaluationCount:1};
+ await page.route('**/api/v1/results/class-periods*',route=>route.fulfill({json:[context]}));
+ await page.route('**/api/v1/results/class-periods/*/final-results',route=>route.fulfill({json:{classPeriod:context,students:[
+   {id:'ancien',identity:{matricule:'FICTIF-ANCIEN'},subjectResults:[{subjectCode:'MATH',meanOn20:'0'}],totalEarned:null,totalMaximum:null},
+   {id:'actuel',identity:{matricule:'FICTIF-ACTUEL'},subjectResults:[{label:'Mathématiques',earned:'0',maximum:'40'}],totalEarned:'0',totalMaximum:'40'}
+  ]}}));
+ await page.goto('/#resultats');await loaded(page);
+ await page.getByRole('row').filter({hasText:context.classLabel}).getByRole('button',{name:'Ouvrir',exact:true}).click();
+ const old=page.getByRole('row').filter({hasText:'FICTIF-ANCIEN'});
+ await expect(old).toContainText('0,00/20 (moyenne historique)');
+ await expect(old.getByRole('cell').last()).toHaveText('—');
+ await expect(page.getByRole('row').filter({hasText:'FICTIF-ACTUEL'}).getByRole('cell').last()).toHaveText('0,00/40,00');
+ await expect(page.getByText('Totaux non disponibles pour certains résultats historiques.',{exact:true})).toBeVisible();
+ await expect(page.locator('main')).not.toContainText('NaN');
+});

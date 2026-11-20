@@ -145,7 +145,7 @@ async function actor(role:string) {
 test('Parcours métier navigateur : affectation, zéro, rejet, correction, validation, clôture, publication et PDF',async({page})=>{
  test.setTimeout(240_000);
  const suffix=randomUUID().slice(0,8),adm=await actor('adm'),sec=await actor('sec'),dir=await actor('dir');
- const school=await adm.get('/school/bootstrap'),year=school.years.find((y:{code:string})=>y.code==='2026-2027');
+ const school=await adm.get('/school/bootstrap'),year=school.years.find((y:{code:string})=>y.code==='DEMO-2025-2026');
  const period=year.periods.find((p:{profile:string;code:string})=>p.profile==='SECONDAIRE_TECHNIQUE'&&p.code==='P1');
  const schoolClass=await adm.post('/school/classes',{schoolYearId:year.id,code:`QA-${suffix}`,label:`Classe fictive QA ${suffix}`,cycle:'SECONDAIRE_TECHNIQUE',level:'7e EB',programVersion:'DEMO-V1.QA'});
  const sourceYear=school.years.find((y:{code:string})=>y.code==='DEMO-2025-2026');

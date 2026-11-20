@@ -460,5 +460,7 @@ function uniquePeriods(classPeriods: Array<{ period: { id: string; code: string;
 
 function formatFinalResult(result:any) {
   const identity=object(result.identitySnapshot);
-  return {id:result.id,identity,subjectResults:result.subjectResults,totalEarned:identity.totalEarned??"0",totalMaximum:identity.totalMaximum??"0",percentage:identity.percentage??null,rank:identity.rank??null};
+  // Les anciens snapshots ne contiennent pas nécessairement de total/maxima.
+  // Une absence ne représente pas une cote zéro ; ne pas recalculer l'historique.
+  return {id:result.id,identity,subjectResults:result.subjectResults,totalEarned:identity.totalEarned??null,totalMaximum:identity.totalMaximum??null,percentage:identity.percentage??null,rank:identity.rank??null};
 }
