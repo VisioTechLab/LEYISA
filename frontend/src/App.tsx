@@ -79,7 +79,7 @@ export default function App(){
  <aside className="leyisa-sidebar" data-open={menuOpen}>
   <button type="button" className="leyisa-menu-toggle" aria-expanded={menuOpen} aria-controls="leyisa-navigation" onClick={()=>setMenuOpen(open=>!open)}>{menuOpen?'Fermer le menu':'Ouvrir le menu'}</button>
   <nav id="leyisa-navigation" className="leyisa-nav" aria-label="Navigation principale"><p className="workspace-role">Menu principal</p><ul>{links.map(item=><li key={item.hash}><a href={item.hash} onClick={()=>setMenuOpen(false)} aria-current={item.hash===(parent?.hash??route.hash)?'page':undefined}>{item.label}</a></li>)}</ul></nav>
-  <p className="leyisa-sidebar-note">VISIO TECH · {deploymentLabel}<br/>{isPrivateRecipe?'Données scolaires — accès privé':'Données de démonstration'}</p>
+  <p className="leyisa-sidebar-note">VISIO TECH · {deploymentLabel}<br/>{isPrivateRecipe?'Données scolaires : accès privé':'Données de démonstration'}</p>
  </aside><div className="leyisa-workspace">
  {error&&<p role="alert">{error}</p>}<div key={`${role}:${route.hash}`} data-route={route.hash}>{route.permission&&!can(scopedUser,route.permission)?<AccessPage/>:route.render(role)}</div>
  </div></div></WorkspaceStateProvider></SessionContext.Provider>;
