@@ -105,6 +105,36 @@ test('T12 — rôles modifiés, sessions révoquées et audit persistant',{skip}
  assert.equal(await db.auditEntry.count({where:{targetId:user.id,action:'ROLE_CHANGED'}}),1);
  assert.equal((await adm.request(`/users/${credentials.adm.id}/roles`,'PUT',{roles:['SEC']})).status,403);
 });
+test('ADM — initialisation profil enseignant existant, rotation et révocation',{skip},async()=>{
+ const original=await db.user.create({data:{kind:'STAFF',firstName:'Enseignant',lastName:'Fictif sans accès',loginEnabled:false,roles:{create:{role:'ENS'}}}});
+ const staff=await db.teacher.create({data:{userId:original.id}});
+ const login=`credential-${suffix}@demo.test`,first=randomUUID(),next=randomUUID();
+ const endpoint=`/users/${original.id}/credentials`;
+ const payload={login,newPassword:first,adminPassword:credentials.adm.password};
+ assert.equal((await sec.request(endpoint,'POST',payload)).status,403);
+ assert.equal((await adm.request(endpoint,'POST',{...payload,adminPassword:randomUUID()})).status,403);
+ assert.equal((await adm.request(endpoint,'POST',{...payload,newPassword:'short'})).status,400);
+ assert.equal((await adm.request(endpoint,'POST',payload,{'X-CSRF-Token':''})).status,403);
+ const created=await ok(adm,endpoint,'POST',payload);
+ assert.equal(created.id,original.id);assert.equal(created.login,login);assert.equal(created.loginEnabled,false);
+ assert.equal(JSON.stringify(created).includes('passwordHash'),false);
+ assert.equal((await db.teacher.findUnique({where:{id:staff.id}})).userId,original.id);
+ await ok(adm,`/users/${original.id}/status`,'PATCH',{enabled:true});
+ credentials.temporaryStaff={id:original.id,login,password:first};
+ const browser=new Browser();await browser.login('temporaryStaff');
+ assert.equal((await browser.request('/auth/me')).status,200);
+ assert.equal((await adm.request(endpoint,'POST',{...payload,login:login+'-other'})).status,400);
+ assert.equal((await adm.request(`/users/${credentials.adm.id}/credentials`,'POST',{newPassword:next,adminPassword:credentials.adm.password})).status,403);
+ const reset=await ok(adm,endpoint,'POST',{newPassword:next,adminPassword:credentials.adm.password});
+ assert.equal(reset.loginEnabled,true);assert.equal(reset.id,original.id);
+ assert.equal((await browser.request('/auth/me')).status,401);
+ const anonymous=new Browser();const csrf=await anonymous.request('/auth/csrf');anonymous.csrf=csrf.body.csrfToken;
+ assert.equal((await anonymous.request('/auth/login','POST',{login,password:first})).status,401);
+ credentials.temporaryStaff.password=next;await browser.login('temporaryStaff');
+ assert.equal((await browser.request('/auth/me')).status,200);
+ const audit=await db.auditEntry.findMany({where:{targetId:original.id,action:{in:['USER_CREDENTIALS_INITIALIZED','PASSWORD_RESET']}}});
+ assert.equal(audit.length,2);assert.ok(audit.every(a=>a.actorId===credentials.adm.id&&!JSON.stringify(a).includes(first)&&!JSON.stringify(a).includes(next)));
+});
 test('T15 — dossier séparé, réinscription concurrente et atomicité',{skip},async()=>{
  const roster=await ok(sec,'/students/registration-options');const year=roster.find(y=>y.code==='2026-2027');
  // Classe ouverte créée via la configuration scolaire réelle.
@@ -138,6 +168,11 @@ async function workflow(code,{publish=true,components=['P1'],unpublished=[]}={})
     detail=await ok(browser,`/evaluations/${detail.id}/submission`,'POST',{version:detail.version},201);
     const pending=await db.submission.findFirst({where:{evaluationId:detail.id,status:'PENDING'}});
     assert.equal((await sec.request(`/results/submissions/${pending.id}/approve`,'POST',{})).status,403);
+    if(kind==='APPRECIATION'){
+     const inspection=await ok(dir,`/results/submissions/${pending.id}`);
+     assert.equal(inspection.evaluation.kind,'APPRECIATION');
+     for(const g of inspection.grades){assert.equal(g.score,null);assert.equal(g.status,'PRESENT');assert.deepEqual(g.appreciation,{QTE:'D1',QLT:'D2',COUL:'D3',observation:'Observation fictive'});}
+    }
     if(component==='P1'&&cs.position===1&&code==='DEMO-SEC') {
      await ok(dir,`/results/submissions/${pending.id}/reject`,'POST',{reason:'Vérification de démonstration'});
      detail=await ok(browser,`/evaluations/${detail.id}`);detail=await ok(browser,`/evaluations/${detail.id}/grades`,'PUT',{version:detail.version,grades});
@@ -276,6 +311,11 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   assert.equal((await teacher.request(historicPath)).status,403);
   assert.equal((await new Browser().request(historicPath)).status,401);
   assert.equal((await sec.request(`/bulletins/${result.id}/pdf?templateVersion=inconnue`)).status,404);
+  const expected=await db.resultSnapshot.count({where:{classPeriod:{publishedAt:{not:null}}}});
+  assert.equal((await ok(sec,'/bulletins/count')).total,expected);
+  assert.equal((await ok(dir,'/bulletins/count')).total,expected);
+  assert.equal((await adm.request('/bulletins/count')).status,403);
+  assert.equal((await teacher.request('/bulletins/count')).status,403);
   const byMatricule=await ok(sec,`/bulletins?search=${encodeURIComponent(result.identitySnapshot.matricule.toLowerCase())}`);
   assert.ok(byMatricule.length>0);
   assert.ok(byMatricule.every(row=>row.identitySnapshot.matricule===result.identitySnapshot.matricule));

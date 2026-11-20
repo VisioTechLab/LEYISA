@@ -55,10 +55,10 @@ export function AccessPage(){return <Page title="Accès refusé ou conflit"><div
 
 const dashboards = {
  ADM:{title:'Tableau de bord Administration',main:'/school/bootstrap',related:'/users?page=1',primary:['Gérer les comptes','#comptes'],links:[['Configuration scolaire','#scolarite'],['Classes et programmes','#classes'],['Audit','#audit']]},
- SEC:{title:'Tableau de bord Secrétariat',main:'/students?pagination=1',related:'/bulletins',primary:['Retrouver un élève','#eleves'],links:[['Inscriptions','#inscription'],['Bulletins','#bulletins']]},
+ SEC:{title:'Tableau de bord Secrétariat',main:'/students?pagination=1',related:'/bulletins/count',primary:['Retrouver un élève','#eleves'],links:[['Inscriptions','#inscription'],['Bulletins','#bulletins']]},
  ENS:{title:'Mon espace Enseignant',main:'/assignments/mine',related:'/evaluations',primary:['Ouvrir mes classes et cours','#cours'],links:[['Mes évaluations','#evaluations'],['Mes soumissions','#mes-soumissions']]},
  DIR:{title:'Tableau de bord Direction',main:'/results/class-periods',related:'/results/submissions',primary:['Examiner les soumissions','#validation'],links:[['Enseignants et affectations','#enseignants'],['Résultats','#resultats'],['Bulletins','#bulletins']]},
- ELEVE:{title:'Mes bulletins publiés',main:'/bulletins',related:null,primary:['Mes bulletins','#bulletins'],links:[]},
+ ELEVE:{title:'Mes bulletins publiés',main:'/bulletins/count',related:null,primary:['Mes bulletins','#bulletins'],links:[]},
 };
 export function Dashboard({role}:{role:string}){
  const view=dashboards[role as keyof typeof dashboards]??dashboards.ELEVE;
@@ -72,7 +72,7 @@ export function Dashboard({role}:{role:string}){
   stats=[['Années scolaires',years.length],['Classes',years.reduce((sum,y)=>sum+y.classes.length,0)],['Comptes utilisateurs',!Array.isArray(related.data)?related.data?.total??0:0]];
   overview=years.map(y=>({id:y.id,label:y.code,context:`${y.classes.length} classes`,href:'#scolarite'}));
  }else if(role==='SEC'){
-  stats=[['Dossiers élèves',!Array.isArray(current.data)?current.data?.total??0:0],['Résultats publiés',other.length]];
+  stats=[['Dossiers élèves',!Array.isArray(current.data)?current.data?.total??0:0],['Résultats publiés',!Array.isArray(related.data)?related.data?.total??0:0]];
   overview=rows.slice(0,5).map(r=>({id:r.id,label:`${r.user.lastName} ${r.postName??''} ${r.user.firstName}`,context:r.matricule,href:`#historique?student=${r.id}`}));
  }else if(role==='ENS'){
   stats=[['Mes cours',rows.length],['Mes évaluations',other.length],['À corriger',other.filter(r=>r.state==='REJECTED').length]];
@@ -80,7 +80,7 @@ export function Dashboard({role}:{role:string}){
  }else if(role==='DIR'){
   stats=[['Soumissions à examiner',other.length],['Classes',new Set(rows.map(r=>r.classId??r.classCode??r.classLabel)).size],['Résultats publiés',rows.filter(r=>r.status==='PUBLISHED').reduce((n,r)=>n+r.resultCount,0)]];
   overview=other.slice(0,5).map(r=>({id:r.id,label:r.evaluation.title,context:r.schoolClass.label,href:'#validation'}));
- }else{stats=[['Résultats publiés',rows.length]];}
+ }else{stats=[['Résultats publiés',!Array.isArray(current.data)?current.data?.total??0:0]];}
  return <Page title={view.title}>
   <Feedback error={error} loading={loading}/>
   <div className="leyisa-stats">{stats.map(([label,value])=><Panel key={label} title={label}><strong>{loading||error?'—':value}</strong></Panel>)}</div>
@@ -96,7 +96,27 @@ export function Pagination({page,total,size=15,onPage}:{page:number;total:number
  const pages=Math.max(1,Math.ceil(total/size));return <div className="workspace-pagination"><span>{total} résultat(s) · page {page} sur {pages}</span><button disabled={page<=1} onClick={()=>onPage(page-1)}>Précédent</button><button disabled={page>=pages} onClick={()=>onPage(page+1)}>Suivant</button></div>;
 }
 
-export function AccountsPage(){const [page,setPage]=useState(1);const r=useResource<Row>(`/users?page=${page}`);const user=useSession();const [selected,setSelected]=useState<Row|null>(null);return <Page title="Comptes et rôles" description="Créer un compte inactif, puis l’activer après remise sécurisée des identifiants."><Feedback error={r.error} loading={r.loading}/><div className="leyisa-grid"><Panel title="Comptes utilisateurs"><div className="leyisa-table-wrap"><table><thead><tr><th>Utilisateur</th><th>Rôles</th><th>Statut</th><th>Action</th></tr></thead><tbody>{r.data?.items.map((row:Row)=><tr key={row.id}><td>{row.login}</td><td>{row.roles.map((r:Row)=>r.role).join(', ')}</td><td>{row.loginEnabled?'Actif':'Inactif'}</td><td><button onClick={()=>setSelected(row)} disabled={row.id===user?.id}>Ouvrir</button></td></tr>)}</tbody></table></div><div className="workspace-controls"><button disabled={page===1} onClick={()=>setPage(page-1)}>Précédent</button><span>Page {page}</span><button disabled={page*50>=(r.data?.total??0)} onClick={()=>setPage(page+1)}>Suivant</button></div>{selected&&<div key={selected.id}><h3>{selected.login}</h3><ActionForm action={d=>api(`/users/${selected.id}/status`,{method:'PATCH',body:JSON.stringify({enabled:d.enabled==='true'})})} done={r.refresh} label="Modifier le statut"><Field label="Statut" name="enabled" value={String(selected.loginEnabled)}><option value="true">Actif</option><option value="false">Inactif</option></Field></ActionForm><ActionForm action={d=>api(`/users/${selected.id}/roles`,{method:'PUT',body:JSON.stringify({roles:[d.role]})})} done={r.refresh} label="Attribuer le rôle"><Field label="Rôle" name="role">{['ENS','SEC','DIR','ADM'].map(role=><option key={role}>{role}</option>)}</Field></ActionForm></div>}</Panel><Panel title="Nouveau compte"><ActionForm action={d=>post('/users',{...d,roles:[d.role]} )} done={r.refresh}><Field label="Identifiant" name="login"/><Field label="Nom" name="lastName"/><Field label="Prénom" name="firstName"/><Field label="Mot de passe initial (12 caractères minimum)" name="initialPassword" type="password"/><Field label="Rôle initial" name="role">{['ENS','SEC','DIR','ADM'].map(role=><option key={role}>{role}</option>)}</Field><p>Le compte est créé inactif. Vos propres rôles et votre statut sont protégés.</p></ActionForm></Panel></div></Page>;}
+function StaffCredentialsForm({account,done}:{account:Row;done:()=>void}) {
+ const [busy,setBusy]=useState(false),[error,setError]=useState(''),[message,setMessage]=useState('');
+ async function submit(e:FormEvent<HTMLFormElement>){
+  e.preventDefault();if(busy)return;
+  const form=e.currentTarget,d=new FormData(form);
+  const newPassword=String(d.get('newPassword')??'');
+  if(newPassword!==d.get('confirmPassword')){setError('Les deux mots de passe doivent être identiques.');return;}
+  setBusy(true);setError('');setMessage('');
+  try{
+   await post(`/users/${account.id}/credentials`,{...(!account.login?{login:String(d.get('login')??'').trim()}:{}),newPassword,adminPassword:String(d.get('adminPassword')??'')});
+   form.reset();setMessage(account.login?'Mot de passe réinitialisé. Les anciennes sessions sont révoquées.':'Identifiants initialisés. Activez le compte après transmission sécurisée.');done();
+  }catch(e){setError(e instanceof Error?e.message:'Action impossible.');}finally{setBusy(false);}
+ }
+ return <form className="leyisa-form" onSubmit={submit} aria-busy={busy}><h4>{account.login?'Réinitialiser le mot de passe':'Configurer les identifiants'}</h4><fieldset disabled={busy}>
+ {!account.login&&<label>Identifiant<input name="login" required maxLength={100} autoComplete="off"/></label>}
+ <label>Nouveau mot de passe<input name="newPassword" type="password" minLength={12} maxLength={256} autoComplete="new-password" required/></label>
+ <label>Confirmer le nouveau mot de passe<input name="confirmPassword" type="password" minLength={12} maxLength={256} autoComplete="new-password" required/></label>
+ <label>Votre mot de passe administrateur<input name="adminPassword" type="password" autoComplete="current-password" required maxLength={256}/></label>
+ </fieldset>{error&&<p role="alert" className="feedback-error">{error}</p>}{message&&<p role="status">{message}</p>}<button className="leyisa-button" disabled={busy}>{busy?'Traitement…':account.login?'Réinitialiser le mot de passe':'Initialiser les identifiants'}</button></form>;
+}
+export function AccountsPage(){const [page,setPage]=useState(1);const r=useResource<Row>(`/users?page=${page}`);const user=useSession();const [selectedId,setSelectedId]=useState<string|null>(null);const selected=r.data?.items?.find((row:Row)=>row.id===selectedId)??null;return <Page title="Comptes et rôles" description="Créer un compte inactif, puis l’activer après remise sécurisée des identifiants."><Feedback error={r.error} loading={r.loading}/><div className="leyisa-grid"><Panel title="Comptes utilisateurs"><div className="leyisa-table-wrap"><table><thead><tr><th>Utilisateur</th><th>Rôles</th><th>Statut</th><th>Action</th></tr></thead><tbody>{r.data?.items.map((row:Row)=><tr key={row.id}><td><strong>{row.firstName} {row.lastName}</strong><br/>{row.login??"Identifiants non configurés"}</td><td>{row.roles.map((r:Row)=>r.role).join(', ')}</td><td>{row.loginEnabled?'Actif':'Inactif'}</td><td><button onClick={()=>setSelectedId(row.id)} disabled={row.id===user?.id}>Ouvrir</button></td></tr>)}</tbody></table></div><div className="workspace-controls"><button disabled={page===1} onClick={()=>setPage(page-1)}>Précédent</button><span>Page {page}</span><button disabled={page*50>=(r.data?.total??0)} onClick={()=>setPage(page+1)}>Suivant</button></div>{selected&&<div key={selected.id}><h3>{selected.firstName} {selected.lastName}</h3>{!selected.roles.some((r:Row)=>r.role==='ADM')&&selected.lastName!=='Recette historique synthétique'&&(selected.login||selected.roles.some((r:Row)=>r.role==='ENS'))&&<StaffCredentialsForm key={`${selected.id}:${selected.login??''}`} account={selected} done={r.refresh}/>}<ActionForm action={d=>api(`/users/${selected.id}/status`,{method:'PATCH',body:JSON.stringify({enabled:d.enabled==='true'})})} done={r.refresh} label="Modifier le statut"><Field label="Statut" name="enabled" value={String(selected.loginEnabled)}><option value="true">Actif</option><option value="false">Inactif</option></Field></ActionForm><ActionForm action={d=>api(`/users/${selected.id}/roles`,{method:'PUT',body:JSON.stringify({roles:[d.role]})})} done={r.refresh} label="Attribuer le rôle"><Field label="Rôle" name="role">{['ENS','SEC','DIR','ADM'].map(role=><option key={role}>{role}</option>)}</Field></ActionForm></div>}</Panel><Panel title="Nouveau compte"><ActionForm action={d=>post('/users',{...d,roles:[d.role]} )} done={r.refresh}><Field label="Identifiant" name="login"/><Field label="Nom" name="lastName"/><Field label="Prénom" name="firstName"/><Field label="Mot de passe initial (12 caractères minimum)" name="initialPassword" type="password"/><Field label="Rôle initial" name="role">{['ENS','SEC','DIR','ADM'].map(role=><option key={role}>{role}</option>)}</Field><p>Le compte est créé inactif. Vos propres rôles et votre statut sont protégés.</p></ActionForm></Panel></div></Page>;}
 
 export function SchoolPages({view='school'}:{view?:'school'|'classes'|'program'}) {
  const r=useResource<Row>('/school/bootstrap');const user=useSession();const editable=can(user,'school.configure');
