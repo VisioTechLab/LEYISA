@@ -86,21 +86,35 @@ test('Vercel réserve le relais à /api/v1 et refuse les redirections amont', as
   assert.equal(fetchMock.mock.callCount(), 1);
 });
 
-test('Une page Render de réveil HTTP200 devient une erreur JSON503 sans faux cookie',async t=>{
- process.env.LEYISA_RENDER_ORIGIN=origin;process.env.LEYISA_PROXY_SECRET=secret;
- t.mock.method(globalThis,'fetch',async()=>new Response('<html>Application loading</html>',{status:200,headers:{'Content-Type':'text/html','Set-Cookie':'interstitiel=fictif'}}));
- const response=await proxy.fetch(new Request('https://demo.invalid/api/v1/auth/me'));
- assert.equal(response.status,503);assert.match(response.headers.get('content-type'),/application\/json/);
- assert.equal(response.headers.get('retry-after'),'5');assert.equal(response.headers.getSetCookie().length,0);
- assert.match((await response.json()).message,/serveur démarre/);
+test('Réveil Render : HTML 200 puis JSON, lecture seule', async (t) => {
+  process.env.LEYISA_RENDER_ORIGIN = origin;
+  process.env.LEYISA_PROXY_SECRET = secret;
+  let attempts = 0;
+  t.mock.method(globalThis, 'fetch', async () => ++attempts === 1
+    ? new Response('<html>Application loading</html>', {headers:{'Content-Type':'text/html'}})
+    : Response.json({items:[],total:0}));
+  const response = await proxy.fetch(new Request('https://demo.invalid/api/v1/students'));
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {items:[],total:0});
+  assert.equal(attempts, 2);
 });
 
-test('Le relais conserve les réponses JSON et les déconnexions204',async t=>{
- process.env.LEYISA_RENDER_ORIGIN=origin;process.env.LEYISA_PROXY_SECRET=secret;
- const mock=t.mock.method(globalThis,'fetch',async()=>Response.json({items:[],total:0}));
- const response=await proxy.fetch(new Request('https://demo.invalid/api/v1/students'));
- assert.equal(response.status,200);assert.deepEqual(await response.json(),{items:[],total:0});
- mock.mock.mockImplementation(async()=>new Response(null,{status:204}));
- const logout=await proxy.fetch(new Request('https://demo.invalid/api/v1/auth/logout',{method:'POST'}));
- assert.equal(logout.status,204);assert.equal(await logout.text(),'');
+test('Réveil Render : une écriture HTML ne doit jamais être rejouée', async (t) => {
+  process.env.LEYISA_RENDER_ORIGIN = origin;
+  process.env.LEYISA_PROXY_SECRET = secret;
+  const fetchMock=t.mock.method(globalThis,'fetch',async()=>new Response('<html>Application loading</html>',{headers:{'Content-Type':'text/html'}}));
+  const response=await proxy.fetch(new Request('https://demo.invalid/api/v1/students',{method:'POST',body:'{}'}));
+  assert.equal(response.status,503);
+  assert.match((await response.json()).message,/Vérifiez/);
+  assert.equal(fetchMock.mock.callCount(),1);
+  assert.match(response.headers.get('cache-control'),/no-store/);
+});
+
+test('Relais : une réponse 204 reste sans corps', async (t) => {
+  process.env.LEYISA_RENDER_ORIGIN = origin;
+  process.env.LEYISA_PROXY_SECRET = secret;
+  t.mock.method(globalThis,'fetch',async()=>new Response(null,{status:204}));
+  const response=await proxy.fetch(new Request('https://demo.invalid/api/v1/auth/logout',{method:'POST',body:'{}'}));
+  assert.equal(response.status,204);
+  assert.equal(await response.text(),'');
 });

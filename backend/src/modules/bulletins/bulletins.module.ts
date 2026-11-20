@@ -9,6 +9,7 @@ import { prepareBulletin } from "./bulletin-data.js";
 import { renderLegacyBulletin } from "./legacy-bulletin.js";
 import { renderMaternal } from "./maternal-bulletin.js";
 import { renderPrimary } from "./primary-bulletin.js";
+import { renderPrimary as renderPrimaryV16 } from "./primary-bulletin-v16.js";
 import { renderSecondary } from "./secondary-bulletin.js";
 
 import { renderMaternal as renderMaternalV14 } from "./v14/maternal-bulletin.js";
@@ -18,10 +19,10 @@ import { renderSecondary as renderSecondaryV15 } from "./v15/secondary-bulletin.
 
 type PdfResponse = { setHeader(name: string, value: string): void; send(body: Buffer): void };
 
-const currentVersion = 'DEMO-V1.6';
+const currentVersion = 'DEMO-V1.7';
 const previousVersion = 'DEMO-V1.4';
 const legacyVersion = (value: unknown): value is 'DEMO-V1.2' | 'DEMO-V1.3' => value === 'DEMO-V1.2' || value === 'DEMO-V1.3';
-const archivedVersion = (value: unknown) => legacyVersion(value) || value === previousVersion || value === 'DEMO-V1.5';
+const archivedVersion = (value: unknown) => legacyVersion(value) || value === previousVersion || value === 'DEMO-V1.5' || value === 'DEMO-V1.6';
 const decisionOrder = { orderBy: { version: 'desc' as const }, take: 1 };
 const periodDetails = { include: { period: true } };
 const canReadAll = (auth: AuthContext) => auth.roles.some(role => role === 'DIR' || role === 'SEC');
@@ -53,6 +54,15 @@ export class BulletinsController {
       const { lastName, postName, firstName, classLabel, periodCode, yearCode, matricule, cycle } = object(row.identitySnapshot);
       return { ...row, identitySnapshot: { lastName, postName, firstName, classLabel, periodCode, yearCode, matricule, cycle } };
     });
+  }
+
+  /** Compteur exact dans le même périmètre RBAC/ABAC que la liste paginée. */
+  @Get("count") @Requires("bulletins.download")
+  async count(@CurrentAuth() auth: AuthContext) {
+    const total = await this.prisma.client.resultSnapshot.count({
+      where: { classPeriod: { publishedAt: { not: null } }, ...(!canReadAll(auth) ? { enrollment: { student: { userId: auth.userId } } } : {}) }
+    });
+    return { total };
   }
 
   private async load(raw: string, auth: AuthContext) {
@@ -132,12 +142,12 @@ export class BulletinsController {
       this.requireDownloadable(result, data);
       bytes = await renderLegacyBulletin({ ...data.identity, decision: data.decision?.outcome ?? data.identity.decision },
         result.subjectResults as unknown as Record<string, unknown>[], version);
-    } else if (version === currentVersion || (version === previousVersion || version === 'DEMO-V1.5') && issued) {
+    } else if (version === currentVersion || (version === previousVersion || version === 'DEMO-V1.5' || version === 'DEMO-V1.6') && issued) {
       const data = await this.data(result, issued?.generatedAt ?? new Date());
       this.requireDownloadable(result, data);
       const renderers = version === previousVersion
         ? { maternal: renderMaternalV14, primary: renderPrimaryV14, secondary: renderSecondaryV14 }
-        : { maternal: renderMaternal, primary: renderPrimary, secondary: version === 'DEMO-V1.5' ? renderSecondaryV15 : renderSecondary };
+        : { maternal: renderMaternal, primary: version === currentVersion ? renderPrimary : renderPrimaryV16, secondary: version === 'DEMO-V1.5' ? renderSecondaryV15 : renderSecondary };
       const render = data.identity.cycle === 'MATERNEL' ? renderers.maternal : data.identity.cycle === 'PRIMAIRE' ? renderers.primary : renderers.secondary;
       bytes = await render(data);
     } else {

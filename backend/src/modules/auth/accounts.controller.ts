@@ -64,6 +64,37 @@ export class AccountsController {
    return tx.user.findUnique({where:{id},select:userSelect});
   });
  }
+ // Initialisation d'un profil existant et rotation administrative, sans nouveau User.
+ @Post("users/:id/credentials") @HttpCode(200) @Requires("accounts.manage")
+ async credentials(@Param("id") raw:string,@Body() body:unknown,@CurrentAuth() auth:AuthContext) {
+  const id=uuid(raw),d=object(body);
+  if(id===auth.userId)throw new ForbiddenException("Utilisez le changement de votre propre mot de passe.");
+  const next=password(d.newPassword),adminPassword=password(d.adminPassword);
+  const requested=d.login===undefined?undefined:text(d.login,"Identifiant",100);
+  const hash=await hashPassword(next);
+  return this.prisma.client.$transaction(async tx=>{
+   // Même verrou que les modifications de rôle/statut ; la connexion utilise aussi le verrou User.
+   await tx.$queryRaw`SELECT 1 AS locked FROM pg_advisory_xact_lock(19731119)`;
+   await tx.$queryRaw`SELECT id FROM "User" WHERE id IN (${auth.userId}::uuid,${id}::uuid) ORDER BY id FOR UPDATE`;
+   const actor=await tx.user.findUnique({where:{id:auth.userId},include:{roles:true}});
+   if(!actor?.loginEnabled||!actor.roles.some(r=>r.role==="ADM")||!actor.passwordHash||!await verifyPassword(actor.passwordHash,adminPassword))
+    throw new ForbiddenException("Confirmation administrateur incorrecte.");
+   const target=await tx.user.findUnique({where:{id},include:{roles:true,teacher:true}});
+   if(!target||target.kind!=="STAFF")throw new NotFoundException("Compte STAFF introuvable.");
+   if(target.roles.some(r=>r.role==="ADM"))throw new ForbiddenException("Un administrateur doit modifier son propre mot de passe.");
+   if(target.lastName==="Recette historique synthétique"||target.teacher?.staffNumber==="REC-HIST-ENS")
+    throw new ForbiddenException("Ce profil technique historique ne peut pas être activé.");
+   const initialize=target.login===null;
+   if(initialize&&(!target.teacher||!target.roles.some(r=>r.role==="ENS")||!requested))
+    throw new BadRequestException("Un enseignant existant et un identifiant initial sont requis.");
+   if(!initialize&&requested!==undefined&&requested!==target.login)
+    throw new BadRequestException("L'identifiant existant ne peut pas être modifié ici.");
+   const user=await tx.user.update({where:{id},data:{passwordHash:hash,...(initialize?{login:requested}:{} )},select:userSelect});
+   await tx.session.updateMany({where:{userId:id,revokedAt:null},data:{revokedAt:new Date()}});
+   await tx.auditEntry.create({data:{actorId:auth.userId,action:initialize?"USER_CREDENTIALS_INITIALIZED":"PASSWORD_RESET",targetType:"User",targetId:id}});
+   return user;
+  },{timeout:15000});
+ }
  @Post("auth/change-password") @HttpCode(204) @SessionOnly()
  async changePassword(@Body() body:unknown,@CurrentAuth() auth:AuthContext) {
   const d=object(body);const next=password(d.newPassword);const current=text(d.currentPassword,"Ancien mot de passe",256);

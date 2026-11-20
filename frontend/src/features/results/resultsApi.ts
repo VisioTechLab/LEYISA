@@ -2,9 +2,10 @@ import { api as request } from '../../shared/api';
 
 export type Reviewer = { id: string; label: string };
 export type Period = { id: string; code: string; label: string };
+export type SubmittedGrade = { matricule: string; student: string; score: string | number | null; status?: string; appreciation?: { QTE: string; QLT: string; COUL: string; observation?: string } | null };
 export type Submission = {
   id: string; attempt: number; status: string; submittedAt: string; reason: string | null;
-  evaluation: { id: string; title: string; maxScore: string };
+  evaluation: { id: string; title: string; maxScore: string; kind?: string };
   subject: string; schoolClass: { id: string; label: string }; period: { id: string; label: string };
   author: { id: string; label: string };
 };
@@ -16,7 +17,7 @@ export type ClassPeriod = {
 export const resultsApi = {
   bootstrap: () => request<{ periods: Period[] }>('/results/bootstrap'),
   submissions: (periodId?: string) => request<Submission[]>(`/results/submissions${periodId ? `?periodId=${encodeURIComponent(periodId)}` : ''}`),
-  detail: (id: string) => request<Submission & { grades: Array<{ matricule: string; student: string; score: string | number | null }> }>(`/results/submissions/${id}`),
+  detail: (id: string) => request<Submission & { grades: SubmittedGrade[] }>(`/results/submissions/${id}`),
   decide: (id: string, action: 'approve' | 'reject', reason?: string) => request<Submission>(`/results/submissions/${id}/${action}`, {
     method: 'POST', body: JSON.stringify(action === 'reject' ? { reason } : {}),
   }),

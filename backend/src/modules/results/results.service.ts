@@ -20,7 +20,7 @@ function assertValidatedResultsEnabled() {
 }
 type WriteClient = Parameters<Parameters<PrismaService["client"]["$transaction"]>[0]>[0];
 
-type GradeSnapshotEntry = { enrollmentId: string; score: string | number | null };
+type GradeSnapshotEntry = { enrollmentId: string; score: string | number | null; status?: string; appreciation?: { QTE: string; QLT: string; COUL: string; observation?: string } };
 
 @Injectable()
 export class ResultsService {
@@ -63,6 +63,8 @@ export class ResultsService {
           matricule: enrollment?.student.matricule ?? "Inconnu",
           student: enrollment ? `${enrollment.student.user.firstName} ${enrollment.student.user.lastName}` : "Élève inconnu",
           score: entry.score,
+          status: entry.status ?? (entry.score === null && !entry.appreciation ? "NON_SAISI" : "PRESENT"),
+          appreciation: entry.appreciation ?? null,
         };
       }),
     };
@@ -122,7 +124,7 @@ export class ResultsService {
       classCode: context.schoolClass.code,
       classLabel: context.schoolClass.label,
       periodCode: context.period.code,
-      periodLabel: context.period.label,
+      periodLabel: context.period.profile === 'HISTORIQUE' ? `${context.period.label} — historique` : context.period.label,
       status: context.publishedAt ? "PUBLISHED" : context.closedAt ? "CLOSED" : "OPEN",
       evaluationCount: context._count.evaluations,
       resultCount: context._count.results,
@@ -131,6 +133,7 @@ export class ResultsService {
 
   async previewClassPeriod(id: string) {
     const context = await loadClassPeriod(this.prisma.client, id);
+    if (context.period.profile === 'HISTORIQUE') throw new ConflictException('Période historique : consultez les résultats figés sans recalcul.');
     return computePreview(this.prisma.client,context, false);
   }
 
@@ -174,6 +177,7 @@ export class ResultsService {
       if(!context.closedAt||context.results.length===0)throw new ConflictException("Publication exige résultats clôturés et validés.");
       if(context.publishedAt)throw new ConflictException("Résultats déjà publiés.");
       const period=await tx.period.findUnique({where:{id:context.periodId}});
+      if(period?.profile==='HISTORIQUE')throw new ConflictException('Publication interdite pour cette période historique.');
       const cls=await tx.schoolClass.findUnique({where:{id:context.classId}});
       if(cls?.cycle!=='MATERNEL'&&['ANNUEL','REPECHAGE'].includes(period!.kind)) {
         for(const result of context.results)if(!await tx.deliberationDecision.findFirst({where:{resultSnapshotId:result.id}}))throw new ConflictException("Une décision motivée de démonstration est requise pour chaque synthèse avant publication.");
@@ -418,7 +422,7 @@ function parseRejection(body: unknown) {
 function parseSnapshot(value: unknown): GradeSnapshotEntry[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((entry) => isObject(entry) && typeof entry.enrollmentId === "string" && (typeof entry.score === "string" || typeof entry.score === "number" || entry.score === null)
-    ? [{ enrollmentId: entry.enrollmentId, score: entry.score }]
+    ? [{ enrollmentId: entry.enrollmentId, score: entry.score, ...(typeof entry.status==="string"?{status:entry.status}:{}), ...(isObject(entry.appreciation)&&typeof entry.appreciation.QTE==="string"&&typeof entry.appreciation.QLT==="string"&&typeof entry.appreciation.COUL==="string"?{appreciation:{QTE:entry.appreciation.QTE,QLT:entry.appreciation.QLT,COUL:entry.appreciation.COUL,...(typeof entry.appreciation.observation==="string"?{observation:entry.appreciation.observation}:{})}}:{}) }]
     : []);
 }
 
@@ -440,7 +444,7 @@ function formatSubmissionSummary(submission: any) {
     submittedAt: submission.submittedAt,
     decidedAt: submission.decidedAt,
     reason: submission.reason,
-    evaluation: { id: submission.evaluation.id, title: submission.evaluation.title, maxScore: submission.evaluation.maxScore.toString() },
+    evaluation: { id: submission.evaluation.id, title: submission.evaluation.title, kind: submission.evaluation.kind, maxScore: submission.evaluation.maxScore.toString() },
     subject: submission.evaluation.assignment.classSubject.subject.label,
     schoolClass: { id: submission.evaluation.classPeriod.schoolClass.id, label: submission.evaluation.classPeriod.schoolClass.label },
     period: { id: submission.evaluation.classPeriod.period.id, label: submission.evaluation.classPeriod.period.label },
