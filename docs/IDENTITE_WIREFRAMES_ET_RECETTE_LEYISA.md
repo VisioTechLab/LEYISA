@@ -1,5 +1,7 @@
 # Identité visuelle et vérification de la recette LEYISA — 20 novembre 2026
 
+État conservé avant publication. La version validée a ensuite été publiée avec accord du responsable : voir le [compte rendu de déploiement](DEPLOIEMENT_RECETTE_2026_11_20.md).
+
 ## Périmètre autorisé
 
 Travail sur `fix/v1-quality-recovery`, à partir de `c0fda69`. Le responsable a précisé qu’il souhaite l’identité visuelle des 31 wireframes, les espaces courts par rôle, et le lecteur/téléchargement PDF corrigés de la DEMO avec les données réelles LEYISA. Les routes détaillées de la maquette ne sont donc pas réintroduites dans le menu. Les données de la maquette ne constituent ni des fixtures de production ni des règles pédagogiques.
