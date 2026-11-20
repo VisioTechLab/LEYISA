@@ -444,7 +444,7 @@ function formatSubmissionSummary(submission: any) {
     submittedAt: submission.submittedAt,
     decidedAt: submission.decidedAt,
     reason: submission.reason,
-    evaluation: { id: submission.evaluation.id, title: submission.evaluation.title, maxScore: submission.evaluation.maxScore.toString() },
+    evaluation: { id: submission.evaluation.id, title: submission.evaluation.title, kind: submission.evaluation.kind, maxScore: submission.evaluation.maxScore.toString() },
     subject: submission.evaluation.assignment.classSubject.subject.label,
     schoolClass: { id: submission.evaluation.classPeriod.schoolClass.id, label: submission.evaluation.classPeriod.schoolClass.label },
     period: { id: submission.evaluation.classPeriod.period.id, label: submission.evaluation.classPeriod.period.label },
