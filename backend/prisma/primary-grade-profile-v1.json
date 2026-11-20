@@ -1,0 +1,470 @@
+{
+  "code": "PRIMAIRE-6-RECETTE",
+  "version": 1,
+  "status": "DEMO_PROPOSE",
+  "cycle": "PRIMAIRE",
+  "level": "6e primaire",
+  "scope": "Recette privée uniquement ; non officiel. Validation de l'établissement requise avant toute publication officielle.",
+  "sources": [
+    {
+      "url": "https://fr.scribd.com/document/858982946/Billetin-6e-PRIMAIRE-docx",
+      "kind": "modèle de bulletin tiers, non authentifié",
+      "note": "Grille IGE/PS/004 ; maxima de période et examen, sous-totaux contrôlés."
+    },
+    {
+      "url": "https://fr.scribd.com/document/906272167/BUL-6",
+      "kind": "contre-source tierce, non authentifiée",
+      "note": "Totaux concordants, certaines lignes OCR incohérentes ; utiliser le premier modèle."
+    },
+    {
+      "url": "https://edu-nc.gouv.cd/wp-content/uploads/2023/06/IFADEM_RDC-Kinshasa-Livret_4-Nouveau-Programme-Enseignement-Primaire.pdf",
+      "kind": "programme de référence IFADEM publié par le ministère",
+      "note": "Structure des branches, pas un barème de notation."
+    }
+  ],
+  "rules": {
+    "periodMaximum": 300,
+    "examMaximum": 600,
+    "termMaximum": 1200,
+    "annualMaximum": 3600,
+    "examMultiplier": 2,
+    "aggregate": "P1+P2+E1, P3+P4+E2, P5+P6+E3 ; annuel = T1+T2+T3",
+    "percentage": "total obtenu / total maximum × 100",
+    "stateExam": "Hors périmètre : aucun calcul ni résultat TENAFEP inventé",
+    "optional": "Informatique incluse pour cette variante de recette ; à confirmer."
+  },
+  "subjects": [
+    {
+      "code": "P6-REL",
+      "label": "Religion",
+      "groupCode": "FORMATION_PERSONNELLE",
+      "maximum": 10,
+      "position": 1,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-ECM",
+      "label": "Éducation civique et morale",
+      "groupCode": "FORMATION_PERSONNELLE",
+      "maximum": 10,
+      "position": 2,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-EV",
+      "label": "Éducation à la vie",
+      "groupCode": "FORMATION_PERSONNELLE",
+      "maximum": 10,
+      "position": 3,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-LN-GRAM",
+      "label": "Langue nationale — grammaire, conjugaison et analyse",
+      "groupCode": "LANGUE_NATIONALE",
+      "maximum": 7,
+      "position": 4,
+      "componentMaxima": {
+        "P1": "7",
+        "P2": "7",
+        "P3": "7",
+        "P4": "7",
+        "P5": "7",
+        "P6": "7",
+        "E1": "14",
+        "E2": "14",
+        "E3": "14"
+      }
+    },
+    {
+      "code": "P6-LN-EXPR",
+      "label": "Langue nationale — expression et vocabulaire",
+      "groupCode": "LANGUE_NATIONALE",
+      "maximum": 6,
+      "position": 5,
+      "componentMaxima": {
+        "P1": "6",
+        "P2": "6",
+        "P3": "6",
+        "P4": "6",
+        "P5": "6",
+        "P6": "6",
+        "E1": "12",
+        "E2": "12",
+        "E3": "12"
+      }
+    },
+    {
+      "code": "P6-LN-ORTH",
+      "label": "Langue nationale — rédaction et orthographe",
+      "groupCode": "LANGUE_NATIONALE",
+      "maximum": 4,
+      "position": 6,
+      "componentMaxima": {
+        "P1": "4",
+        "P2": "4",
+        "P3": "4",
+        "P4": "4",
+        "P5": "4",
+        "P6": "4",
+        "E1": "8",
+        "E2": "8",
+        "E3": "8"
+      }
+    },
+    {
+      "code": "P6-LN-LECT",
+      "label": "Langue nationale — lecture",
+      "groupCode": "LANGUE_NATIONALE",
+      "maximum": 3,
+      "position": 7,
+      "componentMaxima": {
+        "P1": "3",
+        "P2": "3",
+        "P3": "3",
+        "P4": "3",
+        "P5": "3",
+        "P6": "3",
+        "E1": "6",
+        "E2": "6",
+        "E3": "6"
+      }
+    },
+    {
+      "code": "P6-FR-GRAM",
+      "label": "Français — grammaire, conjugaison et analyse",
+      "groupCode": "FRANCAIS",
+      "maximum": 20,
+      "position": 8,
+      "componentMaxima": {
+        "P1": "20",
+        "P2": "20",
+        "P3": "20",
+        "P4": "20",
+        "P5": "20",
+        "P6": "20",
+        "E1": "40",
+        "E2": "40",
+        "E3": "40"
+      }
+    },
+    {
+      "code": "P6-FR-EXPR",
+      "label": "Français — expression et vocabulaire",
+      "groupCode": "FRANCAIS",
+      "maximum": 25,
+      "position": 9,
+      "componentMaxima": {
+        "P1": "25",
+        "P2": "25",
+        "P3": "25",
+        "P4": "25",
+        "P5": "25",
+        "P6": "25",
+        "E1": "50",
+        "E2": "50",
+        "E3": "50"
+      }
+    },
+    {
+      "code": "P6-FR-ORTH",
+      "label": "Français — rédaction et orthographe",
+      "groupCode": "FRANCAIS",
+      "maximum": 15,
+      "position": 10,
+      "componentMaxima": {
+        "P1": "15",
+        "P2": "15",
+        "P3": "15",
+        "P4": "15",
+        "P5": "15",
+        "P6": "15",
+        "E1": "30",
+        "E2": "30",
+        "E3": "30"
+      }
+    },
+    {
+      "code": "P6-FR-LECT",
+      "label": "Français — lecture",
+      "groupCode": "FRANCAIS",
+      "maximum": 10,
+      "position": 11,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-MT-NUM",
+      "label": "Mathématiques — numération et opérations",
+      "groupCode": "MATHEMATIQUES",
+      "maximum": 20,
+      "position": 12,
+      "componentMaxima": {
+        "P1": "20",
+        "P2": "20",
+        "P3": "20",
+        "P4": "20",
+        "P5": "20",
+        "P6": "20",
+        "E1": "40",
+        "E2": "40",
+        "E3": "40"
+      }
+    },
+    {
+      "code": "P6-MT-GEO",
+      "label": "Mathématiques — grandeurs et géométrie",
+      "groupCode": "MATHEMATIQUES",
+      "maximum": 30,
+      "position": 13,
+      "componentMaxima": {
+        "P1": "30",
+        "P2": "30",
+        "P3": "30",
+        "P4": "30",
+        "P5": "30",
+        "P6": "30",
+        "E1": "60",
+        "E2": "60",
+        "E3": "60"
+      }
+    },
+    {
+      "code": "P6-MT-PROB",
+      "label": "Mathématiques — problèmes",
+      "groupCode": "MATHEMATIQUES",
+      "maximum": 20,
+      "position": 14,
+      "componentMaxima": {
+        "P1": "20",
+        "P2": "20",
+        "P3": "20",
+        "P4": "20",
+        "P5": "20",
+        "P6": "20",
+        "E1": "40",
+        "E2": "40",
+        "E3": "40"
+      }
+    },
+    {
+      "code": "P6-SANTE",
+      "label": "Éducation à la santé et à l’environnement",
+      "groupCode": "EVEIL_SCIENTIFIQUE",
+      "maximum": 10,
+      "position": 15,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-HIST",
+      "label": "Histoire",
+      "groupCode": "EVEIL_SCIENTIFIQUE",
+      "maximum": 10,
+      "position": 16,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-GEOG",
+      "label": "Géographie",
+      "groupCode": "EVEIL_SCIENTIFIQUE",
+      "maximum": 10,
+      "position": 17,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-SCN",
+      "label": "Sciences naturelles",
+      "groupCode": "EVEIL_SCIENTIFIQUE",
+      "maximum": 20,
+      "position": 18,
+      "componentMaxima": {
+        "P1": "20",
+        "P2": "20",
+        "P3": "20",
+        "P4": "20",
+        "P5": "20",
+        "P6": "20",
+        "E1": "40",
+        "E2": "40",
+        "E3": "40"
+      }
+    },
+    {
+      "code": "P6-INFO",
+      "label": "Informatique",
+      "groupCode": "EVEIL_SCIENTIFIQUE",
+      "maximum": 10,
+      "position": 19,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-DESS",
+      "label": "Dessin",
+      "groupCode": "EVEIL_ARTISTIQUE",
+      "maximum": 10,
+      "position": 20,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-CALL",
+      "label": "Calligraphie",
+      "groupCode": "EVEIL_ARTISTIQUE",
+      "maximum": 10,
+      "position": 21,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-MUS",
+      "label": "Chant et musique",
+      "groupCode": "EVEIL_ARTISTIQUE",
+      "maximum": 10,
+      "position": 22,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-EPS",
+      "label": "Éducation physique et sportive",
+      "groupCode": "EVEIL_ARTISTIQUE",
+      "maximum": 10,
+      "position": 23,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    },
+    {
+      "code": "P6-TM",
+      "label": "Travail manuel",
+      "groupCode": "EVEIL_ARTISTIQUE",
+      "maximum": 10,
+      "position": 24,
+      "componentMaxima": {
+        "P1": "10",
+        "P2": "10",
+        "P3": "10",
+        "P4": "10",
+        "P5": "10",
+        "P6": "10",
+        "E1": "20",
+        "E2": "20",
+        "E3": "20"
+      }
+    }
+  ]
+}
