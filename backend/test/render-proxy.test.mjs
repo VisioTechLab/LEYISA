@@ -85,3 +85,36 @@ test('Vercel réserve le relais à /api/v1 et refuse les redirections amont', as
   assert.equal((await proxy.fetch(new Request('https://demo.invalid/api/v1/auth/me'))).status, 503);
   assert.equal(fetchMock.mock.callCount(), 1);
 });
+
+test('Réveil Render : HTML 200 puis JSON, lecture seule', async (t) => {
+  process.env.LEYISA_RENDER_ORIGIN = origin;
+  process.env.LEYISA_PROXY_SECRET = secret;
+  let attempts = 0;
+  t.mock.method(globalThis, 'fetch', async () => ++attempts === 1
+    ? new Response('<html>Application loading</html>', {headers:{'Content-Type':'text/html'}})
+    : Response.json({items:[],total:0}));
+  const response = await proxy.fetch(new Request('https://demo.invalid/api/v1/students'));
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {items:[],total:0});
+  assert.equal(attempts, 2);
+});
+
+test('Réveil Render : une écriture HTML ne doit jamais être rejouée', async (t) => {
+  process.env.LEYISA_RENDER_ORIGIN = origin;
+  process.env.LEYISA_PROXY_SECRET = secret;
+  const fetchMock=t.mock.method(globalThis,'fetch',async()=>new Response('<html>Application loading</html>',{headers:{'Content-Type':'text/html'}}));
+  const response=await proxy.fetch(new Request('https://demo.invalid/api/v1/students',{method:'POST',body:'{}'}));
+  assert.equal(response.status,503);
+  assert.match((await response.json()).message,/Vérifiez/);
+  assert.equal(fetchMock.mock.callCount(),1);
+  assert.match(response.headers.get('cache-control'),/no-store/);
+});
+
+test('Relais : une réponse 204 reste sans corps', async (t) => {
+  process.env.LEYISA_RENDER_ORIGIN = origin;
+  process.env.LEYISA_PROXY_SECRET = secret;
+  t.mock.method(globalThis,'fetch',async()=>new Response(null,{status:204}));
+  const response=await proxy.fetch(new Request('https://demo.invalid/api/v1/auth/logout',{method:'POST',body:'{}'}));
+  assert.equal(response.status,204);
+  assert.equal(await response.text(),'');
+});
