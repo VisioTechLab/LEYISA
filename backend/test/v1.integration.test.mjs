@@ -168,6 +168,11 @@ async function workflow(code,{publish=true,components=['P1'],unpublished=[]}={})
     detail=await ok(browser,`/evaluations/${detail.id}/submission`,'POST',{version:detail.version},201);
     const pending=await db.submission.findFirst({where:{evaluationId:detail.id,status:'PENDING'}});
     assert.equal((await sec.request(`/results/submissions/${pending.id}/approve`,'POST',{})).status,403);
+    if(kind==='APPRECIATION'){
+     const inspection=await ok(dir,`/results/submissions/${pending.id}`);
+     assert.equal(inspection.evaluation.kind,'APPRECIATION');
+     for(const g of inspection.grades){assert.equal(g.score,null);assert.equal(g.status,'PRESENT');assert.deepEqual(g.appreciation,{QTE:'D1',QLT:'D2',COUL:'D3',observation:'Observation fictive'});}
+    }
     if(component==='P1'&&cs.position===1&&code==='DEMO-SEC') {
      await ok(dir,`/results/submissions/${pending.id}/reject`,'POST',{reason:'Vérification de démonstration'});
      detail=await ok(browser,`/evaluations/${detail.id}`);detail=await ok(browser,`/evaluations/${detail.id}/grades`,'PUT',{version:detail.version,grades});
@@ -306,6 +311,11 @@ test('Parcours réel — notes zéro, rejet/correction, concurrence, clôture, p
   assert.equal((await teacher.request(historicPath)).status,403);
   assert.equal((await new Browser().request(historicPath)).status,401);
   assert.equal((await sec.request(`/bulletins/${result.id}/pdf?templateVersion=inconnue`)).status,404);
+  const expected=await db.resultSnapshot.count({where:{classPeriod:{publishedAt:{not:null}}}});
+  assert.equal((await ok(sec,'/bulletins/count')).total,expected);
+  assert.equal((await ok(dir,'/bulletins/count')).total,expected);
+  assert.equal((await adm.request('/bulletins/count')).status,403);
+  assert.equal((await teacher.request('/bulletins/count')).status,403);
   const byMatricule=await ok(sec,`/bulletins?search=${encodeURIComponent(result.identitySnapshot.matricule.toLowerCase())}`);
   assert.ok(byMatricule.length>0);
   assert.ok(byMatricule.every(row=>row.identitySnapshot.matricule===result.identitySnapshot.matricule));
