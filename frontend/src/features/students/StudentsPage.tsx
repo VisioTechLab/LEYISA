@@ -1,3 +1,4 @@
+import { archivePupilName } from '../../shared/labels';
 import { api } from '../../shared/api';
 import { PageHeading } from '../../shared/PageHeading';
 import { locationValue } from '../../shared/workspaceState';
@@ -153,7 +154,7 @@ export function StudentsPage() {
                     <div className="leyisa-table-wrap"><table className="student-table">
                       <thead><tr><th scope="col">Matricule</th><th scope="col">Élève</th><th scope="col">Date de naissance</th><th scope="col">Année</th><th scope="col">Classe</th><th scope="col">Dossier</th></tr></thead>
                       <tbody>{filteredStudents.map((student) => <tr key={student.id}>
-                        <td>{student.matricule}</td><td>{student.lastName} {student.postName} {student.firstName}</td><td>{displayDate(student.birthDate)}</td><td>{student.schoolYear}</td><td>{student.className}</td><td><a href={`#historique?student=${student.id}`} aria-label={`Consulter le dossier ${student.matricule}`}>Consulter</a></td>
+                        <td>{student.matricule}</td><td>{archivePupilName(student.matricule,student.lastName,student.postName,student.firstName)}</td><td>{displayDate(student.birthDate)}</td><td>{student.schoolYear}</td><td>{student.className}</td><td><a href={`#historique?student=${student.id}`} aria-label={`Consulter le dossier ${student.matricule}`}>Consulter</a></td>
                       </tr>)}</tbody>
                     </table></div>
                   ) : <div className="state-message" role="status">{students.length ? "Aucun résultat" : "Aucun élève disponible."}</div>}
