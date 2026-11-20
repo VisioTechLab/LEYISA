@@ -56,6 +56,15 @@ export class BulletinsController {
     });
   }
 
+  /** Compteur exact dans le même périmètre RBAC/ABAC que la liste paginée. */
+  @Get("count") @Requires("bulletins.download")
+  async count(@CurrentAuth() auth: AuthContext) {
+    const total = await this.prisma.client.resultSnapshot.count({
+      where: { classPeriod: { publishedAt: { not: null } }, ...(!canReadAll(auth) ? { enrollment: { student: { userId: auth.userId } } } : {}) }
+    });
+    return { total };
+  }
+
   private async load(raw: string, auth: AuthContext) {
     const id = uuid(raw);
     const result = await this.prisma.client.resultSnapshot.findUnique({
