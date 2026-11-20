@@ -214,7 +214,7 @@ test('API directe : primaire P1 refusé pour PDF, archive incompatible et émiss
   await expect(page.getByRole('heading', { name: 'Choisissez une synthèse trimestrielle' })).toBeVisible();
   const id = await page.getByLabel('Élève', { exact: true }).inputValue();
   const before = await (await page.request.get(`/api/v1/bulletins/${id}`)).json();
-  for (const suffix of ['/pdf', '/pdf?templateVersion=DEMO-V1.6']) {
+  for (const suffix of ['/pdf', '/pdf?templateVersion=DEMO-V1.7']) {
     const response = await page.request.get(`/api/v1/bulletins/${id}${suffix}`); expect(response.status()).toBe(409);
     expect(response.headers()['content-type']).not.toContain('application/pdf');
   }
