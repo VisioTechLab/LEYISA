@@ -2,7 +2,7 @@ import { archiveStaffLabel, archivePupilName } from './shared/labels';
 import { RetakeDecisionField } from './features/results/DeliberationPanel';
 import { BulletinWorkspace } from './features/bulletins/BulletinWorkspace';
 import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
-import { api, post } from './shared/api';
+import { api, post, userError } from './shared/api';
 import { useSession } from './shared/session';
 import { can } from './features/auth/authApi';
 import { locationValue, rememberLocation, searchText, useWorkspaceState } from './shared/workspaceState';
@@ -24,7 +24,7 @@ export function useResource<T>(path: string | null) {
    if (request === generation.current) setState({ path, data, error: '', loading: false });
   } catch (error) {
    if (request === generation.current) {
-    setState({ path, data: null, error: error instanceof Error ? error.message : 'Chargement impossible.', loading: false });
+    setState({ path, data: null, error: userError(error,'Chargement impossible.'), loading: false });
    }
   }
  }, [path]);
@@ -40,14 +40,18 @@ export function useResource<T>(path: string | null) {
   ? { ...state, refresh }
   : { data: null, error: '', loading: path !== null, refresh };
 }
-function Feedback({error,loading}:{error:string;loading:boolean}) {return error?<p role="alert" className="form-feedback feedback-error">{error}</p>:loading?<p role="status">Chargement…</p>:null;}
+function Feedback({error,loading,onRetry}:{error:string;loading:boolean;onRetry?:()=>void}) {
+ if(error)return <div role="alert" className="form-feedback feedback-error"><p>{error}</p>{onRetry&&<button className="leyisa-button leyisa-button-secondary" type="button" onClick={onRetry}>Réessayer</button>}</div>;
+ if(loading)return <div className="leyisa-load-placeholder" role="status" aria-busy="true"><span className="leyisa-loading-mark" aria-hidden="true"/><span>Chargement des données…</span></div>;
+ return null;
+}
 export function Panel({title,children,disclosure}:{title:string;children:ReactNode;disclosure?:boolean}) {return (disclosure??/^(Ajouter|Créer|Nouveau|Nouvel|Nouvelle|Identité|Préparer un profil)/.test(title))
  ? <details className="leyisa-card workspace-disclosure"><summary>{title}</summary>{children}</details>
  : <section className="leyisa-card"><h2>{title}</h2>{children}</section>;}
 export function Field({label,name,type='text',required=true,value,children}:{label:string;name:string;type?:string;required?:boolean;value?:string;children?:ReactNode}) {return <label><span>{label}{required?' *':''}</span>{children?<select aria-label={label} name={name} required={required} defaultValue={value}>{children}</select>:<input aria-label={label} name={name} type={type} step={type==='number'?'any':undefined} required={required} defaultValue={value} maxLength={type==='password'?256:200}/>}</label>;}
 export function ActionForm({children,action,label='Enregistrer',done}:{children?:ReactNode;action:(d:Record<string,string>)=>Promise<unknown>;label?:string;done?:()=>void}) {
  const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');
- async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();if(busy)return;const d=Object.fromEntries(new FormData(e.currentTarget).entries()) as Record<string,string>;setBusy(true);setError('');setMessage('');try{await action(d);setMessage('Enregistrement confirmé par le serveur.');done?.();}catch(e){setError(e instanceof Error?e.message:'Action impossible.');}finally{setBusy(false);}}
+ async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();if(busy)return;const d=Object.fromEntries(new FormData(e.currentTarget).entries()) as Record<string,string>;setBusy(true);setError('');setMessage('');try{await action(d);setMessage('Enregistrement confirmé par le serveur.');done?.();}catch(e){setError(userError(e,'Action impossible.'));}finally{setBusy(false);}}
  return <form className="leyisa-form" onSubmit={submit} aria-busy={busy}><fieldset disabled={busy}>{children}</fieldset>{error&&<p role="alert" className="feedback-error">{error}</p>}{message&&<p role="status">{message}</p>}<button className="leyisa-button" disabled={busy}>{busy?'Traitement…':label}</button></form>;
 }
 function Options({rows,label='label'}:{rows:Row[];label?:string}) {return <><option value="">Choisir…</option>{rows.map(r=><option key={r.id} value={r.id}>{r[label]??r.code??r.id}</option>)}</>;}
@@ -82,11 +86,18 @@ export function Dashboard({role}:{role:string}){
   stats=[['Soumissions à examiner',other.length],['Classes',new Set(rows.map(r=>r.classId??r.classCode??r.classLabel)).size],['Résultats publiés',rows.filter(r=>r.status==='PUBLISHED').reduce((n,r)=>n+r.resultCount,0)]];
   overview=other.slice(0,5).map(r=>({id:r.id,label:r.evaluation.title,context:r.schoolClass.label,href:'#validation'}));
  }else{stats=[['Résultats publiés',!Array.isArray(current.data)?current.data?.total??0:0]];}
+ const work:Record<string,{label:string;hint:string;href:string}[]> = {
+  ADM:[{label:'Gérer les comptes',hint:'Activer les accès des collaborateurs',href:'#comptes'},{label:'Vérifier les classes',hint:'Années et programmes scolaires',href:'#classes'}],
+  SEC:[{label:'Rechercher un élève',hint:'Dossiers et inscriptions',href:'#eleves'},{label:'Consulter les bulletins',hint:'Documents publiés par année et par classe',href:'#bulletins'}],
+  ENS:[{label:other.some(e=>e.state==='REJECTED')?'Corriger les notes rejetées':'Ouvrir mes évaluations',hint:other.filter(e=>e.state==='REJECTED').length+' correction(s) à traiter',href:'#evaluations'},{label:'Consulter mes cours',hint:rows.length+' cours affecté(s)',href:'#cours'}],
+  DIR:[{label:'Examiner les soumissions',hint:other.length+' soumission(s) en attente',href:'#validation'},{label:'Suivre les résultats',hint:'Clôtures et publications',href:'#resultats'}],
+  ELEVE:[{label:'Mes bulletins',hint:'Consulter les documents publiés',href:'#bulletins'}]
+ };
  return <Page title={view.title}>
-  <Feedback error={error} loading={loading}/>
+  <Feedback error={error} loading={loading} onRetry={()=>{void Promise.all([current.refresh(),related.refresh()]);}}/>
   <div className="leyisa-stats">{stats.map(([label,value])=><Panel key={label} title={label}><strong>{loading||error?'Indisponible':value}</strong></Panel>)}</div>
-  <div className="leyisa-grid dashboard-workspace"><Panel title="Accès rapides"><ul className="workspace-shortcuts">{[view.primary,...view.links].map(([label,href],index)=><li key={href}><div><strong>{label}</strong><small>Ouvrir le module</small></div><a className={index===0?'leyisa-button':'workspace-open'} href={href}>Ouvrir<span className="sr-only"> : {label}</span></a></li>)}</ul></Panel>
-  <Panel title="Vue d’ensemble">{!loading&&!error&&(overview.length?<div className="leyisa-table-wrap"><table><thead><tr><th>{role==='ENS'?'Cours':role==='SEC'?'Élève':role==='DIR'?'Soumission':'Année scolaire'}</th><th>{role==='SEC'?'Matricule':'Contexte'}</th><th>Action</th></tr></thead><tbody>{overview.map(r=><tr key={r.id}><td>{r.label}</td><td>{r.context}</td><td><a href={r.href}>Consulter</a></td></tr>)}</tbody></table></div>:<p>Aucun élément à afficher dans votre périmètre.</p>)}<div className="dashboard-more"><a href={view.primary[1]}>Ouvrir le module</a></div></Panel></div>
+  <div className="leyisa-grid dashboard-workspace"><Panel title="Mes actions"><ul className="workspace-shortcuts">{(work[role]??work.ELEVE).map((item,index)=><li key={item.href}><div><strong>{item.label}</strong><small>{loading?'Actualisation en cours':item.hint}</small></div><a className={index===0?'leyisa-button':'workspace-open'} href={item.href}>Ouvrir<span className="sr-only"> : {item.label}</span></a></li>)}</ul></Panel>
+  <Panel title={role==='ENS'?'Mes cours récents':role==='DIR'?'Soumissions récentes':role==='SEC'?'Dossiers récents':'Vue d’ensemble'}>{!loading&&!error&&(overview.length?<div className="leyisa-table-wrap"><table><thead><tr><th>{role==='ENS'?'Cours':role==='SEC'?'Élève':role==='DIR'?'Soumission':'Année scolaire'}</th><th>{role==='SEC'?'Matricule':'Contexte'}</th><th>Action</th></tr></thead><tbody>{overview.map(r=><tr key={r.id}><td>{r.label}</td><td>{r.context}</td><td><a href={r.href}>Consulter</a></td></tr>)}</tbody></table></div>:<p>Aucun élément à afficher dans votre périmètre.</p>)}<div className="dashboard-more"><a href={view.primary[1]}>Ouvrir le module</a></div></Panel></div>
  </Page>;
 }
 

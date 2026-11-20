@@ -247,3 +247,46 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
  await downloaded.saveAs(resolve(proofs,'bulletin-parcours-navigateur.pdf'));await capture(page,'W25-parcours-reel');
  await adm.dispose();await sec.dispose();await dir.dispose();
 });
+
+test('Ergonomie par profil : actions utiles, fil d’Ariane, notifications et thème sombre',async({page})=>{
+ test.setTimeout(180_000);
+ for(const role of ['adm','sec','ens','dir'] as const){
+  await login(page,role);
+  await page.goto('/#accueil');await settled(page);
+  await expect(page.getByRole('heading',{name:'Mes actions'})).toBeVisible();
+  await expect(page.getByRole('navigation',{name:'Fil d’Ariane'})).toBeVisible();
+  await expect(page.getByRole('navigation',{name:'Navigation principale'}).locator('a[aria-current="page"]')).toHaveCount(1);
+  if(role==='ens'||role==='dir'){
+   await page.getByRole('button',{name:'Notifications',exact:true}).click();
+   await expect(page.locator('.leyisa-notification-panel')).toBeVisible();
+   await expect(page.locator('.leyisa-notification-panel [role="alert"]')).toHaveCount(0);
+   await expect(page.locator('.leyisa-notification-panel [role="status"]')).toHaveCount(0);
+   await page.getByRole('button',{name:'Notifications',exact:true}).click();
+  } else await expect(page.getByRole('button',{name:'Notifications',exact:true})).toHaveCount(0);
+  await page.getByRole('button',{name:'Mode sombre',exact:true}).click();
+  await expect(page.locator('.leyisa-shell')).toHaveAttribute('data-theme','dark');
+  const background=await page.locator('.leyisa-workspace').evaluate(element=>getComputedStyle(element).backgroundColor);
+  expect(background).not.toBe('rgb(246, 248, 248)');
+  await page.goto('/#accueil');await expect(page.locator('.leyisa-shell')).toHaveAttribute('data-theme','dark');
+  await page.getByRole('button',{name:'Mode clair',exact:true}).click();
+  await expect(page.locator('.leyisa-shell')).toHaveAttribute('data-theme','light');
+  expect(await page.evaluate(()=>localStorage.length+sessionStorage.length)).toBe(0);
+  for(const width of [390,320]){
+   await page.setViewportSize({width,height:844});
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${role}: débordement à ${width}px`).toBeTruthy();
+  }
+  await page.setViewportSize({width:1440,height:1080});
+ }
+});
+
+test('Fil d’Ariane : page de premier niveau non répétée et lien enfant correct',async({page})=>{
+ await login(page,'sec');
+ await page.goto('/#bulletins');
+ const crumbs=page.getByRole('navigation',{name:'Fil d’Ariane'});
+ await expect(crumbs.getByRole('link',{name:'Accueil'})).toHaveCount(1);
+ await expect(crumbs.locator('[aria-current="page"]')).toHaveText('Bulletins disponibles');
+ await expect(crumbs.getByRole('link',{name:'Bulletins',exact:true})).toHaveCount(0);
+ await page.goto('/#historique');
+ await expect(crumbs.getByRole('link',{name:'Élèves',exact:true})).toHaveCount(1);
+ await expect(crumbs.locator('[aria-current="page"]')).toHaveText('Historique scolaire');
+});
