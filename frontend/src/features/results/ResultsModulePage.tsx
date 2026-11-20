@@ -5,6 +5,7 @@ import { DeliberationPanel } from './DeliberationPanel';
 import { CollectionTools, Pagination } from '../../WorkspacePages';
 import { searchText, useWorkspaceState } from '../../shared/workspaceState';
 import { periodLabel, resultStatus } from '../../shared/labels';
+import { PageHeading } from '../../shared/PageHeading';
 
 type View = 'queue' | 'detail' | 'reject' | 'preview' | 'close' | 'final';
 const displayNumber = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -171,7 +172,7 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
   }, [initialView,classPeriodId,classPeriods,loading]);
 
   return <main className="leyisa-page results-module-page">
-    <header className="leyisa-page-heading"><div><h1>{titleFor(view)}</h1><p>{descriptionFor(view)}</p></div><span className="leyisa-chip">DEMO-V1</span></header>
+    <PageHeading title={titleFor(view)} description={descriptionFor(view)}/>
     {!['detail','reject','close'].includes(view)&&<div className="results-toolbar">
       <label>Période<select aria-label="Période" value={periodId} disabled={pendingDecision} onChange={event => selectPeriod(event.target.value)}><option value="">Toutes les périodes</option>{periods.map(period => <option key={period.id} value={period.id}>{periodLabel(period.label)}</option>)}</select></label>
       <button className="leyisa-button leyisa-button-secondary" disabled={pendingDecision} onClick={()=>void loadPeriodData(periodId)}>Actualiser la file</button>

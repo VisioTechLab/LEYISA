@@ -1,0 +1,11 @@
+{
+  "role": "sec",
+  "menu": [
+    "Accueil",
+    "Élèves",
+    "Inscriptions",
+    "Bulletins"
+  ],
+  "heading": "Tableau de bord Secrétariat",
+  "singleRoleSelector": false
+}

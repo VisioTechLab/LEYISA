@@ -1,0 +1,11 @@
+
+Running 4 tests using 1 worker
+
+(node:24170) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/bulletins.spec.ts:179:1 › W12 : vrai PDF, recherche par matricule et conservation W12/W25/retour/rechargement (7.8s)
+  ✓  2 tests/workspaces.spec.ts:24:1 › Multirôle : uniquement ENS/DIR, périmètre actif et refus serveur d’ADM (1.6s)
+  ✓  3 tests/workspaces.spec.ts:48:1 › Changement de compte dans un autre onglet : abandon du menu précédent et déconnexion synchronisée (3.3s)
+  ✓  4 tests/workspaces.spec.ts:61:1 › Changement de session et serveur indisponible : les données de l’ancien compte restent masquées (1.5s)
+
+  4 passed (15.2s)

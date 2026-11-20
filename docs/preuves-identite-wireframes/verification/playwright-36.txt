@@ -1,0 +1,47 @@
+
+Running 36 tests using 1 worker
+
+(node:22019) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/bulletins.spec.ts:48:29 › PDF maternelle : aperçu et téléchargement identiques (2.6s)
+  ✓   2 tests/bulletins.spec.ts:48:29 › PDF primaire annuel : aperçu et téléchargement identiques (2.5s)
+  ✓   3 tests/bulletins.spec.ts:48:29 › PDF secondaire P1 : aperçu et téléchargement identiques (2.5s)
+  ✓   4 tests/bulletins.spec.ts:48:29 › PDF secondaire annuel : aperçu et téléchargement identiques (4.6s)
+  ✓   5 tests/bulletins.spec.ts:48:29 › PDF repêchage : aperçu et téléchargement identiques (3.2s)
+  ✓   6 tests/bulletins.spec.ts:74:1 › Primaire P1 : aucun document sans les notes de la période sélectionnée (2.7s)
+  ✓   7 tests/bulletins.spec.ts:82:1 › Refus PDF403 visible, aucun téléchargement trompeur et reprise après erreur (2.6s)
+  ✓   8 tests/bulletins.spec.ts:92:1 › Les versions archivées affichent et téléchargent le même document (4.4s)
+  ✓   9 tests/bulletins.spec.ts:102:1 › Repêchage V1.5 archivé : octets antérieurs conservés ; V1.6 affiche les40 points (3.6s)
+  ✓  10 tests/bulletins.spec.ts:111:1 › Téléphone390px et320px : PDF lisible au zoom sans débordement de la page (2.7s)
+  ✓  11 tests/bulletins.spec.ts:124:1 › ENS : accès direct au bulletin refusé par la vue et par l’API (816ms)
+  ✓  12 tests/bulletins.spec.ts:130:1 › Liste vide : explication et retour utiles sans formulaire ni faux document (947ms)
+  ✓  13 tests/bulletins.spec.ts:139:1 › Chargement PDF : état explicite et émission indisponible tant que le document manque (2.5s)
+  ✓  14 tests/bulletins.spec.ts:150:1 › Conflit409 d’émission : erreur visible, aucun message de succès et PDF conservé (2.6s)
+  ✓  15 tests/bulletins.spec.ts:159:1 › PDF paginé : toutes les pages sont navigables et les boutons respectent les bornes (3.2s)
+  ✓  16 tests/bulletins.spec.ts:179:1 › W12 : vrai PDF, recherche par matricule et conservation W12/W25/retour/rechargement (7.5s)
+  ✓  17 tests/bulletins.spec.ts:212:1 › API directe : primaire P1 refusé pour PDF, archive incompatible et émission sans nouvel enregistrement (1.2s)
+  ✓  18 tests/bulletins.spec.ts:230:1 › Lien direct hors première liste : le dossier reste accessible sans filtre implicite (2.4s)
+  ✓  19 tests/modules.spec.ts:35:1 › W01 : connexion, erreur lisible, clavier et téléphone (1.3s)
+  ✓  20 tests/modules.spec.ts:56:54 › Module adm : vues réelles, navigation et adaptation390/320px (4.1s)
+  ✓  21 tests/modules.spec.ts:56:54 › Module sec : vues réelles, navigation et adaptation390/320px (7.6s)
+  ✓  22 tests/modules.spec.ts:56:54 › Module ens : vues réelles, navigation et adaptation390/320px (4.2s)
+  ✓  23 tests/modules.spec.ts:56:54 › Module dir : vues réelles, navigation et adaptation390/320px (6.0s)
+  ✓  24 tests/modules.spec.ts:84:1 › Dossier : homonymes, recherche nom/matricule, historique et inscription sans perte de sélection (4.4s)
+  ✓  25 tests/modules.spec.ts:122:1 › Scolarité : la classe choisie reste ouverte entre classes, programme et calendrier (1.9s)
+Parcours local : création de l’évaluation 1.
+Parcours local : grille 1 créée.
+Parcours local : création de l’évaluation 2.
+Parcours local : grille 2 créée.
+  ✓  26 tests/modules.spec.ts:145:1 › Parcours métier navigateur : affectation, zéro, rejet, correction, validation, clôture, publication et PDF (14.1s)
+  ✓  27 tests/workspaces.spec.ts:11:48 › Espace adm : accueil, menu exclusif, données API et téléphone (2.1s)
+  ✓  28 tests/workspaces.spec.ts:11:48 › Espace sec : accueil, menu exclusif, données API et téléphone (2.4s)
+  ✓  29 tests/workspaces.spec.ts:11:48 › Espace ens : accueil, menu exclusif, données API et téléphone (2.0s)
+  ✓  30 tests/workspaces.spec.ts:11:48 › Espace dir : accueil, menu exclusif, données API et téléphone (2.5s)
+  ✓  31 tests/workspaces.spec.ts:24:1 › Multirôle : uniquement ENS/DIR, périmètre actif et refus serveur d’ADM (1.5s)
+  ✓  32 tests/workspaces.spec.ts:31:1 › Secrétariat : total réel, pagination et formulaire sur demande (1.9s)
+  ✓  33 tests/workspaces.spec.ts:36:1 › Résultats et bulletins : toutes les périodes avant un choix explicite (3.0s)
+  ✓  34 tests/workspaces.spec.ts:41:1 › Erreur réseau : alerte explicite, sans faux état vide (1.5s)
+  ✓  35 tests/workspaces.spec.ts:44:1 › Serveur indisponible : la vérification de session propose une reprise sans faux formulaire de connexion (486ms)
+  ✓  36 tests/workspaces.spec.ts:48:1 › Changement de compte dans un autre onglet : abandon du menu précédent et déconnexion synchronisée (3.4s)
+
+  36 passed (2.0m)

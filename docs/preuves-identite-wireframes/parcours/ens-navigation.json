@@ -1,0 +1,11 @@
+{
+  "role": "ens",
+  "menu": [
+    "Accueil",
+    "Mes classes et cours",
+    "Mes évaluations",
+    "Mes soumissions"
+  ],
+  "heading": "Mon espace Enseignant",
+  "singleRoleSelector": false
+}

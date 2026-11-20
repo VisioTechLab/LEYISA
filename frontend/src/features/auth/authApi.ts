@@ -26,13 +26,19 @@ export function can(user: CurrentUser | null, permission: string): boolean {
 }
 
 export class LoginError extends Error {}
+// Aucun identifiant ni jeton n'est diffusé : chaque onglet relit sa session
+// HttpOnly auprès du serveur et abandonne l'espace de l'ancien utilisateur.
+const authChannel = typeof BroadcastChannel === 'undefined' ? null : new BroadcastChannel('leyisa-auth');
+authChannel?.addEventListener('message', event => {
+  if (event.data === 'session-changed') window.dispatchEvent(new Event('leyisa:auth-changed'));
+});
 
 export async function login(identifier:string,password:string):Promise<CurrentUser> {
-  try {return (await post<{user:CurrentUser}>('/auth/login',{login:identifier.trim(),password})).user;}
+  try {const result=await post<{user:CurrentUser}>('/auth/login',{login:identifier.trim(),password});authChannel?.postMessage('session-changed');return result.user;}
   catch(error){throw new LoginError(error instanceof Error?error.message:'Connexion impossible.');}
 }
 export async function fetchCurrentUser():Promise<CurrentUser|null> {
   try{return (await api<{user:CurrentUser}>('/auth/me')).user;}catch(error){if(error instanceof HttpError&&error.status===401)return null;throw error;}
 }
-export async function logout():Promise<void> {await post('/auth/logout',{});}
+export async function logout():Promise<void> {await post('/auth/logout',{});authChannel?.postMessage('session-changed');}
 export function homeHashFor(_user:CurrentUser):string {return '#accueil';}

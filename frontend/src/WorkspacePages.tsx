@@ -6,6 +6,7 @@ import { useSession } from './shared/session';
 import { can } from './features/auth/authApi';
 import { locationValue, rememberLocation, searchText, useWorkspaceState } from './shared/workspaceState';
 import { evaluationStatus } from './shared/labels';
+import { PageHeading } from './shared/PageHeading';
 
 // Contrats d'écran : données réseau uniquement, aucun jeu de démonstration embarqué.
 type Row=Record<string,any>;
@@ -49,7 +50,7 @@ export function ActionForm({children,action,label='Enregistrer',done}:{children?
  return <form className="leyisa-form" onSubmit={submit} aria-busy={busy}><fieldset disabled={busy}>{children}</fieldset>{error&&<p role="alert" className="feedback-error">{error}</p>}{message&&<p role="status">{message}</p>}<button className="leyisa-button" disabled={busy}>{busy?'Traitement…':label}</button></form>;
 }
 function Options({rows,label='label'}:{rows:Row[];label?:string}) {return <><option value="">Choisir…</option>{rows.map(r=><option key={r.id} value={r.id}>{r[label]??r.code??r.id}</option>)}</>;}
-function Page({title,description,children}:{title:string;description?:string;children:ReactNode}) {return <main className="leyisa-page"><header className="leyisa-page-heading"><h1>{title}</h1><p>{description}</p></header>{children}</main>;}
+function Page({title,description,children}:{title:string;description?:string;children:ReactNode}) {return <main className="leyisa-page"><PageHeading title={title} description={description}/>{children}</main>;}
 export function AccessPage(){return <Page title="Accès refusé ou conflit"><div className="leyisa-grid"><Panel title="401 — Session absente ou révoquée"><a href="#connexion">Se connecter</a></Panel><Panel title="403 — Permissions insuffisantes"><a href="#accueil">Retour à mon espace</a></Panel><Panel title="409 — Conflit de version ou ressource clôturée"><button onClick={()=>window.location.reload()}>Recharger les données</button></Panel><Panel title="400 — Données invalides"><p>Corrigez les champs indiqués puis renvoyez le formulaire.</p><a href="#accueil">Retour à mon espace</a></Panel></div></Page>;}
 
 const dashboards = {
@@ -82,11 +83,9 @@ export function Dashboard({role}:{role:string}){
  }else{stats=[['Résultats publiés',rows.length]];}
  return <Page title={view.title}>
   <Feedback error={error} loading={loading}/>
-  <div className="workspace-welcome"><p>Que souhaitez-vous faire aujourd’hui ?</p><a className="leyisa-button" href={view.primary[1]}>{view.primary[0]}</a></div>
   <div className="leyisa-stats">{stats.map(([label,value])=><Panel key={label} title={label}><strong>{loading||error?'—':value}</strong></Panel>)}</div>
-  <div className="leyisa-grid dashboard-workspace"><Panel title={role==='ENS'?'Mes cours':role==='SEC'?'Retrouver un dossier':role==='DIR'?'À examiner':'Années scolaires'}>
-  {!loading&&!error&&(overview.length?<ul className="workspace-overview">{overview.map(r=><li key={r.id}><a href={r.href}><strong>{r.label}</strong><small>{r.context}</small><span aria-hidden="true">→</span></a></li>)}</ul>:<p>Aucun élément à afficher dans votre périmètre.</p>)}
-  </Panel><Panel title="Mes autres outils"><ul className="workspace-shortcuts">{view.links.map(([label,href])=><li key={href}><a href={href}>{label}<span aria-hidden="true">→</span></a></li>)}</ul></Panel></div>
+  <div className="leyisa-grid dashboard-workspace"><Panel title="Accès rapides"><ul className="workspace-shortcuts">{[view.primary,...view.links].map(([label,href],index)=><li key={href}><div><strong>{label}</strong><small>Ouvrir le module</small></div><a className={index===0?'leyisa-button':'workspace-open'} href={href}>Ouvrir<span className="sr-only"> : {label}</span></a></li>)}</ul></Panel>
+  <Panel title="Vue d’ensemble">{!loading&&!error&&(overview.length?<div className="leyisa-table-wrap"><table><thead><tr><th>{role==='ENS'?'Cours':role==='SEC'?'Élève':role==='DIR'?'Soumission':'Année scolaire'}</th><th>{role==='SEC'?'Matricule':'Contexte'}</th><th>Action</th></tr></thead><tbody>{overview.map(r=><tr key={r.id}><td>{r.label}</td><td>{r.context}</td><td><a href={r.href}>Consulter</a></td></tr>)}</tbody></table></div>:<p>Aucun élément à afficher dans votre périmètre.</p>)}<div className="dashboard-more"><a href={view.primary[1]}>Ouvrir le module</a></div></Panel></div>
  </Page>;
 }
 

@@ -10,6 +10,14 @@ import { object, todayCivil } from "../../common/input.js";
 import { PrismaService } from "../../common/prisma.service.js";
 
 const TRANSACTION = { maxWait: 10_000, timeout: 20_000 } as const;
+// Protection de ca2d348 (recette privée) conservée : aucune clôture/publication
+// sur base partagée sans validation explicite. Le scénario local reste isolé.
+function assertValidatedResultsEnabled() {
+  if (process.env.LEYISA_ALLOW_UNVALIDATED_RESULTS === 'false' ||
+      process.env.LEYISA_DB_MODE !== 'local' && process.env.LEYISA_ALLOW_UNVALIDATED_RESULTS !== 'true') {
+    throw new ConflictException('Clôture et publication suspendues : les règles pédagogiques doivent être validées.');
+  }
+}
 type WriteClient = Parameters<Parameters<PrismaService["client"]["$transaction"]>[0]>[0];
 
 type GradeSnapshotEntry = { enrollmentId: string; score: string | number | null };
@@ -127,6 +135,7 @@ export class ResultsService {
   }
 
   async closeClassPeriod(id: string, actorId: string, body: unknown) {
+    assertValidatedResultsEnabled();
     if(object(body).confirmed!==true)throw new BadRequestException("Confirmation explicite requise.");
     return this.prisma.client.$transaction(async (tx) => {
       await requireDirector(tx, actorId);
@@ -156,6 +165,7 @@ export class ResultsService {
   }
 
   async publish(id:string,actorId:string) {
+    assertValidatedResultsEnabled();
     return this.prisma.client.$transaction(async tx=>{
       await requireDirector(tx,actorId);
       await tx.$queryRaw`SELECT id FROM "ClassPeriod" WHERE id=${id}::uuid FOR UPDATE`;

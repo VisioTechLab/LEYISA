@@ -44,3 +44,25 @@ test('Erreur réseau : alerte explicite, sans faux état vide',async({page})=>{
 test('Serveur indisponible : la vérification de session propose une reprise sans faux formulaire de connexion',async({page})=>{
  await page.route('**/api/v1/auth/me',route=>route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({message:'Service momentanément indisponible.'})}));await page.goto('/');await expect(page.getByRole('alert')).toContainText('Service momentanément indisponible.');await expect(page.getByLabel('Identifiant',{exact:true})).toHaveCount(0);await page.unroute('**/api/v1/auth/me');await page.getByRole('button',{name:'Réessayer',exact:true}).click();await expect(page.getByLabel('Identifiant',{exact:true})).toBeVisible();
 });
+
+test('Changement de compte dans un autre onglet : abandon du menu précédent et déconnexion synchronisée',async({page,context})=>{
+ await login(page,'sec');
+ const other=await context.newPage();await other.goto('/');
+ await other.getByRole('button',{name:'Déconnexion',exact:true}).click();
+ await expect(page.getByLabel('Identifiant',{exact:true})).toBeVisible();
+ await login(other,'ens');
+ await expect(page.locator('.leyisa-nav a')).toHaveText(menus.ens);
+ await expect(page.locator('main h1')).toHaveText('Mon espace Enseignant');
+ expect((await json(page,'/auth/me')).user.roles).toEqual(['ENS']);
+ await other.getByRole('button',{name:'Déconnexion',exact:true}).click();
+ await expect(page.getByLabel('Identifiant',{exact:true})).toBeVisible();
+});
+
+test('Changement de session et serveur indisponible : les données de l’ancien compte restent masquées',async({page})=>{
+ await login(page,'sec');
+ await page.route('**/api/v1/auth/me',route=>route.fulfill({status:503,json:{message:'Service momentanément indisponible.'}}));
+ await page.evaluate(()=>window.dispatchEvent(new Event('leyisa:auth-changed')));
+ await expect(page.locator('main h1')).toHaveText('Connexion au service');
+ await expect(page.locator('.leyisa-nav')).toHaveCount(0);
+ await expect(page.getByRole('button',{name:'Réessayer',exact:true})).toBeVisible();
+});

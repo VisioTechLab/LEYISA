@@ -30,7 +30,8 @@ try {
    const errors = [];
    const listener = error => errors.push(error.message); page.on('pageerror',listener);
    await page.goto(`${origin}/#${route}`);
-   await page.locator(`.leyisa-nav a[aria-current="page"][href="#${route}"]`).waitFor();
+   // Les écrans enfants restent dans le menu court de leur module parent.
+   await page.locator('.leyisa-nav a[aria-current="page"]').waitFor();
    await page.locator('main h1').waitFor();
    await page.waitForFunction(()=>![...document.querySelectorAll('[role="status"]')].some(node=>/Chargement|Vérification de la session|Ouverture du lecteur/.test(node.textContent??'')));
    await page.waitForLoadState('networkidle');

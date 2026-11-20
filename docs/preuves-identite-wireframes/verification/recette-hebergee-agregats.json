@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-20",
+  "deployedSha": "ca2d348a769ce75e8216a04aa4b98e72dbcc20bd",
+  "newDeploymentTriggered": false,
+  "databaseReadOnlyChecks": {
+    "students": 93,
+    "classes": 23,
+    "usersAllKinds": 108,
+    "migrationChecksumsMatch": 6,
+    "publishedPeriods": 0
+  },
+  "sequentialAuthenticatedChecks": {
+    "SEC": {
+      "studentPage1": 50,
+      "studentPage2": 43,
+      "classes": 23,
+      "publishedBulletins": 0
+    },
+    "ENS": {
+      "assignedCourses": 1,
+      "evaluations": 1,
+      "scopedStudents": 3
+    },
+    "DIR": {
+      "pendingSubmissions": 0,
+      "classPeriodContexts": 22
+    },
+    "ADM": {
+      "staffAccounts": 15,
+      "classes": 23,
+      "auditEntriesAtCheck": 44
+    }
+  },
+  "limitation": "Le DATABASE_URL effectif de Render n’a pas été exporté ; concordance des données API/Neon vérifiée. Aucun bulletin publié disponible pour tester un PDF réel.",
+  "schoolDataWritesPerformed": false,
+  "passwordsChanged": false
+}

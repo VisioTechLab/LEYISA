@@ -4,6 +4,7 @@ import './index.css'
 import './App.css'
 import App from './App.tsx'
 import './quality.css'
+import './wireframe-theme.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

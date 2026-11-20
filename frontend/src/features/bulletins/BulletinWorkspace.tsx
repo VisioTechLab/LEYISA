@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { activeRoleHeaders, api, post } from '../../shared/api';
+import { PageHeading } from '../../shared/PageHeading';
 import { useSession } from '../../shared/session';
 import { can } from '../auth/authApi';
 import { locationValue, rememberLocation, searchText, useWorkspaceState } from '../../shared/workspaceState';
@@ -146,10 +147,7 @@ export function BulletinWorkspace({ catalog = false }: { catalog?: boolean }) {
   }
 
   return <main className="leyisa-page bulletin-workspace">
-    <header className="bulletin-page-header">
-      <div><p className="bulletin-eyebrow">Scolarité / Documents scolaires</p><h1>Bulletins scolaires</h1><p>{catalog ? 'Retrouver les documents publiés et consulter leur version originale.' : 'Consulter et remettre un bulletin publié.'}</p></div>
-      <a href={`${catalog ? '#bulletin' : '#bulletins'}${selectedId ? `?result=${selectedId}` : ''}`} className="bulletin-return">{catalog ? 'Préparer la remise' : 'Tous les bulletins'}</a>
-    </header>
+    <PageHeading title="Bulletins scolaires" description={catalog ? 'Retrouver les documents publiés et consulter leur version originale.' : 'Consulter et remettre un bulletin publié.'} action={<a href={`${catalog ? '#bulletin' : '#bulletins'}${selectedId ? `?result=${selectedId}` : ''}`} className="bulletin-return">{catalog ? 'Préparer la remise' : 'Tous les bulletins'}</a>}/>
     {listError && <div className="bulletin-error" role="alert"><p>{listError}</p><button onClick={() => setRefresh(n => n + 1)}>Réessayer</button></div>}
     {loading && <p role="status">Chargement des bulletins publiés…</p>}
     {!loading && !listError && !rows.length && <section className="bulletin-empty"><h2>Aucun bulletin publié</h2><p>Les documents apparaîtront ici après la publication des résultats par la direction.</p><a href="#accueil">Retour à l’accueil</a></section>}

@@ -9,6 +9,7 @@ import { SessionContext } from './shared/session';
 import { setApiRole } from './shared/api';
 import { parentEntry, roleMenus, roleNames } from './shared/navigation';
 import { WorkspaceStateProvider } from './shared/workspaceState';
+import { deploymentLabel, isPrivateRecipe } from './shared/deployment';
 import { AccessPage, AccountsPage, AuditPage, BulletinsPage, Dashboard, EvaluationsHome, SchoolPages, StudentRecordPages, TeacherPages } from './WorkspacePages';
 
 const routes=[
@@ -46,7 +47,20 @@ export default function App(){
  const hash=useSyncExternalStore(subscribe,()=>window.location.hash||'#accueil');
  const [menuOpen,setMenuOpen]=useState(false);
  const [user,setUser]=useState<CurrentUser|null>(null),[loading,setLoading]=useState(true),[choice,setChoice]=useState({userId:'',role:''}),[error,setError]=useState('');
- useEffect(()=>{let active=true;const refresh=()=>{setError('');setLoading(true);void fetchCurrentUser().then(u=>{if(active){setUser(u);setLoading(false);}}).catch(error=>{if(active){setError(error instanceof Error?error.message:'Service momentanément indisponible.');setLoading(false);}});};const expire=()=>{setApiRole('');setUser(null);};refresh();window.addEventListener('leyisa:login',refresh);window.addEventListener('leyisa:session-expired',expire);return()=>{active=false;window.removeEventListener('leyisa:login',refresh);window.removeEventListener('leyisa:session-expired',expire);};},[]);
+ useEffect(()=>{
+  let active=true,generation=0,checkingFocus=false,identity:string|null|undefined;
+  const refresh=async(silent=false)=>{
+   const request=++generation;setError('');if(!silent){setLoading(true);setUser(null);}
+   try{const next=await fetchCurrentUser();if(active&&request===generation){const nextIdentity=next?.id??null;if(identity!==undefined&&identity!==nextIdentity)window.location.hash='#accueil';identity=nextIdentity;setUser(next);setLoading(false);}}
+   catch(error){if(active&&request===generation){setError(error instanceof Error?error.message:'Service momentanément indisponible.');setLoading(false);}}
+  };
+  const fullRefresh=()=>{void refresh();};
+  // Une simple reprise de fenêtre ne démonte pas le dossier/PDF sélectionné.
+  const focusRefresh=()=>{if(document.visibilityState!=='visible'||checkingFocus)return;checkingFocus=true;void refresh(true).finally(()=>{checkingFocus=false;});};
+  const expire=()=>{generation++;setApiRole('');setUser(null);setLoading(false);};
+  fullRefresh();window.addEventListener('leyisa:login',fullRefresh);window.addEventListener('leyisa:auth-changed',fullRefresh);window.addEventListener('leyisa:session-expired',expire);window.addEventListener('focus',focusRefresh);document.addEventListener('visibilitychange',focusRefresh);
+  return()=>{active=false;generation++;window.removeEventListener('leyisa:login',fullRefresh);window.removeEventListener('leyisa:auth-changed',fullRefresh);window.removeEventListener('leyisa:session-expired',expire);window.removeEventListener('focus',focusRefresh);document.removeEventListener('visibilitychange',focusRefresh);};
+ },[]);
  const role=(choice.userId===user?.id&&user?.roles.includes(choice.role as RoleCode)?choice.role:user?.roles[0]??'') as RoleCode;
  // Le rôle demandé ne peut que réduire les droits attribués ; le serveur le revérifie.
  setApiRole(role);
@@ -59,13 +73,14 @@ export default function App(){
  async function signOut(){try{await logout();setApiRole('');setUser(null);window.location.hash='#connexion';}catch(e){setError(e instanceof Error?e.message:'Déconnexion impossible.');}}
  function changeRole(next:string){if(!user?.roles.includes(next as RoleCode))return;setChoice({userId:user.id,role:next});setMenuOpen(false);window.location.hash='#accueil';}
  const links=roleMenus[role].filter(item=>{const entry=routes.find(r=>r.hash===item.hash);return entry&&(!entry.permission||can(scopedUser,entry.permission));});
- return <SessionContext.Provider value={scopedUser}><WorkspaceStateProvider key={`${user.id}:${role}`}><div className="leyisa-shell"><aside className="leyisa-sidebar" data-open={menuOpen}>
-  <a className="leyisa-brand" href="#accueil"><SchoolLogo/><span><strong>Leyisa School</strong><small>{roleNames[role]}</small></span></a>
+ return <SessionContext.Provider value={{...scopedUser,roles:[role]}}><WorkspaceStateProvider key={`${user.id}:${role}`}><div className="leyisa-shell">
+ <header className="leyisa-topbar"><div className="leyisa-top-left"><a className="leyisa-brand" href="#accueil"><SchoolLogo/><strong>Leyisa School</strong></a><p><span>Leyisa School</span><span aria-hidden="true">/</span><a href={parent?.hash??'#accueil'}>{parent?.label??'Accueil'}</a>{parent?.hash!==route.hash&&<><span aria-hidden="true">/</span>{route.label}</>}</p></div>
+ <div className="session-controls"><span className="leyisa-chip">{deploymentLabel}</span>{user.roles.length>1?<><label className="sr-only" htmlFor="session-role">Rôle actif</label><select id="session-role" value={role} onChange={e=>changeRole(e.target.value)}>{user.roles.map(r=><option key={r} value={r}>{roleNames[r]}</option>)}</select></>:<span className="leyisa-chip">{roleNames[role]}</span>}<button onClick={()=>void signOut()}>Déconnexion</button></div></header>
+ <aside className="leyisa-sidebar" data-open={menuOpen}>
   <button type="button" className="leyisa-menu-toggle" aria-expanded={menuOpen} aria-controls="leyisa-navigation" onClick={()=>setMenuOpen(open=>!open)}>{menuOpen?'Fermer le menu':'Ouvrir le menu'}</button>
-  <nav id="leyisa-navigation" className="leyisa-nav" aria-label="Navigation principale"><p className="workspace-role">Espace {roleNames[role]}</p><ul>{links.map(item=><li key={item.hash}><a href={item.hash} onClick={()=>setMenuOpen(false)} aria-current={item.hash===(parent?.hash??route.hash)?'page':undefined}>{item.label}</a></li>)}</ul></nav>
-  <p className="leyisa-sidebar-note">VISIO TECH · DEMO-V1</p>
- </aside><div className="leyisa-workspace"><header className="leyisa-topbar"><p><a href={parent?.hash??'#accueil'}>{parent?.label??'Accueil'}</a>{parent?.hash!==route.hash&&<><span aria-hidden="true">/</span>{route.label}</>}</p>
- <div className="session-controls"><span className="leyisa-chip">{['localhost','127.0.0.1'].includes(window.location.hostname)?'Démo locale':'DEMO-V1'}</span>{user.roles.length>1?<><label className="sr-only" htmlFor="session-role">Rôle actif</label><select id="session-role" value={role} onChange={e=>changeRole(e.target.value)}>{user.roles.map(r=><option key={r} value={r}>{roleNames[r]}</option>)}</select></>:<span className="leyisa-chip">{roleNames[role]}</span>}<button onClick={()=>void signOut()}>Déconnexion</button></div></header>
+  <nav id="leyisa-navigation" className="leyisa-nav" aria-label="Navigation principale"><p className="workspace-role">Menu principal</p><ul>{links.map(item=><li key={item.hash}><a href={item.hash} onClick={()=>setMenuOpen(false)} aria-current={item.hash===(parent?.hash??route.hash)?'page':undefined}>{item.label}</a></li>)}</ul></nav>
+  <p className="leyisa-sidebar-note">VISIO TECH · {deploymentLabel}<br/>{isPrivateRecipe?'Données scolaires — accès privé':'Données de démonstration'}</p>
+ </aside><div className="leyisa-workspace">
  {error&&<p role="alert">{error}</p>}<div key={`${role}:${route.hash}`} data-route={route.hash}>{route.permission&&!can(scopedUser,route.permission)?<AccessPage/>:route.render(role)}</div>
  </div></div></WorkspaceStateProvider></SessionContext.Provider>;
 }

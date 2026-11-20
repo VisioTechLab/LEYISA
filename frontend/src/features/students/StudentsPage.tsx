@@ -1,4 +1,5 @@
 import { api } from '../../shared/api';
+import { PageHeading } from '../../shared/PageHeading';
 import { locationValue } from '../../shared/workspaceState';
 import { useSession } from '../../shared/session';
 import { can } from '../auth/authApi';
@@ -133,7 +134,7 @@ export function StudentsPage() {
 
   return (
     <main className="leyisa-page students-app">
-      <header className="leyisa-page-heading"><h1>Élèves</h1>{allowed&&<a className="leyisa-button" href="#dossier">Créer un dossier élève</a>}</header>
+      <PageHeading title="Élèves" action={allowed&&<a className="leyisa-button" href="#dossier">Créer un dossier élève</a>}/>
           <div className="students-workspace">
             <section className="leyisa-card" aria-labelledby="roster-title">
               <div className="panel-header"><div><h2 id="roster-title">Liste des élèves</h2><p className="panel-description">Recherche par nom ou matricule</p></div></div>

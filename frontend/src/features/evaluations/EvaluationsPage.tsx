@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { PageHeading } from '../../shared/PageHeading';
 import { AppreciationsGrid } from './AppreciationsGrid';
 import {
   ApiError,
@@ -169,10 +170,7 @@ export function EvaluationsPage() {
 
   return (
     <main className="leyisa-page leyisa-evaluations">
-      <header className="leyisa-page-heading">
-        <h1>{confirmationMode?"Confirmation de soumission":correctionMode?"Correction après rejet":"Saisie des notes"}</h1>
-        <p>Enregistrer les notes d’une évaluation, puis les soumettre pour validation.</p>
-      </header>
+      <PageHeading title={confirmationMode?"Confirmation de soumission":correctionMode?"Correction après rejet":"Saisie des notes"} description="Enregistrer les notes d’une évaluation, puis les soumettre pour validation."/>
 
       <nav className="workspace-tabs" aria-label="Parcours de l’évaluation"><a href="#cours">Mes classes et cours</a><a href="#evaluations">Mes évaluations</a>{detail&&<a href={`#notes?id=${detail.id}`} aria-current={!confirmationMode?'page':undefined}>Notes</a>}{detail&&<a href={`#soumission?id=${detail.id}`} aria-current={confirmationMode?'page':undefined}>Soumission</a>}</nav>
       <details className="leyisa-card evaluations-picker" aria-labelledby="evaluations-picker-title">
