@@ -263,3 +263,24 @@ test('Lien direct hors première liste : le dossier reste accessible sans filtre
  expect(requests).toEqual([]);
  await expect(page.locator('.bulletin-selection')).not.toContainText(/grade|—/i);
  });
+
+test('Lisibilité : logo, formulaires et navigation visibles sur ordinateur et téléphone',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  await expect(page.locator('.login__logo')).toBeVisible();
+  expect((await page.locator('.login__logo').boundingBox())?.width).toBeGreaterThanOrEqual(180);
+  expect(await page.getByLabel('Identifiant',{exact:true}).evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(16);
+  await login(page);
+  await expect(page.locator('.leyisa-brand .leyisa-logo')).toBeVisible();
+  expect((await page.locator('.leyisa-brand .leyisa-logo').boundingBox())?.width).toBeGreaterThanOrEqual(60);
+  expect(await page.locator('.leyisa-nav a').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(15);
+  await page.goto('/#bulletins');
+  await expect(page.getByLabel('Niveau',{exact:true})).toBeVisible();
+  expect(await page.getByLabel('Année scolaire',{exact:true}).evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(16);
+  for(const width of [390,320]){
+    await page.setViewportSize({width,height:844});
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();
+    await expect(page.locator('.leyisa-brand .leyisa-logo')).toBeVisible();
+    expect((await page.locator('.leyisa-brand .leyisa-logo').boundingBox())?.width).toBeGreaterThanOrEqual(50);
+  }
+});
