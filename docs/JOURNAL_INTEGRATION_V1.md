@@ -38,3 +38,38 @@
 - Les quatre accueils présentent les données réelles avec tableau d’aperçu. W01, W09, W12, W19, W24–26 ont été rapprochés des maquettes existantes. Chromium a rejoué le parcours sur une nouvelle classe-période ouverte et produit les 31 captures de recette ainsi que le PDF. Relecture réussie après redémarrage.
 - Vérification finale locale avec PostgreSQL 18.7 et Node 24.22.1 : 76 tests réussis, aucun échec ni ignoré, 39 vérifications DB et droits du rôle runtime validés. Compilations des deux applications, lint, scan de motifs et comparaison du manifeste des preuves réussis.
 - La [matrice des 31 vues](CONFORMITE_WIREFRAMES_V1.md), le [rapport d’audit](AUDIT_RELEASE_V1.md), les [tests](TESTS_V1.md) et les [migrations](MIGRATIONS_V1.md) documentent les résultats et les écarts. Les verdicts se prononcent sur la démo locale, la démo hébergée et l’exploitation réelle.
+
+## 19 novembre 2026 — accès aux hébergeurs et protection de la démo V1.5
+
+- Vercel confirme le forfait Hobby actif pour `visio-tech-lab`. Le projet `leyisa-v1-5-demo` a été créé avec la protection de tous les déploiements. La relecture confirme Vite, Node.js 24.x, l’absence de liaison Git et zéro déploiement.
+- L’API Render rattache le service Free `leyisa-nestjs` au projet communiqué. Le déploiement de départ `dep-dbqss6tg1s2s73f9ld10` au commit `17df06bac29740a6b550f701c04056c63f870e29` reste en service.
+- Un bac à sable Vercel privé, éphémère et sans port public a vérifié TLS 1.3 et le nom du serveur sur le point d’accès PostgreSQL direct de `demo-v1`. Le test a rendu `Verification: OK` et s’est arrêté avant l’authentification. L’import et la recette en ligne restent ouverts. [Guide de mise en service](MISE_EN_SERVICE_DEMO_V1_5.md)
+- Vercel a attribué le domaine `leyisa-v1-5-demo.vercel.app`. La relecture confirme les deux variables du relais pour les déploiements de production et de prévisualisation, dont le secret en type `sensitive`. Les clients `pg_restore` et `psql` 18.7 démarrent dans le bac à sable. Aucune sauvegarde ni chaîne PostgreSQL n’y a été envoyée.
+
+## 19 novembre 2026 — restauration Neon et contrôle des privilèges
+
+- Autorisation explicite reçue pour le bac à sable privé. La cible `LEYISA School Demo V1 / demo-v1 / leyisa_demo` était vide avant l’import. L’empreinte de la sauvegarde fictive a été vérifiée localement et sur le poste de restauration. SHA-256 `7cd58d884435ad888d0f533e2d7b081eb20455c9fee9ae6871d298c72f6f3672`.
+- `pg_restore` 18.7 a restauré la sauvegarde en une transaction sur la connexion PostgreSQL directe `verify-full`. Les six lignes terminées du registre Prisma portent exactement les noms et empreintes des migrations versionnées. La base contient 84 utilisateurs fictifs, 21 élèves et 105 résultats publiés. Elle ne contient aucune session importée, aucun compteur de connexion et aucun accès élève actif.
+- Le compte `leyisa_demo_runtime` a réussi le contrôle par la connexion groupée en TLS `verify-full`. Les droits des 24 tables sont conformes, dont le registre Prisma inaccessible et les tables d’audit en ajout seul. Le compte ne peut ni administrer le schéma ni créer des rôles ou des bases. L’accès propriétaire temporaire a été révoqué. L’API Vercel confirme la destruction du bac à sable de restauration.
+- Les cinq résultats de référence ont été retrouvés en base. Le téléchargement HTTPS des PDF reste à vérifier après déploiement.
+
+## 19 novembre 2026 — API Render de démonstration active
+
+- Le service Free `leyisa-nestjs` a été réutilisé avec la branche `demo/leyisa-v1`, le répertoire `backend` et le déploiement automatique désactivé. Le déploiement manuel `dep-dbvklqflk1mc73e1cqog` est actif au SHA `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Render reçoit uniquement la chaîne groupée du compte runtime, avec TLS `verify-full`.
+- Depuis l’extérieur, `GET /health` répond 200 et un accès direct à `GET /api/v1/auth/csrf` sans authentification du relais répond 403.
+
+## 19 novembre 2026 — recette de la démonstration hébergée
+
+- Vercel Hobby a publié `dpl_5ZodKxRmTSRNPwsJWpy6GECVk8Sp`, associé au SHA `7783483d59e5f64f5d7e9e54ecb609a28be4e9a3`. Sans accès, l’alias stable et l’URL du déploiement redirigent vers Vercel (302). Avec l’accès de recette temporaire, l’accueil répond 200. L’accès technique a ensuite été révoqué et la protection a été recontrôlée. [Démonstration privée](https://leyisa-v1-5-demo.vercel.app/)
+- Deux sessions indépendantes du secrétariat ont téléchargé les cinq modèles V1.5 sur le domaine. Les PDF étaient identiques aux références locales, en téléchargement et sous `private, no-store`. Les sessions ADM, DIR et ENS ont également été vérifiées. Refus contrôlés sans session (401), hors rôle (403), sans jeton CSRF (403) et avec origine étrangère (403). La déconnexion renvoie 204 et le rechargement ne rétablit pas la session révoquée.
+- Sur une classe de recette fictive distincte, l’inscription a persisté et le doublon a renvoyé 409. Deux enseignants ont saisi les notes ; zéro a été accepté et 21/20 refusé. La direction a rejeté, validé la correction, clôturé le résultat 15/40 et publié. Le bulletin a renvoyé 404 avant publication, 403 à l’enseignant et 200 au secrétariat après publication. Le premier essai avait déclenché le verrou du programme après le début des évaluations. La recette a été rejouée avec les deux matières configurées d’abord.
+- Render a confirmé le redémarrage du service. Le point de santé a répondu 200 ensuite. La lecture de l’inscription et un nouveau téléchargement ont confirmé la persistance. SHA-256 du bulletin de recette avant et après redémarrage `4c2785952be97ac1af4ac30c7f88d9d2fa55e076f778e3cf22a080d0b9638531`.
+- Sur Chromium tactile, à 390 × 844, le formulaire se présente sans débordement. La connexion, le rechargement et la déconnexion 204 ont réussi sur le site hébergé. Confirmation nominative sur le téléphone de Melvin en attente. Les identifiants sont à remettre par coffre nominatif avec expiration. [Procédure et accès invité](MISE_EN_SERVICE_DEMO_V1_5.md#3-recette-hébergée-avec-melvin)
+
+| PDF V1.5 téléchargé | SHA-256 en ligne, identique à la référence |
+| --- | --- |
+| Carte maternelle | `ff7bc3440509786e54a66449bb2a3424f642727a3e8caabe1b1cb549699b1fb3` |
+| Bulletin primaire | `5e5f7e2a4fe01170b3849be940a688ac6d41c217aff4b508df3d8c5ff924fc4d` |
+| Bulletin secondaire | `492c7c41216e57f11fad3200e6dfd69b9d88c0b23c75f590b4067ec65b150457` |
+| Bulletin secondaire annuel | `4de7f4f763279dba72ccb96794ca1634822b8e6496bcc5075f56b68ff1e59712` |
+| Repêchage | `a0b5b1664d1cf8416ba13b063df0d8e9dce95627cb9099ffd35b6d77ed230e68` |
