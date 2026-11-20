@@ -20,7 +20,7 @@ function assertValidatedResultsEnabled() {
 }
 type WriteClient = Parameters<Parameters<PrismaService["client"]["$transaction"]>[0]>[0];
 
-type GradeSnapshotEntry = { enrollmentId: string; score: string | number | null };
+type GradeSnapshotEntry = { enrollmentId: string; score: string | number | null; status?: string; appreciation?: { QTE: string; QLT: string; COUL: string; observation?: string } };
 
 @Injectable()
 export class ResultsService {
@@ -63,6 +63,8 @@ export class ResultsService {
           matricule: enrollment?.student.matricule ?? "Inconnu",
           student: enrollment ? `${enrollment.student.user.firstName} ${enrollment.student.user.lastName}` : "Élève inconnu",
           score: entry.score,
+          status: entry.status ?? (entry.score === null && !entry.appreciation ? "NON_SAISI" : "PRESENT"),
+          appreciation: entry.appreciation ?? null,
         };
       }),
     };
@@ -420,7 +422,7 @@ function parseRejection(body: unknown) {
 function parseSnapshot(value: unknown): GradeSnapshotEntry[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((entry) => isObject(entry) && typeof entry.enrollmentId === "string" && (typeof entry.score === "string" || typeof entry.score === "number" || entry.score === null)
-    ? [{ enrollmentId: entry.enrollmentId, score: entry.score }]
+    ? [{ enrollmentId: entry.enrollmentId, score: entry.score, ...(typeof entry.status==="string"?{status:entry.status}:{}), ...(isObject(entry.appreciation)&&typeof entry.appreciation.QTE==="string"&&typeof entry.appreciation.QLT==="string"&&typeof entry.appreciation.COUL==="string"?{appreciation:{QTE:entry.appreciation.QTE,QLT:entry.appreciation.QLT,COUL:entry.appreciation.COUL,...(typeof entry.appreciation.observation==="string"?{observation:entry.appreciation.observation}:{})}}:{}) }]
     : []);
 }
 
