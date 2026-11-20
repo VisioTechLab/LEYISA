@@ -246,7 +246,23 @@ function FinalScreen({ results, contexts, classPeriodId, onSelect, onLoad, onPub
   </div>}
  </>;
 }
-function StudentResults({ students, final = false, published = false }: { students: Preview['students']; final?: boolean; published?: boolean }) { const subjects = students[0]?.subjectResults ?? []; return <ResultTable headings={['Élève', ...subjects.map(subject => subject.label), ...(final ? ['Total'] : []), ...(published ? ['Document'] : [])]} students={students.map(student => ({ documentId: published ? student.id : undefined, label: `${student.identity.matricule ?? ''} ${student.identity.firstName ?? ''} ${student.identity.lastName ?? ''}`.trim(), values: [...student.subjectResults.map(subject => subject.earned === null ? '—' : `${displayNumber.format(subject.earned)}/${subject.maximum}`), ...(final ? [`${displayNumber.format(student.totalEarned)}/${displayNumber.format(student.totalMaximum)}`] : [])] }))} />; }
+function formatScore(value: number|string|null|undefined) {
+ if(value===null||value===undefined||value==='')return '—';
+ const number=Number(value);
+ return Number.isFinite(number)?displayNumber.format(number):'—';
+}
+function StudentResults({ students, final = false, published = false }: { students: Preview['students']; final?: boolean; published?: boolean }) {
+ const subjects=students[0]?.subjectResults??[];
+ const unknownTotals=final&&students.some(s=>s.totalEarned==null||s.totalMaximum==null);
+ return <><ResultTable headings={['Élève',...subjects.map(s=>s.label??s.subjectCode??'Matière'),...(final?['Total']:[]),...(published?['Document']:[])]} students={students.map(student=>({
+  documentId:published?student.id:undefined,
+  label:`${student.identity.matricule??''} ${student.identity.firstName??''} ${student.identity.lastName??''}`.trim(),
+  values:[...student.subjectResults.map(subject=>{
+   if(subject.earned===undefined&&subject.meanOn20!=null)return `${formatScore(subject.meanOn20)}/20 (moyenne historique)`;
+   return subject.earned==null||subject.maximum==null?'—':`${formatScore(subject.earned)}/${formatScore(subject.maximum)}`;
+  }),...(final?[student.totalEarned==null||student.totalMaximum==null?'—':`${formatScore(student.totalEarned)}/${formatScore(student.totalMaximum)}`]:[])]
+ }))}/>{unknownTotals&&<p className="table-footnote">Totaux non disponibles pour certains résultats historiques.</p>}</>;
+}
 function ResultTable({ headings, students }: { headings: string[]; students: Array<{ label: string; values: string[]; documentId?: string }> }) { return <div className="leyisa-table-wrap"><table><thead><tr>{headings.map(heading => <th key={heading}>{heading}</th>)}</tr></thead><tbody>{students.map(student => <tr key={student.label}><td>{student.label}</td>{student.values.map((value, index) => <td key={`${student.label}-${index}`}>{value}</td>)}{student.documentId&&<td><a href={`#bulletin?result=${student.documentId}`} aria-label={`Bulletin de ${student.label}`}>Consulter le bulletin</a></td>}</tr>)}</tbody></table></div>; }
 function titleFor(view: View) { return ({ queue: 'Validation des notes', detail: 'Détail d’une soumission', reject: 'Rejeter avec motif', preview: 'Prévisualiser les résultats', close: 'Confirmer la clôture', final: 'Résultats et clôture' })[view]; }
 function descriptionFor(view: View) { return ({ queue: 'Examiner les soumissions et décider sur la version envoyée.', detail: 'Consulter les notes transmises sans les modifier.', reject: 'Expliquer à l’enseignant ce qui doit être corrigé.', preview: 'Vérifier toutes les conditions avant de clôturer.', close: 'Clôturer une classe pour une période précise.', final: 'Consulter les résultats figés après la clôture.' })[view]; }

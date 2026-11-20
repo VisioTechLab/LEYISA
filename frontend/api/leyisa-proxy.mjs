@@ -67,6 +67,17 @@ export default {
         return failure(502, 'Réponse inattendue du service.');
       }
 
+      // Une instance Render en réveil peut renvoyer sa page HTML avec HTTP200.
+      // Cette page n'est ni une session ni une liste vide de données scolaires.
+      const mediaType = (upstream.headers.get('content-type') ?? '').split(';')[0].trim().toLowerCase();
+      if (upstream.status !== 204 && request.method !== 'HEAD' &&
+          mediaType !== 'application/json' && !mediaType.endsWith('+json') && mediaType !== 'application/pdf') {
+        await upstream.body?.cancel();
+        const response = failure(503, 'Le serveur démarre ou est momentanément indisponible. Réessayez dans quelques instants.');
+        response.headers.set('Retry-After', '5');
+        return response;
+      }
+
       const responseHeaders = new Headers({ 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' });
       for (const name of outputHeaders) {
         if (upstream.headers.has(name)) responseHeaders.set(name, upstream.headers.get(name));
