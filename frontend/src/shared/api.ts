@@ -7,6 +7,19 @@ export class HttpError extends Error {
  details:Record<string,unknown>;
  constructor(status:number,message:string,details:Record<string,unknown>={}) {super(message);this.status=status;this.details=details;}
 }
+/** Messages courts, sans divulguer de détails techniques ou d'identifiants. */
+export function userError(error: unknown, fallback = 'Cette opération n’a pas pu aboutir.'): string {
+ if (error instanceof HttpError) {
+  if (error.status === 0 || error.status === 502 || error.status === 503 || error.status === 504)
+   return 'Le service ne répond pas. Vérifiez votre connexion puis réessayez.';
+  if (error.status === 401) return 'Votre session a expiré. Reconnectez-vous.';
+  if (error.status === 403) return 'Vous ne disposez pas des droits nécessaires.';
+  if (error.status === 409) return 'Ces données ont changé. Actualisez la page avant de continuer.';
+  if (error.status >= 500) return 'Le service rencontre un problème. Réessayez.';
+  return error.message || fallback;
+ }
+ return error instanceof Error && error.message ? error.message : fallback;
+}
 function jsonResponse(response:Response):boolean {
  const type=(response.headers.get('content-type')??'').split(';')[0].trim().toLowerCase();
  return type==='application/json'||type.endsWith('+json');
