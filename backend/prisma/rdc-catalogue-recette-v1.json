@@ -6587,6 +6587,15 @@
   ],
   "secondaryCalendar": [
     {
+      "code": "P1",
+      "label": "1re période — secondaire",
+      "kind": "PERIODE",
+      "parent": "S1",
+      "starts": "2026-09-01",
+      "ends": "2026-11-04",
+      "position": 1
+    },
+    {
       "code": "P2",
       "label": "P2 — SECONDAIRE_TECHNIQUE",
       "kind": "PERIODE",
@@ -6670,7 +6679,7 @@
   ],
   "limitations": [
     "Le moteur maternel actuel ne calcule pas les composants EVEIL : ne pas créer de contextes d'évaluation sur ces dates.",
-    "P1 secondaire historique reste inchangée : date de fin 18 décembre 2026 au lieu du 4 novembre, pas de parent S1 ; validation complète de la synthèse secondaire bloquée jusqu'à résolution.",
+    "P1 historique conservée dans le profil réservé HISTORIQUE, exclue du calendrier pédagogique actif.",
     "6A et ancienne 5A conservées sans changement de programme ; ne pas effacer les résultats figés.",
     "Toutes les pondérations extrapolées sont provisoires ; aucune publication officielle."
   ]
