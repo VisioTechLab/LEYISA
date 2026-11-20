@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-20",
+  "sourceSha": "abc8b1cec3a878610ccff83d48b35f3dd9825962",
+  "frontendDeployment": "dpl_8GmSSveZMrFeQDEcxmLP6BLfUQCi",
+  "backendDeployment": "dep-dc0380dg1s2s73e1sfsg",
+  "rolesVerifiedAfterPublication": {
+    "ADM": {
+      "schoolYears": 2,
+      "classes": 23,
+      "staffAccounts": 15,
+      "roleSelector": false,
+      "alerts": 0
+    },
+    "SEC": {
+      "studentsTotal": 93,
+      "page1Rows": 50,
+      "page2Rows": 43,
+      "matriculeSearchRows": 1,
+      "publishedBulletins": 0,
+      "alerts": 0
+    },
+    "ENS": {
+      "assignments": 1,
+      "evaluations": 1,
+      "evaluationsWithinAssignments": true,
+      "scopedStudents": 3,
+      "roleSelector": false,
+      "moduleAlerts": 0
+    },
+    "DIR": {
+      "teachers": 11,
+      "pendingSubmissions": 0,
+      "classPeriodContexts": 22,
+      "firstResultsPageRows": 15,
+      "publishedResults": 0,
+      "roleSelector": false,
+      "moduleAlerts": 0
+    }
+  },
+  "schoolDataWritesPerformed": false,
+  "credentialsReset": false,
+  "newDeploymentDuringFinalVerification": false,
+  "limitation": "Aucun bulletin réel publié disponible ; lecteur et téléchargements PDF validés dans la CI sur données synthétiques."
+}

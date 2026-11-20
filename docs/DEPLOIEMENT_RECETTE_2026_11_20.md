@@ -29,7 +29,11 @@ La session SEC est confirmée par `/auth/me`. L’API publiée renvoie maintenan
 
 Une attente de contrôle utilisait un ancien nom de classe CSS du pied de tableau et a expiré ; la lecture du DOM réel a ensuite confirmé43 lignes et « page2 ». Cette erreur de harnais ne constitue pas une panne de pagination.
 
-Les contrôles ENS/DIR après publication restent en attente de la connexion du responsable. Le compte SEC est encore actif au dernier contrôle. Les quatre espaces du code publié sont également couverts par la CI ; les quatre comptes hébergés avaient été vérifiés avant publication. Cette limite n’empêche pas de constater les deux déploiements effectifs et les contrôles ADM/SEC réussis.
+La session ENS publiée est confirmée par `/auth/me` :1 cours affecté,1 évaluation rattachée à cette affectation,3 élèves accessibles via le contrat paginé. Menu exclusif Accueil / Mes classes et cours / Mes évaluations / Mes soumissions ; pas de sélecteur de rôle. Les trois modules s’ouvrent avec1 ligne chacun et0 alerte. L’accueil affiche1 cours,1 évaluation et0 correction. L’onglet précédemment en SEC affichait déjà le nouvel espace ENS avant toute navigation de contrôle : le changement de compte entre onglets est bien répercuté.
+
+La session DIR publiée est confirmée par `/auth/me` :0 soumission en attente,22 contextes classe/période. Menu exclusif Accueil / Enseignants et affectations / Validation des notes / Résultats / Bulletins ; pas de sélecteur de rôle. Ouverture réelle des quatre modules sans alerte :11 enseignants, file de validation vide,15 lignes de résultats en première page, écran de bulletins vide cohérent avec0 période publiée. Les22 classes comptées dans l’accueil Direction correspondent aux classes disposant d’un contexte de résultats ; le catalogue scolaire comporte23 classes au total.
+
+**Les quatre comptes sont donc vérifiés après publication**, en sessions successives ouvertes par le responsable. Les API authentifiées et les menus correspondent à leurs responsabilités. Aucune approbation, correction de note, clôture, publication ou émission de bulletin n’a été exécutée pendant cette recette. Les37 parcours Playwright de la CI restent une validation complémentaire sur données synthétiques, distincte de ces contrôles hébergés.
 
 ## Données et périmètres préservés
 
