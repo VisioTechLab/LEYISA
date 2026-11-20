@@ -23,7 +23,7 @@ export function primaryAnnualCells(subject: BulletinSubject, visible: boolean, a
     if (!earned.isFinite() || !maximum.isFinite() || maximum.lte(0) || earned.lt(0) || earned.gt(maximum)) return ['', ''];
     const score = earned.mul(100).div(maximum).toDecimalPlaces(2, Decimal.ROUND_HALF_UP);
     const mention = score.gte(80) ? 'Très bien' : score.gte(70) ? 'Bien' : score.gte(60) ? 'Assez bien' : score.gte(50) ? 'Passable' : 'Insuffisant';
-    return [score.toFixed(2).replace(/\\.?0+$/, '').replace('.', ','), mention];
+    return [score.toFixed(2).replace(/0+$/, '').replace(/\.$/, '').replace('.', ','), mention];
   } catch { return ['', '']; }
 }
 
