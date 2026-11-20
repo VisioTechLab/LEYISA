@@ -1,0 +1,4 @@
+# Les documents PDF et les captures sont des preuves binaires.
+*.pdf binary
+*.png binary
+*.patch binary

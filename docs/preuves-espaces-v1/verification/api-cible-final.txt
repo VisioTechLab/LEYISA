@@ -1,0 +1,17 @@
+✔ le rôle actif ENS réduit le contexte sans modifier les rôles attribués (7.333474ms)
+✔ un rôle non attribué ou mal formé est refusé (3.878961ms)
+✔ les clients historiques conservent la matrice existante sans en-tête (0.789345ms)
+✔ les permissions par rôle dérivent exclusivement de la matrice approuvée (1.599946ms)
+✔ la pagination élèves compte le même périmètre ABAC que les lignes (17.149124ms)
+✔ la deuxième page de bulletins conserve publication, recherche et propriété (1783.172937ms)
+✔ Render refuse les en-têtes clients et conserve le contrôle de santé (295.477556ms)
+✔ Vercel transmet une requête de même origine et préserve les cookies et le PDF (25.662779ms)
+✔ Vercel réserve le relais à /api/v1 et refuse les redirections amont (10.184218ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3605.498568
