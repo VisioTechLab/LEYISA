@@ -29,6 +29,17 @@ Nouvelle base locale `leyisa_operations_20261120` sur loopback, sept migrations 
 
 ## Publication
 
-À compléter après CI et vérification des deux services sur la même révision. Déploiement demandé sur la recette privée uniquement, avec sa protection Vercel conservée. Aucun changement de plan ou de secret prévu.
+Publication effectuée avec l'autorisation explicite du responsable, réaffirmée avant sa présentation :
+
+- Révision applicative commune : `48ccf241f076ea760c3d1f2fb1553a64197ad521`.
+- [CI du commit publié](https://github.com/VisioTechLab/LEYISA/actions/runs/44829256852) entièrement réussie : 97 tests backend, zéro ignoré, 45 tests Playwright, 39 contrôles SQL, vérification des PDF, builds/lint et sauvegarde/restauration Git.
+- Render `leyisa-production-api` : déploiement manuel du commit exact `dep-dc0clru7bikc73f4brc0`, LIVE ; contrôle `/health` HTTP200 avec statut ok. Aucun seed, migration ou changement de configuration.
+- Vercel `leyisa-school-recette` : `dpl_Ad9BgZ7fy5E1P3oEhVBKLCnZxjEh`, READY, même commit, alias https://leyisa-school-recette.vercel.app/ affecté sans erreur. Node24 et protection Vercel Authentication All Deployments conservés.
+- Navigateur hébergé : nouvelle version rechargée ; 12 liens d'affectation contextualisés, clic réel et conservation de l'enseignant dans le filtre confirmés après chargement. Aucun formulaire métier soumis sur les données hébergées.
+- Erreurs après publication : aucune entrée applicative error Render dans la fenêtre du déploiement ; aucune erreur/fatal Vercel retournée pour le nouveau déploiement. Fenêtre courte, sans promesse d'absence de défaut.
+- Les empreintes et nombres de lignes de 18 tables métier Neon sont identiques avant/après publication. Main, branche de livraison et DEMO restent inchangées. Les sessions existantes sont utilisées pour le contrôle.
+- Bundle Git complet vérifié : `LEYISA-quality-evidence/LEYISA-operations-20261120.bundle`.
+
+Les deux services ont été publiés depuis la branche d'intégration sur ce commit précis, sans fusion de PR ni avance de la branche de livraison. La revue humaine reste nécessaire avant une fusion, conformément à AGENTS.md. Aucun changement de plan ou de secret.
 
 Le test d'une vraie décision scolaire sur les élèves hébergés n'est pas remplacé par les tests locaux. Les notes, affectations et décisions existantes ne sont pas changées pour remplir artificiellement une file de soumission.
