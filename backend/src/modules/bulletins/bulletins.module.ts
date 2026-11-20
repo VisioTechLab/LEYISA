@@ -56,6 +56,58 @@ export class BulletinsController {
     });
   }
 
+  // Catalogue compact : aucune identité d'élève ni note transmise avant la sélection.
+  @Get("archive") @Requires("bulletins.download")
+  async archive(@CurrentAuth() auth: AuthContext) {
+    const groups = await this.prisma.client.$queryRaw<Array<{id:string;year:string;cycle:string;level:string;classLabel:string;periodCode:string;position:number;total:number;issued:number}>>`
+      SELECT cp.id, min(coalesce(nullif(r."identitySnapshot"->>'yearCode',''), y.code)) AS year,
+        min(coalesce(nullif(r."identitySnapshot"->>'cycle',''), c.cycle)) AS cycle,
+        min(coalesce(nullif(r."identitySnapshot"->>'level',''),nullif(c.level,''),'Niveau non renseigné')) AS level,
+        min(coalesce(nullif(r."identitySnapshot"->>'classLabel',''),c.label)) AS "classLabel",
+        p.code AS "periodCode", p.position,
+        count(*)::int AS total,
+        count(*) FILTER (WHERE EXISTS (SELECT 1 FROM "ReportCard" card WHERE card."resultSnapshotId"=r.id))::int AS issued
+      FROM "ResultSnapshot" r JOIN "ClassPeriod" cp ON cp.id=r."classPeriodId"
+      JOIN "SchoolClass" c ON c.id=cp."classId" JOIN "SchoolYear" y ON y.id=cp."schoolYearId"
+      JOIN "Period" p ON p.id=cp."periodId" JOIN "Enrollment" e ON e.id=r."enrollmentId"
+      JOIN "Student" st ON st.id=e."studentId"
+      WHERE cp."publishedAt" IS NOT NULL AND (${canReadAll(auth)} OR st."userId"=${auth.userId}::uuid)
+      GROUP BY cp.id,p.code,p.position
+      ORDER BY year DESC,cycle,level,"classLabel",p.position
+    `;
+    return groups.map(g=>({...g,documentPeriodSupported:periodSupported(g.cycle,g.periodCode)}));
+  }
+
+  // Lecture paginée d'un dossier classe-période ou recherche d'un élève.
+  @Get("archive/entries") @Requires("bulletins.download")
+  async archiveEntries(@CurrentAuth() auth: AuthContext,@Query("context") rawContext?:string,@Query("search") rawSearch?:string,@Query("matricule") rawMatricule?:string,@Query("page") rawPage?:string) {
+    const context=rawContext?uuid(rawContext):undefined;
+    const matricule=optionalText(rawMatricule,'Matricule',120);
+    const terms=(optionalText(rawSearch,'Recherche',120)??'').split(/\s+/).filter(Boolean);
+    const number=page(rawPage),size=25;
+    if(!context&&!matricule&&!terms.length)return {items:[],total:0,page:number,pageSize:size};
+    const where={
+      classPeriod:{publishedAt:{not:null}},
+      ...(!canReadAll(auth)?{enrollment:{student:{userId:auth.userId}}}:{}),
+      ...(context?{classPeriodId:context}:{}),
+      AND:[...(matricule?[{identitySnapshot:{path:['matricule'],equals:matricule}}]:[]),
+        ...terms.map(term=>({OR:['lastName','postName','firstName','matricule'].map(field=>({identitySnapshot:{path:[field],string_contains:term,mode:'insensitive' as const}}))}))]
+    };
+    const [total,rows]=await Promise.all([
+      this.prisma.client.resultSnapshot.count({where}),
+      this.prisma.client.resultSnapshot.findMany({where,
+        select:{id:true,identitySnapshot:true,classPeriodId:true,classPeriod:{select:{period:{select:{position:true}},schoolClass:{select:{level:true}}}},_count:{select:{reportCards:true}}},
+        orderBy:[{classPeriod:{schoolClass:{schoolYear:{startsOn:'desc'}}}},{enrollment:{student:{user:{lastName:'asc'}}}},{enrollment:{student:{user:{firstName:'asc'}}}},{classPeriod:{period:{position:'asc'}}},{id:'asc'}],
+        skip:(number-1)*size,take:size})
+    ]);
+    const items=rows.map(r=>{
+      const i=object(r.identitySnapshot);
+      return {id:r.id,classPeriodId:r.classPeriodId,issued:r._count.reportCards>0,documentPeriodSupported:periodSupported(i.cycle,String(i.periodCode??'')),
+        identitySnapshot:{lastName:i.lastName,postName:i.postName,firstName:i.firstName,classLabel:i.classLabel,yearCode:i.yearCode,periodCode:i.periodCode,matricule:i.matricule,cycle:i.cycle,level:i.level||r.classPeriod.schoolClass.level}};
+    });
+    return {items,total,page:number,pageSize:size};
+  }
+
   /** Compteur exact dans le même périmètre RBAC/ABAC que la liste paginée. */
   @Get("count") @Requires("bulletins.download")
   async count(@CurrentAuth() auth: AuthContext) {
