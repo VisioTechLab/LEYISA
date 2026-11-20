@@ -18,7 +18,13 @@ async function login(page: Page, role = 'sec') {
 }
 async function choose(page: Page, classLabel: string, period: string, pupil = 'Élève 2') {
   await page.goto('/#bulletin');
-  await page.getByLabel('Classe', { exact: true }).selectOption({ label: classLabel });
+  const folders=await (await page.request.get('/api/v1/bulletins/archive')).json();
+  const folder=folders.find((g:{classLabel:string;periodCode:string})=>g.classLabel===classLabel&&g.periodCode===period);
+  expect(folder).toBeTruthy();
+  await page.getByLabel('Année scolaire',{exact:true}).selectOption(folder.year);
+  await page.getByLabel('Cycle',{exact:true}).selectOption(folder.cycle);
+  await page.getByLabel('Niveau',{exact:true}).selectOption(folder.level);
+  await page.getByLabel('Classe', { exact: true }).selectOption(classLabel);
   await page.getByLabel('Période ou session', { exact: true }).selectOption(period);
   const option = page.getByLabel('Élève', { exact: true }).locator('option').filter({ hasText: pupil });
   await page.getByLabel('Élève', { exact: true }).selectOption(await option.first().getAttribute('value') as string);
@@ -76,7 +82,9 @@ test('Primaire P1 : aucun document sans les notes de la période sélectionnée'
   await expect(page.getByRole('heading', { name: 'Choisissez une synthèse trimestrielle' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Télécharger PDF', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Enregistrer l’émission' })).toBeDisabled();
-  await page.getByLabel('Période ou session', { exact: true }).selectOption('T1'); await ready(page);
+  await page.getByLabel('Période ou session', { exact: true }).selectOption('T1');
+  const pupil=page.getByLabel('Élève',{exact:true}).locator('option').filter({hasText:'Élève 2'}).first();
+  await page.getByLabel('Élève',{exact:true}).selectOption(await pupil.getAttribute('value') as string);await ready(page);
 });
 
 test('Refus PDF403 visible, aucun téléchargement trompeur et reprise après erreur', async ({ page }) => {
@@ -129,7 +137,7 @@ test('ENS : accès direct au bulletin refusé par la vue et par l’API', async 
 
 test('Liste vide : explication et retour utiles sans formulaire ni faux document', async ({ page }) => {
   await login(page);
-  await page.route('**/api/v1/bulletins', route => route.fulfill({ status: 200, contentType: 'application/json', body: '[]' }));
+  await page.route('**/api/v1/bulletins/archive', route => route.fulfill({ status: 200, contentType: 'application/json', body: '[]' }));
   await page.goto('/#bulletin');
   await expect(page.getByRole('heading', { name: 'Aucun bulletin publié' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Retour à l’accueil' })).toBeVisible();
@@ -187,13 +195,16 @@ test('W12 : vrai PDF, recherche par matricule et conservation W12/W25/retour/rec
   await expect(page.locator('.document-preview')).toHaveCount(0);
   await expect(page.getByLabel('Élève', { exact: true }).locator('option').filter({ hasText: matricule })).toHaveCount(1);
   await page.getByLabel('Rechercher un élève', { exact: true }).fill(matricule.toLowerCase());
-  const result = page.waitForResponse(response => response.url().includes('/bulletins?search='));
+  const result = page.waitForResponse(response => response.url().includes('/bulletins/archive/entries?')&&response.url().includes('search='));
   await page.getByRole('button', { name: 'Rechercher', exact: true }).click(); expect((await result).status()).toBe(200);
-  await expect(page.locator('.bulletin-catalog li')).toHaveCount(1);
+  await expect(page.locator('.bulletin-catalog li').first()).toBeVisible();
+  await expect(page.locator('.bulletin-catalog li').first()).toContainText(matricule);
+  await page.getByRole('button',{name:'Tout le parcours de cet élève'}).first().click();
+  await expect(page.getByText('Dossier individuel :',{exact:false})).toBeVisible();
   await expect(page.locator('.bulletin-catalog')).toContainText(matricule);
   await page.getByLabel('Rechercher un élève', { exact: true }).fill('IntrouvableFictif');
   await page.getByRole('button', { name: 'Rechercher', exact: true }).click();
-  await expect(page.getByRole('status').filter({ hasText: 'Aucun résultat dans cette classe' })).toBeVisible();
+  await expect(page.getByRole('status').filter({ hasText: 'Aucun résultat pour cette recherche' })).toBeVisible();
   await expect(page.getByLabel('Élève', { exact: true })).toHaveValue(selected);
   await ready(page);
   await page.screenshot({ path: resolve(proofs, 'W12-recherche-vide-dossier-conserve.png'), fullPage: true });
@@ -233,7 +244,8 @@ test('Lien direct hors première liste : le dossier reste accessible sans filtre
  const selected = rows.find((row: { identitySnapshot: { classLabel: string; periodCode: string; matricule: string } }) => row.identitySnapshot.classLabel === 'Classe secondaire DEMO' && row.identitySnapshot.periodCode === 'ANNEE' && row.identitySnapshot.matricule.endsWith('-2'));
  expect(selected).toBeTruthy();
  // Simule uniquement la limite de liste : détail, permissions et PDF restent réels.
- await page.route('**/api/v1/bulletins', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(rows.filter((row: { identitySnapshot: { classLabel: string } }) => row.identitySnapshot.classLabel !== selected.identitySnapshot.classLabel)) }));
+ const folders=await (await page.request.get('/api/v1/bulletins/archive')).json();
+ await page.route('**/api/v1/bulletins/archive', route => route.fulfill({ status:200,contentType:'application/json',body:JSON.stringify(folders.filter((g:{classLabel:string})=>g.classLabel!==selected.identitySnapshot.classLabel)) }));
  await page.goto(`/#bulletin?result=${selected.id}`); await ready(page);
  await expect(page.getByLabel('Élève', { exact: true })).toHaveValue(selected.id);
  await expect(page.getByLabel('Classe', { exact: true })).toHaveValue('');
@@ -242,3 +254,12 @@ test('Lien direct hors première liste : le dossier reste accessible sans filtre
  await expect(page.locator('.bulletin-dossier')).toContainText(selected.identitySnapshot.matricule);
  const file = await downloaded(page); expect(file.download.suggestedFilename()).toContain(selected.identitySnapshot.matricule);
 });
+
+ test('Archives : intitulés scolaires sans redondance, aucun PDF avant choix explicite',async({page})=>{
+ await login(page);const requests:string[]=[];page.on('request',r=>{if(r.url().includes('/bulletins/')&&r.url().includes('/pdf'))requests.push(r.url());});await page.goto('/#bulletins');
+ await expect(page.getByRole('button',{name:'Par classe',exact:true})).toBeVisible();
+ await expect(page.getByLabel('Niveau',{exact:true})).toBeVisible();
+ await expect(page.getByText('Sélectionnez un document',{exact:true})).toBeVisible();
+ expect(requests).toEqual([]);
+ await expect(page.locator('.bulletin-selection')).not.toContainText(/grade|—/i);
+ });
