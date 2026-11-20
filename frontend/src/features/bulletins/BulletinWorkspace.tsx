@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { api, post } from '../../shared/api';
+import { activeRoleHeaders, api, post } from '../../shared/api';
 import { useSession } from '../../shared/session';
 import { can } from '../auth/authApi';
 import { locationValue, rememberLocation, searchText, useWorkspaceState } from '../../shared/workspaceState';
@@ -17,6 +17,18 @@ const unique = (values: string[]) => [...new Set(values)].sort(compare);
 
 type Selection = { year: string; schoolClass: string; period: string; id: string; version: string; search: string; query: string };
 const empty: Selection = { year: '', schoolClass: '', period: '', id: '', version: '', search: '', query: '' };
+
+async function bulletinPages(search:string, signal:AbortSignal):Promise<Bulletin[]> {
+ const collected:Bulletin[]=[];const seen=new Set<string>();
+ for(let page=1;;page++){
+  const params=new URLSearchParams();if(search)params.set('search',search);if(page>1)params.set('page',String(page));
+  const batch=await api<Bulletin[]>(`/bulletins${params.size?`?${params}`:''}`,{signal});
+  const fresh=batch.filter(row=>!seen.has(row.id));
+  if(batch.length&&fresh.length!==batch.length)throw new Error('Pagination incohérente du serveur. Actualisez ou contactez l’administration.');
+  for(const row of fresh){seen.add(row.id);collected.push(row);}
+  if(batch.length<500)return collected;
+ }
+}
 
 export function BulletinWorkspace({ catalog = false }: { catalog?: boolean }) {
   const user = useSession();
@@ -39,7 +51,7 @@ export function BulletinWorkspace({ catalog = false }: { catalog?: boolean }) {
 
   useEffect(() => {
     const controller = new AbortController(); setLoading(true); setListError('');
-    api<Bulletin[]>('/bulletins', { signal: controller.signal }).then(data => { if (!controller.signal.aborted) { setRows(data); setLoading(false); } })
+    bulletinPages('',controller.signal).then(data => { if (!controller.signal.aborted) { setRows(data); setLoading(false); } })
       .catch(error => { if (!controller.signal.aborted) { setRows([]); setListError(error.message); setLoading(false); } });
     return () => controller.abort();
   }, [refresh]);
@@ -47,7 +59,7 @@ export function BulletinWorkspace({ catalog = false }: { catalog?: boolean }) {
   useEffect(() => {
     if (!query) { setMatches([]); setSearching(false); setSearchError(''); return; }
     const controller = new AbortController(); setSearching(true); setSearchError('');
-    api<Bulletin[]>(`/bulletins?${new URLSearchParams({ search: query })}`, { signal: controller.signal })
+    bulletinPages(query,controller.signal)
       .then(data => { if (!controller.signal.aborted) { setMatches(data); setSearching(false); } })
       .catch(error => { if (!controller.signal.aborted) { setSearchError(error.message); setMatches([]); setSearching(false); } });
     return () => controller.abort();
@@ -58,23 +70,22 @@ export function BulletinWorkspace({ catalog = false }: { catalog?: boolean }) {
   const all = [...new Map([...rows, ...matches, ...(detail?.id === id ? [{ id, identitySnapshot: detail.identity }] : [])].map(row => [row.id, row])).values()];
   const remembered = all.find(row => row.id === id) ?? (detail?.id === id ? { id, identitySnapshot: detail.identity } : undefined);
   const years = unique(all.map(row => row.identitySnapshot.yearCode || 'Année non renseignée')).reverse();
-  const activeYear = years.includes(year) ? year : remembered?.identitySnapshot.yearCode ?? years[0] ?? '';
-  const yearRows = all.filter(row => (row.identitySnapshot.yearCode || 'Année non renseignée') === activeYear);
+  const activeYear = years.includes(year) ? year : '';
+  const yearRows = all.filter(row => (!activeYear || (row.identitySnapshot.yearCode || 'Année non renseignée') === activeYear));
   const classes = unique(yearRows.map(row => row.identitySnapshot.classLabel || 'Classe non renseignée'));
-  const activeClass = classes.includes(schoolClass) ? schoolClass : remembered?.identitySnapshot.classLabel ?? classes[0] ?? '';
-  const classRows = yearRows.filter(row => (row.identitySnapshot.classLabel || 'Classe non renseignée') === activeClass);
+  const activeClass = classes.includes(schoolClass) ? schoolClass : '';
+  const classRows = yearRows.filter(row => (!activeClass || (row.identitySnapshot.classLabel || 'Classe non renseignée') === activeClass));
   const periods = unique(classRows.map(row => row.identitySnapshot.periodCode || 'Composant non renseigné'));
-  const activePeriod = periods.includes(period) ? period : remembered?.identitySnapshot.periodCode ?? periods[0] ?? '';
+  const activePeriod = periods.includes(period) ? period : '';
   const terms = searchText(query).trim().split(/\s+/).filter(Boolean);
-  const candidates = classRows.filter(row => (row.identitySnapshot.periodCode || 'Composant non renseigné') === activePeriod
+  const candidates = classRows.filter(row => (!activePeriod || (row.identitySnapshot.periodCode || 'Composant non renseigné') === activePeriod)
     && (!query || matches.some(match => match.id === row.id) || terms.every(term => searchText(`${name(row.identitySnapshot)} ${row.identitySnapshot.matricule ?? ''}`).includes(term))))
     .sort((a, b) => compare(name(a.identitySnapshot), name(b.identitySnapshot)) || compare(a.identitySnapshot.matricule ?? '', b.identitySnapshot.matricule ?? ''));
   // Une recherche ne remplace jamais silencieusement le dossier déjà ouvert.
-  const selected = remembered ?? (!id ? candidates[0] : undefined);
+  const selected = remembered ?? (!id ? candidates.find(row=>row.identitySnapshot.periodCode==='ANNEE')??candidates[0] : undefined);
   const selectedId = id || selected?.id;
   function choose(next: Bulletin) {
-    const person = next.identitySnapshot;
-    setSelection(previous => ({ ...previous, year: person.yearCode ?? activeYear, schoolClass: person.classLabel ?? activeClass, period: person.periodCode ?? activePeriod, id: next.id, version: '' }));
+    setSelection(previous => ({ ...previous, id: next.id, version: '' }));
     rememberLocation('result', next.id); setCatalogPage(1);
   }
   function changeFilter(values: Partial<Selection>) {
@@ -105,7 +116,7 @@ export function BulletinWorkspace({ catalog = false }: { catalog?: boolean }) {
     if (!selectedId || !activeVersion || !downloadable) return;
     const controller = new AbortController(); let objectUrl: string | undefined;
     async function load() {
-      const response = await fetch(`/api/v1/bulletins/${selectedId}/pdf?${new URLSearchParams({ templateVersion: activeVersion })}`, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal });
+      const response = await fetch(`/api/v1/bulletins/${selectedId}/pdf?${new URLSearchParams({ templateVersion: activeVersion })}`, { credentials: 'same-origin', headers: activeRoleHeaders(), cache: 'no-store', signal: controller.signal });
       if (!response.ok) {
         if (response.status === 401) window.dispatchEvent(new Event('leyisa:session-expired'));
         const body = await response.json().catch(() => null);
@@ -153,16 +164,16 @@ export function BulletinWorkspace({ catalog = false }: { catalog?: boolean }) {
         {searching && <p role="status" className="bulletin-muted">Recherche des dossiers publiés…</p>}
         {searchError && <p role="alert" className="bulletin-error">{searchError}</p>}
         <div className="bulletin-fields">
-          <label>Année scolaire<select aria-label="Année scolaire" value={activeYear} onChange={e => changeFilter({ year: e.target.value, schoolClass: '', period: '' })}>{years.map(value => <option key={value}>{value}</option>)}</select></label>
-          <label>Classe<select aria-label="Classe" value={activeClass} onChange={e => changeFilter({ schoolClass: e.target.value, period: '' })}>{classes.map(value => <option key={value}>{value}</option>)}</select></label>
-          <label>Période ou session<select aria-label="Période ou session" value={activePeriod} onChange={e => changeFilter({ period: e.target.value })}>{periods.map(value => <option key={value} value={value}>{value === 'ANNEE' ? 'Année complète' : value === 'REPECHAGE' ? 'Deuxième session — repêchage' : value}</option>)}</select></label>
-          <label>Élève<select aria-label="Élève" value={selectedId ?? ''} onChange={e => { const row = candidates.find(candidate => candidate.id === e.target.value); if (row) choose(row); }}>{selected && !candidates.some(row => row.id === selectedId) && <option value={selectedId}>{selected.identitySnapshot.matricule} — {name(selected.identitySnapshot)} (dossier conservé)</option>}{candidates.map(row => <option key={row.id} value={row.id}>{row.identitySnapshot.matricule || 'Matricule non renseigné'} — {name(row.identitySnapshot)}</option>)}</select></label>
+          <label>Année scolaire<select aria-label="Année scolaire" value={activeYear} onChange={e => changeFilter({ year: e.target.value, schoolClass: '', period: '' })}><option value="">Toutes les années</option>{years.map(value => <option key={value}>{value}</option>)}</select></label>
+          <label>Classe<select aria-label="Classe" value={activeClass} onChange={e => changeFilter({ schoolClass: e.target.value, period: '' })}><option value="">Toutes les classes</option>{classes.map(value => <option key={value}>{value}</option>)}</select></label>
+          <label>Période ou session<select aria-label="Période ou session" value={activePeriod} onChange={e => changeFilter({ period: e.target.value })}><option value="">Toutes les périodes</option>{periods.map(value => <option key={value} value={value}>{value === 'ANNEE' ? 'Année complète' : value === 'REPECHAGE' ? 'Deuxième session — repêchage' : value}</option>)}</select></label>
+          <label>Élève<select aria-label="Élève" value={selectedId ?? ''} onChange={e => { const row = candidates.find(candidate => candidate.id === e.target.value); if (row) choose(row); }}>{selected && !candidates.some(row => row.id === selectedId) && <option value={selectedId}>{selected.identitySnapshot.matricule} — {name(selected.identitySnapshot)} (dossier conservé)</option>}{candidates.map(row => <option key={row.id} value={row.id}>{row.identitySnapshot.matricule || 'Matricule non renseigné'} — {name(row.identitySnapshot)} · {row.identitySnapshot.classLabel} · {row.identitySnapshot.periodCode}</option>)}</select></label>
         </div>
         {!searching && query && !candidates.length && <p className="bulletin-muted" role="status">Aucun résultat dans cette classe et cette période. Le dossier ouvert reste conservé.</p>}
-        {(query ? matches : rows).length === 500 && <p className="bulletin-muted">500 premiers résultats. Précisez le nom ou le matricule pour rechercher dans tous les bulletins publiés.</p>}
+        <p className="bulletin-muted">{rows.length} résultats publiés · {candidates.length} pour ces filtres</p>
         {catalog && candidates.length > 0 && <div className="bulletin-catalog" aria-label="Dossiers trouvés">
-          <p className="bulletin-label">{candidates.length} dossier(s) · {activePeriod}</p>
-          <ul>{candidates.slice((catalogPage - 1) * 5, catalogPage * 5).map(row => <li key={row.id}><button type="button" onClick={() => choose(row)} aria-pressed={row.id === selectedId}><strong>{name(row.identitySnapshot)}</strong><span>{row.identitySnapshot.matricule || 'Matricule non renseigné'}</span></button></li>)}</ul>
+          <p className="bulletin-label">{candidates.length} résultat(s) · {activePeriod||'Toutes les périodes'}</p>
+          <ul>{candidates.slice((catalogPage - 1) * 5, catalogPage * 5).map(row => <li key={row.id}><button type="button" onClick={() => choose(row)} aria-pressed={row.id === selectedId}><strong>{name(row.identitySnapshot)}</strong><span>{row.identitySnapshot.matricule || 'Matricule non renseigné'} · {row.identitySnapshot.classLabel} · {row.identitySnapshot.periodCode}</span></button></li>)}</ul>
           {candidates.length > 5 && <div className="workspace-controls"><button type="button" disabled={catalogPage === 1} onClick={() => setCatalogPage(n => n - 1)}>Précédent</button><span>Page {catalogPage}</span><button type="button" disabled={catalogPage * 5 >= candidates.length} onClick={() => setCatalogPage(n => n + 1)}>Suivant</button></div>}
         </div>}
         {current && <div className="bulletin-dossier"><p className="bulletin-label">Dossier sélectionné</p><strong>{name(current.identity)}</strong><dl><div><dt>Matricule</dt><dd>{current.identity.matricule || 'Non renseigné'}</dd></div><div><dt>Année scolaire</dt><dd>{current.identity.yearCode || 'Non renseignée'}</dd></div><div><dt>Document</dt><dd>{activeVersion}</dd></div></dl></div>}

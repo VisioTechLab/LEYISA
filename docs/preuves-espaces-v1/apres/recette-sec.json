@@ -1,0 +1,90 @@
+[
+  {
+    "screen": "D-SEC",
+    "route": "accueil",
+    "role": "sec",
+    "heading": "Tableau de bord Secrétariat",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W08",
+    "route": "eleves",
+    "role": "sec",
+    "heading": "Élèves",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W09",
+    "route": "dossier",
+    "role": "sec",
+    "heading": "Nouveau dossier élève",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W10",
+    "route": "historique",
+    "role": "sec",
+    "heading": "Fiche et historique scolaire",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W11",
+    "route": "inscription",
+    "role": "sec",
+    "heading": "Inscription annuelle",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W12",
+    "route": "bulletins",
+    "role": "sec",
+    "heading": "Bulletins scolaires",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W25",
+    "route": "bulletin",
+    "role": "sec",
+    "heading": "Bulletins scolaires",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  },
+  {
+    "screen": "W27",
+    "route": "acces",
+    "role": "sec",
+    "heading": "Accès refusé ou conflit",
+    "desktop": true,
+    "mobile": [
+      390,
+      320
+    ]
+  }
+]

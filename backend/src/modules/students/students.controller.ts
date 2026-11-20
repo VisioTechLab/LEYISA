@@ -12,7 +12,7 @@ export class StudentsController {
   @Requires("students.search")
   @Header("Cache-Control", "no-store")
   list(@CurrentAuth() auth: AuthContext,@Query() query: Record<string,string>) {
-    return this.students.list(auth,query);
+    return query.pagination === "1" ? this.students.listPage(auth,query) : this.students.list(auth,query);
   }
 
   @Get("registration-options")

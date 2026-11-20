@@ -27,21 +27,8 @@ export class StudentsService {
 
   list(auth: AuthContext, query: Record<string, string> = {}) {
     const scope = enrollmentScope(auth);
-    const search = query.search ? text(query.search, "Recherche", 100) : undefined;
-    const classId = query.classId ? uuid(query.classId) : undefined;
-    const schoolYearId = query.schoolYearId ? uuid(query.schoolYearId) : undefined;
     return this.prisma.client.student.findMany({
-      where: {
-        ...(scope || classId || schoolYearId
-          ? { enrollments: { some: { ...scope, classId, schoolYearId } } }
-          : {}),
-        ...(search ? { AND: search.split(/\s+/).map(term => ({ OR: [
-          { matricule: { contains: term, mode: "insensitive" as const } },
-          { postName: { contains: term, mode: "insensitive" as const } },
-          { user: { lastName: { contains: term, mode: "insensitive" as const } } },
-          { user: { firstName: { contains: term, mode: "insensitive" as const } } },
-        ] })) } : {}),
-      },
+      where: studentListWhere(auth, query),
       skip:(page(query.page)-1)*50,take:50,
       include: {
         user: { select: { id: true, firstName: true, lastName: true } },
@@ -60,8 +47,15 @@ export class StudentsService {
           orderBy: { enrolledAt: "desc" },
         },
       },
-      orderBy: { user: { lastName: "asc" } },
+      orderBy: [{ user: { lastName: "asc" } }, { id: "asc" }],
     });
+  }
+
+  async listPage(auth: AuthContext, query: Record<string,string>) {
+    const [items,total] = await Promise.all([
+      this.list(auth,query), this.prisma.client.student.count({where:studentListWhere(auth,query)})
+    ]);
+    return {items,total,page:page(query.page),pageSize:50};
   }
 
   registrationOptions() {
@@ -210,4 +204,22 @@ function enrollmentScope(auth: AuthContext) {
       },
     },
   };
+}
+
+function studentListWhere(auth:AuthContext, query:Record<string,string>) {
+ const scope = enrollmentScope(auth);
+ const search = query.search ? text(query.search,"Recherche",100) : undefined;
+ const classId = query.classId ? uuid(query.classId) : undefined;
+ const schoolYearId = query.schoolYearId ? uuid(query.schoolYearId) : undefined;
+ return {
+        ...(scope || classId || schoolYearId
+          ? { enrollments: { some: { ...scope, classId, schoolYearId } } }
+          : {}),
+        ...(search ? { AND: search.split(/\s+/).map(term => ({ OR: [
+          { matricule: { contains: term, mode: "insensitive" as const } },
+          { postName: { contains: term, mode: "insensitive" as const } },
+          { user: { lastName: { contains: term, mode: "insensitive" as const } } },
+          { user: { firstName: { contains: term, mode: "insensitive" as const } } },
+        ] })) } : {}),
+      };
 }

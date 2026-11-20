@@ -1,6 +1,8 @@
+import { api } from '../../shared/api';
+import { locationValue } from '../../shared/workspaceState';
 import { useSession } from '../../shared/session';
 import { can } from '../auth/authApi';
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import type { ClassOption, NewStudent, Student, StudentsDataSource } from "./types";
 import { loadStudentsDataSource } from "./studentsDataSource";
 import "./students.css";
@@ -23,10 +25,6 @@ function displayDate(value: string | null): string {
   }).format(new Date(`${value}T00:00:00`));
 }
 
-function normalizeSearchValue(value: string): string {
-  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
-}
-
 export function StudentsPage() {
   const allowed=can(useSession(),"students.create");
   const [dataSource, setDataSource] = useState<StudentsDataSource | null>(null);
@@ -35,7 +33,9 @@ export function StudentsPage() {
   const [form, setForm] = useState<NewStudent>(EMPTY_FORM);
   const [searchInput, setSearchInput] = useState("");
   const [appliedSearch, setAppliedSearch] = useState("");
-  const [page,setPage]=useState(1);
+  const [page,setPage]=useState(1),[total,setTotal]=useState(0);
+  const [filters,setFilters]=useState({schoolYearId:'',classId:locationValue('class')});
+  const requestGeneration=useRef(0);
   const [loading, setLoading] = useState(true);
   const [canRegister, setCanRegister] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -50,7 +50,8 @@ export function StudentsPage() {
         const source = await loadStudentsDataSource();
         if (!active || !source) return;
         setDataSource(source);
-        const [rows, options] = await Promise.all([source.getStudents(), source.getClasses()]);
+        const [result, options] = await Promise.all([fetchStudentPage('',1,filters), source.getClasses()]);
+        const rows=result.items;setTotal(result.total);
         if (!active) return;
         setStudents(rows);
         setClasses(options);
@@ -72,15 +73,11 @@ export function StudentsPage() {
     return () => { active = false; };
   }, []);
 
-  const filteredStudents = useMemo(() => {
-    const terms = normalizeSearchValue(appliedSearch).trim().split(/\s+/).filter(Boolean);
-    if (!terms.length) return students;
-    return students.filter((student) => {
-      const values = [student.matricule, student.lastName, student.postName ?? '', student.firstName, student.className]
-        .map(normalizeSearchValue);
-      return terms.every((term) => values.some((value) => value.includes(term)));
-    });
-  }, [appliedSearch, students]);
+  const filteredStudents = students;
+  async function fetchStudentPage(search:string,page:number,filters:{classId:string;schoolYearId:string}) {
+    const result=await api<{items:any[];total:number}>(`/students?${new URLSearchParams({pagination:'1',search,page:String(page),...filters})}`);
+    return {...result,items:result.items.map(row=>{const en=row.enrollments.find((e:any)=>(!filters.classId||e.schoolClass.id===filters.classId)&&(!filters.schoolYearId||e.schoolClass.schoolYear.id===filters.schoolYearId))??row.enrollments[0];return {id:row.id,matricule:row.matricule,lastName:row.user.lastName,postName:row.postName,firstName:row.user.firstName,birthDate:row.birthDate?.slice(0,10)??null,className:en?.schoolClass.label??'—',schoolYear:en?.schoolClass.schoolYear.code??'—'};})};
+  }
 
   function updateField<K extends keyof NewStudent>(key: K, value: NewStudent[K]) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -95,10 +92,11 @@ export function StudentsPage() {
     setSuccess("");
   }
 
-  async function loadPage(next:number,search=appliedSearch) {
-    if(!dataSource)return;setLoading(true);setError('');
-    try{setStudents(await dataSource.getStudents(search,next));setPage(next);setAppliedSearch(search);}catch(error){setError(error instanceof Error?error.message:'Recherche impossible.');}finally{setLoading(false);}
+  async function loadPage(next:number,search=appliedSearch,nextFilters=filters) {
+    if(!dataSource)return;const request=++requestGeneration.current;setLoading(true);setError('');
+    try{const result=await fetchStudentPage(search,next,nextFilters);if(request!==requestGeneration.current)return;setStudents(result.items);setTotal(result.total);setPage(next);setAppliedSearch(search);}catch(error){if(request===requestGeneration.current)setError(error instanceof Error?error.message:'Recherche impossible.');}finally{if(request===requestGeneration.current)setLoading(false);}
   }
+  function changeFilters(values:Partial<typeof filters>){const next={...filters,...values};setFilters(next);void loadPage(1,appliedSearch,next);}
   function handleSearch(event: FormEvent<HTMLFormElement>) {event.preventDefault();void loadPage(1,searchInput);}
 
 
@@ -121,7 +119,7 @@ export function StudentsPage() {
         lastName: form.lastName.trim(),
         matricule: form.matricule.trim(),
       });
-      setStudents((current) => [...current, student]);
+      await loadPage(1,appliedSearch);
       setForm({ ...EMPTY_FORM, classId: form.classId, schoolYearId: form.schoolYearId });
       setSuccess(`Inscription enregistrée pour ${student.firstName} ${student.lastName}.`);
     } catch (registrationError) {
@@ -135,8 +133,8 @@ export function StudentsPage() {
 
   return (
     <main className="leyisa-page students-app">
-      <header className="leyisa-page-heading"><h1>Élèves et inscriptions</h1><p>Retrouver le dossier et enregistrer l’inscription annuelle.</p></header>
-          <div className="leyisa-grid">
+      <header className="leyisa-page-heading"><h1>Élèves</h1>{allowed&&<a className="leyisa-button" href="#dossier">Créer un dossier élève</a>}</header>
+          <div className="students-workspace">
             <section className="leyisa-card" aria-labelledby="roster-title">
               <div className="panel-header"><div><h2 id="roster-title">Liste des élèves</h2><p className="panel-description">Recherche par nom ou matricule</p></div></div>
               <form className="search-form" onSubmit={handleSearch} role="search">
@@ -147,8 +145,9 @@ export function StudentsPage() {
                 </div>
               </form>
 
+              <div className="collection-tools"><label>Année scolaire<select value={filters.schoolYearId} onChange={e=>changeFilters({schoolYearId:e.target.value,classId:''})}><option value="">Toutes les années</option>{[...new Map(classes.map(c=>[c.schoolYearId,c])).values()].map(c=><option key={c.schoolYearId} value={c.schoolYearId}>{c.schoolYearCode}</option>)}</select></label><label>Classe<select value={filters.classId} onChange={e=>changeFilters({classId:e.target.value})}><option value="">Toutes les classes</option>{classes.filter(c=>!filters.schoolYearId||c.schoolYearId===filters.schoolYearId).map(c=><option key={c.id} value={c.id}>{c.label} · {c.schoolYearCode}</option>)}</select></label></div>
               {loading ? <div className="state-message" role="status">Chargement des élèves…</div>
-                : error && !students.length ? <div className="state-message state-error" role="alert">{error}</div>
+                : error ? <div className="state-message state-error" role="alert">{error}</div>
                   : filteredStudents.length ? (
                     <div className="leyisa-table-wrap"><table className="student-table">
                       <thead><tr><th scope="col">Matricule</th><th scope="col">Élève</th><th scope="col">Date de naissance</th><th scope="col">Année</th><th scope="col">Classe</th><th scope="col">Dossier</th></tr></thead>
@@ -157,10 +156,10 @@ export function StudentsPage() {
                       </tr>)}</tbody>
                     </table></div>
                   ) : <div className="state-message" role="status">{students.length ? "Aucun résultat" : "Aucun élève disponible."}</div>}
-              <p className="table-footnote">{filteredStudents.length} élève(s) affiché(s) — page {page}</p><button disabled={loading||page===1} onClick={()=>void loadPage(page-1)}>Précédent</button> <button disabled={loading||students.length<50} onClick={()=>void loadPage(page+1)}>Suivant</button>
+              <p className="table-footnote">{filteredStudents.length} élève(s) affiché(s) sur {total} — page {page}</p><button disabled={loading||page===1} onClick={()=>void loadPage(page-1)}>Précédent</button> <button disabled={loading||page*50>=total} onClick={()=>void loadPage(page+1)}>Suivant</button>
             </section>
 
-            <section className="leyisa-card" aria-labelledby="form-title">
+            {allowed&&<details className="leyisa-card workspace-disclosure"><summary>Créer un dossier et une inscription ensemble</summary><section aria-labelledby="form-title">
               <div className="panel-header"><div><h2 id="form-title">Nouvelle inscription</h2><p className="panel-description">Le dossier et l’inscription sont enregistrés ensemble.</p></div></div>
               <form className="leyisa-form student-registration-form" onSubmit={handleSubmit}>
                 <label>Nom <span className="required">*</span><input autoComplete="family-name" required value={form.lastName} onChange={(event) => updateField("lastName", event.target.value)} placeholder="Ex. : Ilunga" /></label>
@@ -182,7 +181,7 @@ export function StudentsPage() {
                 </button>}
                 <p className="form-note"><span className="required">*</span> Champs obligatoires</p>
               </form>
-            </section>
+            </section></details>}
           </div>
     </main>
   );

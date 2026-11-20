@@ -9,7 +9,7 @@ export type Submission = {
   author: { id: string; label: string };
 };
 export type ClassPeriod = {
-  id: string; classLabel: string; periodLabel: string; status: 'OPEN' | 'CLOSED' | 'PUBLISHED';
+  id: string; classId?: string; classCode?: string; yearCode?: string; classLabel: string; periodLabel: string; status: 'OPEN' | 'CLOSED' | 'PUBLISHED';
   evaluationCount: number; resultCount: number;
 };
 
@@ -28,8 +28,8 @@ export const resultsApi = {
 };
 
 export type Preview = {
-  classPeriod: { id: string; classLabel: string; periodLabel: string; status: string };
+  classPeriod: { id: string; classId?: string; classCode?: string; yearCode?: string; classLabel: string; periodLabel: string; status: string };
   readyToClose: boolean; problems: string[];
   students: Array<{ id?:string;identity: { matricule?: string; firstName?: string; lastName?: string }; subjectResults: Array<{ label: string; earned: number | null; maximum: number }>; totalEarned: number; totalMaximum: number }>;
 };
-export type FinalResults = { classPeriod: { id: string; classLabel: string; periodLabel: string; status: string }; students: Preview['students'] };
+export type FinalResults = { classPeriod: { id: string; classId?: string; classCode?: string; yearCode?: string; classLabel: string; periodLabel: string; status: string }; students: Preview['students'] };

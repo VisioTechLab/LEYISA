@@ -174,8 +174,9 @@ export function EvaluationsPage() {
         <p>Enregistrer les notes d’une évaluation, puis les soumettre pour validation.</p>
       </header>
 
-      <section className="leyisa-card evaluations-picker" aria-labelledby="evaluations-picker-title">
-        <h2 id="evaluations-picker-title">Évaluation</h2>
+      <nav className="workspace-tabs" aria-label="Parcours de l’évaluation"><a href="#cours">Mes classes et cours</a><a href="#evaluations">Mes évaluations</a>{detail&&<a href={`#notes?id=${detail.id}`} aria-current={!confirmationMode?'page':undefined}>Notes</a>}{detail&&<a href={`#soumission?id=${detail.id}`} aria-current={confirmationMode?'page':undefined}>Soumission</a>}</nav>
+      <details className="leyisa-card evaluations-picker" aria-labelledby="evaluations-picker-title">
+        <summary id="evaluations-picker-title">Changer d’évaluation</summary>
         {listError && <p className="evaluations-notice" data-kind="error" role="alert">{listError}</p>}
         {!listError && evaluations === null && <p className="leyisa-description" role="status">Chargement des évaluations…</p>}
         {evaluations?.length === 0 && (
@@ -193,7 +194,7 @@ export function EvaluationsPage() {
             </select>
           </label>
         )}
-      </section>
+      </details>
 
       {notice && (
         <p className="evaluations-notice" data-kind={notice.kind} role={notice.kind === 'error' ? 'alert' : 'status'}>

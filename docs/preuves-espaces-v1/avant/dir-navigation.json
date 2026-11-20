@@ -1,0 +1,24 @@
+{
+  "role": "dir",
+  "heading": "Tableau de bord Direction",
+  "menu": [
+    "Accueil",
+    "Configuration scolaire",
+    "Classes et matières",
+    "Programme de classe",
+    "Élèves / inscriptions",
+    "Historique scolaire",
+    "Enseignants",
+    "Affectations",
+    "Mes évaluations",
+    "Validation des notes",
+    "Détail de soumission",
+    "Rejeter avec motif",
+    "Prévisualiser résultats",
+    "Clôturer",
+    "Résultats et publication",
+    "Bulletins disponibles",
+    "Générer un bulletin",
+    "Accès / conflits"
+  ]
+}

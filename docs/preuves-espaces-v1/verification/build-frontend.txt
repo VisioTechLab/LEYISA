@@ -1,0 +1,17 @@
+
+> leyisa-frontend@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 48 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                              0.48 kB │ gzip:   0.31 kB
+dist/assets/leyisa-school-B6aWVbA9.jpeg    102.32 kB
+dist/assets/pdf.worker.min-CIqJB0yW.mjs  1,271.91 kB
+dist/assets/index-VK-DxqwY.css              30.94 kB │ gzip:   6.52 kB
+dist/assets/index-Cz4W4s1h.js              325.77 kB │ gzip:  95.23 kB
+dist/assets/PdfDocumentView-Cus7nhdx.js    446.19 kB │ gzip: 134.57 kB
+
+✓ built in 1.26s

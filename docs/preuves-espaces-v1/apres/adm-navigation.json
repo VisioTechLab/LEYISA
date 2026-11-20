@@ -1,0 +1,12 @@
+{
+  "role": "adm",
+  "menu": [
+    "Accueil",
+    "Comptes utilisateurs",
+    "Configuration scolaire",
+    "Classes et programmes",
+    "Audit"
+  ],
+  "heading": "Tableau de bord Administration",
+  "singleRoleSelector": false
+}

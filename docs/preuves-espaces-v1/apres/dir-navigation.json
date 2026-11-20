@@ -1,0 +1,12 @@
+{
+  "role": "dir",
+  "menu": [
+    "Accueil",
+    "Enseignants et affectations",
+    "Validation des notes",
+    "Résultats",
+    "Bulletins"
+  ],
+  "heading": "Tableau de bord Direction",
+  "singleRoleSelector": false
+}

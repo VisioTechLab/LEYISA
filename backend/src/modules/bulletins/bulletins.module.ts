@@ -1,7 +1,7 @@
 import { ConflictException, Controller, ForbiddenException, Get, Module, NotFoundException, Param, Post, Query, Res } from "@nestjs/common";
 import { PrismaService } from "../../common/prisma.service.js";
 import { PrismaModule } from "../../common/prisma.module.js";
-import { object, optionalText, uuid } from "../../common/input.js";
+import { object, optionalText, page, uuid } from "../../common/input.js";
 import { CurrentAuth } from "../auth/session.guard.js";
 import { Requires } from "../auth/permission.guard.js";
 import type { AuthContext } from "../auth/auth-context.js";
@@ -38,7 +38,7 @@ export class BulletinsController {
   constructor(private readonly prisma: PrismaService) {}
 
   @Get() @Requires("bulletins.download")
-  async list(@CurrentAuth() auth: AuthContext, @Query("search") rawSearch?: string) {
+  async list(@CurrentAuth() auth: AuthContext, @Query("search") rawSearch?: string, @Query("page") rawPage?: string) {
     const terms = (optionalText(rawSearch, 'Recherche', 120) ?? '').split(/\s+/).filter(Boolean);
     const rows = await this.prisma.client.resultSnapshot.findMany({
       where: { classPeriod: { publishedAt: { not: null } }, ...(!canReadAll(auth) ? { enrollment: { student: { userId: auth.userId } } } : {}),
@@ -47,7 +47,7 @@ export class BulletinsController {
         })) })) },
       select: { id: true, identitySnapshot: true, calculationProfile: true },
       orderBy: { id: 'asc' },
-      take: 500
+      skip: (page(rawPage)-1)*500, take: 500
     });
     return rows.map(row => {
       const { lastName, postName, firstName, classLabel, periodCode, yearCode, matricule, cycle } = object(row.identitySnapshot);

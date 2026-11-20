@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-20",
+  "mode": "SELECT uniquement ; aucune connexion applicative neuve",
+  "project": {
+    "name": "LEYISA School Demo V1",
+    "id": "still-surf-49434461"
+  },
+  "branch": {
+    "name": "demo-v1",
+    "id": "br-empty-pine-ba6t2yd6"
+  },
+  "database": "leyisa_demo",
+  "render": {
+    "service": "leyisa-nestjs",
+    "id": "srv-dbqss65g1s2s73f9lb7g",
+    "origin": "https://leyisa-nestjs.onrender.com",
+    "gitBranch": "demo/leyisa-v1",
+    "commit": "7783483d59e5f64f5d7e9e54ecb609a28be4e9a3",
+    "databaseHost": "ep-jolly-rain-ba1ki82d-pooler.c-8.eu-central-1.aws.neon.tech",
+    "sslmode": "verify-full",
+    "source": "interface Render et correspondance Neon search"
+  },
+  "vercel": {
+    "project": "leyisa-v1-5-demo",
+    "origin": "https://leyisa-v1-5-demo.vercel.app",
+    "deployment": "5ZodKxRmTSRNPwsJWpy6GECVk8Sp",
+    "source": "déploiement CLI ; aucune connexion Git visible",
+    "envKeys": [
+      "LEYISA_RENDER_ORIGIN",
+      "LEYISA_PROXY_SECRET"
+    ],
+    "renderOriginValue": "non vérifiée, valeur masquée",
+    "authenticatedApi": "en attente de session déjà connectée"
+  },
+  "counts": {
+    "students": 23,
+    "teachers": 58,
+    "classes": 9,
+    "evaluations": 239,
+    "grades": 709,
+    "publishedResults": 106,
+    "reportCards": 13,
+    "assignments": 77
+  },
+  "confirmedCauses": {
+    "genericTeacherAssignments": 0,
+    "genericTeacherEvaluations": 0,
+    "pendingSubmissions": 1,
+    "pendingContext": "P2, SECONDAIRE_TECHNIQUE",
+    "allSchoolDataYear": "DEMO-2025-2026"
+  },
+  "limitations": [
+    "Les totaux SQL sont globaux et ne remplacent pas les périmètres ABAC par utilisateur.",
+    "Une session applicative publiée déjà connectée reste requise pour comparer les réponses authentifiées.",
+    "Les captures après utilisent une base synthétique locale distincte."
+  ]
+}

@@ -227,7 +227,7 @@ test('API directe : primaire P1 refusé pour PDF, archive incompatible et émiss
   expect(after.archivedTemplates).toEqual(before.archivedTemplates);
 });
 
-test('Lien direct hors première liste : le dossier autorisé garde ses filtres et son PDF', async ({ page }) => {
+test('Lien direct hors première liste : le dossier reste accessible sans filtre implicite', async ({ page }) => {
  await login(page);
  const rows = await (await page.request.get('/api/v1/bulletins')).json();
  const selected = rows.find((row: { identitySnapshot: { classLabel: string; periodCode: string; matricule: string } }) => row.identitySnapshot.classLabel === 'Classe secondaire DEMO' && row.identitySnapshot.periodCode === 'ANNEE' && row.identitySnapshot.matricule.endsWith('-2'));
@@ -236,9 +236,9 @@ test('Lien direct hors première liste : le dossier autorisé garde ses filtres 
  await page.route('**/api/v1/bulletins', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(rows.filter((row: { identitySnapshot: { classLabel: string } }) => row.identitySnapshot.classLabel !== selected.identitySnapshot.classLabel)) }));
  await page.goto(`/#bulletin?result=${selected.id}`); await ready(page);
  await expect(page.getByLabel('Élève', { exact: true })).toHaveValue(selected.id);
- await expect(page.getByLabel('Classe', { exact: true })).toHaveValue(selected.identitySnapshot.classLabel);
- await expect(page.getByLabel('Année scolaire', { exact: true })).toHaveValue(selected.identitySnapshot.yearCode);
- await expect(page.getByLabel('Période ou session', { exact: true })).toHaveValue('ANNEE');
+ await expect(page.getByLabel('Classe', { exact: true })).toHaveValue('');
+ await expect(page.getByLabel('Année scolaire', { exact: true })).toHaveValue('');
+ await expect(page.getByLabel('Période ou session', { exact: true })).toHaveValue('');
  await expect(page.locator('.bulletin-dossier')).toContainText(selected.identitySnapshot.matricule);
  const file = await downloaded(page); expect(file.download.suggestedFilename()).toContain(selected.identitySnapshot.matricule);
 });

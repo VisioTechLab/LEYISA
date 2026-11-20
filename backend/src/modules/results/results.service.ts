@@ -102,13 +102,15 @@ export class ResultsService {
       where: periodId ? { periodId } : undefined,
       include: {
         period: true,
-        schoolClass: true,
+        schoolClass: { include: { schoolYear: true } },
         _count: { select: { evaluations: true, results: true } },
       },
       orderBy: [{ period: { position: "asc" } }, { schoolClass: { code: "asc" } }],
     });
     return contexts.map((context) => ({
       id: context.id,
+      classId: context.schoolClass.id,
+      yearCode: context.schoolClass.schoolYear.code,
       classCode: context.schoolClass.code,
       classLabel: context.schoolClass.label,
       periodCode: context.period.code,

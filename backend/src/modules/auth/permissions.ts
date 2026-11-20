@@ -43,6 +43,10 @@ export const PERMISSIONS = {
   "bulletins.download": ["SEC", "DIR", "ELEVE"], // BUL02 + ABAC
 } as const satisfies Record<string, readonly RoleCode[]>;
 
+export function permissionsByRole(roles: readonly RoleCode[]) {
+  return Object.fromEntries(roles.map(role => [role, permissionsFor([role])]));
+}
+
 export type Permission = keyof typeof PERMISSIONS;
 
 /** Vrai si un des rôles reçoit la permission. Permission inconnue : toujours faux. */

@@ -52,10 +52,11 @@ test('Vercel transmet une requête de même origine et préserve les cookies et 
     assert.equal(options.headers.get('cookie'), 'leyisa_session=fictive');
     assert.equal(options.headers.get('origin'), 'https://demo.invalid');
     assert.equal(options.headers.get('authorization'), null);
+    assert.equal(options.headers.get('x-leyisa-role'), 'ENS');
     return new Response('%PDF-1.7', { headers: responseHeaders });
   });
   const request = new Request('https://demo.invalid/api/leyisa-proxy?__leyisa_path=bulletins%2Fid%2Fpdf&format=A4', {
-    headers: { Cookie: 'leyisa_session=fictive', Origin: 'https://demo.invalid', Authorization: 'fictif',
+    headers: { 'X-Leyisa-Role':'ENS', Cookie: 'leyisa_session=fictive', Origin: 'https://demo.invalid', Authorization: 'fictif',
       'x-leyisa-proxy-secret': 'fictif', 'x-leyisa-client-ip': '192.0.2.12', 'x-vercel-forwarded-for': '192.0.2.11' },
   });
   const response = await proxy.fetch(request);

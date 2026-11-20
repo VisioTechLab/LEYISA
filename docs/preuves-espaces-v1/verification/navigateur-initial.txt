@@ -1,0 +1,75 @@
+
+> leyisa-frontend@0.0.0 test:e2e
+> playwright test
+
+
+Running 34 tests using 1 worker
+
+(node:81090) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/bulletins.spec.ts:48:29 › PDF maternelle : aperçu et téléchargement identiques (9.6s)
+  ✓   2 tests/bulletins.spec.ts:48:29 › PDF primaire annuel : aperçu et téléchargement identiques (9.0s)
+  ✓   3 tests/bulletins.spec.ts:48:29 › PDF secondaire P1 : aperçu et téléchargement identiques (7.5s)
+  ✓   4 tests/bulletins.spec.ts:48:29 › PDF secondaire annuel : aperçu et téléchargement identiques (14.1s)
+  ✓   5 tests/bulletins.spec.ts:48:29 › PDF repêchage : aperçu et téléchargement identiques (7.9s)
+  ✓   6 tests/bulletins.spec.ts:74:1 › Primaire P1 : aucun document sans les notes de la période sélectionnée (7.9s)
+  ✓   7 tests/bulletins.spec.ts:82:1 › Refus PDF403 visible, aucun téléchargement trompeur et reprise après erreur (8.7s)
+  ✓   8 tests/bulletins.spec.ts:92:1 › Les versions archivées affichent et téléchargent le même document (15.2s)
+  ✘   9 tests/bulletins.spec.ts:102:1 › Repêchage V1.5 archivé : octets antérieurs conservés ; V1.6 affiche les40 points (644ms)
+(node:82119) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 tests/bulletins.spec.ts:111:1 › Téléphone390px et320px : PDF lisible au zoom sans débordement de la page (10.5s)
+  ✓  11 tests/bulletins.spec.ts:124:1 › ENS : accès direct au bulletin refusé par la vue et par l’API (3.0s)
+  ✓  12 tests/bulletins.spec.ts:130:1 › Liste vide : explication et retour utiles sans formulaire ni faux document (3.3s)
+  ✓  13 tests/bulletins.spec.ts:139:1 › Chargement PDF : état explicite et émission indisponible tant que le document manque (8.0s)
+  ✓  14 tests/bulletins.spec.ts:150:1 › Conflit409 d’émission : erreur visible, aucun message de succès et PDF conservé (7.8s)
+  ✓  15 tests/bulletins.spec.ts:159:1 › PDF paginé : toutes les pages sont navigables et les boutons respectent les bornes (7.8s)
+  ✓  16 tests/bulletins.spec.ts:179:1 › W12 : vrai PDF, recherche par matricule et conservation W12/W25/retour/rechargement (22.3s)
+  ✓  17 tests/bulletins.spec.ts:212:1 › API directe : primaire P1 refusé pour PDF, archive incompatible et émission sans nouvel enregistrement (5.1s)
+  ✓  18 tests/bulletins.spec.ts:230:1 › Lien direct hors première liste : le dossier reste accessible sans filtre implicite (7.2s)
+  ✓  19 tests/modules.spec.ts:35:1 › W01 : connexion, erreur lisible, clavier et téléphone (4.1s)
+  ✓  20 tests/modules.spec.ts:56:54 › Module adm : vues réelles, navigation et adaptation390/320px (12.0s)
+  ✓  21 tests/modules.spec.ts:56:54 › Module sec : vues réelles, navigation et adaptation390/320px (26.4s)
+  ✓  22 tests/modules.spec.ts:56:54 › Module ens : vues réelles, navigation et adaptation390/320px (11.4s)
+  ✓  23 tests/modules.spec.ts:56:54 › Module dir : vues réelles, navigation et adaptation390/320px (15.3s)
+  ✓  24 tests/modules.spec.ts:84:1 › Dossier : homonymes, recherche nom/matricule, historique et inscription sans perte de sélection (9.4s)
+  ✓  25 tests/modules.spec.ts:122:1 › Scolarité : la classe choisie reste ouverte entre classes, programme et calendrier (5.3s)
+Parcours local : création de l’évaluation 1.
+Parcours local : grille 1 créée.
+Parcours local : création de l’évaluation 2.
+Parcours local : grille 2 créée.
+  ✓  26 tests/modules.spec.ts:145:1 › Parcours métier navigateur : affectation, zéro, rejet, correction, validation, clôture, publication et PDF (35.9s)
+  ✓  27 tests/workspaces.spec.ts:11:48 › Espace adm : accueil, menu exclusif, données API et téléphone (5.4s)
+  ✓  28 tests/workspaces.spec.ts:11:48 › Espace sec : accueil, menu exclusif, données API et téléphone (6.6s)
+  ✓  29 tests/workspaces.spec.ts:11:48 › Espace ens : accueil, menu exclusif, données API et téléphone (6.0s)
+  ✓  30 tests/workspaces.spec.ts:11:48 › Espace dir : accueil, menu exclusif, données API et téléphone (6.4s)
+  ✓  31 tests/workspaces.spec.ts:24:1 › Multirôle : uniquement ENS/DIR, périmètre actif et refus serveur d’ADM (4.0s)
+  ✓  32 tests/workspaces.spec.ts:31:1 › Secrétariat : total réel, pagination et formulaire sur demande (5.4s)
+  ✓  33 tests/workspaces.spec.ts:36:1 › Résultats et bulletins : toutes les périodes avant un choix explicite (9.3s)
+  ✓  34 tests/workspaces.spec.ts:41:1 › Erreur réseau : alerte explicite, sans faux état vide (3.7s)
+
+
+  1) tests/bulletins.spec.ts:102:1 › Repêchage V1.5 archivé : octets antérieurs conservés ; V1.6 affiche les40 points 
+
+    Error: ENOENT: no such file or directory, open '/home/bmk/Documents/ChatGPT/VisioTech/LEYISA-quality-recovery/docs/preuves-quality-modules/apres/AVANT-REPECHAGE-V15.pdf'
+
+      101 |
+      102 | test('Repêchage V1.5 archivé : octets antérieurs conservés ; V1.6 affiche les40 points', async ({ page }) => {
+    > 103 |   const original = await readFile(process.env.LEYISA_E2E_ARCHIVE_V15 ?? resolve('../docs/preuves-quality-recovery/archive-repechage-v15.pdf'));
+          |                    ^
+      104 |   await login(page); await choose(page, 'Classe secondaire DEMO', 'REPECHAGE', 'Élève 1'); await ready(page);
+      105 |   await expect.poll(async () => (await page.getByTestId('pdf-text').innerText()).replace(/\s/g, '')).toContain('TOTAL:40/1520');
+      106 |   await page.getByText('Versions archivées', { exact: true }).click();
+        at /home/bmk/Documents/ChatGPT/VisioTech/LEYISA-quality-recovery/frontend/tests/bulletins.spec.ts:103:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bulletins-Repêchage-V1-5-a-d11bd-s-V1-6-affiche-les40-points/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bulletins-Repêchage-V1-5-a-d11bd-s-V1-6-affiche-les40-points/error-context.md
+
+    Error Context: test-results/bulletins-Repêchage-V1-5-a-d11bd-s-V1-6-affiche-les40-points/error-context.md
+
+  1 failed
+    tests/bulletins.spec.ts:102:1 › Repêchage V1.5 archivé : octets antérieurs conservés ; V1.6 affiche les40 points 
+  33 passed (5.5m)

@@ -24,7 +24,7 @@ async function login(page: Page, role: string) {
 async function capture(page:Page,name:string) { await page.screenshot({path:resolve(proofs,`${name}.png`),fullPage:true}); }
 async function settled(page: Page) {
  const route=new URL(page.url()).hash.split('?')[0];
- await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href',route);
+ await expect(page.locator('[data-route]')).toHaveAttribute('data-route',route);
  await page.locator('main h1').waitFor();
  await expect(page.getByRole('status').filter({hasText:/Chargement|Vérification de la session|Ouverture du lecteur/})).toHaveCount(0);
  await page.waitForLoadState('networkidle');
@@ -159,7 +159,8 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
  }
  const assignments=await dir.get('/assignments'),createdAssignments=[];
  await login(page,'dir');await page.goto('/#affectations');await settled(page);
- await page.getByLabel('Classe',{exact:true}).selectOption(schoolClass.id);
+ await page.getByText('Nouvelle affectation',{exact:true}).click();
+ await page.getByLabel('Classe de la nouvelle affectation',{exact:true}).selectOption(schoolClass.id);
  for(let index=0;index<2;index++) {
   const teacher=assignments.teachers.find((t:{userId:string})=>t.userId===credentials[`ens-demo-live-${index+1}`].id);
   await page.getByLabel('Enseignant',{exact:true}).selectOption(teacher.id);
@@ -202,7 +203,8 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
  await expect(page.getByRole('heading',{name:'Détail d’une soumission'})).toBeVisible();await capture(page,'W20-detail-reel');
  await page.getByRole('button',{name:'Rejeter avec motif',exact:true}).click();
  await page.getByLabel('Motif du rejet').fill('Vérifier la première note fictive.');
- await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#rejet');
+ await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#validation');
+ await expect(page.locator('[data-route]')).toHaveAttribute('data-route','#rejet');
  await expect(page.getByLabel('Motif du rejet')).toHaveValue('Vérifier la première note fictive.');
  await expect(page.getByRole('button',{name:'Confirmer le rejet',exact:true})).toBeEnabled();await capture(page,'W21-rejet-reel');
  const rejected=page.waitForResponse(r=>r.url().endsWith('/reject')&&r.request().method()==='POST');
@@ -226,7 +228,8 @@ test('Parcours métier navigateur : affectation, zéro, rejet, correction, valid
  await expect(page.getByLabel('Je confirme la clôture de la période.')).toBeVisible();
  await expect(page.getByRole('button',{name:'Confirmer la clôture',exact:true})).toBeDisabled();
  await page.getByLabel('Je confirme la clôture de la période.').check();
- await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#cloture');
+ await expect(page.locator('.leyisa-nav a[aria-current="page"]')).toHaveAttribute('href','#resultats');
+ await expect(page.locator('[data-route]')).toHaveAttribute('data-route','#cloture');
  await expect(page.getByLabel('Je confirme la clôture de la période.')).toBeChecked();await capture(page,'W23-confirmation-reelle');
  const closed=page.waitForResponse(r=>r.url().endsWith(`/class-periods/${classPeriod.id}/close`)&&r.request().method()==='POST');
  await page.getByRole('button',{name:'Confirmer la clôture',exact:true}).click();expect((await closed).status()).toBe(201);

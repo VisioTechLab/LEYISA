@@ -1,0 +1,20 @@
+{
+  "role": "ens",
+  "heading": "Mon espace Enseignant",
+  "menu": [
+    "Accueil",
+    "Configuration scolaire",
+    "Classes et matières",
+    "Programme de classe",
+    "Élèves / inscriptions",
+    "Historique scolaire",
+    "Affectations",
+    "Mes cours",
+    "Mes évaluations",
+    "Créer une évaluation",
+    "Saisie des notes",
+    "Soumissions",
+    "Corrections",
+    "Accès / conflits"
+  ]
+}

@@ -1,0 +1,21 @@
+
+> leyisa-frontend@0.0.0 test:e2e
+> playwright test workspaces.spec.ts bulletins.spec.ts -g Espace|Multirôle|Secrétariat|Résultats et bulletins|Erreur réseau|Serveur indisponible|Repêchage V1.5
+
+
+Running 10 tests using 1 worker
+
+(node:84597) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/bulletins.spec.ts:102:1 › Repêchage V1.5 archivé : octets antérieurs conservés ; V1.6 affiche les40 points (14.3s)
+  ✓   2 tests/workspaces.spec.ts:11:48 › Espace adm : accueil, menu exclusif, données API et téléphone (6.9s)
+  ✓   3 tests/workspaces.spec.ts:11:48 › Espace sec : accueil, menu exclusif, données API et téléphone (7.7s)
+  ✓   4 tests/workspaces.spec.ts:11:48 › Espace ens : accueil, menu exclusif, données API et téléphone (5.5s)
+  ✓   5 tests/workspaces.spec.ts:11:48 › Espace dir : accueil, menu exclusif, données API et téléphone (8.5s)
+  ✓   6 tests/workspaces.spec.ts:24:1 › Multirôle : uniquement ENS/DIR, périmètre actif et refus serveur d’ADM (4.1s)
+  ✓   7 tests/workspaces.spec.ts:31:1 › Secrétariat : total réel, pagination et formulaire sur demande (5.4s)
+  ✓   8 tests/workspaces.spec.ts:36:1 › Résultats et bulletins : toutes les périodes avant un choix explicite (9.3s)
+  ✓   9 tests/workspaces.spec.ts:41:1 › Erreur réseau : alerte explicite, sans faux état vide (3.9s)
+  ✓  10 tests/workspaces.spec.ts:44:1 › Serveur indisponible : la vérification de session propose une reprise sans faux formulaire de connexion (2.0s)
+
+  10 passed (1.2m)

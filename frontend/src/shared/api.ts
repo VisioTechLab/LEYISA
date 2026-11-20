@@ -1,3 +1,6 @@
+let activeRole = '';
+export function setApiRole(role: string) { activeRole = role; }
+export function activeRoleHeaders(): Record<string,string> { return activeRole ? { 'X-Leyisa-Role': activeRole } : {}; }
 let csrfPromise:Promise<string>|undefined;
 export class HttpError extends Error {
  status:number;
@@ -13,7 +16,7 @@ async function csrf() {
 export async function api<T>(path:string,init:RequestInit={}):Promise<T> {
  const method=init.method??'GET';let response:Response;
  try {
-  response=await fetch(`/api/v1${path}`,{...init,credentials:'same-origin',headers:{Accept:'application/json',...(init.body?{'Content-Type':'application/json'}:{}),...(!['GET','HEAD'].includes(method)?{'X-CSRF-Token':await csrf()}:{}),...init.headers}});
+  response=await fetch(`/api/v1${path}`,{...init,credentials:'same-origin',headers:{Accept:'application/json',...(!path.startsWith('/auth/')?activeRoleHeaders():{}),...(init.body?{'Content-Type':'application/json'}:{}),...(!['GET','HEAD'].includes(method)?{'X-CSRF-Token':await csrf()}:{}),...init.headers}});
  }catch(error){throw new HttpError(0,error instanceof Error?error.message:'Le serveur est injoignable.');}
  const body=await response.json().catch(()=>null) as Record<string,unknown>|null;
  if(!response.ok) {

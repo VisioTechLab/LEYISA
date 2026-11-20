@@ -1,0 +1,14 @@
+{
+  "role": "adm",
+  "heading": "Tableau de bord Administration",
+  "menu": [
+    "Accueil",
+    "Configuration scolaire",
+    "Classes et matières",
+    "Programme de classe",
+    "Affectations",
+    "Comptes / rôles",
+    "Journal d’audit",
+    "Accès / conflits"
+  ]
+}

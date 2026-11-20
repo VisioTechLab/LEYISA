@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { resultsApi, type ClassPeriod, type FinalResults, type Period, type Preview, type Submission } from './resultsApi';
 import './results.css';
 import { DeliberationPanel } from './DeliberationPanel';
-import { useWorkspaceState } from '../../shared/workspaceState';
+import { CollectionTools, Pagination } from '../../WorkspacePages';
+import { searchText, useWorkspaceState } from '../../shared/workspaceState';
 import { periodLabel, resultStatus } from '../../shared/labels';
 
 type View = 'queue' | 'detail' | 'reject' | 'preview' | 'close' | 'final';
@@ -54,7 +55,7 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
   }
 
   useEffect(() => { mounted.current=true; void loadBootstrap(); return()=>{mounted.current=false;periodRequest.current+=1;}; }, []);
-  useEffect(() => { if (periodId) void loadPeriodData(periodId); }, [periodId]);
+  useEffect(() => { void loadPeriodData(periodId); }, [periodId]);
 
   async function loadBootstrap() {
     setLoading(true); setFailed(false);
@@ -62,7 +63,7 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
       const data = await resultsApi.bootstrap();
       if (!mounted.current) return;
       setPeriods(data.periods);
-      setPeriodId(data.periods.some(period => period.id === periodId) ? periodId : data.periods[0]?.id ?? '');
+      setPeriodId(data.periods.some(period => period.id === periodId) ? periodId : '');
       setMessage(data.periods.length ? '' : 'Aucune période disponible.');
       if (!data.periods.length) setLoading(false);
     } catch (error) { setFailed(true); setLoading(false); setMessage(errorMessage(error)); }
@@ -76,7 +77,7 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
       setSubmissions(queue);
       setClassPeriods(contexts);
       if (!contexts.some(context => context.id === activeClassPeriod.current)) {
-        selectClassPeriod(contexts[0]?.id ?? '');
+        selectClassPeriod('');
       }
       setMessage('');
     } catch (error) {
@@ -171,20 +172,21 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
 
   return <main className="leyisa-page results-module-page">
     <header className="leyisa-page-heading"><div><h1>{titleFor(view)}</h1><p>{descriptionFor(view)}</p></div><span className="leyisa-chip">DEMO-V1</span></header>
-    <div className="results-toolbar">
-      <label>Période<select aria-label="Période" value={periodId} disabled={pendingDecision} onChange={event => selectPeriod(event.target.value)}>{periods.map(period => <option key={period.id} value={period.id}>{periodLabel(period.label)}</option>)}</select></label>
-      <button className="leyisa-button leyisa-button-secondary" disabled={!periodId} onClick={()=>void loadPeriodData(periodId)}>Actualiser la file</button>
-    </div>
+    {!['detail','reject','close'].includes(view)&&<div className="results-toolbar">
+      <label>Période<select aria-label="Période" value={periodId} disabled={pendingDecision} onChange={event => selectPeriod(event.target.value)}><option value="">Toutes les périodes</option>{periods.map(period => <option key={period.id} value={period.id}>{periodLabel(period.label)}</option>)}</select></label>
+      <button className="leyisa-button leyisa-button-secondary" disabled={pendingDecision} onClick={()=>void loadPeriodData(periodId)}>Actualiser la file</button>
+    </div>}
     <nav className="results-steps" aria-label="Parcours résultats"><button className={view === 'queue' ? 'is-current' : ''} onClick={() => { window.location.hash='#validation'; }}>Validation</button><button onClick={() => { window.location.hash='#previsualisation'; }}>Prévisualiser</button><button className={view === 'final' ? 'is-current' : ''} onClick={() => { window.location.hash='#resultats'; }}>Résultats</button></nav>
     {loading && <p role="status">Chargement des soumissions et des classes…</p>}{message && <p className="results-message" role={failed ? 'alert' : 'status'}>{message}</p>}
     {view === 'queue' && !loading && !failed && <Queue submissions={submissions} onOpen={openDetail} />}
     {(view==='detail'||view==='reject')&&!selected&&!loading&&!failed&&<Queue submissions={submissions} onOpen={openDetail}/>}
     {view === 'detail' && selected && <Detail submission={selected} pending={pendingDecision} onApprove={approve} onReject={() => { window.location.hash='#rejet'; }} />}
     {view === 'reject' && selected && <Reject submission={selected} pending={pendingDecision} reason={reason} onReason={setReason} onCancel={() => { window.location.hash='#detail-soumission'; }} onConfirm={reject} />}
-    {view === 'preview' && <PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={() => { window.location.hash='#cloture'; }} />}
+    {view === 'preview' && !loading && !failed && <PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={() => { window.location.hash='#cloture'; }} />}
     {view==='close'&&!preview&&<PreviewScreen preview={preview} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadPreview} onClose={()=>{window.location.hash='#cloture';}}/>}
     {view === 'close' && <CloseScreen preview={preview} confirmed={confirmed} pending={pendingDecision} onConfirm={setConfirmed} onClose={closePeriod} />}
-    {view === 'final' && <>
+    {view === 'final' && !loading && !failed && <>
+      {classPeriodId&&classPeriods.find(c=>c.id===classPeriodId)?.status==='OPEN'&&<a className="leyisa-button" href="#previsualisation">Vérifier avant la clôture</a>}
       <FinalScreen results={finalResults} contexts={classPeriods} classPeriodId={classPeriodId} onSelect={selectClassPeriod} onLoad={loadFinal} onPublish={publishResults} pending={pendingDecision} />
       {finalResults && <details className="leyisa-card result-deliberation">
         <summary>Délibération et repêchage</summary>
@@ -195,31 +197,17 @@ export function ResultsModulePage({ initialView }: { initialView: View }) {
 }
 
 function Queue({ submissions, onOpen }: { submissions: Submission[]; onOpen: (submission: Submission) => void }) {
- const next = submissions[0];
- return <div className="leyisa-grid results-detail-grid">
-  <section className="leyisa-card">
-   <h2>Soumissions à examiner</h2>
-   <div className="results-list">
-    {submissions.length ? submissions.map(item => (
-     <article key={item.id}>
-      <div><strong>{item.evaluation.title}</strong><small>{item.author.label} · {item.schoolClass.label} · {item.subject}</small></div>
-      <button className="leyisa-button leyisa-button-secondary" onClick={() => onOpen(item)}>Ouvrir</button>
-     </article>
-    )) : <p>Aucune soumission en attente pour cette période.</p>}
-   </div>
-  </section>
-  <aside className="leyisa-card">
-   <h2>Première soumission</h2>
-   {next ? <>
-    <dl><dt>Classe</dt><dd>{next.schoolClass.label}</dd><dt>Matière</dt><dd>{next.subject}</dd><dt>Tentative</dt><dd>{next.attempt}</dd></dl>
-    <button className="leyisa-button" onClick={() => onOpen(next)}>Consulter le détail</button>
-   </> : <p>Choisissez une autre période pour consulter sa file.</p>}
-  </aside>
- </div>;
+ const [search,setSearch]=useState(''),[classId,setClassId]=useState(''),[page,setPage]=useState(1);
+ const classes=[...new Map(submissions.map(s=>[s.schoolClass.id,s.schoolClass])).values()];
+ const filtered=submissions.filter(s=>(!classId||s.schoolClass.id===classId)&&searchText(`${s.evaluation.title} ${s.schoolClass.label} ${s.subject} ${s.author.label}`).includes(searchText(search)));
+ return <section className="leyisa-card"><h2>Soumissions à examiner</h2><CollectionTools search={search} onSearch={s=>{setSearch(s);setPage(1);}}><label>Classe<select value={classId} onChange={e=>{setClassId(e.target.value);setPage(1);}}><option value="">Toutes les classes</option>{classes.map(c=><option key={c.id} value={c.id}>{c.label}</option>)}</select></label></CollectionTools>
+ <div className="results-list">{filtered.slice((page-1)*15,page*15).map(item=><article key={item.id}><div><strong>{item.evaluation.title}</strong><small>{item.author.label} · {item.schoolClass.label} · {item.subject} · {item.period.label}</small></div><button className="leyisa-button leyisa-button-secondary" onClick={()=>onOpen(item)}>Ouvrir</button></article>)}</div>
+ {!filtered.length&&<p>Aucune soumission en attente pour ces filtres.</p>}<Pagination page={page} total={filtered.length} onPage={setPage}/></section>;
 }
+
 function Detail({ submission, onApprove, onReject, pending }: { submission: Submission & { grades?: Array<{ matricule: string; student: string; score: string | number | null }> }; onApprove: () => void; onReject: () => void; pending: boolean }) { return <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Détail d’une soumission</h2><p className="leyisa-description">Tentative {submission.attempt} · lecture seule.</p><ResultTable students={(submission.grades ?? []).map(grade => ({ label: `${grade.matricule} · ${grade.student}`, values: [grade.score === null ? 'Absente' : `${grade.score} / ${submission.evaluation.maxScore}`] }))} headings={['Élève', 'Note']} /><div className="preview-actions"><button className="leyisa-button" disabled={pending} onClick={onApprove}>Accepter la soumission</button><button className="leyisa-button leyisa-button-secondary" disabled={pending} onClick={onReject}>Rejeter avec motif</button></div></section><aside className="leyisa-card"><h2>Décision de la Direction</h2><p>Auteur : {submission.author.label}</p><p>Évaluation : {submission.evaluation.title}</p><p>Statut : {submission.status}</p><p className="leyisa-description">L’auteur ne peut jamais décider sur sa propre soumission.</p></aside></div>; }
 function Reject({ submission, reason, onReason, onCancel, onConfirm, pending }: { submission: Submission; reason: string; onReason: (value: string) => void; onCancel: () => void; onConfirm: () => void; pending: boolean }) { return <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Rejeter la soumission</h2><p className="leyisa-description">Le motif est obligatoire et visible par l’enseignant.</p><label>Évaluation<input disabled value={submission.evaluation.title} /></label><label>Motif du rejet<textarea value={reason} onChange={event => onReason(event.target.value)} placeholder="Veuillez préciser la correction attendue…" /></label><div className="preview-actions"><button className="leyisa-button" disabled={!reason.trim()||pending} onClick={onConfirm}>Confirmer le rejet</button><button className="leyisa-button leyisa-button-secondary" onClick={onCancel}>Annuler</button></div></section><aside className="leyisa-card"><h2>Traçabilité</h2><p>La version soumise est conservée.</p><p>État suivant : REJECTED</p><p>Après correction : nouvelle soumission obligatoire.</p></aside></div>; }
-function PreviewScreen({ preview, contexts, classPeriodId, onSelect, onLoad, onClose }: { preview: Preview | null; contexts: ClassPeriod[]; classPeriodId: string; onSelect: (value: string) => void; onLoad: () => void; onClose: () => void }) { return <><section className="results-toolbar"><label>Classe-période<select aria-label="Classe-période" value={classPeriodId} onChange={event => onSelect(event.target.value)}>{contexts.map(context => <option key={context.id} value={context.id}>{context.classLabel} · {periodLabel(context.periodLabel)} · {resultStatus(context.status)}</option>)}</select></label><button className="leyisa-button" onClick={onLoad}>Vérifier</button></section>{preview && <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Aperçu des résultats</h2><p className="leyisa-description">Moyennes par matière uniquement ; aucune moyenne générale avant clôture.</p><StudentResults students={preview.students} /></section><aside className="leyisa-card"><h2>Contrôles avant clôture</h2>{preview.problems.length ? <ul>{preview.problems.map(problem => <li key={problem}>{problem}</li>)}</ul> : <p>Toutes les matières et soumissions sont validées.</p>}<button className="leyisa-button" disabled={!preview.readyToClose} onClick={onClose}>Continuer vers clôture</button></aside></div>}</>; }
+function PreviewScreen({ preview, contexts, classPeriodId, onSelect, onLoad, onClose }: { preview: Preview | null; contexts: ClassPeriod[]; classPeriodId: string; onSelect: (value: string) => void; onLoad: () => void; onClose: () => void }) { return <><section className="results-toolbar"><label>Classe-période<select aria-label="Classe-période" value={classPeriodId} onChange={event => onSelect(event.target.value)}><option value="">Choisir une classe et une période</option>{contexts.map(context => <option key={context.id} value={context.id}>{context.classLabel} · {periodLabel(context.periodLabel)} · {resultStatus(context.status)}</option>)}</select></label><button className="leyisa-button" onClick={onLoad}>Vérifier</button></section>{preview && <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Aperçu des résultats</h2><p className="leyisa-description">Moyennes par matière uniquement ; aucune moyenne générale avant clôture.</p><StudentResults students={preview.students} /></section><aside className="leyisa-card"><h2>Contrôles avant clôture</h2>{preview.problems.length ? <ul>{preview.problems.map(problem => <li key={problem}>{problem}</li>)}</ul> : <p>Toutes les matières et soumissions sont validées.</p>}<button className="leyisa-button" disabled={!preview.readyToClose} onClick={onClose}>Continuer vers clôture</button></aside></div>}</>; }
 function CloseScreen({ preview, confirmed, pending, onConfirm, onClose }: { preview: Preview | null; confirmed: boolean; pending: boolean; onConfirm: (value: boolean) => void; onClose: () => void }) { return <div className="leyisa-grid results-detail-grid"><section className="leyisa-card"><h2>Confirmer la clôture</h2><p className="results-warning">Cette opération est irréversible : les résultats sont figés et toute modification est refusée.</p><p>Classe / période : {preview?.classPeriod.classLabel} / {preview?.classPeriod.periodLabel}</p><label className="results-check"><input type="checkbox" checked={confirmed} onChange={event => onConfirm(event.target.checked)} /> Je confirme la clôture de la période.</label><button className="leyisa-button" disabled={!preview?.readyToClose || !confirmed || pending} onClick={onClose}>Confirmer la clôture</button></section><aside className="leyisa-card"><h2>Contrôles de clôture</h2><ol><li>Vérifier les soumissions et les notes.</li><li>Calculer les résultats.</li><li>Conserver leur version définitive.</li><li>Verrouiller la période.</li></ol></aside></div>; }
 function FinalScreen({ results, contexts, classPeriodId, onSelect, onLoad, onPublish, pending }: {
  results: FinalResults | null;
@@ -230,14 +218,19 @@ function FinalScreen({ results, contexts, classPeriodId, onSelect, onLoad, onPub
  onPublish: () => void;
  pending: boolean;
 }) {
- return <>
+ const [search,setSearch]=useState(''),[year,setYear]=useState(''),[status,setStatus]=useState(''),[page,setPage]=useState(1);
+ const years=[...new Set(contexts.map(c=>c.yearCode).filter(Boolean))];
+ const filtered=contexts.filter(c=>(!year||c.yearCode===year)&&(!status||c.status===status)&&searchText(`${c.classLabel} ${c.periodLabel} ${c.yearCode??''}`).includes(searchText(search)));
+ if(!classPeriodId)return <section className="leyisa-card"><h2>Résultats par classe et période</h2><CollectionTools search={search} onSearch={v=>{setSearch(v);setPage(1);}}><label>Année scolaire<select value={year} onChange={e=>{setYear(e.target.value);setPage(1);}}><option value="">Toutes les années</option>{years.map(y=><option key={y}>{y}</option>)}</select></label><label>État<select value={status} onChange={e=>{setStatus(e.target.value);setPage(1);}}><option value="">Tous les états</option>{['PUBLISHED','CLOSED','OPEN'].map(v=><option key={v} value={v}>{resultStatus(v)}</option>)}</select></label></CollectionTools>
+ <div className="leyisa-table-wrap"><table><thead><tr><th>Classe</th><th>Année</th><th>Période</th><th>État</th><th>Résultats</th><th>Action</th></tr></thead><tbody>{filtered.slice((page-1)*15,page*15).map(c=><tr key={c.id}><td>{c.classLabel}</td><td>{c.yearCode??'—'}</td><td>{periodLabel(c.periodLabel)}</td><td>{resultStatus(c.status)}</td><td>{c.resultCount}</td><td><button onClick={()=>onSelect(c.id)}>Ouvrir</button></td></tr>)}</tbody></table></div>{!filtered.length&&<p>Aucun résultat pour ces filtres.</p>}<Pagination page={page} total={filtered.length} onPage={setPage}/></section>;
+ return <><button className="workspace-back" onClick={()=>onSelect('')}>← Toutes les classes et périodes</button>
   <section className="results-toolbar">
    <label>Classe-période
     <select aria-label="Classe-période" value={classPeriodId} disabled={pending} onChange={event => onSelect(event.target.value)}>
      {contexts.map(context => <option key={context.id} value={context.id}>{context.classLabel} · {periodLabel(context.periodLabel)} · {resultStatus(context.status)}</option>)}
     </select>
    </label>
-   <button className="leyisa-button" disabled={!classPeriodId || pending || contexts.find(context=>context.id===classPeriodId)?.status==='OPEN'} onClick={onLoad}>Afficher</button>
+   <button className="leyisa-button leyisa-button-secondary" disabled={!classPeriodId || pending || contexts.find(context=>context.id===classPeriodId)?.status==='OPEN'} onClick={onLoad}>Afficher</button>
   </section>
   {results && <div className="leyisa-grid results-detail-grid">
    <section className="leyisa-card"><h2>Résultats figés</h2><StudentResults students={results.students} final published={results.classPeriod.status==='PUBLISHED'}/></section>

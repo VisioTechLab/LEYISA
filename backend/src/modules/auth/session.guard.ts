@@ -3,6 +3,7 @@ import {
   createParamDecorator,
   type ExecutionContext,
   Injectable,
+  ForbiddenException,
   UnauthorizedException,
 } from "@nestjs/common";
 import type { AuthContext } from "./auth-context.js";
@@ -13,7 +14,7 @@ import { readCookie } from "./session-token.js";
 /** Champs de la requête HTTP utilisés par le module (évite une dépendance aux types Express). */
 export interface AuthRequest {
   leyisaClientIp?: string;
-  headers: { cookie?: string; origin?: string; "x-csrf-token"?: string };
+  headers: { cookie?: string; origin?: string; "x-csrf-token"?: string; "x-leyisa-role"?: string };
   method?: string;
   ip?: string;
   auth?: AuthContext;
@@ -37,7 +38,11 @@ export class SessionGuard implements CanActivate {
     const authContext = await this.auth.resolveSession(token);
     if (!authContext) throw new UnauthorizedException("Votre session a expiré. Reconnectez-vous.");
 
-    request.auth = authContext;
+    const activeRole = request.headers["x-leyisa-role"];
+    if (activeRole !== undefined && (typeof activeRole !== "string" || !authContext.roles.includes(activeRole as never))) {
+      throw new ForbiddenException("Ce rôle ne vous est pas attribué.");
+    }
+    request.auth = activeRole ? { ...authContext, roles: [activeRole as AuthContext["roles"][number]] } : authContext;
     return true;
   }
 }

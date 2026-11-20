@@ -1,0 +1,18 @@
+{
+  "role": "sec",
+  "heading": "Tableau de bord Secrétariat",
+  "menu": [
+    "Accueil",
+    "Configuration scolaire",
+    "Classes et matières",
+    "Programme de classe",
+    "Élèves / inscriptions",
+    "Créer un dossier",
+    "Historique scolaire",
+    "Inscrire un élève",
+    "Affectations",
+    "Bulletins disponibles",
+    "Générer un bulletin",
+    "Accès / conflits"
+  ]
+}

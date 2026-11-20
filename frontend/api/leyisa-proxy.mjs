@@ -1,6 +1,6 @@
 import { isIP } from 'node:net';
 
-const inputHeaders = ['accept', 'content-type', 'cookie', 'origin', 'x-csrf-token'];
+const inputHeaders = ['accept', 'content-type', 'cookie', 'origin', 'x-csrf-token', 'x-leyisa-role'];
 const outputHeaders = ['content-disposition', 'content-type', 'retry-after'];
 const methods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH'];
 const apiPrefix = '/api/v1/';

@@ -12,7 +12,7 @@ import { authConfig, TRANSACTION_OPTIONS } from "./auth.config.js";
 import { AUTH_AUDIT_ACTIONS, AuditWriter } from "./audit-writer.js";
 import { LoginThrottle } from "./login-throttle.js";
 import { hashPassword, verifyPassword } from "./password.js";
-import { type Permission, permissionsFor } from "./permissions.js";
+import { type Permission, permissionsFor, permissionsByRole } from "./permissions.js";
 import { generateSessionToken, hashSessionToken } from "./session-token.js";
 
 /** Message unique pour tout échec : ne révèle jamais si l'identifiant existe (US-001). */
@@ -34,6 +34,7 @@ export interface PublicUser {
   roles: RoleCode[];
   /** Permissions déduites de la matrice : l'écran s'en sert pour ses menus, le serveur revérifie toujours. */
   permissions: Permission[];
+  permissionsByRole: Record<string, Permission[]>;
 }
 
 export interface LoginResult {
@@ -149,6 +150,7 @@ export class AuthService implements OnModuleInit {
         lastName: user.lastName,
         roles,
         permissions: permissionsFor(roles),
+        permissionsByRole: permissionsByRole(roles),
       },
     };
   }

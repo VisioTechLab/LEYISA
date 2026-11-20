@@ -1,4 +1,4 @@
-import { api, post } from '../../shared/api';
+import { HttpError, api, post } from '../../shared/api';
 /**
  * Appels au module auth du backend NestJS.
  * Le cookie de session est géré par le navigateur (HttpOnly) : React ne le lit jamais
@@ -14,6 +14,7 @@ export interface CurrentUser {
   roles: RoleCode[];
   /** Permissions calculées par le serveur (matrice des droits). */
   permissions: string[];
+  permissionsByRole?: Partial<Record<RoleCode, string[]>>;
 }
 
 /**
@@ -31,7 +32,7 @@ export async function login(identifier:string,password:string):Promise<CurrentUs
   catch(error){throw new LoginError(error instanceof Error?error.message:'Connexion impossible.');}
 }
 export async function fetchCurrentUser():Promise<CurrentUser|null> {
-  try{return (await api<{user:CurrentUser}>('/auth/me')).user;}catch{return null;}
+  try{return (await api<{user:CurrentUser}>('/auth/me')).user;}catch(error){if(error instanceof HttpError&&error.status===401)return null;throw error;}
 }
 export async function logout():Promise<void> {await post('/auth/logout',{});}
 export function homeHashFor(_user:CurrentUser):string {return '#accueil';}
