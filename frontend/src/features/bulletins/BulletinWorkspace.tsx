@@ -1,3 +1,4 @@
+import { archivePupilName } from '../../shared/labels';
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { activeRoleHeaders, api, post } from '../../shared/api';
 import { PageHeading } from '../../shared/PageHeading';
@@ -19,7 +20,7 @@ const sectionName=(label:string,level:string)=>{const l=displayLabel(label),n=di
 type Detail = { id: string; classPeriodId?:string; identity: Identity; templateVersion: string; archivedTemplates: string[]; publicationComplete?: boolean; documentPeriodSupported?: boolean };
 type PdfFile = { key: string; bytes: Uint8Array; url: string };
 const compare = new Intl.Collator('fr', { numeric: true, sensitivity: 'base' }).compare;
-const name = (person: Identity) => [person.lastName, person.postName, person.firstName].filter(Boolean).join(' ');
+const name = (person: Identity) => archivePupilName(person.matricule,person.lastName,person.postName,person.firstName);
 const unique = (values: string[]) => [...new Set(values)].sort(compare);
 
 type Selection = { year: string; cycle?:string; level?:string; schoolClass: string; period: string; id: string; version: string; search: string; query: string; mode?:'class'|'student'; matricule?:string };
