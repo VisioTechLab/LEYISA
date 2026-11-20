@@ -125,6 +125,7 @@ export class ResultsService {
   }
 
   async closeClassPeriod(id: string, actorId: string, body: unknown) {
+    if (process.env.LEYISA_ALLOW_UNVALIDATED_RESULTS !== "true") throw new ConflictException("Clôture suspendue : les règles pédagogiques officielles doivent être validées.");
     if(object(body).confirmed!==true)throw new BadRequestException("Confirmation explicite requise.");
     return this.prisma.client.$transaction(async (tx) => {
       await requireDirector(tx, actorId);
@@ -154,6 +155,7 @@ export class ResultsService {
   }
 
   async publish(id:string,actorId:string) {
+    if (process.env.LEYISA_ALLOW_UNVALIDATED_RESULTS !== "true") throw new ConflictException("Publication suspendue : les règles pédagogiques officielles doivent être validées.");
     return this.prisma.client.$transaction(async tx=>{
       await requireDirector(tx,actorId);
       await tx.$queryRaw`SELECT id FROM "ClassPeriod" WHERE id=${id}::uuid FOR UPDATE`;
