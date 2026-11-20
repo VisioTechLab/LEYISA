@@ -281,7 +281,7 @@ export function EvaluationsPage() {
                                 {error && <small id={errorId} className="evaluations-field-error">{error}</small>}
                               </>
                             ) : (
-                              toField(grade.score) || '—'
+                              toField(grade.score) || 'Non saisie'
                             )}
                           </td>
                         </tr>
@@ -312,7 +312,7 @@ export function EvaluationsPage() {
               </div>
             )}
           </section>}
-          {correctionMode&&<section className="leyisa-card"><h2>Historique des tentatives</h2><ul>{detail.history?.map(h=><li key={h.attempt}>Tentative {h.attempt} — {h.status} — {h.reason??'Sans motif de rejet'}</li>)}</ul></section>}
+          {correctionMode&&<section className="leyisa-card"><h2>Historique des tentatives</h2><ul>{detail.history?.map(h=><li key={h.attempt}>Tentative {h.attempt} : {h.status} : {h.reason??'Sans motif de rejet'}</li>)}</ul></section>}
         </>
       )}
     </main>
