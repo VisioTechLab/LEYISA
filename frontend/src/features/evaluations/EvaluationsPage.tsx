@@ -1,3 +1,4 @@
+import { archiveStaffLabel } from '../../shared/labels';
 import { useCallback, useEffect, useState } from 'react';
 import { PageHeading } from '../../shared/PageHeading';
 import { AppreciationsGrid } from './AppreciationsGrid';
@@ -211,7 +212,7 @@ export function EvaluationsPage() {
                 {detail.subject.label} · {detail.schoolClass.label} · {detail.period.label}
               </p>
               <p className="leyisa-description">
-                {detail.teacher.firstName} {detail.teacher.lastName} · Barème : {detail.maxScore} points · Date : {formatDate(detail.heldOn)}
+                {archiveStaffLabel(`${detail.teacher.firstName} ${detail.teacher.lastName}`)} · Barème : {detail.maxScore} points · Date : {formatDate(detail.heldOn)}
               </p>
             </div>
             <span className="leyisa-chip" data-state={detail.state}>{STATE_LABELS[detail.state]}</span>
