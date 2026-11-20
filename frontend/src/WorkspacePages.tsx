@@ -55,10 +55,10 @@ export function AccessPage(){return <Page title="Accès refusé ou conflit"><div
 
 const dashboards = {
  ADM:{title:'Tableau de bord Administration',main:'/school/bootstrap',related:'/users?page=1',primary:['Gérer les comptes','#comptes'],links:[['Configuration scolaire','#scolarite'],['Classes et programmes','#classes'],['Audit','#audit']]},
- SEC:{title:'Tableau de bord Secrétariat',main:'/students?pagination=1',related:'/bulletins',primary:['Retrouver un élève','#eleves'],links:[['Inscriptions','#inscription'],['Bulletins','#bulletins']]},
+ SEC:{title:'Tableau de bord Secrétariat',main:'/students?pagination=1',related:'/bulletins/count',primary:['Retrouver un élève','#eleves'],links:[['Inscriptions','#inscription'],['Bulletins','#bulletins']]},
  ENS:{title:'Mon espace Enseignant',main:'/assignments/mine',related:'/evaluations',primary:['Ouvrir mes classes et cours','#cours'],links:[['Mes évaluations','#evaluations'],['Mes soumissions','#mes-soumissions']]},
  DIR:{title:'Tableau de bord Direction',main:'/results/class-periods',related:'/results/submissions',primary:['Examiner les soumissions','#validation'],links:[['Enseignants et affectations','#enseignants'],['Résultats','#resultats'],['Bulletins','#bulletins']]},
- ELEVE:{title:'Mes bulletins publiés',main:'/bulletins',related:null,primary:['Mes bulletins','#bulletins'],links:[]},
+ ELEVE:{title:'Mes bulletins publiés',main:'/bulletins/count',related:null,primary:['Mes bulletins','#bulletins'],links:[]},
 };
 export function Dashboard({role}:{role:string}){
  const view=dashboards[role as keyof typeof dashboards]??dashboards.ELEVE;
@@ -72,7 +72,7 @@ export function Dashboard({role}:{role:string}){
   stats=[['Années scolaires',years.length],['Classes',years.reduce((sum,y)=>sum+y.classes.length,0)],['Comptes utilisateurs',!Array.isArray(related.data)?related.data?.total??0:0]];
   overview=years.map(y=>({id:y.id,label:y.code,context:`${y.classes.length} classes`,href:'#scolarite'}));
  }else if(role==='SEC'){
-  stats=[['Dossiers élèves',!Array.isArray(current.data)?current.data?.total??0:0],['Résultats publiés',other.length]];
+  stats=[['Dossiers élèves',!Array.isArray(current.data)?current.data?.total??0:0],['Résultats publiés',!Array.isArray(related.data)?related.data?.total??0:0]];
   overview=rows.slice(0,5).map(r=>({id:r.id,label:`${r.user.lastName} ${r.postName??''} ${r.user.firstName}`,context:r.matricule,href:`#historique?student=${r.id}`}));
  }else if(role==='ENS'){
   stats=[['Mes cours',rows.length],['Mes évaluations',other.length],['À corriger',other.filter(r=>r.state==='REJECTED').length]];
@@ -80,7 +80,7 @@ export function Dashboard({role}:{role:string}){
  }else if(role==='DIR'){
   stats=[['Soumissions à examiner',other.length],['Classes',new Set(rows.map(r=>r.classId??r.classCode??r.classLabel)).size],['Résultats publiés',rows.filter(r=>r.status==='PUBLISHED').reduce((n,r)=>n+r.resultCount,0)]];
   overview=other.slice(0,5).map(r=>({id:r.id,label:r.evaluation.title,context:r.schoolClass.label,href:'#validation'}));
- }else{stats=[['Résultats publiés',rows.length]];}
+ }else{stats=[['Résultats publiés',!Array.isArray(current.data)?current.data?.total??0:0]];}
  return <Page title={view.title}>
   <Feedback error={error} loading={loading}/>
   <div className="leyisa-stats">{stats.map(([label,value])=><Panel key={label} title={label}><strong>{loading||error?'—':value}</strong></Panel>)}</div>
