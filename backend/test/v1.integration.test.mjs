@@ -105,6 +105,36 @@ test('T12 — rôles modifiés, sessions révoquées et audit persistant',{skip}
  assert.equal(await db.auditEntry.count({where:{targetId:user.id,action:'ROLE_CHANGED'}}),1);
  assert.equal((await adm.request(`/users/${credentials.adm.id}/roles`,'PUT',{roles:['SEC']})).status,403);
 });
+test('ADM — initialisation profil enseignant existant, rotation et révocation',{skip},async()=>{
+ const original=await db.user.create({data:{kind:'STAFF',firstName:'Enseignant',lastName:'Fictif sans accès',loginEnabled:false,roles:{create:{role:'ENS'}}}});
+ const staff=await db.teacher.create({data:{userId:original.id}});
+ const login=`credential-${suffix}@demo.test`,first=randomUUID(),next=randomUUID();
+ const endpoint=`/users/${original.id}/credentials`;
+ const payload={login,newPassword:first,adminPassword:credentials.adm.password};
+ assert.equal((await sec.request(endpoint,'POST',payload)).status,403);
+ assert.equal((await adm.request(endpoint,'POST',{...payload,adminPassword:randomUUID()})).status,403);
+ assert.equal((await adm.request(endpoint,'POST',{...payload,newPassword:'short'})).status,400);
+ assert.equal((await adm.request(endpoint,'POST',payload,{'X-CSRF-Token':''})).status,403);
+ const created=await ok(adm,endpoint,'POST',payload);
+ assert.equal(created.id,original.id);assert.equal(created.login,login);assert.equal(created.loginEnabled,false);
+ assert.equal(JSON.stringify(created).includes('passwordHash'),false);
+ assert.equal((await db.teacher.findUnique({where:{id:staff.id}})).userId,original.id);
+ await ok(adm,`/users/${original.id}/status`,'PATCH',{enabled:true});
+ credentials.temporaryStaff={id:original.id,login,password:first};
+ const browser=new Browser();await browser.login('temporaryStaff');
+ assert.equal((await browser.request('/auth/me')).status,200);
+ assert.equal((await adm.request(endpoint,'POST',{...payload,login:login+'-other'})).status,400);
+ assert.equal((await adm.request(`/users/${credentials.adm.id}/credentials`,'POST',{newPassword:next,adminPassword:credentials.adm.password})).status,403);
+ const reset=await ok(adm,endpoint,'POST',{newPassword:next,adminPassword:credentials.adm.password});
+ assert.equal(reset.loginEnabled,true);assert.equal(reset.id,original.id);
+ assert.equal((await browser.request('/auth/me')).status,401);
+ const anonymous=new Browser();const csrf=await anonymous.request('/auth/csrf');anonymous.csrf=csrf.body.csrfToken;
+ assert.equal((await anonymous.request('/auth/login','POST',{login,password:first})).status,401);
+ credentials.temporaryStaff.password=next;await browser.login('temporaryStaff');
+ assert.equal((await browser.request('/auth/me')).status,200);
+ const audit=await db.auditEntry.findMany({where:{targetId:original.id,action:{in:['USER_CREDENTIALS_INITIALIZED','PASSWORD_RESET']}}});
+ assert.equal(audit.length,2);assert.ok(audit.every(a=>a.actorId===credentials.adm.id&&!JSON.stringify(a).includes(first)&&!JSON.stringify(a).includes(next)));
+});
 test('T15 — dossier séparé, réinscription concurrente et atomicité',{skip},async()=>{
  const roster=await ok(sec,'/students/registration-options');const year=roster.find(y=>y.code==='2026-2027');
  // Classe ouverte créée via la configuration scolaire réelle.
