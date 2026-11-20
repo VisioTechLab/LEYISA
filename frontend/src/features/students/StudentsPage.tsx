@@ -18,7 +18,7 @@ const EMPTY_FORM: NewStudent = {
 };
 
 function displayDate(value: string | null): string {
-  if (!value) return "—";
+  if (!value) return "Non renseigné";
   return new Intl.DateTimeFormat("fr-FR", {
     day: "2-digit",
     month: "short",
@@ -77,7 +77,7 @@ export function StudentsPage() {
   const filteredStudents = students;
   async function fetchStudentPage(search:string,page:number,filters:{classId:string;schoolYearId:string}) {
     const result=await api<{items:any[];total:number}>(`/students?${new URLSearchParams({pagination:'1',search,page:String(page),...filters})}`);
-    return {...result,items:result.items.map(row=>{const en=row.enrollments.find((e:any)=>(!filters.classId||e.schoolClass.id===filters.classId)&&(!filters.schoolYearId||e.schoolClass.schoolYear.id===filters.schoolYearId))??row.enrollments[0];return {id:row.id,matricule:row.matricule,lastName:row.user.lastName,postName:row.postName,firstName:row.user.firstName,birthDate:row.birthDate?.slice(0,10)??null,className:en?.schoolClass.label??'—',schoolYear:en?.schoolClass.schoolYear.code??'—'};})};
+    return {...result,items:result.items.map(row=>{const en=row.enrollments.find((e:any)=>(!filters.classId||e.schoolClass.id===filters.classId)&&(!filters.schoolYearId||e.schoolClass.schoolYear.id===filters.schoolYearId))??row.enrollments[0];return {id:row.id,matricule:row.matricule,lastName:row.user.lastName,postName:row.postName,firstName:row.user.firstName,birthDate:row.birthDate?.slice(0,10)??null,className:en?.schoolClass.label??'Non renseigné',schoolYear:en?.schoolClass.schoolYear.code??'Non renseigné'};})};
   }
 
   function updateField<K extends keyof NewStudent>(key: K, value: NewStudent[K]) {
@@ -157,7 +157,7 @@ export function StudentsPage() {
                       </tr>)}</tbody>
                     </table></div>
                   ) : <div className="state-message" role="status">{students.length ? "Aucun résultat" : "Aucun élève disponible."}</div>}
-              <p className="table-footnote">{filteredStudents.length} élève(s) affiché(s) sur {total} — page {page}</p><button disabled={loading||page===1} onClick={()=>void loadPage(page-1)}>Précédent</button> <button disabled={loading||page*50>=total} onClick={()=>void loadPage(page+1)}>Suivant</button>
+              <p className="table-footnote">{filteredStudents.length} élève(s) affiché(s) sur {total} : page {page}</p><button disabled={loading||page===1} onClick={()=>void loadPage(page-1)}>Précédent</button> <button disabled={loading||page*50>=total} onClick={()=>void loadPage(page+1)}>Suivant</button>
             </section>
 
             {allowed&&<details className="leyisa-card workspace-disclosure"><summary>Créer un dossier et une inscription ensemble</summary><section aria-labelledby="form-title">
@@ -170,7 +170,7 @@ export function StudentsPage() {
                 <label>Classe et année scolaire <span className="required">*</span>
                   <select required value={form.classId} onChange={(event) => handleClassChange(event.target.value)} disabled={loading || classes.length === 0}>
                     <option value="">Choisir une classe</option>
-                    {classes.map((item) => <option key={item.id} value={item.id}>{item.label} — {item.schoolYearCode}</option>)}
+                    {classes.map((item) => <option key={item.id} value={item.id}>{item.label} : {item.schoolYearCode}</option>)}
                   </select>
                 </label>
                 {error && <p className="form-feedback feedback-error" role="alert">{error}</p>}
